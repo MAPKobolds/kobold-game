@@ -73,6 +73,12 @@ public class UtilMusic extends Thread{
                         AudioInputStream stream = AudioSystem.getAudioInputStream(new File("src/main/resources/music/Gegagedigedagedago.wav"));
                         clip = AudioSystem.getClip();
                         clip.open(stream);
+                        clip.addLineListener(event -> {
+                                if (event.getType() == LineEvent.Type.STOP && !isMuted) {
+                                        clip.setFramePosition(0);
+                                        playClip();
+                                }
+                        });
                         playClip();
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
                         e.printStackTrace();

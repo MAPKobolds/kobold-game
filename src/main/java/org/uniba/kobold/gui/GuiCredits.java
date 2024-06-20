@@ -65,7 +65,32 @@ public class GuiCredits extends JPanel {
             CardLayout menu = (CardLayout) getParent().getLayout();
             menu.show(getParent(), "MenuPanel");
         });
-        // Set the properties of the icon of Marco
+
+
+        zippoPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon img = new ImageIcon("src/main/resources/img/ZippoToken.png");
+                Image image = img.getImage();
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        zippoPanel.setMinimumSize(new Dimension(150, 150));
+        zippoPanel.setPreferredSize(new Dimension(150, 150));
+
+
+        GroupLayout layoutZippo = new GroupLayout(zippoPanel);
+        zippoPanel.setLayout(layoutZippo);
+        layoutZippo.setHorizontalGroup(
+                layoutZippo.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGap(0, 150, Short.MAX_VALUE)
+        );
+        layoutZippo.setVerticalGroup(
+                layoutZippo.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGap(0, 150, Short.MAX_VALUE)
+        );
+
         sgaramellaPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -78,7 +103,6 @@ public class GuiCredits extends JPanel {
         sgaramellaPanel.setMinimumSize(new Dimension(150, 150));
         sgaramellaPanel.setPreferredSize(new Dimension(150, 150));
 
-
         GroupLayout layoutSgaramella = new GroupLayout(sgaramellaPanel);
         sgaramellaPanel.setLayout(layoutSgaramella);
         layoutSgaramella.setHorizontalGroup(
@@ -89,6 +113,7 @@ public class GuiCredits extends JPanel {
                 layoutSgaramella.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGap(0, 150, Short.MAX_VALUE)
         );
+
 
         porcelliPanel = new JPanel() {
             @Override
@@ -102,7 +127,6 @@ public class GuiCredits extends JPanel {
         porcelliPanel.setMinimumSize(new Dimension(150, 150));
         porcelliPanel.setPreferredSize(new Dimension(150, 150));
 
-        // Set layout of the icon of Pasco
         GroupLayout layoutPorcelli = new GroupLayout(porcelliPanel);
         porcelliPanel.setLayout(layoutPorcelli);
         layoutPorcelli.setHorizontalGroup(
@@ -111,31 +135,6 @@ public class GuiCredits extends JPanel {
         );
         layoutPorcelli.setVerticalGroup(
                 layoutPorcelli.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 150, Short.MAX_VALUE)
-        );
-
-        // Set the properties of the icon of Mik
-        zippoPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon img = new ImageIcon("src/main/resources/img/ZippoToken.png");
-                Image image = img.getImage();
-                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-        zippoPanel.setMinimumSize(new Dimension(150, 150));
-        zippoPanel.setPreferredSize(new Dimension(150, 150));
-
-        // Set layout of the icon of Mik
-        GroupLayout layoutZippo = new GroupLayout(zippoPanel);
-        zippoPanel.setLayout(layoutZippo);
-        layoutZippo.setHorizontalGroup(
-                layoutZippo.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 150, Short.MAX_VALUE)
-        );
-        layoutZippo.setVerticalGroup(
-                layoutZippo.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGap(0, 150, Short.MAX_VALUE)
         );
 
@@ -148,13 +147,13 @@ public class GuiCredits extends JPanel {
                                 .addGroup(backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(backgroundLayout.createSequentialGroup()
                                                 .addGap(136, 136, 136)
-                                                .addComponent(porcelliPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(sgaramellaPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(45, 45, 45)
                                                 .addGroup(backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                                         .addComponent(menuButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(zippoPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                        .addComponent(porcelliPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                 .addGap(59, 59, 59)
-                                                .addComponent(sgaramellaPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(zippoPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                         .addGroup(backgroundLayout.createSequentialGroup()
                                                 .addGap(127, 127, 127)
                                                 .addComponent(creditsText, GroupLayout.PREFERRED_SIZE, 586, GroupLayout.PREFERRED_SIZE))
@@ -167,9 +166,9 @@ public class GuiCredits extends JPanel {
                                 .addComponent(muteMusicButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                                 .addGap(49, 49, 49)
                                 .addGroup(backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(sgaramellaPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(zippoPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(porcelliPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(sgaramellaPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(porcelliPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                 .addGap(71, 71, 71)
                                 .addComponent(creditsText, GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
