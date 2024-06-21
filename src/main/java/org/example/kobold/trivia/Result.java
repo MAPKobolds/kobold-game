@@ -45,5 +45,6 @@ class Result {
                 ", incorrectAnswers=" + incorrect_answers +
                 '}';
     }
+
 }
 
