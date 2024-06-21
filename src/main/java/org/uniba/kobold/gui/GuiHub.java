@@ -6,11 +6,11 @@ import java.awt.CardLayout;
 import java.net.URL;
 
 /**
- * Main Frame of the game
+ * Main hub of the game
  */
-public class HubFrame extends JFrame {
+public class GuiHub extends JFrame {
 
-    public HubFrame() {
+    public GuiHub() {
         //JFRAME SETTINGS
         setTitle("Cerignolus: Città dei Coboldi");
         setSize(800, 600);
@@ -29,10 +29,12 @@ public class HubFrame extends JFrame {
         JPanel cards = new JPanel(new CardLayout());
         GuiMenu menu = new GuiMenu();
         GuiCredits credits = new GuiCredits();
+        GuiLoadGame loadGame = new GuiLoadGame();
 
         // Add the panels to cards
         cards.add(menu, "MenuPanel");
         cards.add(credits, "CreditsPanel");
+        cards.add(loadGame, "SaveInstancesPanel");
 
         // Start the frame
         add(cards);
@@ -40,9 +42,6 @@ public class HubFrame extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        /**
-         * Start the music
-         */
         UtilMusic music = UtilMusic.getInstance();
         music.start();
     }
