@@ -1,7 +1,5 @@
 package org.uniba.kobold.gui;
-
 import org.uniba.kobold.util.UtilMusic;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -41,16 +39,9 @@ public class GuiCredits extends JPanel {
          * Mute music button logic and clip management
          */
         muteMusicButton.setBackground(new java.awt.Color(204, 204, 204));
-        muteMusicButton.setText("\uD83D\uDD0A");
+        UtilMusic.setOnText(muteMusicButton);
         muteMusicButton.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                //Silence
-                muteMusicButton.setText("\uD83D\uDD07");
-                UtilMusic.getInstance().setMuted(true);
-            } else {
-                muteMusicButton.setText("\uD83D\uDD0A");
-                UtilMusic.getInstance().setMuted(false);
-            }
+            UtilMusic.getInstance().setMuted(e.getStateChange() == ItemEvent.SELECTED, muteMusicButton);
         });
 
         backgroundPanel.setMinimumSize(new Dimension(800, 600));
@@ -71,6 +62,7 @@ public class GuiCredits extends JPanel {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
+                setOpaque(false);
                 ImageIcon img = new ImageIcon("src/main/resources/img/ZippoToken.png");
                 Image image = img.getImage();
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
@@ -187,8 +179,6 @@ public class GuiCredits extends JPanel {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(backgroundPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
-
     }
 }
 
