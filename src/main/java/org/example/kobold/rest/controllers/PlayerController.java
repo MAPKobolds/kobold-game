@@ -1,7 +1,6 @@
 package org.example.kobold.rest.controllers;
 
 import com.google.gson.Gson;
-import org.example.kobold.rest.CRUDInterface;
 import org.example.kobold.rest.models.Player;
 import org.example.kobold.rest.service.PlayerService;
 import javax.ws.rs.*;

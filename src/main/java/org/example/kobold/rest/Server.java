@@ -14,7 +14,7 @@ public class Server {
 
     private static final int PORT = 8000;
 
-    public static void main(String[] args) {
+    public static void startServer() {
         URI baseUri = UriBuilder.fromUri("http://localhost/").port(PORT).build();
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(baseUri, getControllers());
@@ -23,11 +23,12 @@ public class Server {
             server.start();
             System.out.println(String.format("SERVER STARTED at http://localhost:%d", PORT));
 
-            System.in.read();
-            server.shutdown();
-        } catch (IOException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                System.in.read();
+                server.shutdown();
+            } catch (IOException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }).start();
 
     }
 
