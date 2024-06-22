@@ -19,6 +19,9 @@ public class GuiCredits extends JPanel {
     private JPanel porcelliPanel;
     private JPanel zippoPanel;
     private JToggleButton muteMusicButton;
+    private int width = 800;
+    private int height = 600;
+    private int tokenSize = 150;
 
     /**
      * Constructor of the class GuiCredits
@@ -55,8 +58,8 @@ public class GuiCredits extends JPanel {
             UtilMusic.getInstance().setMuted(e.getStateChange() == ItemEvent.SELECTED, muteMusicButton);
         });
 
-        backgroundPanel.setMinimumSize(new Dimension(800, 600));
-        backgroundPanel.setPreferredSize(new Dimension(800, 600));
+        backgroundPanel.setMinimumSize(new Dimension(width, height));
+        backgroundPanel.setPreferredSize(new Dimension(width, height));
         backgroundPanel.setRequestFocusEnabled(false);
 
         //Button Settings
@@ -80,18 +83,18 @@ public class GuiCredits extends JPanel {
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
-        zippoPanel.setMinimumSize(new Dimension(150, 150));
-        zippoPanel.setPreferredSize(new Dimension(150, 150));
+        zippoPanel.setMinimumSize(new Dimension(tokenSize, tokenSize));
+        zippoPanel.setPreferredSize(new Dimension(tokenSize, tokenSize));
 
         GroupLayout layoutZippo = new GroupLayout(zippoPanel);
         zippoPanel.setLayout(layoutZippo);
         layoutZippo.setHorizontalGroup(
                 layoutZippo.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 150, Short.MAX_VALUE)
+                        .addGap(0, tokenSize, Short.MAX_VALUE)
         );
         layoutZippo.setVerticalGroup(
                 layoutZippo.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 150, Short.MAX_VALUE)
+                        .addGap(0, tokenSize, Short.MAX_VALUE)
         );
 
         sgaramellaPanel = new JPanel() {
@@ -103,18 +106,18 @@ public class GuiCredits extends JPanel {
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
-        sgaramellaPanel.setMinimumSize(new Dimension(150, 150));
-        sgaramellaPanel.setPreferredSize(new Dimension(150, 150));
+        sgaramellaPanel.setMinimumSize(new Dimension(tokenSize, tokenSize));
+        sgaramellaPanel.setPreferredSize(new Dimension(tokenSize, tokenSize));
 
         GroupLayout layoutSgaramella = new GroupLayout(sgaramellaPanel);
         sgaramellaPanel.setLayout(layoutSgaramella);
         layoutSgaramella.setHorizontalGroup(
                 layoutSgaramella.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 150, Short.MAX_VALUE)
+                        .addGap(0, tokenSize, Short.MAX_VALUE)
         );
         layoutSgaramella.setVerticalGroup(
                 layoutSgaramella.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 150, Short.MAX_VALUE)
+                        .addGap(0, tokenSize, Short.MAX_VALUE)
         );
 
         porcelliPanel = new JPanel() {
@@ -126,18 +129,18 @@ public class GuiCredits extends JPanel {
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
-        porcelliPanel.setMinimumSize(new Dimension(150, 150));
-        porcelliPanel.setPreferredSize(new Dimension(150, 150));
+        porcelliPanel.setMinimumSize(new Dimension(tokenSize, tokenSize));
+        porcelliPanel.setPreferredSize(new Dimension(tokenSize, tokenSize));
 
         GroupLayout layoutPorcelli = new GroupLayout(porcelliPanel);
         porcelliPanel.setLayout(layoutPorcelli);
         layoutPorcelli.setHorizontalGroup(
                 layoutPorcelli.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 150, Short.MAX_VALUE)
+                        .addGap(0, tokenSize, Short.MAX_VALUE)
         );
         layoutPorcelli.setVerticalGroup(
                 layoutPorcelli.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 150, Short.MAX_VALUE)
+                        .addGap(0, tokenSize, Short.MAX_VALUE)
         );
 
         //Background layout settings
