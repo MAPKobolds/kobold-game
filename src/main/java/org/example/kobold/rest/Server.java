@@ -19,9 +19,10 @@ public class Server {
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(baseUri, getControllers());
 
-        try {
-            server.start();
-            System.out.println(String.format("SERVER STARTED at http://localhost:%d", PORT));
+        new Thread(() -> {
+            try {
+                server.start();
+                System.out.println(String.format("SERVER STARTED at http://localhost:%d", PORT));
 
                 System.in.read();
                 server.shutdown();
