@@ -3,6 +3,8 @@ package org.uniba.kobold.gui;
 import org.uniba.kobold.util.UtilMusic;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  * Class GuiCredits
@@ -17,9 +19,9 @@ public class GuiCredits extends JPanel {
     private static final String sgaramellaURL = "/img/SgaramellaToken.png";
     private static final String zippoURL = "/img/ZippoToken.png";
     private static final int tokenSize = 150;
-    private static JPanel sgaramellaPanel = new GuiGenericToken(sgaramellaURL, tokenSize).getToken();
-    private static JPanel porcelliPanel = new GuiGenericToken(porcelliURL, tokenSize).getToken();
-    private static JPanel zippoPanel = new GuiGenericToken(zippoURL, tokenSize).getToken();
+    private static final JPanel sgaramellaPanel = new GuiGenericToken(sgaramellaURL, tokenSize).getToken();
+    private static final JPanel porcelliPanel = new GuiGenericToken(porcelliURL, tokenSize).getToken();
+    private static final JPanel zippoPanel = new GuiGenericToken(zippoURL, tokenSize).getToken();
 
     private static JButton menuButton;
     private static JLabel creditsText;
@@ -32,6 +34,14 @@ public class GuiCredits extends JPanel {
     public GuiCredits() {
         initTokens();
         initComponents();
+
+        // Aggiungi un ComponentAdapter per eseguire il codice legato al muteMusicButton quando il componente viene mostrato
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                UtilMusic.initButton(muteMusicButton);
+            }
+        });
     }
 
     /**
@@ -51,9 +61,6 @@ public class GuiCredits extends JPanel {
         creditsText = new JLabel();
         muteMusicButton = new JToggleButton();
 
-        //Mute music button logic and clip management
-        UtilMusic.initButton(muteMusicButton);
-        UtilMusic.manageButton(muteMusicButton);
         muteMusicButton.setBounds(0, 0, 50, 50);
 
         //menuButton logic

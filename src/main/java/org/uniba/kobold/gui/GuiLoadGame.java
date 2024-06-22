@@ -2,9 +2,10 @@ package org.uniba.kobold.gui;
 
 import org.uniba.kobold.game.SaveInstance;
 import org.uniba.kobold.util.UtilMusic;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.Objects;
 
 /**
@@ -28,6 +29,14 @@ public class GuiLoadGame extends JPanel {
      */
     public GuiLoadGame() {
         initComponents();
+
+        // Aggiungi un ComponentAdapter per eseguire il codice legato al muteMusicButton quando il componente viene mostrato
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                UtilMusic.initButton(muteMusicButton);
+            }
+        });
     }
 
     /**
@@ -36,15 +45,11 @@ public class GuiLoadGame extends JPanel {
     private void initComponents() {
         menuButton = new GuiGenericButton("Torna al Menu").getButton();
         muteMusicButton = new JToggleButton();
+        muteMusicButton.setBounds(0, 0, 50, 50);
 
         // Create a JLayeredPane
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(width, height));
-
-        //Mute music button logic and clip management
-        UtilMusic.initButton(muteMusicButton);
-        UtilMusic.manageButton(muteMusicButton);
-        muteMusicButton.setBounds(0, 0, 50, 50);
 
         // Add the backgroundPanel to the JLayeredPane with a lower depth value
         backgroundPanel.add(muteMusicButton);
@@ -106,7 +111,7 @@ public class GuiLoadGame extends JPanel {
          */
         private final int saveWidth = (int) (backgroundPanel.getWidth() * 0.85);
         private final int saveHeight = (int) (backgroundPanel.getHeight() * 0.1);
-        private JButton loadButton;
+        private JButton loadButton = new GuiGenericButton("Carica").getButton();
         private JLabel loadInfoLable;
 
         /**
@@ -123,14 +128,8 @@ public class GuiLoadGame extends JPanel {
             setMinimumSize(new Dimension(saveWidth, saveHeight));
             setMaximumSize(new Dimension(saveWidth, saveHeight));
             setBackground(new java.awt.Color(70,204,204));
-            loadButton = new JButton();
+
             loadInfoLable = new JLabel();
-
-            loadButton.setBackground(new java.awt.Color(204, 204, 204));
-            loadButton.setFont(new java.awt.Font("Arial", 0, 14));
-            loadButton.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-            loadButton.setText("Carica\n");
-
             loadInfoLable.setFont(new java.awt.Font("Arial", 0, 14));
             loadInfoLable.setText("Data e Nome Utente");
 

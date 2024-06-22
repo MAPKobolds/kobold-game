@@ -2,17 +2,22 @@ package org.uniba.kobold.util;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * UtilMusic Class to manage the music
+ */
 public class UtilMusic extends Thread{
 
         /**
          * Attributes of the class UtilMusic
          */
         private static UtilMusic instance;
-        private boolean isMuted;
-        private Clip clip;
+        private static boolean isMuted;
+        private static Clip clip;
 
         /**
          * UtilMusic Constructor
@@ -31,23 +36,13 @@ public class UtilMusic extends Thread{
                 }
                 return instance;
         }
-        public boolean isMuted() {
-                return isMuted;
-        }
 
         /**
-         * setMuted Method to mute
-         * @param isMuted boolean to see if the music is muted or not
+         * isMuted Method to check if the music is muted
+         * @return isMuted
          */
-        public void setMuted(boolean isMuted, JToggleButton muteMusicButton) {
-                this.isMuted = isMuted;
-                if (isMuted) {
-                        stopClip();
-                        setOffText(muteMusicButton);
-                } else {
-                        playClip();
-                        setOnText(muteMusicButton);
-                }
+        public boolean isMuted() {
+                return isMuted;
         }
 
         /**
@@ -65,6 +60,7 @@ public class UtilMusic extends Thread{
         public static void setOffText(JToggleButton muteMusicButton) {
                 muteMusicButton.setText("\uD83D\uDD07");
         }
+
         /**
          * playClip Method to play the clip
          */
@@ -80,6 +76,40 @@ public class UtilMusic extends Thread{
         private void stopClip() {
                 if (clip != null) {
                         clip.stop();
+                }
+        }
+
+        /**
+         * initButton Method to initialize the button
+         * @param muteMusicButton JToggleButton to toggle music
+         */
+        public static void initButton(JToggleButton muteMusicButton) {
+                //Mute music button logic and clip management
+                muteMusicButton.setBackground(new java.awt.Color(204, 204, 204));
+                muteMusicButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+                instance = UtilMusic.getInstance();
+                if (instance.isMuted()) {
+                        setOffText(muteMusicButton);
+                        muteMusicButton.setSelected(true);
+                } else {
+                        setOnText(muteMusicButton);
+                        muteMusicButton.setSelected(false);
+                }
+                muteMusicButton.addItemListener(button -> instance.setMuted(button.getStateChange() == ItemEvent.SELECTED, muteMusicButton));
+        }
+
+        /**
+         * setMuted Method to mute
+         * @param isMuted boolean to see if the music is muted or not
+         */
+        public void setMuted(boolean isMuted, JToggleButton muteMusicButton) {
+                UtilMusic.isMuted = isMuted;
+                if (isMuted) {
+                        stopClip();
+                        setOffText(muteMusicButton);
+                } else {
+                        playClip();
+                        setOnText(muteMusicButton);
                 }
         }
 
