@@ -4,8 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 
+/**
+ * Class GuiCredits
+ */
 public class GuiCredits extends JPanel {
 
+    /**
+     * Attributes of the class GuiCredits
+     */
     private JPanel backgroundPanel;
     private JButton menuButton;
     private JLabel creditsText;
@@ -14,16 +20,22 @@ public class GuiCredits extends JPanel {
     private JPanel zippoPanel;
     private JToggleButton muteMusicButton;
 
+    /**
+     * Constructor of the class GuiCredits
+     */
     public GuiCredits() {
         initComponents();
     }
 
+    /**
+     * Method to initialize the components of the class GuiCredits
+     */
     private void initComponents() {
         menuButton = new JButton();
         creditsText = new JLabel();
         muteMusicButton = new JToggleButton();
 
-        //BACKGROUND SETTINGS
+        //Background Settings
         backgroundPanel = new JPanel()
         {
             @Override
@@ -35,10 +47,9 @@ public class GuiCredits extends JPanel {
             }
         };
 
-        /**
-         * Mute music button logic and clip management
-         */
+        //Mute music button logic and clip management
         muteMusicButton.setBackground(new java.awt.Color(204, 204, 204));
+        muteMusicButton.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         UtilMusic.setOnText(muteMusicButton);
         muteMusicButton.addItemListener(e -> {
             UtilMusic.getInstance().setMuted(e.getStateChange() == ItemEvent.SELECTED, muteMusicButton);
@@ -48,16 +59,17 @@ public class GuiCredits extends JPanel {
         backgroundPanel.setPreferredSize(new Dimension(800, 600));
         backgroundPanel.setRequestFocusEnabled(false);
 
-        //BUTTON SETTINGS
+        //Button Settings
         menuButton.setBackground(new java.awt.Color(204, 204, 204));
         menuButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         menuButton.setText("Torna al Menu");
+        menuButton.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         menuButton.addActionListener(e -> {
             CardLayout menu = (CardLayout) getParent().getLayout();
-            menu.show(getParent(), "MenuPanel");
+            menu.show(getParent(), "Menu");
         });
 
-
+        //Layout Settings
         zippoPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -70,7 +82,6 @@ public class GuiCredits extends JPanel {
         };
         zippoPanel.setMinimumSize(new Dimension(150, 150));
         zippoPanel.setPreferredSize(new Dimension(150, 150));
-
 
         GroupLayout layoutZippo = new GroupLayout(zippoPanel);
         zippoPanel.setLayout(layoutZippo);
@@ -106,7 +117,6 @@ public class GuiCredits extends JPanel {
                         .addGap(0, 150, Short.MAX_VALUE)
         );
 
-
         porcelliPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -130,6 +140,7 @@ public class GuiCredits extends JPanel {
                         .addGap(0, 150, Short.MAX_VALUE)
         );
 
+        //Background layout settings
         creditsText.setText("Ci siamo impegnati molto porco dio");
         GroupLayout backgroundLayout = new GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundLayout);
