@@ -17,7 +17,7 @@ public class GuiLoadGame extends JPanel {
     /**
      * Attributes of the GuiLoadGame class
      */
-    private JPanel backgroundPanel;
+    private GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel();
     private JPanel savesBGPanel;
     private JButton menuButton;
     private JToggleButton muteMusicButton;
@@ -42,20 +42,6 @@ public class GuiLoadGame extends JPanel {
         // Create a JLayeredPane
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(width, height));
-
-        //backgroundPanel settings
-        backgroundPanel = new JPanel(new BorderLayout()) {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon img = new ImageIcon("src/main/resources/img/pporc.png");
-                Image image = img.getImage();
-                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-        backgroundPanel.setMinimumSize(new Dimension(width, height));
-        backgroundPanel.setPreferredSize(new Dimension(width, height));
-        backgroundPanel.setRequestFocusEnabled(false);
 
         // Add the backgroundPanel to the JLayeredPane with a lower depth value
         backgroundPanel.setBounds(0, 0, width, height);

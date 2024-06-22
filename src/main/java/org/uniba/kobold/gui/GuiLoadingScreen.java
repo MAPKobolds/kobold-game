@@ -18,7 +18,7 @@ public class GuiLoadingScreen extends JPanel {
      */
     private JProgressBar progressBar;
     private JToggleButton muteMusicButton;
-    private JPanel backgroundPanel;
+    private GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel();
     private int height = 600;
 
     /**
@@ -34,18 +34,6 @@ public class GuiLoadingScreen extends JPanel {
     private void initComponents() {
         progressBar = new JProgressBar(0, 100);
         muteMusicButton = new JToggleButton();
-
-        //Background Settings
-        backgroundPanel = new JPanel()
-        {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon img = new ImageIcon("src/main/resources/img/pporc.png");
-                Image image = img.getImage();
-                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-            }
-        };
 
         //Progress Bar Settings
         progressBar.setStringPainted(true);
