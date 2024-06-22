@@ -1,6 +1,6 @@
-package org.example.kobold.rest.repositories;
+package org.example.kobold.rest;
 
-public interface RepositoryInterface<T> {
+public interface CRUDInterface<T> {
     T save(T entity);
 
     int deleteById(int id);
