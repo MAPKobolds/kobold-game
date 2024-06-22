@@ -3,6 +3,9 @@ package org.uniba.kobold.gui;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Class GuiGenericButton
+ */
 public class GuiGenericButton extends JButton {
 
         /**
