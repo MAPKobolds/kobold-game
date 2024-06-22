@@ -10,6 +10,8 @@ import java.net.URL;
  */
 public class GuiHub extends JFrame {
 
+    private int width = 800;
+    private int height = 600;
     /**
      * Constructor of the class GuiHub
      */
@@ -17,7 +19,7 @@ public class GuiHub extends JFrame {
 
         //Jframe Settings
         setTitle("Cerignolus: Città dei Coboldi");
-        setSize(800, 600);
+        setSize(width, height);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
