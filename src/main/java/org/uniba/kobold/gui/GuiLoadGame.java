@@ -4,10 +4,8 @@ import org.uniba.kobold.game.SaveInstance;
 import org.uniba.kobold.util.UtilMusic;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ItemEvent;
+import java.util.Objects;
 
 /**
  * Class GuiLoadGame
@@ -17,12 +15,13 @@ public class GuiLoadGame extends JPanel {
     /**
      * Attributes of the GuiLoadGame class
      */
-    private GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel();
+    private final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel();
+    private final String savesBGPath = "/img/BR.png";
+    private final int width = 800;
+    private final int height = 600;
     private JPanel savesBGPanel;
     private JButton menuButton;
     private JToggleButton muteMusicButton;
-    private int width = 800;
-    private int height = 600;
 
     /**
      * Constructor for the GuiLoadGame class
@@ -35,50 +34,43 @@ public class GuiLoadGame extends JPanel {
      * Method to initialize the components of the GuiLoadGame class
      */
     private void initComponents() {
-
-        menuButton = new JButton();
+        menuButton = new GuiGenericButton("Torna al Menu").getButton();
         muteMusicButton = new JToggleButton();
 
         // Create a JLayeredPane
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(width, height));
 
+        //Mute music button logic and clip management
+        UtilMusic.initButton(muteMusicButton);
+        UtilMusic.manageButton(muteMusicButton);
+        muteMusicButton.setBounds(0, 0, 50, 50);
+
         // Add the backgroundPanel to the JLayeredPane with a lower depth value
+        backgroundPanel.add(muteMusicButton);
         backgroundPanel.setBounds(0, 0, width, height);
 
-        //Mute music button logic and clip management
-        muteMusicButton.setBackground(new java.awt.Color(204, 204, 204));
-        if (UtilMusic.getInstance().isMuted()) {
-            UtilMusic.setOffText(muteMusicButton);
-        } else {
-            UtilMusic.setOnText(muteMusicButton);
-        }
-        muteMusicButton.addItemListener(e -> UtilMusic.getInstance().setMuted(ItemEvent.SELECTED == e.getStateChange(), muteMusicButton));
-        muteMusicButton.setBounds(0, 0, 50, 50);
-        muteMusicButton.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        layeredPane.add(muteMusicButton, JLayeredPane.PALETTE_LAYER);
 
         //menuButton settings
-        menuButton.setBackground(new java.awt.Color(204, 204, 204));
-        menuButton.setFont(new java.awt.Font("Arial", 0, 14));
-        menuButton.setBounds(340, 530, 150, 40);
-        menuButton.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        menuButton.setText("Torna al Menu");
-        menuButton.addActionListener(e -> {
-            CardLayout menu = (CardLayout) getParent().getLayout();
-            menu.show(getParent(), "Menu");
-        });
+        if (menuButton != null) {
+            menuButton.setBounds(340, 530, 150, 40);
+            menuButton.addActionListener(_ -> {
+                CardLayout menu = (CardLayout) getParent().getLayout();
+                menu.show(getParent(), "Menu");
+            });
+        }
 
         // Add the menuButton to the JLayeredPane with a higher depth value
-        layeredPane.add(menuButton, JLayeredPane.PALETTE_LAYER);
+        if (menuButton != null) layeredPane.add(menuButton, JLayeredPane.PALETTE_LAYER);
         layeredPane.add(backgroundPanel, JLayeredPane.DEFAULT_LAYER);
+        layeredPane.add(muteMusicButton, JLayeredPane.PALETTE_LAYER);
 
         //Mute music button logic and clip management and savesBGPanel settings
         savesBGPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon img = new ImageIcon("src/main/resources/img/BR.png");
+                ImageIcon img = new ImageIcon(Objects.requireNonNull(getClass().getResource(savesBGPath)));
                 Image image = img.getImage();
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
@@ -88,7 +80,7 @@ public class GuiLoadGame extends JPanel {
         savesBGPanel.setRequestFocusEnabled(false);
 
         //Temporaneo finché non avremo salvataggi veri
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
             SaveInstance saveGame = new SaveInstance();
         }
 
@@ -98,11 +90,9 @@ public class GuiLoadGame extends JPanel {
             saveInstancePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             savesBGPanel.add(saveInstancePanel);
         }
-
         savesBGPanel.setBounds(120, 0, (int)(width * 0.85), (int)(height * 0.52));
-        layeredPane.add(savesBGPanel, JLayeredPane.PALETTE_LAYER);
 
-        // Add the JLayeredPane to the GuiLoadGame
+        layeredPane.add(savesBGPanel, JLayeredPane.PALETTE_LAYER);
         add(layeredPane, BorderLayout.CENTER);
     }
 
@@ -114,10 +104,10 @@ public class GuiLoadGame extends JPanel {
         /**
          * Attributes of the SaveInstancePanel class
          */
+        private final int saveWidth = (int) (backgroundPanel.getWidth() * 0.85);
+        private final int saveHeight = (int) (backgroundPanel.getHeight() * 0.1);
         private JButton loadButton;
         private JLabel loadInfoLable;
-        private int saveWidth = (int) (backgroundPanel.getWidth() * 0.85);
-        private int saveHeight = (int) (backgroundPanel.getHeight() * 0.1);
 
         /**
          * Constructor for the SaveInstancePanel class
@@ -167,5 +157,3 @@ public class GuiLoadGame extends JPanel {
         }
     }
 }
-
-
