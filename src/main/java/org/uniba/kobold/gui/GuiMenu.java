@@ -3,6 +3,8 @@ package org.uniba.kobold.gui;
 import org.uniba.kobold.util.UtilMusic;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  * Class GuiMenu
@@ -13,8 +15,6 @@ public class GuiMenu extends JPanel {
      * Attributes of the MainMenu class
      */
     private static final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel();
-    private static final int width = 800;
-    private static final int height = 600;
     private static JButton gameStartButton;
     private static JButton loadGameButton;
     private static JButton creditsButton;
@@ -26,47 +26,52 @@ public class GuiMenu extends JPanel {
      */
     public GuiMenu() {
         initComponents();
+
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                updateButtonPositions();
+            }
+        });
     }
 
     /**
      * Method to initialize the components of the MainMenu class
      */
     private void initComponents() {
+
         gameStartButton = new GuiGenericButton("Inizia Partita").getButton();
         loadGameButton = new GuiGenericButton("Carica Partita").getButton();
         creditsButton = new GuiGenericButton("Riconoscimenti").getButton();
         exitButton = new GuiGenericButton("Esci").getButton();
         muteMusicButton = new JToggleButton();
 
-        setPreferredSize(new Dimension(width, height));
-        setSize(new Dimension(width, height));
+        setPreferredSize(new Dimension(getWidth(), getHeight()));
+        setSize(new Dimension(getWidth(), getHeight()));
+
+        //Mute music button logic and clip management
+        UtilMusic.initButton(muteMusicButton);
 
         //gameStartButton logic
-        gameStartButton.addActionListener(e -> {
+        gameStartButton.addActionListener(_ -> {
             CardLayout loadingScreen = (CardLayout) getParent().getLayout();
             loadingScreen.show(getParent(), "LoadingScreen");
         });
 
         //loadGameButton logic
-        loadGameButton.addActionListener(e -> {
+        loadGameButton.addActionListener(_ -> {
             CardLayout loadGame = (CardLayout) getParent().getLayout();
             loadGame.show(getParent(), "SaveInstances");
         });
 
         //CreditsButton logic
-        creditsButton.addActionListener(e -> {
+        creditsButton.addActionListener(_ -> {
             CardLayout credits = (CardLayout) getParent().getLayout();
             credits.show(getParent(), "Credits");
         });
 
         //Exit button logic
-        exitButton.addActionListener(e -> {
-            System.exit(0);
-        });
-
-        //Mute music button logic and clip management
-        UtilMusic.initButton(muteMusicButton);
-        UtilMusic.manageButton(muteMusicButton);
+        exitButton.addActionListener(_ -> System.exit(0));
 
         //Layout Settings
         GroupLayout backgroundLayout = new GroupLayout(backgroundPanel);
@@ -107,5 +112,21 @@ public class GuiMenu extends JPanel {
         //Background group layout manager
         backgroundPanel.setLayout(backgroundLayout);
         GuiBackgroundPanel.manageBackgroundLayout(this, backgroundPanel);
+    }
+
+    /**
+     * Method to update the position of the buttons
+     */
+    private void updateButtonPositions() {
+        int width = getWidth();
+        int height = getHeight();
+        double widthOffset = width * 0.75;
+        double heightOffset = height * 0.25;
+        int offset = 50;
+
+        gameStartButton.setBounds((int) widthOffset, (int) heightOffset, 140, 40);
+        loadGameButton.setBounds((int) widthOffset , (int) heightOffset + offset, 140, 40);
+        creditsButton.setBounds((int) widthOffset, (int) heightOffset + (offset * 2), 140, 40);
+        exitButton.setBounds((int) widthOffset, (int) heightOffset + (offset * 3), 120, 40);
     }
 }

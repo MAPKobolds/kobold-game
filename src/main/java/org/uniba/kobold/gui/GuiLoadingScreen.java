@@ -24,6 +24,14 @@ public class GuiLoadingScreen extends JPanel {
      */
     public GuiLoadingScreen() {
         initComponents();
+
+        // Aggiungi un ComponentAdapter per eseguire il codice legato al muteMusicButton quando il componente viene mostrato
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                UtilMusic.initButton(muteMusicButton);
+            }
+        });
     }
 
     /**
@@ -70,10 +78,6 @@ public class GuiLoadingScreen extends JPanel {
                 progressBarThread.start();
             }
         });
-
-        //Mute music button logic and clip management
-        UtilMusic.initButton(muteMusicButton);
-        UtilMusic.manageButton(muteMusicButton);
 
         //Layout Settings
         GroupLayout backgroundLayout = new GroupLayout(backgroundPanel);
