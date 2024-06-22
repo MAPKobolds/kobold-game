@@ -40,12 +40,12 @@ public class PlayerRepository extends Repository<Player> {
     public int deleteById(int id) {
         try {
             String sql = "DELETE FROM "+ RELATION + " WHERE ID = ?";
-            PreparedStatement preparedStmt = connection.prepareStatement(sql, new String[]{ "ID" });
+            PreparedStatement preparedStmt = connection.prepareStatement(sql);
 
-            preparedStmt.setInt (1, id);
+            preparedStmt.setInt(1, id);
             int executedSt = preparedStmt.executeUpdate();
 
-            return executedSt == 1 ? id : null;
+            return executedSt == 1 ? id : -1;
         } catch (SQLException e) {
             return -1;
         }
