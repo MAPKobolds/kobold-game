@@ -12,15 +12,13 @@ public class GuiCredits extends JPanel {
     /**
      * Attributes of the class GuiCredits
      */
-    private JPanel backgroundPanel;
+    private GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel();
     private JButton menuButton;
     private JLabel creditsText;
     private JPanel sgaramellaPanel;
     private JPanel porcelliPanel;
     private JPanel zippoPanel;
     private JToggleButton muteMusicButton;
-    private int width = 800;
-    private int height = 600;
     private int tokenSize = 150;
 
     /**
@@ -38,18 +36,6 @@ public class GuiCredits extends JPanel {
         creditsText = new JLabel();
         muteMusicButton = new JToggleButton();
 
-        //Background Settings
-        backgroundPanel = new JPanel()
-        {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon img = new ImageIcon("src/main/resources/img/pporc.png");
-                Image image = img.getImage();
-                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-
         //Mute music button logic and clip management
         muteMusicButton.setBackground(new java.awt.Color(204, 204, 204));
         muteMusicButton.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
@@ -57,10 +43,6 @@ public class GuiCredits extends JPanel {
         muteMusicButton.addItemListener(e -> {
             UtilMusic.getInstance().setMuted(e.getStateChange() == ItemEvent.SELECTED, muteMusicButton);
         });
-
-        backgroundPanel.setMinimumSize(new Dimension(width, height));
-        backgroundPanel.setPreferredSize(new Dimension(width, height));
-        backgroundPanel.setRequestFocusEnabled(false);
 
         //Button Settings
         menuButton.setBackground(new java.awt.Color(204, 204, 204));
@@ -83,6 +65,7 @@ public class GuiCredits extends JPanel {
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
+        zippoPanel.setOpaque(false);
         zippoPanel.setMinimumSize(new Dimension(tokenSize, tokenSize));
         zippoPanel.setPreferredSize(new Dimension(tokenSize, tokenSize));
 
@@ -106,6 +89,7 @@ public class GuiCredits extends JPanel {
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
+        sgaramellaPanel.setOpaque(false);
         sgaramellaPanel.setMinimumSize(new Dimension(tokenSize, tokenSize));
         sgaramellaPanel.setPreferredSize(new Dimension(tokenSize, tokenSize));
 
@@ -129,6 +113,7 @@ public class GuiCredits extends JPanel {
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
+        porcelliPanel.setOpaque(false);
         porcelliPanel.setMinimumSize(new Dimension(tokenSize, tokenSize));
         porcelliPanel.setPreferredSize(new Dimension(tokenSize, tokenSize));
 

@@ -17,8 +17,8 @@ public class GuiMenu extends JPanel {
     private JButton loadGameButton;
     private JButton creditsButton;
     private JButton exitButton;
-    private JPanel backgroundPanel;
     private JToggleButton muteMusicButton;
+    private GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel();
     private int width = 800;
     private int height = 600;
 
@@ -33,7 +33,6 @@ public class GuiMenu extends JPanel {
      * Method to initialize the components of the MainMenu class
      */
     private void initComponents() {
-        backgroundPanel = new JPanel();
         gameStartButton = new JButton();
         loadGameButton = new JButton();
         creditsButton = new JButton();
@@ -42,22 +41,6 @@ public class GuiMenu extends JPanel {
 
         setPreferredSize(new Dimension(width, height));
         setSize(new Dimension(width, height));
-
-        //backgroundPanel settings
-        backgroundPanel = new JPanel()
-        {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon img = new ImageIcon("src/main/resources/img/pporc.png");
-                Image image = img.getImage();
-                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-
-        backgroundPanel.setMinimumSize(new Dimension(width, height));
-        backgroundPanel.setPreferredSize(new Dimension(width, height));
-        backgroundPanel.setRequestFocusEnabled(false);
 
         //gameStartButton logic and redirect to gamePanel
         gameStartButton.setBackground(new java.awt.Color(204, 204, 204));

@@ -51,7 +51,6 @@ public class GuiHub extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-
         UtilMusic music = UtilMusic.getInstance();
         music.start();
     }
