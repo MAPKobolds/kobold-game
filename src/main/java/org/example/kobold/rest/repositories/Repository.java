@@ -1,12 +1,12 @@
 package org.example.kobold.rest.repositories;
-
 import org.example.kobold.db.DBConnection;
+import org.example.kobold.rest.CRUDInterface;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public abstract class Repository<T> implements RepositoryInterface<T> {
+public abstract class Repository<T> implements CRUDInterface<T> {
 
     public static String RELATION = "";
     public Connection connection = DBConnection.getConnection();
