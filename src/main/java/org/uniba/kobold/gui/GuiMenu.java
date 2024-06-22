@@ -3,7 +3,6 @@ package org.uniba.kobold.gui;
 import org.uniba.kobold.util.UtilMusic;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
 
 /**
  * Class GuiMenu
@@ -13,14 +12,14 @@ public class GuiMenu extends JPanel {
     /**
      * Attributes of the MainMenu class
      */
-    private JButton gameStartButton;
-    private JButton loadGameButton;
-    private JButton creditsButton;
-    private JButton exitButton;
-    private JToggleButton muteMusicButton;
-    private GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel();
-    private int width = 800;
-    private int height = 600;
+    private static final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel();
+    private static final int width = 800;
+    private static final int height = 600;
+    private static JButton gameStartButton;
+    private static JButton loadGameButton;
+    private static JButton creditsButton;
+    private static JButton exitButton;
+    private static JToggleButton muteMusicButton;
 
     /**
      * Constructor of the class GuiMenu
@@ -33,62 +32,41 @@ public class GuiMenu extends JPanel {
      * Method to initialize the components of the MainMenu class
      */
     private void initComponents() {
-        gameStartButton = new JButton();
-        loadGameButton = new JButton();
-        creditsButton = new JButton();
-        exitButton = new JButton();
+        gameStartButton = new GuiGenericButton("Inizia Partita").getButton();
+        loadGameButton = new GuiGenericButton("Carica Partita").getButton();
+        creditsButton = new GuiGenericButton("Riconoscimenti").getButton();
+        exitButton = new GuiGenericButton("Esci").getButton();
         muteMusicButton = new JToggleButton();
 
         setPreferredSize(new Dimension(width, height));
         setSize(new Dimension(width, height));
 
-        //gameStartButton logic and redirect to gamePanel
-        gameStartButton.setBackground(new java.awt.Color(204, 204, 204));
-        gameStartButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        gameStartButton.setText("Nuova Partita");
-        gameStartButton.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        //gameStartButton logic
         gameStartButton.addActionListener(e -> {
             CardLayout loadingScreen = (CardLayout) getParent().getLayout();
             loadingScreen.show(getParent(), "LoadingScreen");
-
         });
 
-        //loadGameButton logic and redirect to loadGamePanel
-        loadGameButton.setBackground(new java.awt.Color(204, 204, 204));
-        loadGameButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        loadGameButton.setText("Carica Partita");
-        loadGameButton.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        //loadGameButton logic
         loadGameButton.addActionListener(e -> {
             CardLayout loadGame = (CardLayout) getParent().getLayout();
             loadGame.show(getParent(), "SaveInstances");
         });
 
-        //CreditsButton logic and redirect to creditsPanel
-        creditsButton.setBackground(new java.awt.Color(204, 204, 204));
-        creditsButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        creditsButton.setText("Riconoscimenti");
-        creditsButton.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        //CreditsButton logic
         creditsButton.addActionListener(e -> {
             CardLayout credits = (CardLayout) getParent().getLayout();
             credits.show(getParent(), "Credits");
         });
 
         //Exit button logic
-        exitButton.setBackground(new java.awt.Color(204, 204, 204));
-        exitButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        exitButton.setText("Esci");
-        exitButton.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         exitButton.addActionListener(e -> {
             System.exit(0);
         });
 
         //Mute music button logic and clip management
-        muteMusicButton.setBackground(new java.awt.Color(204, 204, 204));
-        muteMusicButton.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        UtilMusic.setOnText(muteMusicButton);
-        muteMusicButton.addItemListener(e -> {
-            UtilMusic.getInstance().setMuted(e.getStateChange() == ItemEvent.SELECTED, muteMusicButton);
-        });
+        UtilMusic.initButton(muteMusicButton);
+        UtilMusic.manageButton(muteMusicButton);
 
         //Layout Settings
         GroupLayout backgroundLayout = new GroupLayout(backgroundPanel);
@@ -126,18 +104,8 @@ public class GuiMenu extends JPanel {
                                 .addContainerGap(88, Short.MAX_VALUE))
         );
 
-        //GroupLayout settings for background panel
+        //Background group layout manager
         backgroundPanel.setLayout(backgroundLayout);
-
-        GroupLayout layout = new GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(backgroundPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(backgroundPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        GuiBackgroundPanel.manageBackgroundLayout(this, backgroundPanel);
     }
 }
