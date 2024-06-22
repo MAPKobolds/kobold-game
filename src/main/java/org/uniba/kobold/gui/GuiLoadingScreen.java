@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ItemEvent;
 
 /**
  * Class GuiLoadingScreen
@@ -18,8 +17,7 @@ public class GuiLoadingScreen extends JPanel {
      */
     private JProgressBar progressBar;
     private JToggleButton muteMusicButton;
-    private GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel();
-    private int height = 600;
+    private final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel();
 
     /**
      * Constructor of the class GuiLoadingScreen
@@ -38,7 +36,7 @@ public class GuiLoadingScreen extends JPanel {
         //Progress Bar Settings
         progressBar.setStringPainted(true);
         progressBar.setString("0%");
-        progressBar.setBounds(100, 500, height, 50);
+        progressBar.setBounds(100, 500, 600, 50);
         progressBar.setFont(new Font("Arial", Font.BOLD, 20));
         progressBar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         progressBar.setForeground(Color.MAGENTA);
@@ -57,7 +55,7 @@ public class GuiLoadingScreen extends JPanel {
                                 progressBar.setValue(progress);
                                 progressBar.setString("Loading..." + progress + "%");
                             });
-                            Thread.sleep(50);
+                            Thread.sleep(20);
                         }
                         progressBar.setString("Kobold is ready!");
                         Thread.sleep(1000);
@@ -74,12 +72,8 @@ public class GuiLoadingScreen extends JPanel {
         });
 
         //Mute music button logic and clip management
-        muteMusicButton.setBackground(new java.awt.Color(204, 204, 204));
-        muteMusicButton.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        UtilMusic.setOnText(muteMusicButton);
-        muteMusicButton.addItemListener(e -> {
-            UtilMusic.getInstance().setMuted(e.getStateChange() == ItemEvent.SELECTED, muteMusicButton);
-        });
+        UtilMusic.initButton(muteMusicButton);
+        UtilMusic.manageButton(muteMusicButton);
 
         //Layout Settings
         GroupLayout backgroundLayout = new GroupLayout(backgroundPanel);
@@ -97,18 +91,8 @@ public class GuiLoadingScreen extends JPanel {
                                 .addGap(199, 199, 199)
         ));
 
-        //GroupLayout settings for background panel
+        //Background group layout manager
         backgroundPanel.setLayout(backgroundLayout);
-
-        GroupLayout layout = new GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(backgroundPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(backgroundPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        GuiBackgroundPanel.manageBackgroundLayout(this, backgroundPanel);
     }
 }
