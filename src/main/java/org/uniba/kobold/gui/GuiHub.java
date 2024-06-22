@@ -10,8 +10,12 @@ import java.net.URL;
  */
 public class GuiHub extends JFrame {
 
-    private int width = 800;
-    private int height = 600;
+    /**
+     * Attributes of the GuiHub class
+     */
+    private final static int width = 800;
+    private final static int height = 600;
+
     /**
      * Constructor of the class GuiHub
      */
@@ -32,6 +36,19 @@ public class GuiHub extends JFrame {
         setIconImage(image != null ? image.getImage() : null);
 
         //Card layout inits
+        JPanel cards = getCards();
+
+        //Add cards to the frame and starts the music
+        add(cards);
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+        UtilMusic music = UtilMusic.getInstance();
+        music.start();
+    }
+
+    private static JPanel getCards() {
+
         JPanel cards = new JPanel(new CardLayout());
         GuiMenu menu = new GuiMenu();
         GuiCredits credits = new GuiCredits();
@@ -45,13 +62,6 @@ public class GuiHub extends JFrame {
         cards.add(loadGame, "SaveInstances");
         cards.add(loadingScreen, "LoadingScreen");
         cards.add(game, "Game");
-
-        //Add cards to the frame and starts the music
-        add(cards);
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
-        UtilMusic music = UtilMusic.getInstance();
-        music.start();
+        return cards;
     }
 }
