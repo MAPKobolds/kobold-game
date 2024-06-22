@@ -4,12 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
+/**
+ * Class GuiGenericToken
+ */
 public class GuiGenericToken {
 
     /**
      * Attributes of the class GuiGenericToken
      */
-    private JPanel tokenPanel;
+    private final JPanel tokenPanel;
 
     /**
      * Constructor of the class GuiGenericToken
