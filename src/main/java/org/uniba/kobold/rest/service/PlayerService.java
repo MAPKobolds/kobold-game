@@ -1,8 +1,8 @@
-package org.example.kobold.rest.service;
+package org.uniba.kobold.rest.service;
 
-import org.example.kobold.rest.CRUDInterface;
-import org.example.kobold.rest.models.Player;
-import org.example.kobold.rest.repositories.PlayerRepository;
+import org.uniba.kobold.rest.CRUDInterface;
+import org.uniba.kobold.rest.models.Player;
+import org.uniba.kobold.rest.repositories.PlayerRepository;
 
 public class PlayerService implements CRUDInterface<Player> {
 

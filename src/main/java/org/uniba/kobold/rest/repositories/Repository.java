@@ -1,6 +1,6 @@
-package org.example.kobold.rest.repositories;
-import org.example.kobold.db.DBConnection;
-import org.example.kobold.rest.CRUDInterface;
+package org.uniba.kobold.rest.repositories;
+import org.uniba.kobold.rest.db.DBConnection;
+import org.uniba.kobold.rest.CRUDInterface;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

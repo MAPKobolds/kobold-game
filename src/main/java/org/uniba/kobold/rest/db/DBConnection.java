@@ -1,4 +1,4 @@
-package org.example.kobold.db;
+package org.uniba.kobold.rest.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

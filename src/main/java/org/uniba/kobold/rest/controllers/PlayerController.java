@@ -1,8 +1,9 @@
-package org.example.kobold.rest.controllers;
+package org.uniba.kobold.rest.controllers;
 
 import com.google.gson.Gson;
-import org.example.kobold.rest.models.Player;
-import org.example.kobold.rest.service.PlayerService;
+import org.uniba.kobold.rest.models.Player;
+import org.uniba.kobold.rest.service.PlayerService;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

@@ -1,4 +1,4 @@
-package org.example.kobold.rest.models;
+package org.uniba.kobold.rest.models;
 
 public class Base {
    protected int id;

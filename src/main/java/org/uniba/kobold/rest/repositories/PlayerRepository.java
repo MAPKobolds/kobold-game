@@ -1,6 +1,6 @@
-package org.example.kobold.rest.repositories;
+package org.uniba.kobold.rest.repositories;
 
-import org.example.kobold.rest.models.Player;
+import org.uniba.kobold.rest.models.Player;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
