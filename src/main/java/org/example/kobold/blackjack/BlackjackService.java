@@ -1,16 +1,16 @@
 package org.example.kobold.blackjack;
 
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.client.WebTarget;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
+import com.google.gson.Gson;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.example.kobold.error.HttpRequestHandler;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * A class that represents the interface to the deck of cards API
