@@ -1,6 +1,4 @@
 package org.example.kobold.api.trivia;
-
-import com.google.gson.Gson;
 import org.example.kobold.api.error.*;
 
 import java.util.ArrayList;
