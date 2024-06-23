@@ -9,43 +9,23 @@ public class HttpRequestHandler {
      * Handle the status code of an HTTP request
      * @param statusCode the status code of the HTTP request
      */
-    public static void handle(int statusCode) {
+    public static void handle(int statusCode) throws  HttpInternalServerErrorException, HttpNotFoundException, HttpBadRequestException, HttpForbiddenException, HttpUnavailableException {
         switch (statusCode) {
             case HttpURLConnection.HTTP_OK:
-                System.out.println("HTTP_OK");
                 break;
             case HttpURLConnection.HTTP_INTERNAL_ERROR:
-                System.out.println("HTTP_INTERNAL_ERROR");
-                break;
+                throw new HttpInternalServerErrorException("HTTP_INTERNAL_ERROR");
             case HttpURLConnection.HTTP_NOT_FOUND:
-                System.out.println("HTTP_NOT_FOUND");
-                break;
+                throw new HttpNotFoundException("HTTP_NOT_FOUND");
             case HttpURLConnection.HTTP_BAD_REQUEST:
-                System.out.println("HTTP_BAD_REQUEST");
-                break;
-            case HttpURLConnection.HTTP_UNAUTHORIZED:
-                System.out.println("HTTP_UNAUTHORIZED");
-                break;
+                throw new HttpBadRequestException("HTTP_BAD_REQUEST");
             case HttpURLConnection.HTTP_FORBIDDEN:
-                System.out.println("HTTP_FORBIDDEN");
-                break;
-            case HttpURLConnection.HTTP_NOT_IMPLEMENTED:
-                System.out.println("HTTP_NOT_IMPLEMENTED");
-                break;
+                throw new HttpForbiddenException("HTTP_FORBIDDEN");
             case HttpURLConnection.HTTP_UNAVAILABLE:
-                System.out.println("HTTP_UNAVAILABLE");
-                break;
-            case HttpURLConnection.HTTP_GATEWAY_TIMEOUT:
-                System.out.println("HTTP_GATEWAY_TIMEOUT");
-                break;
-            case HttpURLConnection.HTTP_VERSION:
-                System.out.println("HTTP_VERSION");
-                break;
+                throw new HttpUnavailableException("HTTP_UNAVAILABLE");
             default:
-                System.out.println("Unknown status code");
-        }
-        if (statusCode != HttpURLConnection.HTTP_OK) {
-            throw new RuntimeException("HTTP request failed with status code: " + statusCode);
+                System.out.println("UNKNOWN_STATUS");
+                break;
         }
     }
 }
