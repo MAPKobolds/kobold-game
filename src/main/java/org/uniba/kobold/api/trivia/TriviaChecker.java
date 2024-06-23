@@ -1,5 +1,5 @@
-package org.example.kobold.api.trivia;
-import org.example.kobold.api.error.*;
+package org.uniba.kobold.api.trivia;
+import org.uniba.kobold.api.error.*;
 
 import java.util.ArrayList;
 import java.util.Collections;

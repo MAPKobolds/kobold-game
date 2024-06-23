@@ -1,14 +1,13 @@
-package org.example.kobold.api.trivia;
+package org.uniba.kobold.api.trivia;
 import com.google.gson.Gson;
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.client.WebTarget;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import org.example.kobold.api.error.*;
-import org.example.kobold.api.error.HttpRequestHandler;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import org.uniba.kobold.api.error.*;
 
-public class TriviaService {
+class TriviaService {
 
     private static String getRequest(String url) throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         // Create a new client and initiate a request
