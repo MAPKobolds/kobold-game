@@ -3,6 +3,8 @@ package org.uniba.kobold.gui;
 import org.uniba.kobold.util.UtilMusic;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  * Class GuiCredits
@@ -23,6 +25,7 @@ public class GuiCredits extends GuiAbstractPanel{
     private static final JPanel zippoPanel = new GuiGenericToken(zippoURL, tokenSize).getToken();
     private static JButton menuButton;
     private static JLabel creditsText;
+    private static final JToggleButton muteMusicButton = new JToggleButton();
 
 
     /**
@@ -31,6 +34,12 @@ public class GuiCredits extends GuiAbstractPanel{
     public GuiCredits() {
         initTokens();
         panelManager();
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                UtilMusic.initButton(muteMusicButton);
+            }
+        });
     }
 
     /**
@@ -70,6 +79,7 @@ public class GuiCredits extends GuiAbstractPanel{
         creditsText.setText("Ci siamo impegnati molto porco dio");
 
         //Adding components to the panel
+        add(muteMusicButton);
         add(menuButton);
         add(sgaramellaPanel);
         add(porcelliPanel);
@@ -103,6 +113,5 @@ public class GuiCredits extends GuiAbstractPanel{
         creditsText.setBounds((int) widthOffset, (int) (height * 0.60), (int) (width * 0.80), 50);
         menuButton.setBounds((int) widthOffset, (int) (height * 0.85) , (int) (width * 0.80), 50);
         muteMusicButton.setBounds(0, 0, buttonWidth, buttonHeight);
-        add(muteMusicButton);
     }
 }

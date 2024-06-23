@@ -5,6 +5,8 @@ import org.uniba.kobold.util.UtilMusic;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  * Class GuiLoadGame
@@ -20,12 +22,19 @@ public class GuiLoadGame extends GuiAbstractPanel {
     private final GuiBackgroundPanel savesBGPanel = new GuiBackgroundPanel(savesBGPath);
     private final JLayeredPane layeredPane = new JLayeredPane();
     private JButton menuButton;
+    private final JToggleButton muteMusicButton = new JToggleButton();
 
     /**
      * Constructor for the GuiLoadGame class
      */
     public GuiLoadGame() {
        panelManager();
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                UtilMusic.initButton(muteMusicButton);
+            }
+        });
     }
 
     /**
@@ -102,6 +111,7 @@ public class GuiLoadGame extends GuiAbstractPanel {
         layeredPane.setPreferredSize(new Dimension(width, height));
         menuButton.setBounds((int) widthOffset, (int) (height * 0.85) , (int) (width * 0.80), 50);
         muteMusicButton.setBounds(0, 0, buttonWidth, buttonHeight);
+        savesBGPanel.repaint();
         add(layeredPane, BorderLayout.CENTER);
         fillSavesBGPanel();
     }

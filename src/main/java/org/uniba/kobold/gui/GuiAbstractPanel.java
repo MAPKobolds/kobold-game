@@ -8,8 +8,6 @@ import java.awt.event.ComponentEvent;
 
 public abstract class GuiAbstractPanel extends JPanel {
 
-        public static final JToggleButton muteMusicButton = new JToggleButton();
-
         /**
          * Entry point for every subclass of GuiAbstractPanel
          */
@@ -20,12 +18,7 @@ public abstract class GuiAbstractPanel extends JPanel {
                         public void componentResized(ComponentEvent e) {
                                 updateLayout();
                         }
-                        @Override
-                        public void componentShown(ComponentEvent e) {
-                                UtilMusic.initButton(muteMusicButton);
-                        }
                 });
-                add(muteMusicButton);
         }
 
         /**
@@ -54,5 +47,7 @@ public abstract class GuiAbstractPanel extends JPanel {
         /**
          * Method to update the layout of the class GuiAbstractPanel
          */
-        public abstract void updateLayout();
+        public void updateLayout(){
+        }
+
 }

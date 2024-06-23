@@ -3,6 +3,8 @@ package org.uniba.kobold.gui;
 import org.uniba.kobold.util.UtilMusic;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  * Class GuiMenu
@@ -14,6 +16,7 @@ public class GuiMenu extends GuiAbstractPanel {
      */
     private static final String bgURL = "/img/pporc.png";
     private static final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel(bgURL);
+    private static JToggleButton muteMusicButton = new JToggleButton();
     private static JButton gameStartButton;
     private static JButton loadGameButton;
     private static JButton creditsButton;
@@ -24,6 +27,12 @@ public class GuiMenu extends GuiAbstractPanel {
      */
    public GuiMenu() {
         panelManager();
+       addComponentListener(new ComponentAdapter() {
+           @Override
+           public void componentShown(ComponentEvent e) {
+               UtilMusic.initButton(muteMusicButton);
+           }
+       });
     }
 
     /**
@@ -91,6 +100,7 @@ public class GuiMenu extends GuiAbstractPanel {
         exitButton.addActionListener(_ -> System.exit(0));
 
         //Adding components to the panel
+        add(muteMusicButton);
         add(gameStartButton);
         add(loadGameButton);
         add(creditsButton);

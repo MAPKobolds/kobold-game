@@ -20,8 +20,8 @@ public class GuiBackgroundPanel extends GuiAbstractPanel {
      * Constructor of the class GuiBackgroundPanel
      */
     public GuiBackgroundPanel(String backgroundPath) {
+       panelManager();
         this.backgroundPath = backgroundPath;
-        initComponents();
     }
 
     /**
@@ -33,7 +33,6 @@ public class GuiBackgroundPanel extends GuiAbstractPanel {
         setPreferredSize(new Dimension(width, height));
         setRequestFocusEnabled(false);
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
     }
 
     @Override
@@ -42,11 +41,5 @@ public class GuiBackgroundPanel extends GuiAbstractPanel {
         ImageIcon img = new ImageIcon(Objects.requireNonNull(getClass().getResource(backgroundPath)));
         Image image = img.getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-    }
-
-    @Override
-    public void updateLayout() {
-        setSize(new Dimension(getWidth(), getHeight()));
-        setPreferredSize(new Dimension(getWidth(), getHeight()));
     }
 }
