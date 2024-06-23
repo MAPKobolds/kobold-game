@@ -1,11 +1,11 @@
-package org.example.kobold.blackjack;
+package org.uniba.kobold.api.blackjack;
 
 import com.google.gson.Gson;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 import com.google.gson.reflect.TypeToken;
-import org.example.kobold.error.HttpRequestHandler;
+import org.uniba.kobold.api.error.HttpRequestHandler;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;

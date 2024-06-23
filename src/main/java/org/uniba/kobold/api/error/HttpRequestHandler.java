@@ -1,4 +1,4 @@
-package org.example.kobold.error;
+package org.uniba.kobold.api.error;
 
 import java.net.HttpURLConnection;
 

@@ -1,4 +1,4 @@
-package org.example.kobold.rest;
+package org.uniba.kobold.rest;
 
 public interface CRUDInterface<T> {
     T save(T entity);

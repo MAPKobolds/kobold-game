@@ -1,4 +1,4 @@
-package org.example.kobold.blackjack;
+package org.uniba.kobold.api.blackjack;
 
 import java.util.List;
 

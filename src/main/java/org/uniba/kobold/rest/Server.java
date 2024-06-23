@@ -1,6 +1,6 @@
-package org.example.kobold.rest;
+package org.uniba.kobold.rest;
 
-import org.example.kobold.rest.controllers.PlayerController;
+import org.uniba.kobold.rest.controllers.PlayerController;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
