@@ -21,11 +21,11 @@ public class GuiHub extends JFrame {
      */
     public GuiHub() {
 
-        //Jframe Settings
+        //JFrame Settings
         setTitle("Cerignolus: Città dei Coboldi");
         setSize(width, height);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+        setResizable(true);
 
         //Logo Settings
         URL logo = GuiMenu.class.getResource("/img/BR.png");

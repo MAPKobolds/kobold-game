@@ -3,18 +3,17 @@ package org.uniba.kobold.gui;
 import org.uniba.kobold.util.UtilMusic;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 /**
  * Class GuiCredits
  */
-public class GuiCredits extends JPanel {
+public class GuiCredits extends GuiAbstractPanel{
 
     /**
      * Attributes of the class GuiCredits
      */
-    private static final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel();
+    private static final String bgURL = "/img/pporc.png";
+    private static final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel(bgURL);
     private static final String porcelliURL = "/img/PorcelliToken.png";
     private static final String sgaramellaURL = "/img/SgaramellaToken.png";
     private static final String zippoURL = "/img/ZippoToken.png";
@@ -22,10 +21,8 @@ public class GuiCredits extends JPanel {
     private static final JPanel sgaramellaPanel = new GuiGenericToken(sgaramellaURL, tokenSize).getToken();
     private static final JPanel porcelliPanel = new GuiGenericToken(porcelliURL, tokenSize).getToken();
     private static final JPanel zippoPanel = new GuiGenericToken(zippoURL, tokenSize).getToken();
-
     private static JButton menuButton;
     private static JLabel creditsText;
-    private static JToggleButton muteMusicButton;
 
 
     /**
@@ -33,15 +30,7 @@ public class GuiCredits extends JPanel {
      */
     public GuiCredits() {
         initTokens();
-        initComponents();
-
-        // Aggiungi un ComponentAdapter per eseguire il codice legato al muteMusicButton quando il componente viene mostrato
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentShown(ComponentEvent e) {
-                UtilMusic.initButton(muteMusicButton);
-            }
-        });
+        panelManager();
     }
 
     /**
@@ -56,12 +45,20 @@ public class GuiCredits extends JPanel {
     /**
      * Method to initialize the components of the class GuiCredits
      */
-    private void initComponents() {
-        menuButton = new GuiGenericButton("Torna al Menu").getButton();
-        creditsText = new JLabel();
-        muteMusicButton = new JToggleButton();
+    @Override
+    public void initComponents() {
 
-        muteMusicButton.setBounds(0, 0, 50, 50);
+        //Initializations
+        creditsText = new JLabel();
+        menuButton = new GuiGenericButton(
+                "Torna al Menu",
+                new Color(40, 0, 5),
+                Color.WHITE,
+                new Dimension(800, 100)
+        ).getButton();
+
+        //muteMusicButton logic
+        UtilMusic.initButton(muteMusicButton);
 
         //menuButton logic
         menuButton.addActionListener(_ -> {
@@ -69,48 +66,43 @@ public class GuiCredits extends JPanel {
             menu.show(getParent(), "Menu");
         });
 
-        //Background layout settings
+        //creditsText settings
         creditsText.setText("Ci siamo impegnati molto porco dio");
 
-        GroupLayout backgroundLayout = new GroupLayout(backgroundPanel);
-        backgroundPanel.setLayout(backgroundLayout);
-        backgroundLayout.setHorizontalGroup(
-                backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(backgroundLayout.createSequentialGroup()
-                                .addGroup(backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addGroup(backgroundLayout.createSequentialGroup()
-                                                .addGap(136, 136, 136)
-                                                .addComponent(sgaramellaPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(45, 45, 45)
-                                                .addGroup(backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(menuButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(porcelliPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(59, 59, 59)
-                                                .addComponent(zippoPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(backgroundLayout.createSequentialGroup()
-                                                .addGap(127, 127, 127)
-                                                .addComponent(creditsText, GroupLayout.PREFERRED_SIZE, 586, GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(muteMusicButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(87, Short.MAX_VALUE))
-        );
-        backgroundLayout.setVerticalGroup(
-                backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
-                                .addComponent(muteMusicButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                .addGap(49, 49, 49)
-                                .addGroup(backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(sgaramellaPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(zippoPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(porcelliPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addGap(71, 71, 71)
-                                .addComponent(creditsText, GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(menuButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                                .addGap(49, 49, 49))
-        );
+        //Adding components to the panel
+        add(menuButton);
+        add(sgaramellaPanel);
+        add(porcelliPanel);
+        add(zippoPanel);
+        add(creditsText);
+        add(backgroundPanel);
 
-        //Background group layout manager
-        backgroundPanel.setLayout(backgroundLayout);
-        GuiBackgroundPanel.manageBackgroundLayout(this, backgroundPanel);
+        //Background panel management
+        super.manageBackgroundLayout(this, backgroundPanel);
+    }
+
+    /**
+     * Method to update the layout of the class GuiCredits
+     */
+    @Override
+    public void updateLayout() {
+        int width = getWidth();
+        int height = getHeight();
+        int buttonHeight = 50 * height / 600;
+        int buttonWidth = 50 * height / 600;
+        double widthOffset = width * 0.10;
+        double heightOffset = height * 0.20;
+        double tokenWidth = width * 0.20;
+        double tokenHeight = height * 0.20;
+        int offset = 70 * height / 600;
+
+        //This is where the magic happens
+        sgaramellaPanel.setBounds((int) widthOffset, (int) heightOffset, (int) tokenWidth, (int) tokenHeight);
+        porcelliPanel.setBounds((int) widthOffset + (int) tokenWidth + offset, (int) heightOffset, (int) tokenWidth, (int) tokenHeight);
+        zippoPanel.setBounds((int) widthOffset + ((int) tokenWidth + offset) * 2, (int) heightOffset, (int) tokenWidth, (int) tokenHeight);
+        creditsText.setBounds((int) widthOffset, (int) (height * 0.60), (int) (width * 0.80), 50);
+        menuButton.setBounds((int) widthOffset, (int) (height * 0.85) , (int) (width * 0.80), 50);
+        muteMusicButton.setBounds(0, 0, buttonWidth, buttonHeight);
+        add(muteMusicButton);
     }
 }

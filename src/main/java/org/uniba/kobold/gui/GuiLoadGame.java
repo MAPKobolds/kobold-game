@@ -2,59 +2,48 @@ package org.uniba.kobold.gui;
 
 import org.uniba.kobold.game.SaveInstance;
 import org.uniba.kobold.util.UtilMusic;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.util.Objects;
 
 /**
  * Class GuiLoadGame
  */
-public class GuiLoadGame extends JPanel {
+public class GuiLoadGame extends GuiAbstractPanel {
 
     /**
      * Attributes of the GuiLoadGame class
      */
-    private final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel();
+    private final String bgURL = "/img/pporc.png";
+    private final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel(bgURL);
     private final String savesBGPath = "/img/BR.png";
-    private final int width = 800;
-    private final int height = 600;
-    private JPanel savesBGPanel;
+    private final GuiBackgroundPanel savesBGPanel = new GuiBackgroundPanel(savesBGPath);
+    private final JLayeredPane layeredPane = new JLayeredPane();
     private JButton menuButton;
-    private JToggleButton muteMusicButton;
 
     /**
      * Constructor for the GuiLoadGame class
      */
     public GuiLoadGame() {
-        initComponents();
-
-        // Aggiungi un ComponentAdapter per eseguire il codice legato al muteMusicButton quando il componente viene mostrato
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentShown(ComponentEvent e) {
-                UtilMusic.initButton(muteMusicButton);
-            }
-        });
+       panelManager();
     }
 
     /**
      * Method to initialize the components of the GuiLoadGame class
      */
-    private void initComponents() {
-        menuButton = new GuiGenericButton("Torna al Menu").getButton();
-        muteMusicButton = new JToggleButton();
-        muteMusicButton.setBounds(0, 0, 50, 50);
+    @Override
+    public void initComponents() {
 
-        // Create a JLayeredPane
-        JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setPreferredSize(new Dimension(width, height));
+        //Initializations
+        menuButton = new GuiGenericButton(
+                "Torna al Menu",
+                new Color(40, 0, 5),
+                Color.WHITE
+        ).getButton();
 
-        // Add the backgroundPanel to the JLayeredPane with a lower depth value
-        backgroundPanel.add(muteMusicButton);
-        backgroundPanel.setBounds(0, 0, width, height);
-
+        //muteMusicButton settings
+        UtilMusic.initButton(muteMusicButton);
+        add(muteMusicButton);
 
         //menuButton settings
         if (menuButton != null) {
@@ -70,89 +59,135 @@ public class GuiLoadGame extends JPanel {
         layeredPane.add(backgroundPanel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(muteMusicButton, JLayeredPane.PALETTE_LAYER);
 
-        //Mute music button logic and clip management and savesBGPanel settings
-        savesBGPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon img = new ImageIcon(Objects.requireNonNull(getClass().getResource(savesBGPath)));
-                Image image = img.getImage();
-                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-        savesBGPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        savesBGPanel.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        savesBGPanel.setRequestFocusEnabled(false);
+        // Add the save games panels to the container
+        savesBGPanel.setLayout(new BoxLayout(savesBGPanel, BoxLayout.Y_AXIS));
+        layeredPane.add(savesBGPanel, JLayeredPane.DEFAULT_LAYER);
 
+        //Container of the save games panel settings
+        savesBGPanel.setRequestFocusEnabled(false);
+    }
+
+    /**
+     * Method to fill the savesBGPanel with the SaveInstancePanels
+     */
+    private void fillSavesBGPanel() {
+        savesBGPanel.removeAll();
         //Temporaneo finché non avremo salvataggi veri
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             SaveInstance saveGame = new SaveInstance();
         }
 
-        savesBGPanel.setLayout(new BoxLayout(savesBGPanel, BoxLayout.Y_AXIS));
         for (SaveInstance save : SaveInstance.getInstances()) {
             SaveInstancePanel saveInstancePanel = new SaveInstancePanel();
+            saveInstancePanel.setVisible(true);
             saveInstancePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             savesBGPanel.add(saveInstancePanel);
         }
-        savesBGPanel.setBounds(120, 0, (int)(width * 0.85), (int)(height * 0.52));
+    }
 
-        layeredPane.add(savesBGPanel, JLayeredPane.PALETTE_LAYER);
+    /**
+     * Method to update the layout of the GuiLoadGame class
+     */
+    @Override
+    public void updateLayout() {
+        int width = getWidth();
+        int height = getHeight();
+        int buttonHeight = 50 * height / 600;
+        int buttonWidth = 50 * height / 600;
+        double widthOffset = width * 0.10;
+
+        //This is where the magic happens
+        backgroundPanel.setBounds(0, 0, width, height);
+        savesBGPanel.setBounds((int) (width * 0.20), 0, (int)(width * 0.85), (int)(height * 0.80));
+        layeredPane.setPreferredSize(new Dimension(width, height));
+        menuButton.setBounds((int) widthOffset, (int) (height * 0.85) , (int) (width * 0.80), 50);
+        muteMusicButton.setBounds(0, 0, buttonWidth, buttonHeight);
         add(layeredPane, BorderLayout.CENTER);
+        fillSavesBGPanel();
     }
 
     /**
      * Inner class SaveInstancePanel
      */
-    public class SaveInstancePanel extends JPanel {
+    public class SaveInstancePanel extends GuiAbstractPanel {
 
         /**
          * Attributes of the SaveInstancePanel class
          */
         private final int saveWidth = (int) (backgroundPanel.getWidth() * 0.85);
-        private final int saveHeight = (int) (backgroundPanel.getHeight() * 0.1);
-        private JButton loadButton = new GuiGenericButton("Carica").getButton();
-        private JLabel loadInfoLable;
+        private final int saveHeight = (int) (backgroundPanel.getHeight() * 0.10);
+        private JButton loadButton;
+        private JButton deleteButton;
+        private JLabel loadInfoLabel;
 
         /**
          * Constructor for the SaveInstancePanel class
          */
         public SaveInstancePanel() {
-            initComponents();
+            panelManager();
         }
 
         /**
          * Method to initialize the components of the SaveInstancePanel class
          */
-        private void initComponents() {
+        @Override
+        public void initComponents() {
             setMinimumSize(new Dimension(saveWidth, saveHeight));
             setMaximumSize(new Dimension(saveWidth, saveHeight));
-            setBackground(new java.awt.Color(70,204,204));
+            setBackground(new Color(40, 0, 5));
 
-            loadInfoLable = new JLabel();
-            loadInfoLable.setFont(new java.awt.Font("Arial", 0, 14));
-            loadInfoLable.setText("Data e Nome Utente");
+            //Initializations
+            loadButton = new GuiGenericButton(
+                    "Carica",
+                    new Color(40, 0, 5),
+                    Color.WHITE
+                    ).getButton();
+            deleteButton = new GuiGenericButton(
+                    "Elimina",
+                    new Color(40, 0, 5),
+                    Color.WHITE
+                    ).getButton();
+            loadInfoLabel = new JLabel();
 
-            GroupLayout layout = new GroupLayout(this);
-            this.setLayout(layout);
-            layout.setHorizontalGroup(
-                    layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addGap(19, 19, 19)
-                                    .addComponent(loadInfoLable, GroupLayout.PREFERRED_SIZE, 314, GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
-                                    .addComponent(loadButton, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
-                                    .addGap(46, 46, 46))
-            );
-            layout.setVerticalGroup(
-                    layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addContainerGap(29, Short.MAX_VALUE)
-                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                            .addComponent(loadButton, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(loadInfoLable, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
-                                    .addGap(24, 24, 24))
-            );
+            //loadButton settings
+            loadButton.addActionListener(_ -> {
+                    //Qui andrà richiamato il metodo che seleziona il salvataggio e poi loading screen
+                    CardLayout loadingScreen = (CardLayout) getParent().getLayout();
+                    loadingScreen.show(getParent(), "LoadingScreen");
+                });
+
+            //deleteButton settings
+            deleteButton.addActionListener(_ -> {
+                    SaveInstance.getInstances().remove(this);
+                    updateLayout();
+                });
+
+            //loadInfoLabel settings
+            loadInfoLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 14));
+            loadInfoLabel.setForeground(Color.WHITE);
+            loadInfoLabel.setText("Data e Nome Utente");
+
+            //Adding components to the panel
+            add(loadButton);
+            add(deleteButton);
+            add(loadInfoLabel);
+        }
+
+        /**
+         * Method to update the layout of the SaveInstancePanel class
+         */
+        @Override
+        public void updateLayout() {
+            int width = getWidth();
+            int height = getHeight();
+            int buttonHeight = 100 * height / 600;
+            int buttonWidth = 100 * width / 600;
+            double widthOffset = width * 0.60;
+
+            //This is where the magic happens
+            loadInfoLabel.setBounds(0, 0, (int) (width * 0.60), height);
+            deleteButton.setBounds((int) widthOffset, (int) (height * 0.10), buttonWidth, buttonHeight);
+            loadButton.setBounds((int) widthOffset + buttonWidth, (int) (height * 0.85) , (int) (width * 0.20), buttonHeight);
         }
     }
 }

@@ -7,29 +7,33 @@ import java.util.Objects;
 /**
  * Class GuiBackgroundPanel
  */
-public class GuiBackgroundPanel extends JPanel {
+public class GuiBackgroundPanel extends GuiAbstractPanel {
 
     /**
      * Attributes of the class GuiBackgroundPanel
      */
     private final int width = 800;
     private final int height = 600;
-    private final String backgroundPath = "/img/pporc.png";
+    private final String backgroundPath;
 
     /**
      * Constructor of the class GuiBackgroundPanel
      */
-    public GuiBackgroundPanel() {
+    public GuiBackgroundPanel(String backgroundPath) {
+        this.backgroundPath = backgroundPath;
         initComponents();
     }
 
     /**
      * Method to initialize the components of the class GuiBackgroundPanel
      */
-    private void initComponents() {
+    @Override
+    public void initComponents() {
         setMinimumSize(new Dimension(width, height));
         setPreferredSize(new Dimension(width, height));
         setRequestFocusEnabled(false);
+        setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
     }
 
     @Override
@@ -40,22 +44,9 @@ public class GuiBackgroundPanel extends JPanel {
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
     }
 
-    /**
-     * Method to manage the layout of the background panel
-     *
-     * @param parent          the parent panel
-     * @param backgroundPanel the background panel
-     */
-    public static void manageBackgroundLayout(JPanel parent, JPanel backgroundPanel) {
-        GroupLayout layout = new GroupLayout(parent);
-        parent.setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(backgroundPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(backgroundPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+    @Override
+    public void updateLayout() {
+        setSize(new Dimension(getWidth(), getHeight()));
+        setPreferredSize(new Dimension(getWidth(), getHeight()));
     }
 }

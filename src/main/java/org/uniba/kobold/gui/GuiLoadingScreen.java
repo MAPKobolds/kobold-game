@@ -1,7 +1,5 @@
 package org.uniba.kobold.gui;
 
-import org.uniba.kobold.util.UtilMusic;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -10,41 +8,32 @@ import java.awt.event.ComponentEvent;
 /**
  * Class GuiLoadingScreen
  */
-public class GuiLoadingScreen extends JPanel {
+public class GuiLoadingScreen extends GuiAbstractPanel {
 
     /**
      * Attributes of the class GuiLoadingScreen
      */
+    private final String bgURL = "/img/pporc.png";
     private JProgressBar progressBar;
-    private JToggleButton muteMusicButton;
-    private final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel();
+    private final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel(bgURL);
 
     /**
      * Constructor of the class GuiLoadingScreen
      */
     public GuiLoadingScreen() {
-        initComponents();
-
-        // Aggiungi un ComponentAdapter per eseguire il codice legato al muteMusicButton quando il componente viene mostrato
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentShown(ComponentEvent e) {
-                UtilMusic.initButton(muteMusicButton);
-            }
-        });
+        panelManager();
     }
 
     /**
      * Method to initialize the components of the class GuiLoadingScreen
      */
-    private void initComponents() {
+    @Override
+    public void initComponents() {
         progressBar = new JProgressBar(0, 100);
-        muteMusicButton = new JToggleButton();
 
         //Progress Bar Settings
         progressBar.setStringPainted(true);
         progressBar.setString("0%");
-        progressBar.setBounds(100, 500, 600, 50);
         progressBar.setFont(new Font("Arial", Font.BOLD, 20));
         progressBar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         progressBar.setForeground(Color.MAGENTA);
@@ -80,7 +69,7 @@ public class GuiLoadingScreen extends JPanel {
         });
 
         //Layout Settings
-        GroupLayout backgroundLayout = new GroupLayout(backgroundPanel);
+        /*GroupLayout backgroundLayout = new GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundLayout);
         backgroundLayout.setHorizontalGroup(
                 backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -96,7 +85,25 @@ public class GuiLoadingScreen extends JPanel {
         ));
 
         //Background group layout manager
-        backgroundPanel.setLayout(backgroundLayout);
-        GuiBackgroundPanel.manageBackgroundLayout(this, backgroundPanel);
+        backgroundPanel.setLayout(backgroundLayout);*/
+        super.manageBackgroundLayout(this, backgroundPanel);
+    }
+
+    /**
+     * Method to update the layout of the class GuiLoadingScreen
+     */
+    @Override
+    public void updateLayout() {
+int width = getWidth();
+        int height = getHeight();
+        int buttonHeight = 50 * height / 600;
+        int buttonWidth = 50 * height / 600;
+        double widthOffset = width * 0.10;
+        double heightOffset = height * 0.85;
+
+        //This is where the magic happens
+        backgroundPanel.setBounds(0, 0, width, height);
+        progressBar.setBounds((int) widthOffset, (int) heightOffset, (int) (width * 0.80), (int) (height * 0.10));
+        muteMusicButton.setBounds(0, 0, buttonWidth, buttonHeight);
     }
 }
