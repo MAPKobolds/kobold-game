@@ -40,10 +40,30 @@ public class GuiMenu extends JPanel {
      */
     private void initComponents() {
 
-        gameStartButton = new GuiGenericButton("Inizia Partita").getButton();
-        loadGameButton = new GuiGenericButton("Carica Partita").getButton();
-        creditsButton = new GuiGenericButton("Riconoscimenti").getButton();
-        exitButton = new GuiGenericButton("Esci").getButton();
+        gameStartButton = new GuiGenericButton(
+            "Inizia Partita",
+            new Color(40, 0, 5),
+            Color.WHITE,
+            new Dimension(800, 100)
+        ).getButton();
+        loadGameButton = new GuiGenericButton(
+                "Carica Partita",
+                new Color(40, 0, 5),
+                Color.WHITE,
+                new Dimension(800, 100)
+        ).getButton();
+        creditsButton = new GuiGenericButton(
+                "Riconoscimenti",
+                new Color(40, 0, 5),
+                Color.WHITE,
+                new Dimension(800, 100)
+        ).getButton();
+        exitButton = new GuiGenericButton(
+                "Esci",
+                new Color(40, 0, 5),
+                Color.WHITE,
+                new Dimension(800, 100)
+        ).getButton();
         muteMusicButton = new JToggleButton();
 
         setPreferredSize(new Dimension(getWidth(), getHeight()));
