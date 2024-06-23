@@ -1,4 +1,4 @@
-package org.example.kobold.trivia;
+package org.example.kobold.api.trivia;
 
 import java.util.List;
 
@@ -14,6 +14,17 @@ class Result {
         return type;
     }
 
+    public String format (String toFormat){
+        return toFormat.replace("&quot;", "\"")
+                .replace("&amp;", "&")
+                .replace("&apos;", "'")
+                .replace("&lt;", "<")
+                .replace("&gt;", ">")
+                .replace("&#039;", "'")
+                .replace("&eacute;", "é")
+                .replace("&egrave;", "è");
+    }
+
     public String getDifficulty() {
         return difficulty;
     }
@@ -23,14 +34,16 @@ class Result {
     }
 
     public String getQuestion() {
-        return question;
+        return format(question);
     }
 
     public String getCorrectAnswer() {
-        return correct_answer;
+        return format(correct_answer);
     }
 
     public List<String> getIncorrect_answers() {
+        List<String> incorrect_answers = this.incorrect_answers;
+        incorrect_answers.replaceAll(this::format);
         return incorrect_answers;
     }
 
