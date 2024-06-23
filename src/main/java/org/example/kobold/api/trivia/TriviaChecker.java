@@ -1,6 +1,8 @@
-package org.example.kobold.trivia;
+package org.example.kobold.api.trivia;
 
 import com.google.gson.Gson;
+import org.example.kobold.api.error.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,14 +11,9 @@ public class TriviaChecker {
     Quiz quiz;
     int[] isCorrect;
 
-    public TriviaChecker() {
-        Gson gson = new Gson();
-        String response;
+    public TriviaChecker() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
 
-        response = TriviaService.getTrivia();
-        quiz = gson.fromJson(response, Quiz.class);
-
-
+        quiz = TriviaService.getTrivia();
         isCorrect = new int[quiz.getResults().size()];
         System.out.println(quiz);
     }
