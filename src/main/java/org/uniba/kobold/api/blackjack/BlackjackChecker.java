@@ -1,19 +1,21 @@
 package org.uniba.kobold.api.blackjack;
 
+import org.uniba.kobold.api.error.*;
+
 import java.util.List;
 
-public class BlackjackGame {
+public class BlackjackChecker {
 
     List<Card> playerHand;
     List<Card> dealerHand;
     static BlackjackService blackjackService;
 
-    public BlackjackGame() {
+    public BlackjackChecker() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         blackjackService = new BlackjackService();
         blackjackService.getDeck();
     }
 
-    public void playRound() {
+    public void playRound() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         BlackjackService blackjackService = new BlackjackService();
 
         playerHand = blackjackService.getCards(2);
@@ -28,11 +30,11 @@ public class BlackjackGame {
         return playerHand;
     }
 
-    public void hit() {
+    public void hit() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         playerHand.addAll(blackjackService.getCards(1));
     }
 
-    public void dealerTurn() {
+    public void dealerTurn() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         while (getHandValue(dealerHand) < 17) {
             dealerHand.addAll(blackjackService.getCards(1));
         }
