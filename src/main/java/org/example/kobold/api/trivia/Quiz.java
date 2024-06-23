@@ -1,4 +1,4 @@
-package org.example.kobold.trivia;
+package org.example.kobold.api.trivia;
 import java.util.List;
 
 class Quiz {
