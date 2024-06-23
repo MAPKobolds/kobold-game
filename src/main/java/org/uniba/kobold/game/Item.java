@@ -1,5 +1,8 @@
 package org.uniba.kobold.game;
 
+import org.uniba.kobold.gui.GuiGenericButton;
+
+import javax.swing.*;
 import java.util.ArrayList;
 
 
@@ -10,14 +13,7 @@ public class Item {
      */
     private String name;
     private String description;
-
-    /**
-     * Constructor of the Item class
-     */
-    public Item() {
-        setDescription("");
-        setName("");
-    }
+    private JButton itemButton;
 
     /**
      * Constructor of the Item class
@@ -27,6 +23,11 @@ public class Item {
     public Item(String name, String description) {
         this.name = name;
         this.description = description;
+        this.itemButton = new GuiGenericButton(
+                name,
+                new java.awt.Color(40, 0, 5),
+                java.awt.Color.WHITE
+        ).getButton();
     }
 
     /**
@@ -58,5 +59,13 @@ public class Item {
      */
     public String getDescription() {
         return description;
+    }
+
+    /**
+     * Getter for the item button
+     * @return item button
+     */
+    public JButton getItemButton() {
+        return itemButton;
     }
 }
