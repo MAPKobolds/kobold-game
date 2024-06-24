@@ -67,6 +67,7 @@ public class GuiCredits extends GuiAbstractPanel{
         ).getButton();
 
         //muteMusicButton logic
+        muteMusicButton.setBounds(0, 0, 50, 50);
         UtilMusic.initButton(muteMusicButton);
 
         //menuButton logic
