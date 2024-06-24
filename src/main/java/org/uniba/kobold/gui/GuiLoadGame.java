@@ -129,7 +129,7 @@ public class GuiLoadGame extends GuiAbstractPanel {
         private JLabel loadInfoLabel;
 
         /**
-         * Constructor for the SaveInstancePanel class
+         * Constructor for the SaveInstancePanel class parameterized with a SaveInstance object
          */
         public SaveInstancePanel(SaveInstance saveInstance) {
             initComponents(saveInstance);
@@ -139,6 +139,12 @@ public class GuiLoadGame extends GuiAbstractPanel {
                     updateLayout();
                 }
             });
+        }
+        /**
+         * Constructor for the SaveInstancePanel class
+         */
+        public SaveInstancePanel() {
+            initComponents();
         }
 
         /**
@@ -178,8 +184,8 @@ public class GuiLoadGame extends GuiAbstractPanel {
                 //loadButton settings
                 loadButton.addActionListener(_ -> {
                     //Qui andrà richiamato il metodo che seleziona il salvataggio e poi loading screen
-                    CardLayout loadingScreen = (CardLayout) getParent().getLayout();
-                    loadingScreen.show(getParent(), "LoadingScreen");
+                    CardLayout loadingScreen = (CardLayout) GuiLoadGame.this.getParent().getLayout();
+                    loadingScreen.show(GuiLoadGame.this.getParent(), "LoadingScreen");
                 });
 
                 //deleteButton settings
