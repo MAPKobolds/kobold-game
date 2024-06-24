@@ -49,6 +49,7 @@ public class GuiLoadingScreen extends GuiAbstractPanel {
         progressBar.setBackground(Color.BLACK);
 
         //muteMusicButton settings
+        muteMusicButton.setBounds(0, 0, 50, 50);
         UtilMusic.initButton(muteMusicButton);
         add(muteMusicButton);
 
@@ -64,7 +65,7 @@ public class GuiLoadingScreen extends GuiAbstractPanel {
                                 progressBar.setValue(progress);
                                 progressBar.setString("Loading..." + progress + "%");
                             });
-                            Thread.sleep(20);
+                            Thread.sleep(10);
                         }
                         progressBar.setString("Kobold is ready!");
                         Thread.sleep(1000);
