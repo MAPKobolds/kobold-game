@@ -1,7 +1,5 @@
 package org.uniba.kobold.gui;
 
-import org.uniba.kobold.util.UtilMusic;
-
 import javax.swing.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -45,7 +43,7 @@ public abstract class GuiAbstractPanel extends JPanel {
         public abstract void initComponents();
 
         public <T> void initComponents(T Object) {
-        };
+        }
         /**
          * Method to update the layout of the class GuiAbstractPanel
          */

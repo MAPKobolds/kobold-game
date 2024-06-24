@@ -13,7 +13,7 @@ public class SaveInstance {
     /**
      * Attributes of the class SaveInstance
      */
-    private static ArrayList<SaveInstance> instances = new ArrayList<SaveInstance>();
+    private static final ArrayList<SaveInstance> instances = new ArrayList<>();
     private static String saveName;
     private static String saveDate;
 

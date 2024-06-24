@@ -140,12 +140,6 @@ public class GuiLoadGame extends GuiAbstractPanel {
                 }
             });
         }
-        /**
-         * Constructor for the SaveInstancePanel class
-         */
-        public SaveInstancePanel() {
-            initComponents();
-        }
 
         /**
          * Method to initialize the components of the SaveInstancePanel class

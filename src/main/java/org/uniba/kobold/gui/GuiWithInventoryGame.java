@@ -118,18 +118,12 @@ public class GuiWithInventoryGame extends JPanel {
         dialogPanel.setBackground(new Color(40, 0, 5));
     }
 
-    private void updateLayout() {
-        mapPanel.setBounds(getWidth() - 200, 0, 200, 200);
-        withInventoryLayout();
-    }
-
     /**
      * Method to fill the inventory
      */
     public void fillInventory() {
-        int i = 0;
-        for (Item item : items) {
-            item = new Item("Item" + i, "Description" + i);
+        for (int i = 0; i < items.length; i++) {
+            items[i] = new Item("Item" + i, "Description" + i);
             GridBagConstraints gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = i % 3;
             gridBagConstraints.gridy = i / 3;
@@ -139,8 +133,7 @@ public class GuiWithInventoryGame extends JPanel {
             gridBagConstraints.weightx = 0.4;
             gridBagConstraints.weighty = 2.5;
             gridBagConstraints.insets = new Insets(6, 3, 6, 3);
-            inventoryPanel.add(item.getItemButton(), gridBagConstraints);
-            i++;
+            inventoryPanel.add(items[i].getItemButton(), gridBagConstraints);
         }
     }
 

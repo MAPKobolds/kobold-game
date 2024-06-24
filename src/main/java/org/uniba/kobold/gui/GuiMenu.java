@@ -16,7 +16,7 @@ public class GuiMenu extends GuiAbstractPanel {
      */
     private static final String bgURL = "/img/pporc.png";
     private static final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel(bgURL);
-    private static JToggleButton muteMusicButton = new JToggleButton();
+    private static final JToggleButton muteMusicButton = new JToggleButton();
     private static JButton gameStartButton;
     private static JButton loadGameButton;
     private static JButton creditsButton;
