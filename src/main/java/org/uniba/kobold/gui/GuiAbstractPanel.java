@@ -44,6 +44,8 @@ public abstract class GuiAbstractPanel extends JPanel {
          */
         public abstract void initComponents();
 
+        public <T> void initComponents(T Object) {
+        };
         /**
          * Method to update the layout of the class GuiAbstractPanel
          */
