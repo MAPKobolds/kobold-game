@@ -76,6 +76,7 @@ public class GuiMenu extends GuiAbstractPanel {
         ).getButton();
 
         //Mute music button logic and clip management
+        muteMusicButton.setBounds(0, 0, 50, 50);
         UtilMusic.initButton(muteMusicButton);
 
         //gameStartButton logic
