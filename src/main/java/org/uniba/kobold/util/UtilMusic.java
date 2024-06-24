@@ -86,7 +86,6 @@ public class UtilMusic extends Thread{
         public static void initButton(JToggleButton muteMusicButton) {
                 //Mute music button logic and clip management
                 muteMusicButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-                muteMusicButton.setBounds(0, 0, 50, 50);
                 muteMusicButton.setForeground(Color.WHITE);
                 muteMusicButton.setBackground(new Color(40, 0, 5));
                 instance = UtilMusic.getInstance();
