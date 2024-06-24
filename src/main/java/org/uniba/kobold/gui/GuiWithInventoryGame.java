@@ -16,11 +16,13 @@ public class GuiWithInventoryGame extends JPanel {
     private static final int MAXITEMS = 8;
     private static final Item[] items = new Item[MAXITEMS];
     private static final String backgroundPath = "/img/pporc.png";
+    private static final String mapPath = "/img/BR.png";
 
     private JPanel gamePanel;
     private JToggleButton muteMusicButton;
     private JPanel inventoryPanel;
     private JPanel dialogPanel;
+    private JPanel mapPanel;
     private JButton menuButton;
     private JButton saveButton;
     private JButton toggleInventoryButton;
@@ -51,6 +53,7 @@ public class GuiWithInventoryGame extends JPanel {
         gamePanel = new GuiBackgroundPanel(backgroundPath);
         inputField = new JTextField();
         toolBar = new JToolBar();
+        mapPanel = new GuiBackgroundPanel(mapPath);
         muteMusicButton = new JToggleButton();
 
         //Setting the buttons up
@@ -76,8 +79,8 @@ public class GuiWithInventoryGame extends JPanel {
         toolBar.add(muteMusicButton);
         toolBar.add(Box.createHorizontalStrut(50));
 
-        toggleInventoryButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        toggleInventoryButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        toggleInventoryButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        toggleInventoryButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         toggleInventoryButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         toggleInventoryButton.addActionListener(_ -> {
             CardLayout cardLayout = (CardLayout) getParent().getLayout();
@@ -86,15 +89,14 @@ public class GuiWithInventoryGame extends JPanel {
         toolBar.add(toggleInventoryButton);
         toolBar.add(Box.createHorizontalStrut(800));
 
-        saveButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        saveButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        saveButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        saveButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         toolBar.add(saveButton);
         toolBar.add(Box.createHorizontalStrut(50));
 
-
-        menuButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        menuButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        menuButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        menuButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         menuButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         menuButton.addActionListener(_ -> {
             CardLayout cardLayout = (CardLayout) getParent().getLayout();
@@ -105,8 +107,9 @@ public class GuiWithInventoryGame extends JPanel {
         //Setting the toolbar
         toolBar.setRollover(true);
         toolBar.setFloatable(false);
-        toolBar.setBackground(new Color(40, 0, 5));
+        toolBar.setBackground(Color.BLACK);
 
+        mapPanel.setBounds(getWidth() - 200, 0, 200, 200);
         withInventoryLayout();
         inventoryPanel.setBackground(new Color(40, 0, 5));
         inventoryPanel.setLayout(new GridBagLayout());
@@ -115,12 +118,18 @@ public class GuiWithInventoryGame extends JPanel {
         dialogPanel.setBackground(new Color(40, 0, 5));
     }
 
+    private void updateLayout() {
+        mapPanel.setBounds(getWidth() - 200, 0, 200, 200);
+        withInventoryLayout();
+    }
+
     /**
      * Method to fill the inventory
      */
     public void fillInventory() {
-        for (int i = 0; i < MAXITEMS; i++) {
-            items[i] = new Item("Item" + i, "Description" + i);
+        int i = 0;
+        for (Item item : items) {
+            item = new Item("Item" + i, "Description" + i);
             GridBagConstraints gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = i % 3;
             gridBagConstraints.gridy = i / 3;
@@ -130,7 +139,8 @@ public class GuiWithInventoryGame extends JPanel {
             gridBagConstraints.weightx = 0.4;
             gridBagConstraints.weighty = 2.5;
             gridBagConstraints.insets = new Insets(6, 3, 6, 3);
-            inventoryPanel.add(items[i].getItemButton(), gridBagConstraints);
+            inventoryPanel.add(item.getItemButton(), gridBagConstraints);
+            i++;
         }
     }
 
@@ -138,60 +148,68 @@ public class GuiWithInventoryGame extends JPanel {
      * Method to update the layout of the components of the withInventoryLayout
      */
     public void withInventoryLayout() {
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(dialogPanel);
-        dialogPanel.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
+        GroupLayout dialogLayout = new GroupLayout(dialogPanel);
+        dialogPanel.setLayout(dialogLayout);
+        dialogLayout.setHorizontalGroup(
+                dialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(dialogLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(dialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addComponent(inputField)
-                                        .addComponent(dialogText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(dialogText, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(dialogText, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(inputField, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+        dialogLayout.setVerticalGroup(
+                dialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(dialogLayout.createSequentialGroup()
+                                .addComponent(dialogText, GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(inputField, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
         );
 
         gamePanel.setBackground(new java.awt.Color(102, 102, 255));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(gamePanel);
-        gamePanel.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 674, Short.MAX_VALUE)
+        GroupLayout gameLayout = new GroupLayout(gamePanel);
+        gamePanel.setLayout(gameLayout);
+        gameLayout.setHorizontalGroup(
+                gameLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(gameLayout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(mapPanel, 200, 200, 200)
+                                .addContainerGap()
+                                .addGap(0, 0, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 0, Short.MAX_VALUE)
+        gameLayout.setVerticalGroup(
+                gameLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(gameLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(mapPanel, 200, 200, 200)
+                                .addContainerGap()
+                                .addGap(0, 439, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(inventoryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(gamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(dialogPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(toolBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(inventoryPanel, GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(gamePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(dialogPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(toolBar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(toolBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(inventoryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
-                                        .addComponent(gamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dialogPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(toolBar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(inventoryPanel, GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+                                        .addComponent(gamePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dialogPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
 
