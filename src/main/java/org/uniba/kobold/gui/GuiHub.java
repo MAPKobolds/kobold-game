@@ -21,11 +21,11 @@ public class GuiHub extends JFrame {
      */
     public GuiHub() {
 
-        //Jframe Settings
+        //JFrame Settings
         setTitle("Cerignolus: Città dei Coboldi");
         setSize(width, height);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+        setResizable(true);
 
         //Logo Settings
         URL logo = GuiMenu.class.getResource("/img/BR.png");
@@ -54,14 +54,16 @@ public class GuiHub extends JFrame {
         GuiCredits credits = new GuiCredits();
         GuiLoadGame loadGame = new GuiLoadGame();
         GuiLoadingScreen loadingScreen = new GuiLoadingScreen();
-        GuiGame game = new GuiGame();
+        GuiWithInventoryGame withInventoryCard = new GuiWithInventoryGame();
+        GuiNoInventoryGame noInventoryCard = new GuiNoInventoryGame();
 
         //Card layout management
         cards.add(menu, "Menu");
         cards.add(credits, "Credits");
         cards.add(loadGame, "SaveInstances");
         cards.add(loadingScreen, "LoadingScreen");
-        cards.add(game, "Game");
+        cards.add(withInventoryCard, "Game");
+        cards.add(noInventoryCard, "noInventoryGame");
         return cards;
     }
 }

@@ -14,9 +14,29 @@ public class GuiGenericButton extends JButton {
          */
         public GuiGenericButton(String text) {
             super(text);
-            setFont(new java.awt.Font("Arial", 0, 14));
+            setFont(new java.awt.Font("Arial", Font.BOLD, 14));
             setBackground(new java.awt.Color(204, 204, 204));
             setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        }
+
+        public GuiGenericButton(String text, Color bgColor, Color textColor) {
+            super(text);
+            setFont(new java.awt.Font("Arial", Font.BOLD, 14));
+            setBackground(bgColor);
+            setForeground(textColor);
+            setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        }
+
+        public GuiGenericButton(String text, Color bgColor, Color textColor, Dimension size) {
+            super(text);
+            setFont(new java.awt.Font("Arial", Font.BOLD, 14));
+            setBackground(bgColor);
+            setForeground(textColor);
+            setPreferredSize(size);
+            setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         }
 
         /**

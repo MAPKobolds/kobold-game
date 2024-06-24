@@ -10,22 +10,21 @@ import java.awt.event.ComponentEvent;
 /**
  * Class GuiLoadingScreen
  */
-public class GuiLoadingScreen extends JPanel {
+public class GuiLoadingScreen extends GuiAbstractPanel {
 
     /**
      * Attributes of the class GuiLoadingScreen
      */
+    private final String bgURL = "/img/pporc.png";
     private JProgressBar progressBar;
-    private JToggleButton muteMusicButton;
-    private final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel();
+    private final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel(bgURL);
+    private final JToggleButton muteMusicButton = new JToggleButton();
 
     /**
      * Constructor of the class GuiLoadingScreen
      */
     public GuiLoadingScreen() {
-        initComponents();
-
-        // Aggiungi un ComponentAdapter per eseguire il codice legato al muteMusicButton quando il componente viene mostrato
+        panelManager();
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
@@ -37,19 +36,22 @@ public class GuiLoadingScreen extends JPanel {
     /**
      * Method to initialize the components of the class GuiLoadingScreen
      */
-    private void initComponents() {
+    @Override
+    public void initComponents() {
         progressBar = new JProgressBar(0, 100);
-        muteMusicButton = new JToggleButton();
 
         //Progress Bar Settings
         progressBar.setStringPainted(true);
         progressBar.setString("0%");
-        progressBar.setBounds(100, 500, 600, 50);
         progressBar.setFont(new Font("Arial", Font.BOLD, 20));
         progressBar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        progressBar.setForeground(Color.MAGENTA);
+        progressBar.setForeground(new Color(40, 0, 5));
         progressBar.setBackground(Color.BLACK);
-        backgroundPanel.add(progressBar);
+
+        //muteMusicButton settings
+        muteMusicButton.setBounds(0, 0, 50, 50);
+        UtilMusic.initButton(muteMusicButton);
+        add(muteMusicButton);
 
         //Progress bar thread logic and card layout management
         addComponentListener(new ComponentAdapter() {
@@ -63,7 +65,7 @@ public class GuiLoadingScreen extends JPanel {
                                 progressBar.setValue(progress);
                                 progressBar.setString("Loading..." + progress + "%");
                             });
-                            Thread.sleep(20);
+                            Thread.sleep(10);
                         }
                         progressBar.setString("Kobold is ready!");
                         Thread.sleep(1000);
@@ -79,24 +81,25 @@ public class GuiLoadingScreen extends JPanel {
             }
         });
 
-        //Layout Settings
-        GroupLayout backgroundLayout = new GroupLayout(backgroundPanel);
-        backgroundPanel.setLayout(backgroundLayout);
-        backgroundLayout.setHorizontalGroup(
-                backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(backgroundLayout.createSequentialGroup()
-                                .addComponent(muteMusicButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        backgroundLayout.setVerticalGroup(
-                backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(backgroundLayout.createSequentialGroup()
-                                .addComponent(muteMusicButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                .addGap(199, 199, 199)
-        ));
+        super.manageBackgroundLayout(this, backgroundPanel);
+    }
 
-        //Background group layout manager
-        backgroundPanel.setLayout(backgroundLayout);
-        GuiBackgroundPanel.manageBackgroundLayout(this, backgroundPanel);
+    /**
+     * Method to update the layout of the class GuiLoadingScreen
+     */
+    @Override
+    public void updateLayout() {
+        int width = getWidth();
+        int height = getHeight();
+        int buttonHeight = 50 * height / 600;
+        int buttonWidth = 50 * height / 600;
+        double widthOffset = width * 0.10;
+        double heightOffset = height * 0.85;
+
+        //This is where the magic happens
+        add(progressBar);
+        backgroundPanel.setBounds(0, 0, width, height);
+        progressBar.setBounds((int) widthOffset, (int) heightOffset, (int) (width * 0.80), (int) (height * 0.10));
+        muteMusicButton.setBounds(0, 0, buttonWidth, buttonHeight);
     }
 }

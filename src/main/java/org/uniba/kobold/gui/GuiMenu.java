@@ -9,47 +9,74 @@ import java.awt.event.ComponentEvent;
 /**
  * Class GuiMenu
  */
-public class GuiMenu extends JPanel {
+public class GuiMenu extends GuiAbstractPanel {
 
     /**
      * Attributes of the MainMenu class
      */
-    private static final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel();
+    private static final String bgURL = "/img/pporc.png";
+    private static final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel(bgURL);
+    private static final JToggleButton muteMusicButton = new JToggleButton();
     private static JButton gameStartButton;
     private static JButton loadGameButton;
     private static JButton creditsButton;
     private static JButton exitButton;
-    private static JToggleButton muteMusicButton;
 
     /**
      * Constructor of the class GuiMenu
      */
-    public GuiMenu() {
-        initComponents();
-
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                updateButtonPositions();
-            }
-        });
+   public GuiMenu() {
+        panelManager();
+       addComponentListener(new ComponentAdapter() {
+           @Override
+           public void componentShown(ComponentEvent e) {
+               UtilMusic.initButton(muteMusicButton);
+           }
+       });
     }
 
     /**
      * Method to initialize the components of the MainMenu class
      */
-    private void initComponents() {
+    @Override
+    public void initComponents() {
 
-        gameStartButton = new GuiGenericButton("Inizia Partita").getButton();
-        loadGameButton = new GuiGenericButton("Carica Partita").getButton();
-        creditsButton = new GuiGenericButton("Riconoscimenti").getButton();
-        exitButton = new GuiGenericButton("Esci").getButton();
-        muteMusicButton = new JToggleButton();
-
+        //Panel specific settings
         setPreferredSize(new Dimension(getWidth(), getHeight()));
         setSize(new Dimension(getWidth(), getHeight()));
+        setLayout(null);
+
+        //Buttons initialization
+        gameStartButton = new GuiGenericButton(
+            "Inizia Partita",
+            new Color(40, 0, 5),
+            Color.WHITE,
+            new Dimension(800, 100)
+        ).getButton();
+
+        loadGameButton = new GuiGenericButton(
+                "Carica Partita",
+                new Color(40, 0, 5),
+                Color.WHITE,
+                new Dimension(800, 100)
+        ).getButton();
+
+        creditsButton = new GuiGenericButton(
+                "Riconoscimenti",
+                new Color(40, 0, 5),
+                Color.WHITE,
+                new Dimension(800, 100)
+        ).getButton();
+
+        exitButton = new GuiGenericButton(
+                "Esci",
+                new Color(40, 0, 5),
+                Color.WHITE,
+                new Dimension(800, 100)
+        ).getButton();
 
         //Mute music button logic and clip management
+        muteMusicButton.setBounds(0, 0, 50, 50);
         UtilMusic.initButton(muteMusicButton);
 
         //gameStartButton logic
@@ -73,60 +100,35 @@ public class GuiMenu extends JPanel {
         //Exit button logic
         exitButton.addActionListener(_ -> System.exit(0));
 
-        //Layout Settings
-        GroupLayout backgroundLayout = new GroupLayout(backgroundPanel);
-        backgroundPanel.setLayout(backgroundLayout);
-        backgroundLayout.setHorizontalGroup(
-                backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
-                                .addContainerGap(491, Short.MAX_VALUE)
-                                .addGroup(backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addGroup(GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
-                                                .addGroup(backgroundLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                                                        .addComponent(creditsButton, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                                                        .addComponent(loadGameButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(gameStartButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(169, 169, 169))
-                                        .addGroup(GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
-                                                .addComponent(exitButton, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(179, 179, 179))))
-                        .addGroup(backgroundLayout.createSequentialGroup()
-                                .addComponent(muteMusicButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        backgroundLayout.setVerticalGroup(
-                backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(backgroundLayout.createSequentialGroup()
-                                .addComponent(muteMusicButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                .addGap(199, 199, 199)
-                                .addComponent(gameStartButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(loadGameButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(creditsButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)
-                                .addComponent(exitButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(88, Short.MAX_VALUE))
-        );
+        //Adding components to the panel
+        add(muteMusicButton);
+        add(gameStartButton);
+        add(loadGameButton);
+        add(creditsButton);
+        add(exitButton);
 
-        //Background group layout manager
-        backgroundPanel.setLayout(backgroundLayout);
-        GuiBackgroundPanel.manageBackgroundLayout(this, backgroundPanel);
+        //Background panel management
+        super.manageBackgroundLayout(this, backgroundPanel);
     }
 
     /**
-     * Method to update the position of the buttons
+     * Method to update the position of the components
      */
-    private void updateButtonPositions() {
+    @Override
+     public void updateLayout() {
         int width = getWidth();
         int height = getHeight();
-        double widthOffset = width * 0.75;
-        double heightOffset = height * 0.25;
-        int offset = 50;
+        int buttonHeight = 50 * height / 600;
+        int buttonWidth = 50 * height / 600;
+        double widthOffset = width * 0.10;
+        double heightOffset = height * 0.55;
+        int offset = 70 * height / 600;
 
-        gameStartButton.setBounds((int) widthOffset, (int) heightOffset, 140, 40);
-        loadGameButton.setBounds((int) widthOffset , (int) heightOffset + offset, 140, 40);
-        creditsButton.setBounds((int) widthOffset, (int) heightOffset + (offset * 2), 140, 40);
-        exitButton.setBounds((int) widthOffset, (int) heightOffset + (offset * 3), 120, 40);
+        //This is where the magic happens
+        gameStartButton.setBounds((int) widthOffset, (int) heightOffset, (int) (width * 0.80), buttonHeight);
+        loadGameButton.setBounds((int) widthOffset, (int) heightOffset + offset, (int) (width * 0.80), buttonHeight);
+        creditsButton.setBounds((int) widthOffset, (int) heightOffset + (offset * 2), (int) (width * 0.80), buttonHeight);
+        exitButton.setBounds((int) widthOffset, (int) heightOffset + (offset * 3), (int) (width * 0.80), buttonHeight);
+        muteMusicButton.setBounds(0, 0, buttonWidth, buttonHeight);
     }
 }
