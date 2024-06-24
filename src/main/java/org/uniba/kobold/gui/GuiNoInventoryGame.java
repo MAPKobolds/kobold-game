@@ -35,13 +35,16 @@ public class GuiNoInventoryGame extends JPanel {
             public void componentShown(ComponentEvent e) {
                 UtilMusic.initButton(muteMusicButton);
             }
+            @Override
             public void componentResized(ComponentEvent e) {
-                updateLayout();
+                updateToolbar();
             }
         });
     }
 
     public void initComponents() {
+
+        //Initializations
         gamePanel = new GuiBackgroundPanel(backgroundPath);
         dialogPanel = new JPanel();
         mapPanel = new GuiBackgroundPanel(mapPath);
@@ -69,50 +72,47 @@ public class GuiNoInventoryGame extends JPanel {
                 Color.WHITE
         ).getButton();
 
+        //Setting the muteMusicButton
         UtilMusic.initButton(muteMusicButton);
-        toolBar.add(muteMusicButton);
-        toolBar.add(Box.createHorizontalStrut(50));
 
-        toggleInventoryButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        toggleInventoryButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        //Setting the toggleInventoryButton
         toggleInventoryButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         toggleInventoryButton.addActionListener(_ -> {
             CardLayout cardLayout = (CardLayout) getParent().getLayout();
             cardLayout.show(getParent(), "Game");
         });
-        toolBar.add(toggleInventoryButton);
-        toolBar.add(Box.createHorizontalStrut(800));
 
-        saveButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        saveButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        //Setting the saveButton
         saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        toolBar.add(saveButton);
-        toolBar.add(Box.createHorizontalStrut(50));
 
-        menuButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        menuButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        //Setting the menuButton
         menuButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         menuButton.addActionListener(_ -> {
             CardLayout cardLayout = (CardLayout) getParent().getLayout();
             cardLayout.show(getParent(), "Menu");
         });
-        toolBar.add(menuButton);
 
         //Setting the toolbar
         toolBar.setRollover(true);
         toolBar.setFloatable(false);
         toolBar.setBackground(Color.BLACK);
 
-        mapPanel.setBounds(getWidth() - 100, 0, 100, 100);
         noInventoryLayout();
         dialogPanel.setBackground(new Color(40, 0, 5));
     }
 
     /**
-     * Method to update the layout of the components of the gamePanel
+     * Method to update the toolbar
      */
-    private void updateLayout() {
-        mapPanel.setBounds(getWidth() - 200, 0, 200, 200);
+    private void updateToolbar() {
+        double widthOffsetSx = this.getWidth() * 0.01;
+        toolBar.removeAll();
+        toolBar.add(muteMusicButton);
+        toolBar.add(toggleInventoryButton);
+        toolBar.add(Box.createHorizontalGlue());
+        toolBar.add(saveButton);
+        toolBar.add(Box.createHorizontalStrut((int) widthOffsetSx));
+        toolBar.add(menuButton);
         noInventoryLayout();
     }
 
@@ -148,14 +148,13 @@ public class GuiNoInventoryGame extends JPanel {
                 gameLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(gameLayout.createSequentialGroup()
                                 .addGap(0, 0, 0)
-                                .addComponent(mapPanel, 200, 200, 200)
+                                .addComponent(mapPanel, 250, 250, 250)
                                 .addContainerGap()
                         .addGap(0, 0, Short.MAX_VALUE))
         );
         gameLayout.setVerticalGroup(
                 gameLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(gameLayout.createSequentialGroup()
-                                .addContainerGap()
                                 .addComponent(mapPanel, 200, 200, 200)
                                 .addContainerGap()
                         .addGap(0, 439, Short.MAX_VALUE))
