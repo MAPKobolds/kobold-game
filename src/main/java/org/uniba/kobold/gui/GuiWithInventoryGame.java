@@ -40,6 +40,10 @@ public class GuiWithInventoryGame extends JPanel {
             public void componentShown(ComponentEvent e) {
                 UtilMusic.initButton(muteMusicButton);
             }
+            @Override
+            public void componentResized(ComponentEvent e) {
+                updateToolbar();
+            }
         });
     }
 
@@ -75,41 +79,31 @@ public class GuiWithInventoryGame extends JPanel {
                 Color.WHITE
         ).getButton();
 
+        //Setting the muteMusicButton
         UtilMusic.initButton(muteMusicButton);
-        toolBar.add(muteMusicButton);
-        toolBar.add(Box.createHorizontalStrut(50));
 
-        toggleInventoryButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        toggleInventoryButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        //Setting the toggleInventoryButton
         toggleInventoryButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         toggleInventoryButton.addActionListener(_ -> {
             CardLayout cardLayout = (CardLayout) getParent().getLayout();
             cardLayout.show(getParent(), "noInventoryGame");
         });
-        toolBar.add(toggleInventoryButton);
-        toolBar.add(Box.createHorizontalStrut(800));
 
-        saveButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        saveButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        //Setting the saveButton
         saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        toolBar.add(saveButton);
-        toolBar.add(Box.createHorizontalStrut(50));
 
-        menuButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        menuButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        //Setting the menuButton
         menuButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         menuButton.addActionListener(_ -> {
             CardLayout cardLayout = (CardLayout) getParent().getLayout();
             cardLayout.show(getParent(), "Menu");
         });
-        toolBar.add(menuButton);
 
         //Setting the toolbar
         toolBar.setRollover(true);
         toolBar.setFloatable(false);
         toolBar.setBackground(Color.BLACK);
 
-        mapPanel.setBounds(getWidth() - 200, 0, 200, 200);
         withInventoryLayout();
         inventoryPanel.setBackground(new Color(40, 0, 5));
         inventoryPanel.setLayout(new GridBagLayout());
@@ -121,20 +115,44 @@ public class GuiWithInventoryGame extends JPanel {
     /**
      * Method to fill the inventory
      */
-    public void fillInventory() {
+    private void fillInventory() {
         for (int i = 0; i < items.length; i++) {
             items[i] = new Item("Item" + i, "Description" + i);
             GridBagConstraints gridBagConstraints = new GridBagConstraints();
-            gridBagConstraints.gridx = i % 3;
-            gridBagConstraints.gridy = i / 3;
-            gridBagConstraints.fill = GridBagConstraints.BOTH;
-            gridBagConstraints.ipady = 5;
-            gridBagConstraints.anchor = GridBagConstraints.ABOVE_BASELINE;
-            gridBagConstraints.weightx = 0.4;
-            gridBagConstraints.weighty = 2.5;
-            gridBagConstraints.insets = new Insets(6, 3, 6, 3);
+            gridManager(gridBagConstraints, i);
             inventoryPanel.add(items[i].getItemButton(), gridBagConstraints);
         }
+    }
+
+    /**
+     * Method to manage the grid layout
+     * @param gridBagConstraints the grid layout manager
+     * @param i the index of the item
+     */
+    private void gridManager(GridBagConstraints gridBagConstraints, int i) {
+        gridBagConstraints.gridx = i % 3;
+        gridBagConstraints.gridy = i / 3;
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.anchor = GridBagConstraints.ABOVE_BASELINE;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weighty = 2.5;
+        gridBagConstraints.insets = new Insets(6, 3, 6, 3);
+    }
+
+    /**
+     * Method to set and update the toolbar
+     */
+    private void updateToolbar() {
+        double widthOffsetSx = this.getWidth() * 0.01;
+        toolBar.removeAll();
+        toolBar.add(muteMusicButton);
+        toolBar.add(toggleInventoryButton);
+        toolBar.add(Box.createHorizontalGlue());
+        toolBar.add(saveButton);
+        toolBar.add(Box.createHorizontalStrut((int) widthOffsetSx));
+        toolBar.add(menuButton);
+        withInventoryLayout();
     }
 
     /**
@@ -168,7 +186,6 @@ public class GuiWithInventoryGame extends JPanel {
         gameLayout.setHorizontalGroup(
                 gameLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(gameLayout.createSequentialGroup()
-                                .addGap(0, 0, 0)
                                 .addComponent(mapPanel, 200, 200, 200)
                                 .addContainerGap()
                                 .addGap(0, 0, Short.MAX_VALUE))
@@ -176,7 +193,6 @@ public class GuiWithInventoryGame extends JPanel {
         gameLayout.setVerticalGroup(
                 gameLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(gameLayout.createSequentialGroup()
-                                .addContainerGap()
                                 .addComponent(mapPanel, 200, 200, 200)
                                 .addContainerGap()
                                 .addGap(0, 439, Short.MAX_VALUE))
@@ -196,8 +212,8 @@ public class GuiWithInventoryGame extends JPanel {
         layout.setVerticalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(toolBar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(toolBar, 30, 30, 30)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addComponent(inventoryPanel, GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
                                         .addComponent(gamePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -205,5 +221,4 @@ public class GuiWithInventoryGame extends JPanel {
                                 .addComponent(dialogPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
-
 }
