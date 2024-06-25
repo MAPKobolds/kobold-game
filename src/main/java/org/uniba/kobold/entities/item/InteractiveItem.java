@@ -1,4 +1,4 @@
-package org.uniba.kobold.entities;
+package org.uniba.kobold.entities.item;
 
 interface InteractiveItem  {
 

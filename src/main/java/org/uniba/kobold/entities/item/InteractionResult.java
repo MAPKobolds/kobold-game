@@ -1,4 +1,4 @@
-package org.uniba.kobold.entities;
+package org.uniba.kobold.entities.item;
 
 public enum InteractionResult {
     SUCCESSFUL,
