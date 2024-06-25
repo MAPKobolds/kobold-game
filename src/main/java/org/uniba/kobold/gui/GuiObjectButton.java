@@ -9,7 +9,7 @@ public class GuiObjectButton extends JButton{
     /**
      * Attributes of the class GuiObjectButton
      */
-    private String objectImagePath;
+    private final String objectImagePath;
 
     /**
      * Constructor of the class GuiObjectButton
