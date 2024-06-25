@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
 
 /**
  * Class GuiLoadGame
@@ -28,7 +29,7 @@ public class GuiLoadGame extends GuiAbstractPanel {
      * Constructor for the GuiLoadGame class
      */
     public GuiLoadGame() {
-       panelManager();
+        panelManager();
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
@@ -63,10 +64,17 @@ public class GuiLoadGame extends GuiAbstractPanel {
             });
         }
 
+        //Temporaneo finché non avremo salvataggi veri
+        for (int i = 0; i < 3; i++) {
+            SaveInstance saveGame = new SaveInstance();
+            SaveInstancePanel savePanel = new SaveInstancePanel(saveGame);
+        }
+
         // Add the menuButton to the JLayeredPane with a higher depth value
         if (menuButton != null) layeredPane.add(menuButton, JLayeredPane.PALETTE_LAYER);
         layeredPane.add(backgroundPanel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(muteMusicButton, JLayeredPane.PALETTE_LAYER);
+
         //Container of the save games panel settings
         savesBGPanel.setRequestFocusEnabled(false);
     }
@@ -75,21 +83,11 @@ public class GuiLoadGame extends GuiAbstractPanel {
      * Method to fill the savesBGPanel with the SaveInstancePanels
      */
     private void fillSavesBGPanel() {
-        savesBGPanel.removeAll();
-        layeredPane.remove(savesBGPanel);
         savesBGPanel.setLayout(new BoxLayout(savesBGPanel, BoxLayout.Y_AXIS));
-        //Temporaneo finché non avremo salvataggi veri
-        for (int i = 0; i < 3; i++) {
-            SaveInstance saveGame = new SaveInstance();
-        }
-        for (SaveInstance save : SaveInstance.getInstances()) {
-            SaveInstancePanel savePanel= new SaveInstancePanel(save);
-            savePanel.setVisible(true);
+        for (SaveInstancePanel savePanel : SaveInstancePanel.getInstances()) {
             savePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             savesBGPanel.add(savePanel);
         }
-        savesBGPanel.revalidate();
-        savesBGPanel.repaint();
         layeredPane.add(savesBGPanel, JLayeredPane.PALETTE_LAYER);
     }
 
@@ -122,6 +120,7 @@ public class GuiLoadGame extends GuiAbstractPanel {
         /**
          * Attributes of the SaveInstancePanel class
          */
+        private static ArrayList<SaveInstancePanel> instances = new ArrayList<>();
         private final int saveWidth = (int) (backgroundPanel.getWidth() * 0.85);
         private final int saveHeight = (int) (backgroundPanel.getHeight() * 0.10);
         private JButton loadButton;
@@ -149,60 +148,67 @@ public class GuiLoadGame extends GuiAbstractPanel {
         }
 
         /**
+         * Method to get the instances of the SaveInstancePanel class
+         */
+        public static ArrayList<SaveInstancePanel> getInstances() {
+            return instances;
+        }
+
+        /**
          * Method to initialize the components of the SaveInstancePanel class
          */
         @Override
         public <T> void initComponents(T object) {
-
             setMinimumSize(new Dimension(saveWidth, saveHeight));
             setMaximumSize(new Dimension(saveWidth, saveHeight));
             setBackground(new Color(40, 0, 5));
+            setVisible(true);
+            try {
+                if (object instanceof SaveInstance save) {
+                    instances.add(this);
+                    setLayout(null);
+                    //Initializations
+                    loadButton = new GuiGenericButton(
+                            "Carica",
+                            new Color(40, 0, 5),
+                            Color.WHITE,
+                            new Dimension(100, 50)
+                    ).getButton();
+                    deleteButton = new GuiGenericButton(
+                            "Elimina",
+                            new Color(40, 0, 5),
+                            Color.WHITE,
+                            new Dimension(100, 50)
+                    ).getButton();
+                    loadInfoLabel = new JLabel();
 
-            if (object instanceof SaveInstance save) {
+                    //loadButton settings
+                    loadButton.addActionListener(_ -> {
+                        //Qui andrà richiamato il metodo che seleziona il salvataggio e poi loading screen
+                        CardLayout loadingScreen = (CardLayout) GuiLoadGame.this.getParent().getLayout();
+                        loadingScreen.show(GuiLoadGame.this.getParent(), "LoadingScreen");
+                    });
 
-                //Initializations
-                loadButton = new GuiGenericButton(
-                        "Carica",
-                        new Color(40, 0, 5),
-                        Color.WHITE,
-                        new Dimension(100, 50)
-                ).getButton();
-                deleteButton = new GuiGenericButton(
-                        "Elimina",
-                        new Color(40, 0, 5),
-                        Color.WHITE,
-                        new Dimension(100, 50)
-                ).getButton();
-                loadInfoLabel = new JLabel();
+                    //deleteButton settings
+                    deleteButton.addActionListener(_ -> {
+                        SaveInstance.getInstances().remove(save);
+                        updateLayout();
+                    });
 
-                //loadButton settings
-                loadButton.addActionListener(_ -> {
-                    //Qui andrà richiamato il metodo che seleziona il salvataggio e poi loading screen
-                    CardLayout loadingScreen = (CardLayout) GuiLoadGame.this.getParent().getLayout();
-                    loadingScreen.show(GuiLoadGame.this.getParent(), "LoadingScreen");
-                });
+                    //loadInfoLabel settings
+                    loadInfoLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 14));
+                    loadInfoLabel.setForeground(Color.WHITE);
+                    loadInfoLabel.setText(save.getSaveName() + " - " + save.getSaveDate());
 
-                //deleteButton settings
-                deleteButton.addActionListener(_ -> {
-                    SaveInstance.getInstances().remove(save);
-                    updateLayout();
-                });
-
-                //loadInfoLabel settings
-                loadInfoLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 14));
-                loadInfoLabel.setForeground(Color.WHITE);
-                loadInfoLabel.setText(save.getSaveName() + " - " + save.getSaveDate());
-                loadInfoLabel.setBounds(0, 0, (int) (saveWidth * 0.50), saveHeight);
-
-                loadButton.setBounds((int) (saveWidth * 0.60), (int) (saveHeight * 0.10), 100, 50);
-                deleteButton.setBounds((int) (saveWidth * 0.80), (int) (saveHeight * 0.85), 100, 50);
-
-                //Adding components to the panel
-                add(loadButton);
-                add(deleteButton);
-                add(loadInfoLabel);
-            } else {
+                    //Adding components to the panel
+                    add(loadButton);
+                    add(deleteButton);
+                    add(loadInfoLabel);
+                }
+            } catch (ClassCastException e){
                 throw new IllegalArgumentException("Object is not of type SaveInstance");
+            } catch (NullPointerException e){
+                throw new IllegalArgumentException("Object is null");
             }
         }
 
@@ -214,9 +220,9 @@ public class GuiLoadGame extends GuiAbstractPanel {
             //This is where the magic happens
             loadInfoLabel.setHorizontalTextPosition(SwingConstants.CENTER);
             loadInfoLabel.setVerticalTextPosition(SwingConstants.CENTER);
-            loadInfoLabel.setBounds(0, 0, (int) (saveWidth * 0.50), saveHeight);
-            loadButton.setBounds((int) (saveWidth * 0.60), (int) (saveHeight * 0.10), 100, 50);
-            deleteButton.setBounds((int) (saveWidth * 0.80), (int) (saveHeight * 0.85), 100, 50);
+            loadInfoLabel.setBounds((int) (saveWidth * 0.05), (int) (saveHeight * 0.10), (int) (saveWidth * 0.50), saveHeight);
+            loadButton.setBounds((int) (saveWidth * 0.70), (int) (saveHeight * 0.10), 100, 50);
+            deleteButton.setBounds((int) (saveWidth * 0.82), (int) (saveHeight * 0.10), 100, 50);
         }
     }
 }

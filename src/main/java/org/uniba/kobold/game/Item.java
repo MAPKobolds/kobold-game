@@ -1,10 +1,8 @@
 package org.uniba.kobold.game;
 
-import org.uniba.kobold.gui.GuiGenericButton;
+import org.uniba.kobold.gui.GuiObjectButton;
 
 import javax.swing.*;
-import java.util.ArrayList;
-
 
 public class Item {
 
@@ -13,7 +11,8 @@ public class Item {
      */
     private String name;
     private String description;
-    private JButton itemButton;
+    private final String objectImagePath;
+    private final JButton itemButton;
 
     /**
      * Constructor of the Item class
@@ -23,10 +22,11 @@ public class Item {
     public Item(String name, String description) {
         this.name = name;
         this.description = description;
-        this.itemButton = new GuiGenericButton(
+        this.objectImagePath = "/img/BR.png";
+        //this.objectImagePath = "/img/" + name + ".png";
+        this.itemButton = new GuiObjectButton(
                 name,
-                new java.awt.Color(40, 0, 5),
-                java.awt.Color.WHITE
+                objectImagePath
         ).getButton();
     }
 

@@ -35,6 +35,10 @@ public class GuiBackgroundPanel extends GuiAbstractPanel {
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 
+    /**
+     * Method to paint the background image
+     * @param g the graphics
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
