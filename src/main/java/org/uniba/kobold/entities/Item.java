@@ -6,10 +6,12 @@ import java.io.File;
 import java.io.IOException;
 
 public class Item {
+    private String name;
     private String description;
     private BufferedImage image;
 
-    Item(String description, String imagePath) throws IOException {
+    Item(String name, String description, String imagePath) throws IOException {
+        this.name = name;
         this.description = description;
         this.image = ImageIO.read(new File(imagePath));
     }
