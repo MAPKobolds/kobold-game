@@ -25,7 +25,7 @@ public class ModularItem extends Item {
         this.pieces.addAll(pieces);
     }
 
-    void addPiece(Class item) {
+    public void addPiece(Class item) {
         if(pieces.stream().noneMatch(p -> Objects.equals(p, item))){
             throw new Error("Invalid piece");
         }
@@ -33,7 +33,7 @@ public class ModularItem extends Item {
         actualPieces.add(item);
     }
 
-    boolean isComplete() {
+    public boolean isComplete() {
         boolean isComplete = true;
 
         for (Class item : pieces) {
