@@ -52,7 +52,7 @@ public class ModularItem extends Item {
 
     public List<Class> getRemainingPieces() {
         Set<Class> dummyPieces = new HashSet<>();
-        dummyPieces.addAll(actualPieces);
+        dummyPieces.addAll(pieces);
 
         dummyPieces.removeAll(this.actualPieces);
         return dummyPieces.stream().toList();
