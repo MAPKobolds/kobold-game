@@ -9,10 +9,10 @@ public class Item {
     private String description;
     private ImageIcon image;
 
-    public Item(String name, String description, String imagePath) throws IOException {
+    public Item(String name, String description, String imagePath) {
         this.name = name;
         this.description = description;
-        this.image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/img/BR.png")));
+        this.image = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));
     }
 
     public String getDescription() {

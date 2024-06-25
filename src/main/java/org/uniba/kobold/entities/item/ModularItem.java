@@ -7,7 +7,7 @@ public class ModularItem extends Item {
     Set<Class> pieces = new HashSet<>();
     Set<Class> actualPieces = new HashSet<>();
 
-    public ModularItem(String name, String description, String imagePath, List<Class> pieces) throws IOException {
+    public ModularItem(String name, String description, String imagePath, List<Class> pieces) {
         super(name, description, imagePath);
 
         for(Class item : pieces) {
