@@ -7,14 +7,18 @@ import java.util.Objects;
 import java.util.Set;
 
 public class ModularItem extends Item {
-    Set<Item> pieces;
+    Set<Class> pieces;
     Set<Item> actualPieces = new HashSet<>();
 
-    ModularItem(String name, String description, String imagePath, List<Item> pieces) throws IOException {
+    ModularItem(String name, String description, String imagePath, List<Class> pieces) throws IOException {
         super(name, description, imagePath);
 
-        for(Item item : pieces) {
-            int matchCount = pieces.stream().filter(p -> Objects.equals(p.getName(), item.getName())).toArray().length;
+        for(Class item : pieces) {
+            if(!item.isAssignableFrom(Item.class)) {
+                throw new Error("This list does not contains only items: " + item.getName());
+            }
+
+            int matchCount = pieces.stream().filter(p -> p.equals(item)).toArray().length;
 
             if(matchCount > 1) {
                 throw new Error("Pieces must be unique");
@@ -35,7 +39,7 @@ public class ModularItem extends Item {
     boolean isComplete() {
         boolean isComplete = true;
 
-        for (Item item : pieces) {
+        for (Class item : pieces) {
             if (!actualPieces.contains(item)) {
                 isComplete = false;
                 break;
