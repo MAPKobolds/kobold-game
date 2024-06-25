@@ -45,4 +45,18 @@ public class ModularItem extends Item {
 
         return isComplete;
     }
+
+    public List<Class> getActualPieces() {
+        return actualPieces.stream().toList();
+    }
+
+    public List<Class> getRemainingPieces() {
+        Set<Class> dummyPieces = new HashSet<>();
+        dummyPieces.addAll(actualPieces);
+
+        dummyPieces.removeAll(this.actualPieces);
+        return dummyPieces.stream().toList();
+    }
+
+
 }
