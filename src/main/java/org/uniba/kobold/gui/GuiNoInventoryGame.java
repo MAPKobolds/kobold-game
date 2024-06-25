@@ -53,6 +53,8 @@ public class GuiNoInventoryGame extends JPanel {
         toolBar = new JToolBar();
         muteMusicButton = new JToggleButton();
 
+        setBackground(Color.BLACK);
+        
         //Setting the buttons up
         menuButton = new GuiGenericButton(
                 "Menu",
@@ -73,6 +75,7 @@ public class GuiNoInventoryGame extends JPanel {
         ).getButton();
 
         //Setting the muteMusicButton
+        muteMusicButton.setPreferredSize(new Dimension(40, 10));
         UtilMusic.initButton(muteMusicButton);
 
         //Setting the toggleInventoryButton

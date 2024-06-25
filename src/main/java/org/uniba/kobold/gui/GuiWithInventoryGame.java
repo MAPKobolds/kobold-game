@@ -13,7 +13,7 @@ public class GuiWithInventoryGame extends JPanel {
     /**
      * Attributes of the class GuiWithInventoryGame
      */
-    private static final int MAXITEMS = 8;
+    private static final int MAXITEMS = 20;
     private static final Item[] items = new Item[MAXITEMS];
     private static final String backgroundPath = "/img/pporc.png";
     private static final String mapPath = "/img/BR.png";
@@ -60,6 +60,8 @@ public class GuiWithInventoryGame extends JPanel {
         mapPanel = new GuiBackgroundPanel(mapPath);
         muteMusicButton = new JToggleButton();
 
+        setBackground(Color.BLACK);
+
         //Setting the buttons up
         menuButton = new GuiGenericButton(
                 "Menu",
@@ -80,6 +82,7 @@ public class GuiWithInventoryGame extends JPanel {
         ).getButton();
 
         //Setting the muteMusicButton
+        muteMusicButton.setPreferredSize(new Dimension(40, 10));
         UtilMusic.initButton(muteMusicButton);
 
         //Setting the toggleInventoryButton
@@ -118,6 +121,11 @@ public class GuiWithInventoryGame extends JPanel {
     private void fillInventory() {
         for (int i = 0; i < items.length; i++) {
             items[i] = new Item("Item" + i, "Description" + i);
+            items[i].getItemButton().addActionListener(_ -> {
+                //Azione dell'oggetto generica quindi da togliere sta roba
+                CardLayout cardLayout = (CardLayout) getParent().getLayout();
+                cardLayout.show(getParent(), "Menu");
+            });
             GridBagConstraints gridBagConstraints = new GridBagConstraints();
             gridManager(gridBagConstraints, i);
             inventoryPanel.add(items[i].getItemButton(), gridBagConstraints);
@@ -132,9 +140,9 @@ public class GuiWithInventoryGame extends JPanel {
     private void gridManager(GridBagConstraints gridBagConstraints, int i) {
         gridBagConstraints.gridx = i % 3;
         gridBagConstraints.gridy = i / 3;
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
-        gridBagConstraints.ipady = 5;
-        gridBagConstraints.anchor = GridBagConstraints.ABOVE_BASELINE;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 50;
+        gridBagConstraints.anchor = GridBagConstraints.NORTH;
         gridBagConstraints.weightx = 0.4;
         gridBagConstraints.weighty = 2.5;
         gridBagConstraints.insets = new Insets(6, 3, 6, 3);
@@ -197,7 +205,6 @@ public class GuiWithInventoryGame extends JPanel {
                                 .addContainerGap()
                                 .addGap(0, 439, Short.MAX_VALUE))
         );
-
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(

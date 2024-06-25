@@ -20,6 +20,12 @@ public class GuiGenericButton extends JButton {
             setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         }
 
+        /**
+         * Constructor of the class GuiGenericButton
+         * @param text the text of the button
+         * @param bgColor the background color of the button
+         * @param textColor the text color of the button
+         */
         public GuiGenericButton(String text, Color bgColor, Color textColor) {
             super(text);
             setFont(new java.awt.Font("Arial", Font.BOLD, 14));
@@ -29,6 +35,13 @@ public class GuiGenericButton extends JButton {
             setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         }
 
+        /**
+         * Constructor of the class GuiGenericButton
+         * @param text the text of the button
+         * @param bgColor the background color of the button
+         * @param textColor the text color of the button
+         * @param size the size of the button
+         */
         public GuiGenericButton(String text, Color bgColor, Color textColor, Dimension size) {
             super(text);
             setFont(new java.awt.Font("Arial", Font.BOLD, 14));

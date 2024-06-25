@@ -44,7 +44,7 @@ public class GuiHub extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         UtilMusic music = UtilMusic.getInstance();
-        music.start();
+        //music.start();
     }
 
     private static JPanel getCards() {
