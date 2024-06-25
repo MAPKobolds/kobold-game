@@ -1,20 +1,17 @@
 package org.uniba.kobold.entities.item;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class ModularItem extends Item {
-    Set<Class> pieces;
+    Set<Class> pieces = new HashSet<>();
     Set<Item> actualPieces = new HashSet<>();
 
-    ModularItem(String name, String description, String imagePath, List<Class> pieces) throws IOException {
+    public ModularItem(String name, String description, String imagePath, List<Class> pieces) throws IOException {
         super(name, description, imagePath);
 
         for(Class item : pieces) {
-            if(!item.isAssignableFrom(Item.class)) {
+            if(!Item.class.isAssignableFrom(item)) {
                 throw new Error("This list does not contains only items: " + item.getName());
             }
 
@@ -25,7 +22,7 @@ public class ModularItem extends Item {
             }
         }
 
-        pieces.addAll(pieces);
+        this.pieces.addAll(pieces);
     }
 
     void addPiece(Item item) {
