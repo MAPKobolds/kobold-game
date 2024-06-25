@@ -1,19 +1,18 @@
 package org.uniba.kobold.entities.item;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import javax.swing.*;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Item {
     private String name;
     private String description;
-    private BufferedImage image;
+    private ImageIcon image;
 
-    Item(String name, String description, String imagePath) throws IOException {
+    public Item(String name, String description, String imagePath) throws IOException {
         this.name = name;
         this.description = description;
-        this.image = ImageIO.read(new File(imagePath));
+        this.image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/img/BR.png")));
     }
 
     public String getDescription() {
@@ -24,7 +23,7 @@ public class Item {
         return name;
     }
 
-    public BufferedImage getImage() {
+    public ImageIcon getImage() {
         return image;
     }
 }
