@@ -5,7 +5,7 @@ import java.util.*;
 
 public class ModularItem extends Item {
     Set<Class> pieces = new HashSet<>();
-    Set<Item> actualPieces = new HashSet<>();
+    Set<Class> actualPieces = new HashSet<>();
 
     public ModularItem(String name, String description, String imagePath, List<Class> pieces) throws IOException {
         super(name, description, imagePath);
@@ -25,8 +25,8 @@ public class ModularItem extends Item {
         this.pieces.addAll(pieces);
     }
 
-    void addPiece(Item item) {
-        if(pieces.stream().noneMatch(p -> Objects.equals(p.getName(), item.getName()))){
+    void addPiece(Class item) {
+        if(pieces.stream().noneMatch(p -> Objects.equals(p, item))){
             throw new Error("Invalid piece");
         }
 
