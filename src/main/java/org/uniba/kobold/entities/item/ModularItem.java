@@ -34,16 +34,7 @@ public class ModularItem extends Item {
     }
 
     public boolean isComplete() {
-        boolean isComplete = true;
-
-        for (Class item : pieces) {
-            if (!actualPieces.contains(item)) {
-                isComplete = false;
-                break;
-            }
-        }
-
-        return isComplete;
+        return (this.getRemainingPieces()).toArray().length == 0;
     }
 
     public List<Class> getActualPieces() {
