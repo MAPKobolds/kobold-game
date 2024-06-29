@@ -1,18 +1,15 @@
 package org.uniba.kobold.entities.room;
 
-import org.javatuples.Pair;
 import org.uniba.kobold.entities.item.Item;
-import org.uniba.kobold.util.ComparePair;
-
 import java.util.List;
 
 abstract public class Room {
     private final String name;
     private final List<Item> items;
     private final List<Character> characters;
-    private final List<Pair<String, String>> commands;
+    private final List<Command> commands;
 
-    public Room(String name, List<Item> items, List<Character> characters, List<Pair<String, String>> commands) {
+    public Room(String name, List<Item> items, List<Character> characters, List<Command> commands) {
         this.name = name;
         this.items = items;
         this.characters = characters;
@@ -31,9 +28,13 @@ abstract public class Room {
         return characters;
     }
 
-    private boolean isCommandAvailable(Pair<String, String> command) {
-        return commands.stream().anyMatch(comm -> ComparePair.isPairEquals(comm, command));
-    }
+    public final void interact(Command command) {
+        if(!commands.contains(command)) {
+            throw new Error("Command not found");
+        }
 
-    abstract void interact(String command);
+        this.executeCommand(command);
+    };
+
+    abstract void executeCommand(Command command);
 }
