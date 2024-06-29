@@ -1,10 +1,11 @@
 package org.uniba.kobold.entities.inventory;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Inventory {
     private static Inventory instance = getInstance();
-    private Set<Class> items;
+    private Set<Class> items = new HashSet<>();
 
     public static Inventory getInstance() {
         return instance == null ? new Inventory() : instance;
