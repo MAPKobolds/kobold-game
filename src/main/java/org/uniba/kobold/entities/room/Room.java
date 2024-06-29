@@ -1,6 +1,6 @@
 package org.uniba.kobold.entities.room;
 
-import org.uniba.kobold.entities.item.Item;
+import org.uniba.kobold.entities.inventory.Item;
 import javax.swing.*;
 import java.util.List;
 

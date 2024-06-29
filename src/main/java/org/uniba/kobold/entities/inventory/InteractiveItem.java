@@ -1,4 +1,4 @@
-package org.uniba.kobold.entities.item;
+package org.uniba.kobold.entities.inventory;
 
 import org.uniba.kobold.entities.InteractionResult;
 

@@ -1,6 +1,5 @@
-package org.uniba.kobold.entities.item;
+package org.uniba.kobold.entities.inventory;
 
-import java.io.IOException;
 import java.util.*;
 
 public class ModularItem extends Item {

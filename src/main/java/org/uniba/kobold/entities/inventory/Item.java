@@ -1,7 +1,6 @@
-package org.uniba.kobold.entities.item;
+package org.uniba.kobold.entities.inventory;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.util.Objects;
 
 public class Item {
