@@ -2,6 +2,8 @@ package org.uniba.kobold.entities.room;
 
 import org.javatuples.Pair;
 import org.uniba.kobold.entities.item.Item;
+import org.uniba.kobold.util.ComparePair;
+
 import java.util.List;
 
 abstract public class Room {
@@ -27,6 +29,10 @@ abstract public class Room {
 
     public List<Character> getCharacters() {
         return characters;
+    }
+
+    private boolean isCommandAvailable(Pair<String, String> command) {
+        return commands.stream().anyMatch(comm -> ComparePair.isPairEquals(comm, command));
     }
 
     abstract void interact(String command);
