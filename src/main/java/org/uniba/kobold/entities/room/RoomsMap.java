@@ -4,11 +4,16 @@ import java.util.List;
 import java.util.Map;
 
 public class RoomsMap {
-    Map<String,List<Pair<Boolean, Room>> > rooms;
-    String whereAmI = "intro";
+    Map<String, List<Pair<Boolean, Room>> > rooms;
+    String currentRoom;
 
-    public RoomsMap(Map<String, List<Pair<Boolean, Room>>> rooms) {
+    public RoomsMap(Map<String, List<Pair<Boolean, Room>>> rooms, String initialPositions) {
+        if(!rooms.containsKey(initialPositions)) {
+            throw new Error("Invalid initial position");
+        }
+
         this.rooms = rooms;
+        currentRoom = initialPositions;
     }
 
     public Room moveToRoom(String roomName){
@@ -17,7 +22,7 @@ public class RoomsMap {
         for (Pair<Boolean, Room> room : rooms.get(roomName)) {
             if (room.getValue0()) {
                 destination = room.getValue1();
-                whereAmI = roomName;
+                currentRoom = roomName;
             }
         }
 
