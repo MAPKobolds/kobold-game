@@ -31,7 +31,6 @@ public class HallwayRoom extends Room {
             case "guarda dietro":
                 System.out.println("Guardi dietro e vedi la caverna da cui sei arrivato");
                 break;
-            case "guarda giù":
             case "guarda destra":
             case "guarda sinistra":
             case "guarda sopra":
