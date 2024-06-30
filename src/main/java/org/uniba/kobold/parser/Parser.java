@@ -45,7 +45,12 @@ public class Parser {
         List<String> tokens = ParserUtils.parseString(command, stopwords);
         if (!tokens.isEmpty()) {
             int ic = checkForCommand(tokens.get(0), commands);
-            int aa = checkForCommand(tokens.get(0)+" "+tokens.get(1), commands);
+
+            int aa = -1;
+            if(tokens.toArray().length > 1) {
+                aa = checkForCommand(tokens.get(0) + " " + tokens.get(1), commands);
+            }
+
             if (ic > -1) {
                 if (tokens.size() > 1) {
                     int io = checkForItem(tokens.get(1), Items);
