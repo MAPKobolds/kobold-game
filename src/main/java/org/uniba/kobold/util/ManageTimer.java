@@ -1,4 +1,6 @@
 package org.uniba.kobold.util;
+import org.uniba.kobold.game.Item;
+import org.uniba.kobold.gui.AbstractGameGui;
 import org.uniba.kobold.gui.GuiNoInventoryGame;
 import org.uniba.kobold.gui.GuiWithInventoryGame;
 
@@ -43,8 +45,7 @@ public class ManageTimer {
                         minutes = 0;
                         hours++;
                     }
-                    GuiNoInventoryGame.setTimeLabel(getTime());
-                    GuiWithInventoryGame.setTimeLabel(getTime());
+                    AbstractGameGui.setTimeLabel(getTime());
                 }
             };
             timer.scheduleAtFixedRate(taskTimer, DELAY, PERIOD);
@@ -69,15 +70,13 @@ public class ManageTimer {
             seconds = 0;
             minutes = 0;
             hours = 0;
-            GuiWithInventoryGame.setTimeLabel("00:00:00");
-            GuiNoInventoryGame.setTimeLabel("00:00:00");
+            AbstractGameGui.setTimeLabel("00:00:00");
         } else {
             String[] split = time.trim().split(":");
             hours = Integer.parseInt(split[0]);
             minutes = Integer.parseInt(split[1]);
             seconds = Integer.parseInt(split[2]);
-            GuiWithInventoryGame.setTimeLabel(time.trim());
-            GuiNoInventoryGame.setTimeLabel(time.trim());
+            AbstractGameGui.setTimeLabel(time.trim());
 
         }
     }
