@@ -19,9 +19,9 @@ abstract public class Room {
         new Command("guarda giù", Set.of("giù", "terra", "pavimento", "sotto")),
         new Command("guarda davanti",Set.of("avanti", "davanti", "dritto", "innanzi")),
         new Command("guarda dietro", Set.of("dietro", "indietro", "retro", "dietrofront")),
-        new Command("guarda sopra", Set.of("sopra", "alto", "cielo", "testa")),
-        new Command("guarda a destra", Set.of("destra", "dx", "lato destro")),
-        new Command("guarda a sinistra", Set.of("sinistra", "sx", "lato sinistro"))
+        new Command("guarda sopra", Set.of("sopra", "alto", "cielo", "testa", "sù")),
+        new Command("guarda destra", Set.of("destra", "dx", "lato destro")),
+        new Command("guarda sinistra", Set.of("sinistra", "sx", "lato sinistro"))
     ));
 
     public Room(String name, String description, ImageIcon backgroundImage, List<Item> items, List<Character> characters, List<Command> commands) {
