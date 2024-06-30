@@ -1,6 +1,7 @@
 package org.uniba.kobold.entities.room.avaliableRooms;
 
 import org.uniba.kobold.entities.inventory.Inventory;
+import org.uniba.kobold.entities.inventory.availableItems.Cloak;
 import org.uniba.kobold.entities.room.Room;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
@@ -15,14 +16,14 @@ public class StartingRoom extends Room {
             "Ti svegli in una caverna buia, non ricordi come ci sei arrivato, ma senti un forte dolore alla testa.\n" +
                     "Guardandoti intorno è buio pesto, senti qualcosa di appiccicoso sotto di te.\n",
             new ImageIcon("/img/BR.png"),
-            Arrays.asList(),
+            Arrays.asList(new Cloak()),
             Arrays.asList(),
             Arrays.asList(
-                new Command("vai corridoio", Set.of("muoviti"))
+                new Command("vai corridoio", Set.of("muoviti")),
+                new Command("prendi", Set.of("raccogli", "solleva"))
             )
         );
     }
-
 
     @Override
     public void executeCommand(ParserOutput command) {
@@ -46,11 +47,11 @@ public class StartingRoom extends Room {
                 System.out.println("Guardi a sinistra e vedi una parete");
                 break;
             case "prendi":
-                if (command.getItem().getName().equals("mantello")) {
+                if (command.getItem() != null && command.getItem().getName().equals("mantello")) {
                     System.out.println("Hai preso il mantello");
                     Inventory.addPiece(command.getItem());
                 } else {
-                    System.out.println("Non c'è niente da prendere");
+                    System.out.println("Cosa vuoi prendere?");
                 }
                 break;
             case "usa":
