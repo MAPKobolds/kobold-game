@@ -10,6 +10,12 @@ public class Main {
         Server.startServer();
         Game g = new Game();
 
+        g.executeCommand("prendi mantello");
+        g.executeCommand("vai corridoio");
+        g.executeCommand("guarda a destra");
+        g.executeCommand("parla guardie");
+
+
         new GuiHub();
 
     }
