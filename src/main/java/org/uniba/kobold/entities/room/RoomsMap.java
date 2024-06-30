@@ -1,42 +1,43 @@
 package org.uniba.kobold.entities.room;
+
 import org.javatuples.Pair;
 import java.util.List;
 import java.util.Map;
 
 public class RoomsMap {
-    Map<String, List<Pair<Boolean, Room>> > rooms;
-    String currentRoom;
+    private Map<String, Pair<Room, RoomPath>> rooms;
+    private String currentRoom;
 
-    public RoomsMap(Map<String, List<Pair<Boolean, Room>>> rooms, String initialPositions) {
-        if(!rooms.containsKey(initialPositions)) {
-            throw new Error("Invalid initial position");
-        }
+    public RoomsMap(List<Pair<Room, RoomPath>> roomsList) {
+        roomsList.forEach(r -> rooms.put(r.getValue0().getName(), r));
 
-        this.rooms = rooms;
-        currentRoom = initialPositions;
+        this.currentRoom = roomsList.get(0).getValue0().getName();
     }
 
-    public Room moveToRoom(String roomName){
-        Room destination = null;
-
-        for (Pair<Boolean, Room> room : rooms.get(roomName)) {
-            if (room.getValue0()) {
-                destination = room.getValue1();
-                currentRoom = roomName;
-            }
-        }
-
-        return destination;
+    public Room getCurrentRoom() {
+        return rooms.get(currentRoom).getValue0();
     }
 
-    public void nowIsAccessible(String roomName) {
-        rooms.forEach((key, value) -> {
-            if (key.equals(roomName)) {
-                for (Pair<Boolean, Room> room : value) {
-                    room = room.setAt0(true);
-                }
-            }
-        });
+    public void moveTo(String roomName) {
+        if (!rooms.get(roomName).getValue1().isAccessible(roomName)) {
+            throw new Error("Cannot go to this room");
+        }
+
+        this.currentRoom = roomName;
+    }
+
+    public void unlockPath(String roomName) {
+        try {
+            Room room = rooms.get(currentRoom).getValue0();
+            RoomPath path = rooms.get(currentRoom).getValue1();
+
+            path.setLockRoomPath(roomName, true);
+
+            rooms.replace(roomName, Pair.with(room, path));
+        }
+        catch (Error e) {
+            throw e;
+        }
     }
 
 }

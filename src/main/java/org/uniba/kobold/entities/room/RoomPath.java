@@ -1,7 +1,6 @@
 package org.uniba.kobold.entities.room;
 
 import org.javatuples.Pair;
-
 import java.util.List;
 import java.util.Objects;
 
