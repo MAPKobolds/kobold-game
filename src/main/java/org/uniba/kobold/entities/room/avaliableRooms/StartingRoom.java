@@ -56,6 +56,7 @@ public class StartingRoom extends Room {
                 break;
             case "ispeziona":
                 if (command.getItem().getName().equals("mantello")) {
+                    Inventory.addPiece(new Cloak());
                     System.out.println(command.getItem().getDescription());
                     System.out.println("Hai indossato il mantello, ora sei irriconoscibile");
                 } else {
