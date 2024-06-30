@@ -12,15 +12,15 @@ import java.util.Set;
 public class StartingRoom extends Room {
 
     public StartingRoom() {
-        super("Starting Room",
-                "Ti svegli in una stanza buia, non ricordi come ci sei arrivato, ma senti un forte dolore alla testa.\n" +
-                        "Guardandoti intorno è buio pesto, senti qualcosa di appiccicoso sotto di te.\n",
-                new ImageIcon("/img/BR.png"),
-                Arrays.asList(),
-                Arrays.asList(),
-                Arrays.asList(
-                    new Command("vai corridoio", Set.of("muoviti"))
-                )
+        super("caverna",
+            "Ti svegli in una caverna buia, non ricordi come ci sei arrivato, ma senti un forte dolore alla testa.\n" +
+                    "Guardandoti intorno è buio pesto, senti qualcosa di appiccicoso sotto di te.\n",
+            new ImageIcon("/img/BR.png"),
+            Arrays.asList(),
+            Arrays.asList(),
+            Arrays.asList(
+                new Command("vai corridoio", Set.of("muoviti"))
+            )
         );
     }
 
