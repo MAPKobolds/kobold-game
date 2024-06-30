@@ -12,7 +12,7 @@ abstract public class Room {
     private String description = "";
     private final ImageIcon backgroundImage;
     private final List<Item> items;
-    private final Map<String, Character> characters = (Map<String, Character>) new HashSet<>();
+    private Map<String, Character> characters = new HashMap<>();
     private List<Command> commands = new ArrayList<>(Arrays.asList(
         new Command("guarda giù", Set.of("giù", "terra", "pavimento", "sotto")),
         new Command("guarda davanti",Set.of("avanti", "davanti", "dritto", "innanzi")),
