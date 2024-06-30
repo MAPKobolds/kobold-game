@@ -1,5 +1,7 @@
 package org.uniba.kobold.entities.room.avaliableRooms;
 
+import org.uniba.kobold.entities.character.availableCharacters.TwinGuards;
+import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.room.Room;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
@@ -11,14 +13,12 @@ public class HallwayRoom extends Room {
 
     public HallwayRoom() {
         super("corridoio",
-            "Sei in un corridoio che si apre ad una strada. Di fronte a te vedi un BAR preceduto" +
+                "Sei in un corridoio che si apre ad una strada. Di fronte a te vedi un BAR preceduto" +
                     " da delle guardie, forse loro sanno qualcosa su questo posto",
             new ImageIcon("/img/BR.png"),
             Arrays.asList(),
-            Arrays.asList(),
-            Arrays.asList(
-                new Command("parla guardie", Set.of("muoviti"))
-            )
+            Arrays.asList(new TwinGuards()),
+            Arrays.asList(new Command("parla guardie", Set.of()))
         );
     }
 
@@ -35,6 +35,9 @@ public class HallwayRoom extends Room {
             case "guarda sinistra":
             case "guarda sopra":
                 System.out.println("Una normale (Gauss shit) parete");
+                break;
+            case "parla guardie":
+                getCharacterByName("guardie").interact(Inventory.contains("mantello"));
                 break;
             default:
                 System.out.println("Comando non valido");
