@@ -4,28 +4,23 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Inventory {
-    private static Inventory instance = getInstance();
-    private Set<Class> items = new HashSet<>();
+    private static final Set<Item> items = new HashSet<>();
 
-    public static Inventory getInstance() {
-        return instance == null ? new Inventory() : instance;
-    }
-
-    public void addPiece(Class item) {
-        if(!Item.class.isAssignableFrom(item)) {
-            throw new Error("This is not an item");
-        }
-
+    public static void addPiece(Item item) {
         if(!items.contains(item)) {
             items.add(item);
         }
     }
 
-    public void removePiece(Class item) {
+    public void removePiece(Item item) {
         if(!items.contains(item)) {
             throw new Error("This item is not in the inventory");
         }
 
         items.remove(item);
+    }
+
+    public static Set<Item> getItems() {
+        return items;
     }
 }
