@@ -1,10 +1,10 @@
 package org.uniba.kobold.entities.room;
 
 import org.uniba.kobold.entities.inventory.Item;
-import org.uniba.kobold.parser.Parser;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -15,14 +15,14 @@ abstract public class Room {
     private final ImageIcon backgroundImage;
     private final List<Item> items;
     private final List<Character> characters;
-    private List<Command> commands = Arrays.asList(
+    private List<Command> commands = new ArrayList<>(Arrays.asList(
         new Command("guarda giù", Set.of("giù", "terra", "pavimento", "sotto")),
         new Command("guarda davanti",Set.of("avanti", "davanti", "dritto", "innanzi")),
         new Command("guarda dietro", Set.of("dietro", "indietro", "retro", "dietrofront")),
         new Command("guarda sopra", Set.of("sopra", "alto", "cielo", "testa")),
         new Command("guarda a destra", Set.of("destra", "dx", "lato destro")),
         new Command("guarda a sinistra", Set.of("sinistra", "sx", "lato sinistro"))
-    );
+    ));
 
     public Room(String name, String description, ImageIcon backgroundImage, List<Item> items, List<Character> characters, List<Command> commands) {
         this.name = name;
@@ -57,5 +57,5 @@ abstract public class Room {
         return commands;
     }
 
-    protected abstract void executeCommand(ParserOutput command);
+    public abstract void executeCommand(ParserOutput command);
 }
