@@ -1,20 +1,18 @@
 package org.uniba.kobold.entities.room;
 
+import org.uniba.kobold.entities.character.Character;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 abstract public class Room {
     private final String name;
     private String description = "";
     private final ImageIcon backgroundImage;
     private final List<Item> items;
-    private final List<Character> characters;
+    private final Map<String, Character> characters = (Map<String, Character>) new HashSet<>();
     private List<Command> commands = new ArrayList<>(Arrays.asList(
         new Command("guarda giù", Set.of("giù", "terra", "pavimento", "sotto")),
         new Command("guarda davanti",Set.of("avanti", "davanti", "dritto", "innanzi")),
@@ -24,12 +22,12 @@ abstract public class Room {
         new Command("guarda sinistra", Set.of("sinistra", "sx", "lato sinistro"))
     ));
 
-    public Room(String name, String description, ImageIcon backgroundImage, List<Item> items, List<Character> characters, List<Command> commands) {
+    public Room(String name, String description, ImageIcon backgroundImage, List<Item> items, List<Character> charactersList, List<Command> commands) {
         this.name = name;
         this.description = description;
         this.backgroundImage = backgroundImage;
         this.items = items;
-        this.characters = characters;
+        charactersList.forEach(c -> characters.put(c.getName(), c));
         this.commands.addAll(commands);
     }
 
@@ -45,8 +43,12 @@ abstract public class Room {
         return items;
     }
 
-    public List<Character> getCharacters() {
-        return characters;
+    public Character getCharacterByName(String name) {
+        return characters.get(name);
+    }
+
+    public Character updateCharacter(String name, Character character) {
+        return characters.replace(name, character);
     }
 
     public ImageIcon getBackgroundImage() {
