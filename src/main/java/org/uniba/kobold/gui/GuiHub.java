@@ -1,6 +1,6 @@
 package org.uniba.kobold.gui;
-import org.uniba.kobold.util.UtilMusic;
 
+import org.uniba.kobold.util.UtilMusic;
 import javax.swing.*;
 import java.awt.CardLayout;
 import java.net.URL;
@@ -44,7 +44,7 @@ public class GuiHub extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         UtilMusic music = UtilMusic.getInstance();
-        music.start();
+        //music.start();
     }
 
     private static JPanel getCards() {
@@ -54,8 +54,8 @@ public class GuiHub extends JFrame {
         GuiCredits credits = new GuiCredits();
         GuiLoadGame loadGame = new GuiLoadGame();
         GuiLoadingScreen loadingScreen = new GuiLoadingScreen();
-        GuiWithInventoryGame withInventoryCard = new GuiWithInventoryGame();
-        GuiNoInventoryGame noInventoryCard = new GuiNoInventoryGame();
+        GuiWithInventoryGameGame withInventoryCard = new GuiWithInventoryGameGame();
+        GuiNoInventoryGameGame noInventoryCard = new GuiNoInventoryGameGame();
 
         //Card layout management
         cards.add(menu, "Menu");

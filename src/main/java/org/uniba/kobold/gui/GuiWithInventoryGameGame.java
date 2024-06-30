@@ -1,36 +1,37 @@
 package org.uniba.kobold.gui;
 
 import org.uniba.kobold.game.Item;
-
 import javax.swing.*;
 import java.awt.*;
 
-
-public class GuiWithInventoryGame extends AbstractGameGui {
+/**
+ * Class GuiWithInventoryGameGame
+ */
+public class GuiWithInventoryGameGame extends GuiGame {
 
     /**
-     * Attributes of the class GuiWithInventoryGame
+     * Attributes of the class GuiWithInventoryGameGame
      */
     private static final int MAXITEMS = 20;
     private static final Item[] items = new Item[MAXITEMS];
     private JPanel inventoryPanel;
 
     /**
-     * Constructor of the class GuiWithInventoryGame
+     * Constructor of the class GuiWithInventoryGameGame
      */
-    public GuiWithInventoryGame() {
-        initAdditionalComponents();
+    public GuiWithInventoryGameGame() {
+       initAdditionalComponents();
     }
 
     /**
-     * Method to initialize the components of the class GuiWithInventoryGame
+     * Method to initialize the components of the class GuiWithInventoryGameGame
      */
     private void initAdditionalComponents() {
         inventoryPanel = new JPanel();
-        GameLayout();
         inventoryPanel.setBackground(new Color(40, 0, 5));
         inventoryPanel.setLayout(new GridBagLayout());
         fillInventory();
+        gameLayout();
     }
 
     /**
@@ -38,11 +39,11 @@ public class GuiWithInventoryGame extends AbstractGameGui {
      */
     private void fillInventory() {
         for (int i = 0; i < items.length; i++) {
+            //TODO: Adattare agli item
             items[i] = new Item("Item" + i, "Description" + i);
             items[i].getItemButton().addActionListener(_ -> {
-                //Azione dell'oggetto generica quindi da togliere sta roba
-                CardLayout cardLayout = (CardLayout) getParent().getLayout();
-                cardLayout.show(getParent(), "Menu");
+                //TODO: Azione dell'oggetto generica quindi da togliere sta roba
+                gamePanel.updateBackground("/img/BR.png");
             });
             GridBagConstraints gridBagConstraints = new GridBagConstraints();
             gridManager(gridBagConstraints, i);
@@ -69,45 +70,7 @@ public class GuiWithInventoryGame extends AbstractGameGui {
     /**
      * Method to update the layout of the components of the withInventoryLayout
      */
-    public void GameLayout() {
-        GroupLayout dialogLayout = new GroupLayout(dialogPanel);
-        dialogPanel.setLayout(dialogLayout);
-        dialogLayout.setHorizontalGroup(
-                dialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(dialogLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(dialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(inputField)
-                                        .addComponent(dialogText, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap())
-        );
-        dialogLayout.setVerticalGroup(
-                dialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(dialogLayout.createSequentialGroup()
-                                .addComponent(dialogText, GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(inputField, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-        );
-
-        gamePanel.setBackground(new java.awt.Color(102, 102, 255));
-
-        GroupLayout gameLayout = new GroupLayout(gamePanel);
-        gamePanel.setLayout(gameLayout);
-        gameLayout.setHorizontalGroup(
-                gameLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(gameLayout.createSequentialGroup()
-                                .addComponent(mapPanel, 200, 200, 200)
-                                .addContainerGap()
-                                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        gameLayout.setVerticalGroup(
-                gameLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(gameLayout.createSequentialGroup()
-                                .addComponent(mapPanel, 200, 200, 200)
-                                .addContainerGap()
-                                .addGap(0, 439, Short.MAX_VALUE))
-        );
+    public void gameLayout() {
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
