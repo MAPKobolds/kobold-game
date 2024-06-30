@@ -12,7 +12,7 @@ public class HallwayRoom extends Room {
     public HallwayRoom() {
         super("corridoio",
             "Sei in un corridoio che si apre ad una strada. Di fronte a te vedi un BAR preceduto" +
-                    "da delle guardie, forse loro sanno qualcosa su questo posto",
+                    " da delle guardie, forse loro sanno qualcosa su questo posto",
             new ImageIcon("/img/BR.png"),
             Arrays.asList(),
             Arrays.asList(),
