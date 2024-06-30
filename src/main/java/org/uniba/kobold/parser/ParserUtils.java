@@ -18,7 +18,7 @@ import java.util.Set;
  *
  * @author pierpaolo
  */
-public class Utils {
+public class ParserUtils {
 
     /**
      *

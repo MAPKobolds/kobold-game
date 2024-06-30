@@ -43,7 +43,7 @@ public class Parser {
     */
 
     public ParserOutput parse(String command, List<Command> commands, List<Item> Items, List<Item> inventory) {
-        List<String> tokens = Utils.parseString(command, stopwords);
+        List<String> tokens = ParserUtils.parseString(command, stopwords);
         if (!tokens.isEmpty()) {
             int ic = checkForCommand(tokens.get(0), commands);
             if (ic > -1) {
