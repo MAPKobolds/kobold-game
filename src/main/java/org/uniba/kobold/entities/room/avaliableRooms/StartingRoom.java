@@ -54,16 +54,10 @@ public class StartingRoom extends Room {
                     System.out.println("Cosa vuoi prendere?");
                 }
                 break;
-            case "usa":
-                if (command.getItem().getName().equals("mantello")) {
-                    System.out.println("Hai messo il mantello");
-                } else {
-                    System.out.println("Non puoi usare questo oggetto");
-                }
-                break;
             case "ispeziona":
                 if (command.getItem().getName().equals("mantello")) {
                     System.out.println(command.getItem().getDescription());
+                    System.out.println("Hai indossato il mantello, ora sei irriconoscibile");
                 } else {
                     System.out.println("Non c'è niente da ispezionare");
                 }
