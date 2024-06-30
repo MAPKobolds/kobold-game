@@ -1,11 +1,13 @@
 package org.uniba.kobold.entities.room;
 
 import org.javatuples.Pair;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class RoomsMap {
-    private Map<String, Pair<Room, RoomPath>> rooms;
+    private Map<String, Pair<Room, RoomPath>> rooms = new HashMap<>();
     private String currentRoom;
 
     public RoomsMap(List<Pair<Room, RoomPath>> roomsList) {
@@ -19,7 +21,7 @@ public class RoomsMap {
     }
 
     public void moveTo(String roomName) {
-        if (!rooms.get(roomName).getValue1().isAccessible(roomName)) {
+        if (!rooms.get(currentRoom).getValue1().isAccessible(roomName)) {
             throw new Error("Cannot go to this room");
         }
 
@@ -33,7 +35,7 @@ public class RoomsMap {
 
             path.setLockRoomPath(roomName, true);
 
-            rooms.replace(roomName, Pair.with(room, path));
+            rooms.replace(currentRoom, Pair.with(room, path));
         }
         catch (Error e) {
             throw e;
