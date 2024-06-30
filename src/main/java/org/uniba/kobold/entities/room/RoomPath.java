@@ -1,7 +1,7 @@
 package org.uniba.kobold.entities.room;
 
 import org.javatuples.Pair;
-import org.uniba.kobold.errors.RoomNotFound;
+import org.uniba.kobold.errors.RoomNotFoundError;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,12 +13,12 @@ public class RoomPath {
     }
 
     public boolean isAccessible(String roomName) {
-        return paths.stream().anyMatch(path -> path.getValue1() && path.getValue0().getName() == roomName);
+        return paths.stream().anyMatch(path -> path.getValue1() && path.getValue0().getName().equals(roomName));
     }
 
     public void setLockRoomPath(String roomName, Boolean isLocked) {
         if (!getRoomNames().contains(roomName)) {
-            throw new RoomNotFound();
+            throw new RoomNotFoundError();
         }
 
         paths = paths.stream().map(pair -> Objects.equals(pair.getValue0().getName(), roomName) ?

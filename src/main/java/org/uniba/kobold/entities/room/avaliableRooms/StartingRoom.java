@@ -3,8 +3,11 @@ package org.uniba.kobold.entities.room.avaliableRooms;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.room.Room;
 import org.uniba.kobold.parser.ParserOutput;
+import org.uniba.kobold.type.Command;
+
 import javax.swing.*;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Set;
 
 public class StartingRoom extends Room {
 
@@ -13,15 +16,17 @@ public class StartingRoom extends Room {
                 "Ti svegli in una stanza buia, non ricordi come ci sei arrivato, ma senti un forte dolore alla testa.\n" +
                         "Guardandoti intorno è buio pesto, senti qualcosa di appiccicoso sotto di te.\n",
                 new ImageIcon("/img/BR.png"),
-                null,
-                null,
-                List.of()
+                Arrays.asList(),
+                Arrays.asList(),
+                Arrays.asList(
+                    new Command("vai corridoio", Set.of("muoviti"))
+                )
         );
     }
 
 
     @Override
-    protected void executeCommand(ParserOutput command) {
+    public void executeCommand(ParserOutput command) {
         switch (command.getCommand().getName()) {
 
             case "guarda giù":

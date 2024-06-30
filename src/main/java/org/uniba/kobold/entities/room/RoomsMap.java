@@ -1,8 +1,7 @@
 package org.uniba.kobold.entities.room;
 
 import org.javatuples.Pair;
-import org.uniba.kobold.errors.RoomNotAccessible;
-
+import org.uniba.kobold.errors.RoomNotAccessibleError;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +20,9 @@ public class RoomsMap {
         return rooms.get(currentRoom).getValue0();
     }
 
-    public void moveTo(String roomName) {
+    public void moveTo(String roomName) throws RoomNotAccessibleError {
         if (!rooms.get(currentRoom).getValue1().isAccessible(roomName)) {
-            throw new RoomNotAccessible();
+            throw new RoomNotAccessibleError();
         }
 
         this.currentRoom = roomName;
