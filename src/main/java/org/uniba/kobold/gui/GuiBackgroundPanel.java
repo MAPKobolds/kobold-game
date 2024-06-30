@@ -14,7 +14,7 @@ public class GuiBackgroundPanel extends GuiAbstractPanel {
      */
     private final int width = 800;
     private final int height = 600;
-    private final String backgroundPath;
+    private String backgroundPath;
 
     /**
      * Constructor of the class GuiBackgroundPanel
@@ -45,5 +45,14 @@ public class GuiBackgroundPanel extends GuiAbstractPanel {
         ImageIcon img = new ImageIcon(Objects.requireNonNull(getClass().getResource(backgroundPath)));
         Image image = img.getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+    }
+
+    /**
+     * Method to update the background image
+     * @param newBackgroundPath the path to the new background image
+     */
+    public void updateBackground(String newBackgroundPath) {
+        this.backgroundPath = newBackgroundPath;
+        repaint();
     }
 }

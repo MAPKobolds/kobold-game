@@ -17,10 +17,10 @@ public class GuiLoadGame extends GuiAbstractPanel {
     /**
      * Attributes of the GuiLoadGame class
      */
-    private final String bgURL = "/img/pporc.png";
-    private final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel(bgURL);
-    private final String savesBGPath = "/img/BR.png";
-    private final GuiBackgroundPanel savesBGPanel = new GuiBackgroundPanel(savesBGPath);
+    private final String bgImagePath = "/img/pporc.png";
+    private final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel(bgImagePath);
+    private final String containerImagePath = "/img/BR.png";
+    private final GuiBackgroundPanel containerPanel = new GuiBackgroundPanel(containerImagePath);
     private final JLayeredPane layeredPane = new JLayeredPane();
     private JButton menuButton;
     private final JToggleButton muteMusicButton = new JToggleButton();
@@ -76,19 +76,8 @@ public class GuiLoadGame extends GuiAbstractPanel {
         layeredPane.add(muteMusicButton, JLayeredPane.PALETTE_LAYER);
 
         //Container of the save games panel settings
-        savesBGPanel.setRequestFocusEnabled(false);
-    }
 
-    /**
-     * Method to fill the savesBGPanel with the SaveInstancePanels
-     */
-    private void fillSavesBGPanel() {
-        savesBGPanel.setLayout(new BoxLayout(savesBGPanel, BoxLayout.Y_AXIS));
-        for (SaveInstancePanel savePanel : SaveInstancePanel.getInstances()) {
-            savePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            savesBGPanel.add(savePanel);
-        }
-        layeredPane.add(savesBGPanel, JLayeredPane.PALETTE_LAYER);
+        fillContainerPanel();
     }
 
     /**
@@ -104,12 +93,24 @@ public class GuiLoadGame extends GuiAbstractPanel {
 
         //This is where the magic happens
         backgroundPanel.setBounds(0, 0, width, height);
-        savesBGPanel.setBounds((int) (width * 0.20), 0, (int) (width * 0.85), (int) (height * 0.80));
+        containerPanel.setBounds((int) (width * 0.20), 0, (int) (width * 0.85), (int) (height * 0.80));
         layeredPane.setPreferredSize(new Dimension(width, height));
         menuButton.setBounds((int) widthOffset, (int) (height * 0.85), (int) (width * 0.80), 50);
         muteMusicButton.setBounds(0, 0, buttonWidth, buttonHeight);
-        fillSavesBGPanel();
         add(layeredPane, BorderLayout.CENTER);
+    }
+
+    /**
+     * Method to fill the containerPanel with the SaveInstancePanels
+     */
+    private void fillContainerPanel() {
+        containerPanel.setRequestFocusEnabled(false);
+        containerPanel.setLayout(new BoxLayout(containerPanel, BoxLayout.Y_AXIS));
+        for (SaveInstancePanel savePanel : SaveInstancePanel.getInstances()) {
+            savePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            containerPanel.add(savePanel);
+        }
+        layeredPane.add(containerPanel, JLayeredPane.PALETTE_LAYER);
     }
 
     /**
@@ -121,8 +122,6 @@ public class GuiLoadGame extends GuiAbstractPanel {
          * Attributes of the SaveInstancePanel class
          */
         private static ArrayList<SaveInstancePanel> instances = new ArrayList<>();
-        private final int saveWidth = (int) (backgroundPanel.getWidth() * 0.85);
-        private final int saveHeight = (int) (backgroundPanel.getHeight() * 0.10);
         private JButton loadButton;
         private JButton deleteButton;
         private JLabel loadInfoLabel;
@@ -159,10 +158,7 @@ public class GuiLoadGame extends GuiAbstractPanel {
          */
         @Override
         public <T> void initComponents(T object) {
-            setMinimumSize(new Dimension(saveWidth, saveHeight));
-            setMaximumSize(new Dimension(saveWidth, saveHeight));
             setBackground(new Color(40, 0, 5));
-            setVisible(true);
             try {
                 if (object instanceof SaveInstance save) {
                     instances.add(this);
@@ -217,6 +213,15 @@ public class GuiLoadGame extends GuiAbstractPanel {
          */
         @Override
         public void updateLayout() {
+
+            // Calcola le dimensioni in base alle dimensioni attuali del backgroundPanel
+            int saveWidth = (int) (backgroundPanel.getWidth() * 0.85);
+            int saveHeight = (int) (backgroundPanel.getHeight() * 0.10);
+
+            // Imposta le dimensioni minime e massime
+            setMinimumSize(new Dimension(saveWidth, saveHeight));
+            setMaximumSize(new Dimension(saveWidth, saveHeight));
+
             //This is where the magic happens
             loadInfoLabel.setHorizontalTextPosition(SwingConstants.CENTER);
             loadInfoLabel.setVerticalTextPosition(SwingConstants.CENTER);
