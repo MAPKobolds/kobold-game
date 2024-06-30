@@ -28,7 +28,6 @@ public class StartingRoom extends Room {
     @Override
     public void executeCommand(ParserOutput command) {
         switch (command.getCommand().getName()) {
-
             case "guarda giù":
                 System.out.println("Guardi giù e vedi un qualcosa di appiccicoso sotto di te di colore verde scuro, che esce da un tessuto nero, sembra un mantello nero.");
                 break;
