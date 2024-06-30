@@ -27,6 +27,8 @@ public class Game {
             Pair.with(r2, new RoomPath(Arrays.asList(Pair.with(r1, true))))
         ));
         parser = new Parser(ParserUtils.loadFileListInSet(new File("src/main/resources/stopwords.txt")));
+
+        System.out.println(roomPath.getCurrentRoom().getDescription());
     }
 
     public void executeCommand(String command) {
@@ -48,6 +50,8 @@ public class Game {
         if(splittedCommand[0].equals("vai")) {
             try {
                 roomPath.moveTo(splittedCommand[1]);
+
+                System.out.println(roomPath.getCurrentRoom().getDescription());
             } catch (RoomNotAccessibleError e) {
                 System.out.print("Non puoi andarci");
             }
