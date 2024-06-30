@@ -13,7 +13,7 @@ public class RoomPath {
     }
 
     public boolean isAccessible(String roomName) {
-        return paths.stream().anyMatch(path -> path.getValue1() && path.getValue0().getName() == roomName);
+        return paths.stream().anyMatch(path -> path.getValue1() && path.getValue0().getName().equals(roomName));
     }
 
     public void setLockRoomPath(String roomName, Boolean isLocked) {
