@@ -22,6 +22,7 @@ public class GuiNoInventoryGame extends JPanel {
     private JButton menuButton;
     private JButton toggleInventoryButton;
     private JLabel dialogText;
+    private static JLabel timerLabel;
     private JTextField inputField;
     private JToolBar toolBar;
 
@@ -52,6 +53,7 @@ public class GuiNoInventoryGame extends JPanel {
         inputField = new JTextField();
         toolBar = new JToolBar();
         muteMusicButton = new JToggleButton();
+        timerLabel = new JLabel();
 
         setBackground(Color.BLACK);
         
@@ -73,6 +75,11 @@ public class GuiNoInventoryGame extends JPanel {
                 new Color(40, 0, 5),
                 Color.WHITE
         ).getButton();
+
+        //Setting the timer label
+        timerLabel.setOpaque(true);
+        timerLabel.setFont(new Font("Arial", 1, 16));
+        timerLabel.setFocusable(false);
 
         //Setting the muteMusicButton
         muteMusicButton.setPreferredSize(new Dimension(40, 10));
@@ -113,10 +120,20 @@ public class GuiNoInventoryGame extends JPanel {
         toolBar.add(muteMusicButton);
         toolBar.add(toggleInventoryButton);
         toolBar.add(Box.createHorizontalGlue());
+        toolBar.add(timerLabel);
+        toolBar.add(Box.createHorizontalGlue());
         toolBar.add(saveButton);
         toolBar.add(Box.createHorizontalStrut((int) widthOffsetSx));
         toolBar.add(menuButton);
         noInventoryLayout();
+    }
+
+    /**
+     * Method to set the text of the timerText
+     * @param time the text to set
+     */
+    public static void setTimeLabel(String time) {
+        timerLabel.setText(" " + time + " ");
     }
 
     /**

@@ -1,6 +1,7 @@
 package org.uniba.kobold.gui;
 
 import org.uniba.kobold.game.Item;
+import org.uniba.kobold.util.ManageTimer;
 import org.uniba.kobold.util.UtilMusic;
 
 import javax.swing.*;
@@ -27,6 +28,7 @@ public class GuiWithInventoryGame extends JPanel {
     private JButton saveButton;
     private JButton toggleInventoryButton;
     private JLabel dialogText;
+    private static JLabel timerLabel;
     private JTextField inputField;
     private JToolBar toolBar;
 
@@ -59,6 +61,9 @@ public class GuiWithInventoryGame extends JPanel {
         toolBar = new JToolBar();
         mapPanel = new GuiBackgroundPanel(mapPath);
         muteMusicButton = new JToggleButton();
+        timerLabel = new JLabel();
+        ManageTimer.getInstance();
+
 
         setBackground(Color.BLACK);
 
@@ -91,6 +96,10 @@ public class GuiWithInventoryGame extends JPanel {
             CardLayout cardLayout = (CardLayout) getParent().getLayout();
             cardLayout.show(getParent(), "noInventoryGame");
         });
+
+        timerLabel.setOpaque(true);
+        timerLabel.setFont(new Font("Arial", 1, 16));
+        timerLabel.setFocusable(false);
 
         //Setting the saveButton
         saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -133,6 +142,14 @@ public class GuiWithInventoryGame extends JPanel {
     }
 
     /**
+     * Method to set the text of the timerText
+     * @param time the text to set
+     */
+    public static void setTimeLabel(String time) {
+        timerLabel.setText(" " + time + " ");
+    }
+
+    /**
      * Method to manage the grid layout
      * @param gridBagConstraints the grid layout manager
      * @param i the index of the item
@@ -156,6 +173,8 @@ public class GuiWithInventoryGame extends JPanel {
         toolBar.removeAll();
         toolBar.add(muteMusicButton);
         toolBar.add(toggleInventoryButton);
+        toolBar.add(Box.createHorizontalGlue());
+        toolBar.add(timerLabel);
         toolBar.add(Box.createHorizontalGlue());
         toolBar.add(saveButton);
         toolBar.add(Box.createHorizontalStrut((int) widthOffsetSx));
