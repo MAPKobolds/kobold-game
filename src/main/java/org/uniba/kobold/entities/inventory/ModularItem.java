@@ -6,8 +6,8 @@ public class ModularItem extends Item {
     Set<Class> pieces = new HashSet<>();
     Set<Class> actualPieces = new HashSet<>();
 
-    public ModularItem(String name, String description, String imagePath, List<Class> pieces) {
-        super(name, description, imagePath);
+    public ModularItem(String name, String description, Set<String> alias, String imagePath, List<Class> pieces) {
+        super(name, alias, description, imagePath);
 
         for(Class item : pieces) {
             if(!Item.class.isAssignableFrom(item)) {
