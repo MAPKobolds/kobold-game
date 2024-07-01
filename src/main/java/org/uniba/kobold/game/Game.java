@@ -1,10 +1,9 @@
 package org.uniba.kobold.game;
 
 import org.javatuples.Pair;
-import org.uniba.kobold.entities.room.Room;
-import org.uniba.kobold.entities.room.RoomPath;
-import org.uniba.kobold.entities.room.RoomsMap;
+import org.uniba.kobold.entities.room.*;
 import org.uniba.kobold.entities.room.avaliableRooms.HallwayRoom;
+import org.uniba.kobold.entities.room.avaliableRooms.PubRoom;
 import org.uniba.kobold.entities.room.avaliableRooms.StartingRoom;
 import org.uniba.kobold.errors.RoomNotAccessibleError;
 import org.uniba.kobold.parser.Parser;
@@ -21,10 +20,12 @@ public class Game {
     public Game() throws IOException {
         StartingRoom r1 = new StartingRoom();
         HallwayRoom r2 = new HallwayRoom();
+        PubRoom r3 = new PubRoom();
 
         roomPath = new RoomsMap(Arrays.asList(
             Pair.with(r1, new RoomPath(Arrays.asList(Pair.with(r2, true)))),
-            Pair.with(r2, new RoomPath(Arrays.asList(Pair.with(r1, true))))
+            Pair.with(r2, new RoomPath(Arrays.asList(Pair.with(r1, true), Pair.with(r3, false)))),
+            Pair.with(r3, new RoomPath(Arrays.asList()))
         ));
         parser = new Parser(ParserUtils.loadFileListInSet(new File("src/main/resources/stopwords.txt")));
 
@@ -46,10 +47,10 @@ public class Game {
             return;
         }
 
-        String[] splittedCommand = parsedCommand.getCommand().getName().split(" ");
-        if(splittedCommand[0].equals("vai")) {
+        String[] splitCommand = parsedCommand.getCommand().getName().split(" ");
+        if(splitCommand[0].equals("vai")) {
             try {
-                roomPath.moveTo(splittedCommand[1]);
+                roomPath.moveTo(splitCommand[1]);
 
                 System.out.println(roomPath.getCurrentRoom().getDescription());
             } catch (RoomNotAccessibleError e) {
@@ -59,6 +60,10 @@ public class Game {
             return;
         }
 
-        roomPath.getCurrentRoom().executeCommand(parsedCommand);
+        RoomInteractionResult result = roomPath.getCurrentRoom().executeCommand(parsedCommand);
+
+        if(result.getResultType() == RoomInteractionResultType.UNLOCK) {
+            this.roomPath.unlockPath(result.getSubject());
+        }
     }
 }
