@@ -1,5 +1,6 @@
 package org.uniba.kobold.entities.room.avaliableRooms;
 
+import org.uniba.kobold.entities.InteractionResult;
 import org.uniba.kobold.entities.character.availableCharacters.TwinGuards;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.room.Room;
@@ -26,6 +27,8 @@ public class HallwayRoom extends Room {
 
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command) {
+        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+
         switch (command.getCommand().getName()) {
             case "guarda davanti":
                 System.out.println("Guardi davanti e vedi un gruppo di guardie, forse ci dovresti parlare");
@@ -39,13 +42,19 @@ public class HallwayRoom extends Room {
                 System.out.println("Una normale (Gauss shit) parete");
                 break;
             case "parla guardie":
-                getCharacterByName("guardie").interact(Inventory.contains("mantello"));
+                InteractionResult interactionResult = getCharacterByName("guardie").interact(Inventory.contains("mantello"));
+
+                if(interactionResult == InteractionResult.SUCCESSFUL) {
+                    result.setResultType(RoomInteractionResultType.MOVE);
+                    result.setSubject("bar");
+                }
+
                 break;
             default:
                 System.out.println("Comando non valido");
         }
 
-        return new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+        return result;
     }
 
 }
