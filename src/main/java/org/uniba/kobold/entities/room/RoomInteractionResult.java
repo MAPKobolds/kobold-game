@@ -1,8 +1,8 @@
 package org.uniba.kobold.entities.room;
 
 public class RoomInteractionResult {
-    RoomInteractionResultType resultType;
-    String subject = "";
+    private final RoomInteractionResultType resultType;
+    private String subject = "";
 
     public RoomInteractionResult(RoomInteractionResultType resultType, String subject) {
         this.resultType = resultType;
@@ -11,5 +11,13 @@ public class RoomInteractionResult {
 
     public RoomInteractionResult(RoomInteractionResultType resultType) {
         this.resultType = resultType;
+    }
+
+    public RoomInteractionResultType getResultType() {
+        return resultType;
+    }
+
+    public String getSubject() {
+        return subject;
     }
 }
