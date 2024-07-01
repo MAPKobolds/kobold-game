@@ -3,6 +3,8 @@ package org.uniba.kobold.entities.room.avaliableRooms;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.availableItems.Cloak;
 import org.uniba.kobold.entities.room.Room;
+import org.uniba.kobold.entities.room.RoomInteractionResult;
+import org.uniba.kobold.entities.room.RoomInteractionResultType;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 import javax.swing.*;
@@ -26,7 +28,7 @@ public class StartingRoom extends Room {
     }
 
     @Override
-    public void executeCommand(ParserOutput command) {
+    public RoomInteractionResult executeCommand(ParserOutput command) {
         switch (command.getCommand().getName()) {
             case "guarda giù":
                 System.out.println("Guardi giù e vedi un qualcosa di appiccicoso sotto di te di colore verde scuro, che esce da un tessuto nero, sembra un mantello nero.");
@@ -66,6 +68,7 @@ public class StartingRoom extends Room {
             default:
                 System.out.println("Comando non valido");
         }
-    }
 
+        return new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+    }
 }

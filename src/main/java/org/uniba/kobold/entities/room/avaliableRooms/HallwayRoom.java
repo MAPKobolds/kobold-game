@@ -3,6 +3,8 @@ package org.uniba.kobold.entities.room.avaliableRooms;
 import org.uniba.kobold.entities.character.availableCharacters.TwinGuards;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.room.Room;
+import org.uniba.kobold.entities.room.RoomInteractionResult;
+import org.uniba.kobold.entities.room.RoomInteractionResultType;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 import javax.swing.*;
@@ -23,7 +25,7 @@ public class HallwayRoom extends Room {
     }
 
     @Override
-    public void executeCommand(ParserOutput command) {
+    public RoomInteractionResult executeCommand(ParserOutput command) {
         switch (command.getCommand().getName()) {
             case "guarda davanti":
                 System.out.println("Guardi davanti e vedi un gruppo di guardie, forse ci dovresti parlare");
@@ -42,6 +44,8 @@ public class HallwayRoom extends Room {
             default:
                 System.out.println("Comando non valido");
         }
+
+        return new RoomInteractionResult(RoomInteractionResultType.NOTHING);
     }
 
 }
