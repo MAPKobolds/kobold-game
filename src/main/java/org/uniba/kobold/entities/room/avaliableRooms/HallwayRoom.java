@@ -12,7 +12,7 @@ import javax.swing.*;
 import java.util.Arrays;
 import java.util.Set;
 
-public class HallwayRoom extends Room {
+public final class HallwayRoom extends Room {
 
     public HallwayRoom() {
         super("corridoio",
