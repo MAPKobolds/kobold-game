@@ -21,7 +21,10 @@ public final class HallwayRoom extends Room {
             new ImageIcon("/img/BR.png"),
             Arrays.asList(),
             Arrays.asList(new TwinGuards()),
-            Arrays.asList(new Command("parla guardie", Set.of()))
+            Arrays.asList(
+                new Command("parla guardie", Set.of()),
+                new Command("vai bar", Set.of("muoviti"))
+            )
         );
     }
 
@@ -45,7 +48,7 @@ public final class HallwayRoom extends Room {
                 InteractionResult interactionResult = getCharacterByName("guardie").interact(Inventory.contains("mantello"));
 
                 if(interactionResult == InteractionResult.SUCCESSFUL) {
-                    result.setResultType(RoomInteractionResultType.MOVE);
+                    result.setResultType(RoomInteractionResultType.UNLOCK);
                     result.setSubject("bar");
                 }
 
