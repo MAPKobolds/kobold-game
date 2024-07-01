@@ -59,5 +59,5 @@ abstract public class Room {
         return commands;
     }
 
-    public abstract void executeCommand(ParserOutput command);
+    public abstract RoomInteractionResult executeCommand(ParserOutput command);
 }
