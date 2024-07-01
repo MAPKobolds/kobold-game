@@ -14,7 +14,7 @@ public class Main {
         g.executeCommand("vai corridoio");
         g.executeCommand("guarda a destra");
         g.executeCommand("parla guardie");
-
+        g.executeCommand("vai bar");
 
         new GuiHub();
 
