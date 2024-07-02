@@ -26,6 +26,8 @@ public final class CircuitRoom extends Room {
 
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command) {
+        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+
         switch (command.getCommand().getName()) {
             case "guarda davanti":
                 System.out.println("Di fronte trovi la cassiera, lì otrai fare una scommessa");
@@ -42,10 +44,15 @@ public final class CircuitRoom extends Room {
             case "guarda sopra":
                 System.out.println("Vedi la parete dell'enorme caverna, è da tempo che non vedi il sole...");
                 break;
+            case "vai spiazzale":
+                result.setResultType(RoomInteractionResultType.MOVE);
+                result.setSubject("spiazzale");
+
+                break;
             default:
                 System.out.println("Comando non valido");
         }
 
-        return new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+        return result;
     }
 }

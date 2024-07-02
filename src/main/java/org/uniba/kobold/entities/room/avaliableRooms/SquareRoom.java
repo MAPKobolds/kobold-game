@@ -34,6 +34,8 @@ public final class SquareRoom extends Room {
 
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command) {
+        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+
         switch (command.getCommand().getName()) {
             case "guarda davanti":
                 System.out.println("Di fronte, oltre ai cartelli c'è l'entrata del palazzo. È protetta e chiusa, è impossibile" +
@@ -50,6 +52,15 @@ public final class SquareRoom extends Room {
                 break;
             case "guarda sopra":
                 System.out.println("Vedi la parete dell'enorme caverna, è da tempo che non vedi il sole...");
+                break;
+            case "vai bar":
+            case "vai fucine":
+            case "vai circuito":
+            case "vai palazzo":
+            case "vai generatore":
+                result.setResultType(RoomInteractionResultType.MOVE);
+                result.setSubject(command.getCommand().getName().split(" ")[0]);
+
                 break;
             default:
                 System.out.println("Comando non valido");

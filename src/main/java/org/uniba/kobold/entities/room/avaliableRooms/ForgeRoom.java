@@ -26,6 +26,8 @@ public final class ForgeRoom extends Room {
 
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command) {
+        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+
         switch (command.getCommand().getName()) {
             case "guarda davanti":
                 System.out.println("Di fronte, vedi un RULLO dove stanno passando numerosi pezzi di auto, forse potrebbe esserci" +
@@ -43,10 +45,15 @@ public final class ForgeRoom extends Room {
             case "guarda sopra":
                 System.out.println("Vedi la parete dell'enorme caverna, è da tempo che non vedi il sole...");
                 break;
+            case "vai spiazzale":
+                result.setResultType(RoomInteractionResultType.MOVE);
+                result.setSubject("spiazzale");
+
+                break;
             default:
                 System.out.println("Comando non valido");
         }
 
-        return new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+        return result;
     }
 }

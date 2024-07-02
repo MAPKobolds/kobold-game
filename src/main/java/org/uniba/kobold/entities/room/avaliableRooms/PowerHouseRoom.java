@@ -27,6 +27,8 @@ public final class PowerHouseRoom extends Room {
 
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command) {
+        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+
         switch (command.getCommand().getName()) {
             case "guarda davanti":
                 System.out.println("Di fronte, c'è il direttore coboldo, sembra molto preso dallo schermo del " +
@@ -42,10 +44,15 @@ public final class PowerHouseRoom extends Room {
             case "guarda sopra":
                 System.out.println("Un normale soffitto, anch'esso pieno di motori");
                 break;
+            case "vai spiazzale":
+                result.setResultType(RoomInteractionResultType.MOVE);
+                result.setSubject("spiazzale");
+
+                break;
             default:
                 System.out.println("Comando non valido");
         }
 
-        return new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+        return result;
     }
 }

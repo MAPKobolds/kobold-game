@@ -27,6 +27,8 @@ public final class PalaceEntryRoom extends Room {
 
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command) {
+        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+
         switch (command.getCommand().getName()) {
             case "guarda davanti":
                 System.out.println("Di fronte, oltre ai cartelli c'è l'entrata del palazzo. È protetta e chiusa, è impossibile" +
@@ -43,10 +45,16 @@ public final class PalaceEntryRoom extends Room {
             case "guarda sopra":
                 System.out.println("Il palazzo reale ha un soffitto che quasi ricorda quello di un palazzo comunale...");
                 break;
+            case "vai spiazzale":
+            case "vai trono":
+                result.setResultType(RoomInteractionResultType.MOVE);
+                result.setSubject(command.getCommand().getName().split(" ")[0]);
+
+                break;
             default:
                 System.out.println("Comando non valido");
         }
 
-        return new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+        return result;
     }
 }

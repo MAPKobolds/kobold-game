@@ -29,6 +29,8 @@ public final class StartingRoom extends Room {
 
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command) {
+        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+
         switch (command.getCommand().getName()) {
             case "guarda giù":
                 System.out.println("Guardi giù e vedi un qualcosa di appiccicoso sotto di te di colore verde scuro, che esce da un tessuto nero, sembra un mantello nero.");
@@ -65,10 +67,15 @@ public final class StartingRoom extends Room {
                     System.out.println("Non c'è niente da ispezionare");
                 }
                 break;
+            case "vai corridoio":
+                result.setResultType(RoomInteractionResultType.MOVE);
+                result.setSubject("corridoio");
+
+                break;
             default:
                 System.out.println("Comando non valido");
         }
 
-        return new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+        return result;
     }
 }

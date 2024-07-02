@@ -46,6 +46,11 @@ public final class PubRoom extends Room {
             case "guarda sopra":
                 System.out.println("Una normale (Gauss shit) parete in legno");
                 break;
+            case "vai spiazzale":
+                result.setResultType(RoomInteractionResultType.MOVE);
+                result.setSubject("spiazzale");
+
+                break;
             default:
                 System.out.println("Comando non valido");
         }

@@ -53,6 +53,11 @@ public final class HallwayRoom extends Room {
                 }
 
                 break;
+            case "vai bar":
+                result.setResultType(RoomInteractionResultType.MOVE);
+                result.setSubject("bar");
+
+                break;
             default:
                 System.out.println("Comando non valido");
         }

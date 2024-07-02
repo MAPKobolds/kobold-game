@@ -74,23 +74,14 @@ public class Game {
             return;
         }
 
-        String[] splitCommand = parsedCommand.getCommand().getName().split(" ");
-        if(splitCommand[0].equals("vai")) {
-            try {
-                roomPath.moveTo(splitCommand[1]);
-
-                System.out.println(roomPath.getCurrentRoom().getDescription());
-            } catch (RoomNotAccessibleError e) {
-                System.out.print("Non puoi andarci");
-            }
-
-            return;
-        }
-
         RoomInteractionResult result = roomPath.getCurrentRoom().executeCommand(parsedCommand);
 
-        if(result.getResultType() == RoomInteractionResultType.UNLOCK) {
-            this.roomPath.unlockPath(result.getSubject());
+        switch (result.getResultType()) {
+            case UNLOCK -> this.roomPath.unlockPath(result.getSubject());
+            case MOVE -> {
+                roomPath.moveTo(result.getSubject());
+                System.out.println(roomPath.getCurrentRoom().getDescription());
+            }
         }
     }
 }
