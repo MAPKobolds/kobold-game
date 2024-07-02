@@ -27,6 +27,20 @@ public final class ThroneRoom extends Room {
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command) {
         switch (command.getCommand().getName()) {
+            case "guarda davanti":
+                System.out.println("Di fronte, c'è l'enorme trono di cianfrusaglie del re coboldo." +
+                        "\nIl re ti sta fissando con aria quasi scocciata");
+                break;
+            case "guarda dietro":
+                System.out.println("Guardi dietro e vedi il corridoio del PALAZZO");
+                break;
+            case "guarda destra":
+            case "guarda sinistra":
+                System.out.println("La stanza è vuota");
+                break;
+            case "guarda sopra":
+                System.out.println("Il palazzo reale ha un soffitto che quasi ricorda quello di un palazzo comunale...");
+                break;
             default:
                 System.out.println("Comando non valido");
         }
