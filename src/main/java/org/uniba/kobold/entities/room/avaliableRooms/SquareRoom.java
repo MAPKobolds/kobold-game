@@ -1,6 +1,5 @@
 package org.uniba.kobold.entities.room.avaliableRooms;
 
-import org.uniba.kobold.entities.inventory.availableItems.Cloak;
 import org.uniba.kobold.entities.room.Room;
 import org.uniba.kobold.entities.room.RoomInteractionResult;
 import org.uniba.kobold.entities.room.RoomInteractionResultType;
@@ -36,6 +35,22 @@ public final class SquareRoom extends Room {
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command) {
         switch (command.getCommand().getName()) {
+            case "guarda davanti":
+                System.out.println("Di fronte, oltre ai cartelli c'è l'entrata del palazzo. È protetta e chiusa, è impossibile" +
+                        "entrarci, forse qualcosa di veloce la potrebbe sfondare");
+                break;
+            case "guarda dietro":
+                System.out.println("Guardi dietro e vedi il pub da dove sei arrivato");
+                break;
+            case "guarda destra":
+                System.out.println("Guardi a destra e vedi il sentiero per le fucine e per il generatore");
+                break;
+            case "guarda sinistra":
+                System.out.println("Guardi a sinistra e vedi il sentiero per la pista dei kart");
+                break;
+            case "guarda sopra":
+                System.out.println("Vedi la parete dell'enorme caverna, è da tempo che non vedi il sole...");
+                break;
             default:
                 System.out.println("Comando non valido");
         }
