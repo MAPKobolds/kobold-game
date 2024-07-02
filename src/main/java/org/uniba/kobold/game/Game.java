@@ -2,9 +2,7 @@ package org.uniba.kobold.game;
 
 import org.javatuples.Pair;
 import org.uniba.kobold.entities.room.*;
-import org.uniba.kobold.entities.room.avaliableRooms.HallwayRoom;
-import org.uniba.kobold.entities.room.avaliableRooms.PubRoom;
-import org.uniba.kobold.entities.room.avaliableRooms.StartingRoom;
+import org.uniba.kobold.entities.room.avaliableRooms.*;
 import org.uniba.kobold.errors.RoomNotAccessibleError;
 import org.uniba.kobold.parser.Parser;
 import org.uniba.kobold.parser.ParserOutput;
@@ -21,13 +19,35 @@ public class Game {
         StartingRoom r1 = new StartingRoom();
         HallwayRoom r2 = new HallwayRoom();
         PubRoom r3 = new PubRoom();
+        SquareRoom r4 = new SquareRoom();
+        ForgeRoom r5 = new ForgeRoom();
+        CircuitRoom r6 = new CircuitRoom();
+        PowerHouseRoom r7 = new PowerHouseRoom();
+        PalaceEntryRoom r8 = new PalaceEntryRoom();
+        ThroneRoom r9 = new ThroneRoom();
 
+        parser = new Parser(ParserUtils.loadFileListInSet(new File("src/main/resources/stopwords.txt")));
         roomPath = new RoomsMap(Arrays.asList(
             Pair.with(r1, new RoomPath(Arrays.asList(Pair.with(r2, true)))),
-            Pair.with(r2, new RoomPath(Arrays.asList(Pair.with(r1, true), Pair.with(r3, false)))),
-            Pair.with(r3, new RoomPath(Arrays.asList()))
+            Pair.with(r2, new RoomPath(
+                    Arrays.asList(
+                        Pair.with(r1, true),
+                        Pair.with(r3, false)
+                    )
+            )),
+            Pair.with(r3, new RoomPath(Arrays.asList())),
+            Pair.with(r4, new RoomPath(
+                Arrays.asList(
+                    Pair.with(r3, true),
+                    Pair.with(r5, true),
+                    Pair.with(r6, true),
+                    Pair.with(r7, true),
+                    Pair.with(r8, false)
+                )
+            )),
+            Pair.with(r8, new RoomPath(Arrays.asList(Pair.with(r9, true)))),
+            Pair.with(r9, new RoomPath(Arrays.asList(Pair.with(r8, true))))
         ));
-        parser = new Parser(ParserUtils.loadFileListInSet(new File("src/main/resources/stopwords.txt")));
 
         System.out.println(roomPath.getCurrentRoom().getDescription());
     }
