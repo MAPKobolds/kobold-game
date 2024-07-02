@@ -27,6 +27,21 @@ public final class CircuitRoom extends Room {
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command) {
         switch (command.getCommand().getName()) {
+            case "guarda davanti":
+                System.out.println("Di fronte trovi la cassiera, lì otrai fare una scommessa");
+                break;
+            case "guarda dietro":
+                System.out.println("Guardi dietro e vedi l'uscita che porta allo SPIAZZALE");
+                break;
+            case "guarda destra":
+                System.out.println("Guardi a destra e numerosi quadri e opera d'arte raffiguranti il numero due");
+                break;
+            case "guarda sinistra":
+                System.out.println("Guardi a sinistra e la pista, la forma ricorda il numero due");
+                break;
+            case "guarda sopra":
+                System.out.println("Vedi la parete dell'enorme caverna, è da tempo che non vedi il sole...");
+                break;
             default:
                 System.out.println("Comando non valido");
         }
