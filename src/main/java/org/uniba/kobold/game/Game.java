@@ -35,7 +35,7 @@ public class Game {
                         Pair.with(r3, false)
                     )
             )),
-            Pair.with(r3, new RoomPath(Arrays.asList())),
+            Pair.with(r3, new RoomPath(Arrays.asList(Pair.with(r4, true)))),
             Pair.with(r4, new RoomPath(
                 Arrays.asList(
                     Pair.with(r3, true),
@@ -45,7 +45,14 @@ public class Game {
                     Pair.with(r8, false)
                 )
             )),
-            Pair.with(r8, new RoomPath(Arrays.asList(Pair.with(r9, true)))),
+            Pair.with(r5, new RoomPath(Arrays.asList(Pair.with(r4, true)))),
+            Pair.with(r6, new RoomPath(Arrays.asList(Pair.with(r4, true)))),
+            Pair.with(r7, new RoomPath(Arrays.asList(Pair.with(r4, true)))),
+            Pair.with(r8, new RoomPath(
+                Arrays.asList(
+                    Pair.with(r9, true),
+                    Pair.with(r4, true)
+                ))),
             Pair.with(r9, new RoomPath(Arrays.asList(Pair.with(r8, true))))
         ));
 

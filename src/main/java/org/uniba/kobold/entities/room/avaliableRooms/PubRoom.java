@@ -4,8 +4,11 @@ import org.uniba.kobold.entities.room.Room;
 import org.uniba.kobold.entities.room.RoomInteractionResult;
 import org.uniba.kobold.entities.room.RoomInteractionResultType;
 import org.uniba.kobold.parser.ParserOutput;
+import org.uniba.kobold.type.Command;
+
 import javax.swing.*;
 import java.util.Arrays;
+import java.util.Set;
 
 public final class PubRoom extends Room {
 
@@ -17,7 +20,9 @@ public final class PubRoom extends Room {
                 new ImageIcon("/img/BR.png"),
                 Arrays.asList(),
                 Arrays.asList(),
-                Arrays.asList()
+                Arrays.asList(
+                    new Command("vai spiazzale", Set.of("muoviti"))
+                )
         );
     }
 
