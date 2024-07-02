@@ -21,7 +21,7 @@ public final class SquareRoom extends Room {
                         "\nPALAZZO" +
                         "\nGENERATORE",
                 new ImageIcon("/img/BR.png"),
-                Arrays.asList(new Cloak()),
+                Arrays.asList(),
                 Arrays.asList(),
                 Arrays.asList(
                     new Command("vai bar", Set.of("muoviti")),
