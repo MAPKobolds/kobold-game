@@ -27,6 +27,22 @@ public final class ForgeRoom extends Room {
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command) {
         switch (command.getCommand().getName()) {
+            case "guarda davanti":
+                System.out.println("Di fronte, vedi un RULLO dove stanno passando numerosi pezzi di auto, forse potrebbe esserci" +
+                        "qualcosa di familiare attraverso quella ferraglia");
+                break;
+            case "guarda dietro":
+                System.out.println("Guardi dietro e vedi l'uscita che porta allo SPIAZZALE");
+                break;
+            case "guarda destra":
+                System.out.println("Guardi a destra e vedi numerosi coboldi che trasportano pezzi di metallo");
+                break;
+            case "guarda sinistra":
+                System.out.println("Guardi a destra e vedi una montagna di pezzi di ricambio per auto");
+                break;
+            case "guarda sopra":
+                System.out.println("Vedi la parete dell'enorme caverna, è da tempo che non vedi il sole...");
+                break;
             default:
                 System.out.println("Comando non valido");
         }
