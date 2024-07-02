@@ -9,9 +9,9 @@ import javax.swing.*;
 import java.util.Arrays;
 import java.util.Set;
 
-public final class PowerHouse extends Room {
+public final class PowerHouseRoom extends Room {
 
-    public PowerHouse() {
+    public PowerHouseRoom() {
         super("generatore",
                 "L'edificio contenente il generatore è il più pulito e ordinato di questo inferno. Su tutte le pareti sono stati piazzati dei motori di autovetture " +
                         "che producono energia. \n " +
