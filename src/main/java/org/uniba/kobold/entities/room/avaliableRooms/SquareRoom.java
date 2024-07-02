@@ -26,8 +26,8 @@ public final class SquareRoom extends Room {
                 Arrays.asList(
                     new Command("vai bar", Set.of("muoviti")),
                     new Command("vai fucine", Set.of("muoviti")),
-                    new Command("vai pista", Set.of("muoviti")),
-                    new Command("vai pista ", Set.of("muoviti")),
+                    new Command("vai circuito", Set.of("muoviti")),
+                    new Command("vai palazzo", Set.of("muoviti")),
                     new Command("vai generatore", Set.of("muoviti"))
                 )
         );
