@@ -26,24 +26,24 @@ public final class ForgeRoom extends Room {
 
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command) {
-        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
 
         switch (command.getCommand().getName()) {
             case "guarda davanti":
-                System.out.println("Di fronte, vedi un RULLO dove stanno passando numerosi pezzi di auto, forse potrebbe esserci" +
+                result.setSubject("Di fronte, vedi un RULLO dove stanno passando numerosi pezzi di auto, forse potrebbe esserci" +
                         "qualcosa di familiare attraverso quella ferraglia");
                 break;
             case "guarda dietro":
-                System.out.println("Guardi dietro e vedi l'uscita che porta allo SPIAZZALE");
+                result.setSubject("Guardi dietro e vedi l'uscita che porta allo SPIAZZALE");
                 break;
             case "guarda destra":
-                System.out.println("Guardi a destra e vedi numerosi coboldi che trasportano pezzi di metallo");
+                result.setSubject("Guardi a destra e vedi numerosi coboldi che trasportano pezzi di metallo");
                 break;
             case "guarda sinistra":
-                System.out.println("Guardi a destra e vedi una montagna di pezzi di ricambio per auto");
+                result.setSubject("Guardi a destra e vedi una montagna di pezzi di ricambio per auto");
                 break;
             case "guarda sopra":
-                System.out.println("Vedi la parete dell'enorme caverna, è da tempo che non vedi il sole...");
+                result.setSubject("Vedi la parete dell'enorme caverna, è da tempo che non vedi il sole...");
                 break;
             case "vai spiazzale":
                 result.setResultType(RoomInteractionResultType.MOVE);
@@ -51,7 +51,7 @@ public final class ForgeRoom extends Room {
 
                 break;
             default:
-                System.out.println("Comando non valido");
+                result.setResultType(RoomInteractionResultType.NOTHING);
         }
 
         return result;

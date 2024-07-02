@@ -27,23 +27,23 @@ public final class PalaceEntryRoom extends Room {
 
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command) {
-        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
 
         switch (command.getCommand().getName()) {
             case "guarda davanti":
-                System.out.println("Di fronte, oltre ai cartelli c'è l'entrata del palazzo. È protetta e chiusa, è impossibile" +
+                result.setSubject("Di fronte, oltre ai cartelli c'è l'entrata del palazzo. È protetta e chiusa, è impossibile" +
                         "entrarci, forse qualcosa di veloce la potrebbe sfondare");
                 break;
             case "guarda dietro":
-                System.out.println("Guardi dietro e vedi i cadaveri dei coboldi travolti e l'uscita verso" +
+                result.setSubject("Guardi dietro e vedi i cadaveri dei coboldi travolti e l'uscita verso" +
                         "lo SPIAZZALE, hai fatto un bel casino!");
                 break;
             case "guarda destra":
             case "guarda sinistra":
-                System.out.println("Le pareti sono piene di TORCE per illuminare");
+                result.setSubject("Le pareti sono piene di TORCE per illuminare");
                 break;
             case "guarda sopra":
-                System.out.println("Il palazzo reale ha un soffitto che quasi ricorda quello di un palazzo comunale...");
+                result.setSubject("Il palazzo reale ha un soffitto che quasi ricorda quello di un palazzo comunale...");
                 break;
             case "vai spiazzale":
             case "vai trono":
@@ -52,7 +52,7 @@ public final class PalaceEntryRoom extends Room {
 
                 break;
             default:
-                System.out.println("Comando non valido");
+                result.setResultType(RoomInteractionResultType.NOTHING);
         }
 
         return result;

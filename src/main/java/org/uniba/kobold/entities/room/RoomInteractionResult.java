@@ -3,6 +3,7 @@ package org.uniba.kobold.entities.room;
 public class RoomInteractionResult {
     private RoomInteractionResultType resultType;
     private String subject = "";
+    private Object argument;
 
     public RoomInteractionResult(RoomInteractionResultType resultType, String subject) {
         this.resultType = resultType;
@@ -27,5 +28,13 @@ public class RoomInteractionResult {
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public Object getArgument() {
+        return argument;
+    }
+
+    public void setArgument(Object argument) {
+        this.argument = argument;
     }
 }

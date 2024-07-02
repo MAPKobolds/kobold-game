@@ -30,19 +30,19 @@ public final class HallwayRoom extends Room {
 
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command) {
-        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
 
         switch (command.getCommand().getName()) {
             case "guarda davanti":
-                System.out.println("Guardi davanti e vedi un gruppo di guardie, forse ci dovresti parlare");
+                result.setSubject("Guardi davanti e vedi un gruppo di guardie, forse ci dovresti parlare");
                 break;
             case "guarda dietro":
-                System.out.println("Guardi dietro e vedi la caverna da cui sei arrivato");
+                result.setSubject("Guardi dietro e vedi la caverna da cui sei arrivato");
                 break;
             case "guarda destra":
             case "guarda sinistra":
             case "guarda sopra":
-                System.out.println("Una normale (Gauss shit) parete");
+                result.setSubject("Una normale (Gauss shit) parete");
                 break;
             case "parla guardie":
                 InteractionResult interactionResult = getCharacterByName("guardie").interact(Inventory.contains("mantello"));
@@ -59,7 +59,7 @@ public final class HallwayRoom extends Room {
 
                 break;
             default:
-                System.out.println("Comando non valido");
+                result.setResultType(RoomInteractionResultType.NOTHING);
         }
 
         return result;

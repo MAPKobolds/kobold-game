@@ -1,6 +1,8 @@
 package org.uniba.kobold.game;
 
 import org.javatuples.Pair;
+import org.uniba.kobold.entities.inventory.Inventory;
+import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.entities.room.*;
 import org.uniba.kobold.entities.room.avaliableRooms.*;
 import org.uniba.kobold.errors.RoomNotAccessibleError;
@@ -77,7 +79,12 @@ public class Game {
         RoomInteractionResult result = roomPath.getCurrentRoom().executeCommand(parsedCommand);
 
         switch (result.getResultType()) {
+            case DESCRIPTION -> System.out.println(result.getSubject());
             case UNLOCK -> this.roomPath.unlockPath(result.getSubject());
+            case ADD_ITEM -> {
+                System.out.println(result.getSubject());
+                Inventory.addPiece((Item) result.getArgument());
+            }
             case MOVE -> {
                 roomPath.moveTo(result.getSubject());
                 System.out.println(roomPath.getCurrentRoom().getDescription());

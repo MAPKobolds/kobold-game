@@ -28,23 +28,23 @@ public final class PubRoom extends Room {
 
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command) {
-        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
 
         switch (command.getCommand().getName()) {
             case "guarda davanti":
-                System.out.println("Guardi davanti e vedi il bancone del barista, è indaffarato a servire gli altri clienti ma avrà tempo per te");
+                result.setSubject("Guardi davanti e vedi il bancone del barista, è indaffarato a servire gli altri clienti ma avrà tempo per te");
                 break;
             case "guarda dietro":
-                System.out.println("Guardi dietro e vedi il corridoio da dove sei arrivato");
+                result.setSubject("Guardi dietro e vedi il corridoio da dove sei arrivato");
                 break;
             case "guarda destra":
-                System.out.println("Guardi a destra e un'uscita che da su uno SPIAZZALE");
+                result.setSubject("Guardi a destra e un'uscita che da su uno SPIAZZALE");
                 break;
             case "guarda sinistra":
-                System.out.println("Guardi a sinistra e vedi un gruppo di coboldi che giocano a blackjack, sei abbastanza ludopatico per giocare.");
+                result.setSubject("Guardi a sinistra e vedi un gruppo di coboldi che giocano a blackjack, sei abbastanza ludopatico per giocare.");
                 break;
             case "guarda sopra":
-                System.out.println("Una normale (Gauss shit) parete in legno");
+                result.setSubject("Una normale (Gauss shit) parete in legno");
                 break;
             case "vai spiazzale":
                 result.setResultType(RoomInteractionResultType.MOVE);
@@ -52,7 +52,7 @@ public final class PubRoom extends Room {
 
                 break;
             default:
-                System.out.println("Comando non valido");
+                result.setResultType(RoomInteractionResultType.NOTHING);
         }
 
         return result;

@@ -27,22 +27,22 @@ public final class PowerHouseRoom extends Room {
 
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command) {
-        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.NOTHING);
+        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
 
         switch (command.getCommand().getName()) {
             case "guarda davanti":
-                System.out.println("Di fronte, c'è il direttore coboldo, sembra molto preso dallo schermo del " +
+                result.setSubject("Di fronte, c'è il direttore coboldo, sembra molto preso dallo schermo del " +
                         "suo PC");
                 break;
             case "guarda dietro":
-                System.out.println("Guardi dietro e vedi l'uscita che da sullo SPIAZZALE");
+                result.setSubject("Guardi dietro e vedi l'uscita che da sullo SPIAZZALE");
                 break;
             case "guarda destra":
             case "guarda sinistra":
-                System.out.println("Le pareti sono piene di motori, c'è un rumore assordante");
+                result.setSubject("Le pareti sono piene di motori, c'è un rumore assordante");
                 break;
             case "guarda sopra":
-                System.out.println("Un normale soffitto, anch'esso pieno di motori");
+                result.setSubject("Un normale soffitto, anch'esso pieno di motori");
                 break;
             case "vai spiazzale":
                 result.setResultType(RoomInteractionResultType.MOVE);
@@ -50,7 +50,7 @@ public final class PowerHouseRoom extends Room {
 
                 break;
             default:
-                System.out.println("Comando non valido");
+                result.setResultType(RoomInteractionResultType.NOTHING);
         }
 
         return result;
