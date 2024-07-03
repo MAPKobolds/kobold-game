@@ -9,22 +9,22 @@ public class WebServerSocket {
     static final int MAX_USERS = 5;
 
     public static void startServer() {
-        try {
-            ServerSocket serverSocket = new ServerSocket(PORT, MAX_USERS);
-            System.out.println("SERVER STARTED at http://localhost:" + PORT);
+        new Thread(() -> {
+            try {
+                ServerSocket serverSocket = new ServerSocket(PORT, MAX_USERS);
+                System.out.println("SERVER STARTED at http://localhost:" + PORT);
 
-            while (true) {
-                Socket socket = serverSocket.accept();
-                HttpPage page = new HttpPage(socket);
+                while (true) {
+                    Socket socket = serverSocket.accept();
+                    HttpPage page = new HttpPage(socket);
 
-                page.renderPage("src/main/java/org/uniba/kobold/socket/page.html");
+                    page.renderPage("src/main/java/org/uniba/kobold/socket/page.html");
+                }
+
+            } catch(IOException ex){
+                System.out.println("CANNOT START SERVER AT PORT: " + PORT);
             }
-
-        } catch(IOException ex){
-            System.out.println("CANNOT START SERVER AT PORT: " + PORT);
-        }
-
-
+        });
     }
 
 }
