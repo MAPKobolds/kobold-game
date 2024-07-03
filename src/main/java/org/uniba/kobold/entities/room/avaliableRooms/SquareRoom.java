@@ -59,7 +59,7 @@ public final class SquareRoom extends Room {
             case "vai palazzo":
             case "vai generatore":
                 result.setResultType(RoomInteractionResultType.MOVE);
-                result.setSubject(command.getCommand().getName().split(" ")[0]);
+                result.setSubject(command.getCommand().getName().split(" ")[1]);
 
                 break;
             default:
