@@ -8,6 +8,7 @@ import java.util.Set;
 public class Inventory {
     private static Inventory instance;
     private static final Set<Item> items = new HashSet<>();
+    private static int money = 0;
 
     public static Inventory getInstance() {
         if (instance == null) {
@@ -16,18 +17,29 @@ public class Inventory {
         return instance;
     }
 
+    public static void addMoney(int value) {
+        money += value;
+    }
+
+    public static void removeMoney(int value) {
+        money -= value;
+    }
+
+    public static int getMoney() {
+        return money;
+    }
+    
     public static void addPiece(Item item) {
-        if(!items.contains(item)) {
-            items.add(item);
-        }
+        items.add(item);
     }
 
     public static void removePiece(Item item) {
-        if(!items.contains(item)) {
-            throw new Error("This item is not in the inventory");
+        for (Item i : items) {
+            if (i.equals(item)) {
+                items.remove(i);
+                break;
+            }
         }
-
-        items.remove(item);
     }
 
     public static boolean contains(String name) {

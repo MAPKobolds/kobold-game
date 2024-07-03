@@ -5,6 +5,7 @@ import org.uniba.kobold.api.blackjack.Card;
 import org.uniba.kobold.api.error.*;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
+import org.uniba.kobold.entities.inventory.availableItems.Bill;
 import org.uniba.kobold.entities.room.*;
 import org.uniba.kobold.entities.room.avaliableRooms.*;
 import org.uniba.kobold.game.minigames.BlackJackControl;
@@ -19,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+
 
 public class Game {
     private final Parser parser;
@@ -104,9 +106,34 @@ public class Game {
 
     private void gameCommandSorter(MiniGameInteraction result) {
 
+        Item item = null;
+
         System.out.println(result.getInfo());
+
+        System.out.println("money: " + Inventory.getMoney());
+
+        if (result.getResult() != null) {
+
+            Pair<List<Card>,List<Card>> output = (Pair<List<Card>, List<Card>>) result.getResult();
+            List<Card> Pcards = output.getValue0();
+            List<Card> Dcards = output.getValue1();
+
+            System.out.println("Player's cards");
+            for (Card card : Pcards) {
+                System.out.println(
+                        card.getValue() + " of " + card.getSuit()
+                );
+            }
+
+            System.out.println("Dealer's cards");
+            for (Card card : Dcards) {
+                System.out.println(
+                        card.getValue() + " of " + card.getSuit()
+                );
+            }
+        }
+
         switch (result.getType()) {
-            //Pair<> cards = (List<Card>) result.getResult();
 
             case INFO -> {
                 if (result.getHasFinished()) {
@@ -116,17 +143,15 @@ public class Game {
             }
 
             case WIN -> {
-                inGame = false;
-                currentGameType = MiniGameType.NONE;
-
-                Inventory.addPiece((Item) result.getResult());
+                if (item != null){
+                    Inventory.addPiece(item);
+                }
             }
 
             case LOSE -> {
-                inGame = false;
-                currentGameType = MiniGameType.NONE;
-
-                Inventory.removePiece((Item) result.getResult());
+                if (item != null){
+                    Inventory.removePiece(item);
+                }
             }
 
         }

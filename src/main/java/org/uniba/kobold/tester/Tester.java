@@ -12,13 +12,7 @@ public class Tester {
 
         Game game = new Game();
 
-        for (int i = 0; i < 10; i++) {
-            Inventory.addPiece(new Bill(50));
-        }
-
-        for (int i = 0; i < 10; i++) {
-            Inventory.addPiece(new Bill(200));
-        }
+        Inventory.addMoney(1000);
 
         game.executeCommand("prendi mantello");
         game.executeCommand("vai corridoio");

@@ -1,15 +1,11 @@
 package org.uniba.kobold.game.minigames;
 
-import org.javatuples.Pair;
 import org.uniba.kobold.api.blackjack.BlackjackChecker;
-import org.uniba.kobold.api.blackjack.Card;
 import org.uniba.kobold.api.error.*;
 import org.uniba.kobold.entities.inventory.Inventory;
-import org.uniba.kobold.entities.inventory.availableItems.Bill;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 
-import java.util.List;
 import java.util.Set;
 
 public class BlackJackControl extends MiniGame{
@@ -18,7 +14,7 @@ public class BlackJackControl extends MiniGame{
     BlackjackChecker blackjackChecker;
     Boolean isPlaying = false;
     Boolean hasBet = false;
-    Bill bettedItem = null;
+    int bettedMoney = 0;
 
     public BlackJackControl() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
 
@@ -63,12 +59,15 @@ public class BlackJackControl extends MiniGame{
                             blackjackChecker.playRound();
                             isPlaying = true;
                             if (blackjackChecker.getHandValue(blackjackChecker.getPlayerHand()) == 21) {
+                                Inventory.addMoney(bettedMoney);
                                 interaction = new MiniGameInteraction(
                                         "Hai vinto",
                                         true,
-                                        new Pair<>(bettedItem, blackjackChecker.getHands()),
+                                        blackjackChecker.getHands(),
                                         MiniGameInteractionType.WIN
                                 );
+                                isPlaying = false;
+                                hasBet = false;
                             }else{
                                 interaction = new MiniGameInteraction(
                                         "Hai iniziato una mano",
@@ -99,12 +98,15 @@ public class BlackJackControl extends MiniGame{
                     if (isPlaying) {
                         blackjackChecker.hit();
                         if (blackjackChecker.getHandValue(blackjackChecker.getPlayerHand()) > 21) {
+                            Inventory.removeMoney(bettedMoney);
                             interaction = new MiniGameInteraction(
                                     "Hai perso",
                                     true,
-                                    new Pair<>(bettedItem, blackjackChecker.getHands()),
+                                    blackjackChecker.getHands(),
                                     MiniGameInteractionType.LOSE
                             );
+                            isPlaying = false;
+                            hasBet = false;
                         }else{
                             interaction = new MiniGameInteraction(
                                     "Hai chiesto una carta",
@@ -126,21 +128,27 @@ public class BlackJackControl extends MiniGame{
                 case "stand":
                     if (isPlaying) {
                         blackjackChecker.dealerTurn();
+                        isPlaying = false;
                         if (blackjackChecker.isBust(blackjackChecker.getDealerHand()) ||
                                 blackjackChecker.isWinner(blackjackChecker.getPlayerHand(), blackjackChecker.getDealerHand())) {
+                            Inventory.addMoney(bettedMoney);
                             interaction = new MiniGameInteraction(
                                     "Hai vinto",
                                     false,
-                                    new Pair<>(bettedItem, blackjackChecker.getHands()),
+                                    blackjackChecker.getHands(),
                                     MiniGameInteractionType.WIN);
+
                         } else {
+                            Inventory.removeMoney(bettedMoney);
                             interaction = new MiniGameInteraction(
                                     "Hai perso",
                                     false,
-                                    new Pair<>(bettedItem, blackjackChecker.getHands()),
+                                    blackjackChecker.getHands(),
                                     MiniGameInteractionType.LOSE);
+
                         }
                         isPlaying = false;
+                        hasBet = false;
                     } else {
                         interaction = new MiniGameInteraction(
                                 "Devi iniziare una mano prima",
@@ -150,10 +158,10 @@ public class BlackJackControl extends MiniGame{
                     }
                     break;
 
-                case "bet 50":
-                case "bet 100":
-                case "bet 200":
-                case "bet 500":
+                case "bet 50" :
+                case "bet 100" :
+                case "bet 200" :
+                case "bet 500" :
                     if (isPlaying) {
                         interaction = new MiniGameInteraction(
                                 "Devi chiedere una mano prima di scommettere",
@@ -163,14 +171,14 @@ public class BlackJackControl extends MiniGame{
                     } else {
                         if (!hasBet) {
                             int value = Integer.parseInt(output.getCommand().getName().split(" ")[1]);
-                            if (Inventory.findCurrency(value)) {
+                            if (Inventory.getMoney() >= value) {
                                 switch (value) {
-                                    case 500:
-                                    case 200:
-                                    case 100:
                                     case 50:
+                                    case 100:
+                                    case 200:
+                                    case 500:
                                         hasBet = true;
-                                        bettedItem = (Bill) output.getItem();
+                                        bettedMoney = value;
                                         interaction = new MiniGameInteraction(
                                                 "Hai scommesso " + value + " euro",
                                                 false,
@@ -186,7 +194,7 @@ public class BlackJackControl extends MiniGame{
                                 }
                             } else {
                                 interaction = new MiniGameInteraction(
-                                        "Non hai banconote da " + value + " euro",
+                                        "Non hai " + value + " euro",
                                         false,
                                         null,
                                         MiniGameInteractionType.INFO);
