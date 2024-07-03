@@ -1,16 +1,12 @@
 package org.uniba.kobold.game;
 
 import org.javatuples.Pair;
-import org.uniba.kobold.api.blackjack.Card;
 import org.uniba.kobold.api.error.*;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.entities.room.*;
 import org.uniba.kobold.entities.room.avaliableRooms.*;
-import org.uniba.kobold.game.minigames.BlackJackControl;
-import org.uniba.kobold.game.minigames.MiniGame;
-import org.uniba.kobold.game.minigames.MiniGameInteraction;
-import org.uniba.kobold.game.minigames.MiniGameType;
+import org.uniba.kobold.game.minigames.*;
 import org.uniba.kobold.parser.Parser;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.parser.ParserUtils;
@@ -18,7 +14,6 @@ import org.uniba.kobold.parser.ParserUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 public class Game {
     private final Parser parser;
@@ -76,10 +71,10 @@ public class Game {
         currentRoom = roomPath.getCurrentRoom();
 
         ParserOutput parsedCommand = parser.parse(
-                command,
-                (inGame) ? currentGame.getCommands() : currentRoom.getCommands(),
-                currentRoom.getItems(),
-                currentRoom.getItems()
+            command,
+            (inGame) ? currentGame.getCommands() : currentRoom.getCommands(),
+            currentRoom.getItems(),
+            currentRoom.getItems()
         );
 
         if (parsedCommand == null || parsedCommand.getCommand() == null) {
@@ -87,7 +82,6 @@ public class Game {
 
             return;
         }
-
 
         if (currentGameType == MiniGameType.NONE) {
             RoomInteractionResult result = roomPath.getCurrentRoom().executeCommand(parsedCommand);
@@ -98,37 +92,23 @@ public class Game {
             }
         } else {
            MiniGameInteraction result = currentGame.play(parsedCommand);
-           gameCommandSorter(result);
+           manageMiniGameInteraction(result);
         }
     }
 
-    private void gameCommandSorter(MiniGameInteraction result) {
-
+    private void manageMiniGameInteraction(MiniGameInteraction result) {
         System.out.println(result.getInfo());
-        switch (result.getType()) {
-            //Pair<> cards = (List<Card>) result.getResult();
+        MiniGameInteractionType type = result.getType();
 
-            case INFO -> {
-                if (result.getHasFinished()) {
-                    inGame = false;
-                    currentGameType = MiniGameType.NONE;
-                }
-            }
+        if ((type == MiniGameInteractionType.INFO && result.getHasFinished()) || (type== MiniGameInteractionType.WIN || type== MiniGameInteractionType.LOSE)) {
+            inGame = false;
+            currentGameType = MiniGameType.NONE;
+        }
 
-            case WIN -> {
-                inGame = false;
-                currentGameType = MiniGameType.NONE;
-
-                Inventory.addPiece((Item) result.getResult());
-            }
-
-            case LOSE -> {
-                inGame = false;
-                currentGameType = MiniGameType.NONE;
-
-                Inventory.removePiece((Item) result.getResult());
-            }
-
+        if (result.getType() == MiniGameInteractionType.WIN) {
+            Inventory.addPiece((Item) result.getResult());
+        } else {
+            Inventory.removePiece((Item) result.getResult());
         }
     }
 
