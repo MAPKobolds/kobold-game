@@ -11,16 +11,11 @@ public class HttpPage {
         this.socket = socket;
     }
 
-    public void renderPage(String filePath) throws IOException {
-        File index = new File(filePath);
+    public void renderPage(File file) throws IOException {
         PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
-        BufferedReader reader = new BufferedReader(new FileReader(index));
+        BufferedReader reader = new BufferedReader(new FileReader(file));
 
-        // print HTTP headers
-        printWriter.println("HTTP/1.1 200 OK");
-        printWriter.println("Content-Type: text/html");
-        printWriter.println("Content-Length: " + index.length());
-        printWriter.println("\r\n");
+        initPage(printWriter, file.length());
 
         String line = reader.readLine();
         while (line != null) {
@@ -30,6 +25,22 @@ public class HttpPage {
 
         reader.close();
         printWriter.close();
+    }
+
+    public void renderPage(String htmlPage) throws IOException {
+        PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
+
+        initPage(printWriter, htmlPage.length());
+        printWriter.println(htmlPage);
+
+        printWriter.close();
+    }
+
+    public void initPage(PrintWriter printWriter, long contentLength) {
+        printWriter.println("HTTP/1.1 200 OK");
+        printWriter.println("Content-Type: text/html");
+        printWriter.println("Content-Length: " + contentLength);
+        printWriter.println("\r\n");
     }
 
 }
