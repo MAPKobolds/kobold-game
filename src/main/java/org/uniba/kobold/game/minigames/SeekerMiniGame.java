@@ -111,6 +111,9 @@ public class SeekerMiniGame extends MiniGame {
             case "prendi":
                 interaction = this.pickItemInteraction();
                 break;
+            case "esci":
+                interaction.setType(MiniGameInteractionType.EXIT);
+                break;
         }
 
         return interaction;
