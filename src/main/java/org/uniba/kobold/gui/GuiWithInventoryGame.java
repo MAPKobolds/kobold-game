@@ -1,30 +1,32 @@
 package org.uniba.kobold.gui;
 
-import org.uniba.kobold.game.Item;
+import org.uniba.kobold.entities.inventory.Item;
+
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 import javax.swing.*;
 import java.awt.*;
-
 /**
- * Class GuiWithInventoryGameGame
+ * Class GuiWithInventoryGame
  */
-public class GuiWithInventoryGameGame extends GuiGame {
+public class GuiWithInventoryGame extends GuiGame {
 
     /**
-     * Attributes of the class GuiWithInventoryGameGame
+     * Attributes of the class GuiWithInventoryGame
      */
     private static final int MAXITEMS = 20;
     private static final Item[] items = new Item[MAXITEMS];
     private JPanel inventoryPanel;
 
     /**
-     * Constructor of the class GuiWithInventoryGameGame
+     * Constructor of the class GuiWithInventoryGame
      */
-    public GuiWithInventoryGameGame() {
+    public GuiWithInventoryGame() {
        initAdditionalComponents();
     }
 
     /**
-     * Method to initialize the components of the class GuiWithInventoryGameGame
+     * Method to initialize the components of the class GuiWithInventoryGame
      */
     private void initAdditionalComponents() {
         inventoryPanel = new JPanel();
@@ -59,8 +61,9 @@ public class GuiWithInventoryGameGame extends GuiGame {
     private void gridManager(GridBagConstraints gridBagConstraints, int i) {
         gridBagConstraints.gridx = i % 3;
         gridBagConstraints.gridy = i / 3;
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        if(i % 3 == 0) gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 50;
+        gridBagConstraints.ipadx = 50;
         gridBagConstraints.anchor = GridBagConstraints.NORTH;
         gridBagConstraints.weightx = 0.4;
         gridBagConstraints.weighty = 2.5;
@@ -86,7 +89,7 @@ public class GuiWithInventoryGameGame extends GuiGame {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(toolBar, 30, 30, 30)
+                                .addComponent(toolBar, 25, 25, 25)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addComponent(inventoryPanel, GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
                                         .addComponent(gamePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
