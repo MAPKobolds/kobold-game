@@ -21,7 +21,8 @@ public final class PubRoom extends Room {
                 Arrays.asList(),
                 Arrays.asList(),
                 Arrays.asList(
-                    new Command("vai spiazzale", Set.of("muoviti"))
+                    new Command("vai spiazzale", Set.of("muoviti")),
+                    new Command("gioca blackjack", Set.of("gioca","blackjack", "carte"))
                 )
         );
     }
@@ -49,7 +50,10 @@ public final class PubRoom extends Room {
             case "vai spiazzale":
                 result.setResultType(RoomInteractionResultType.MOVE);
                 result.setSubject("spiazzale");
-
+                break;
+            case "gioca blackjack":
+                result.setResultType(RoomInteractionResultType.PLAY);
+                result.setSubject("blackjack");
                 break;
             default:
                 result.setResultType(RoomInteractionResultType.NOTHING);
