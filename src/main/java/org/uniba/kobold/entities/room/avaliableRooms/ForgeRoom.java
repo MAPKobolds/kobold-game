@@ -48,7 +48,6 @@ public final class ForgeRoom extends Room {
             case "vai spiazzale":
                 result.setResultType(RoomInteractionResultType.MOVE);
                 result.setSubject("spiazzale");
-
                 break;
             default:
                 result.setResultType(RoomInteractionResultType.NOTHING);

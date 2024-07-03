@@ -1,5 +1,7 @@
 package org.uniba.kobold.entities.inventory;
 
+import org.uniba.kobold.entities.inventory.availableItems.Bill;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,5 +36,17 @@ public class Inventory {
 
     public static Set<Item> getItems() {
         return items;
+    }
+
+    public static boolean findCurrency(int value) {
+        boolean found = false;
+        for (Item item : items) {
+            if (item instanceof Bill){
+                if (((Bill) item).getValue() == value) {
+                    found = true;
+                }
+            }
+        }
+        return found;
     }
 }

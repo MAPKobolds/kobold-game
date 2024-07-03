@@ -1,5 +1,6 @@
 package org.uniba.kobold.api.blackjack;
 
+import org.javatuples.Pair;
 import org.uniba.kobold.api.error.*;
 
 import java.util.List;
@@ -70,6 +71,10 @@ public class BlackjackChecker {
     public boolean isWinner(List<Card> playerHand, List<Card> dealerHand) {
         // check if the player is the winner
         return getHandValue(playerHand) > getHandValue(dealerHand) && !isBust(playerHand);
+    }
+
+    public Pair<List<Card>,List<Card>> getHands(){
+        return Pair.with(playerHand,dealerHand);
     }
 
 }
