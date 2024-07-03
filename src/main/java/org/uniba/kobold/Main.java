@@ -9,7 +9,8 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
         Server.startServer();
-        WebServerSocket.startServer();
+        WebServerSocket.startServerA();
+        WebServerSocket.startServerB();
 
         Game g = new Game();
 
