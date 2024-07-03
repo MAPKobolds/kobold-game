@@ -62,14 +62,13 @@ public class SeekerMiniGame extends MiniGame {
     }
 
     private MiniGameInteraction pickItemInteraction() {
-        MiniGameInteraction interaction = new MiniGameInteraction("", false, null, MiniGameInteractionType.INFO);
+        MiniGameInteraction interaction = new MiniGameInteraction("",null, MiniGameInteractionType.INFO);
 
         try {
             this.pickItem();
 
             if (this.isGameFinished()) {
                 interaction.setInfo("Hai collezzionato tutti i pezzi!!");
-                interaction.setHasFinished(true);
             } else {
                 interaction.setInfo("Hai trovato un pezzo, te ne mancano " + itemsToFindCount);
             }
@@ -85,7 +84,6 @@ public class SeekerMiniGame extends MiniGame {
     public MiniGameInteraction play(ParserOutput output) {
         MiniGameInteraction interaction = new MiniGameInteraction(
             "Utilizza i comandi disponibili",
-            false,
             null,
             MiniGameInteractionType.INFO
         );

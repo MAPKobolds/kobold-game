@@ -43,7 +43,6 @@ public class BlackJackControl extends MiniGame{
 
         MiniGameInteraction interaction = new MiniGameInteraction(
                 "Stanno succedendo cose strane",
-                false,
                 null,
                 MiniGameInteractionType.INFO
         );
@@ -60,7 +59,6 @@ public class BlackJackControl extends MiniGame{
 
                                 interaction = new MiniGameInteraction(
                                         "Hai vinto",
-                                        true,
                                         blackjackChecker.getHands(),
                                         MiniGameInteractionType.WIN
                                 );
@@ -91,7 +89,6 @@ public class BlackJackControl extends MiniGame{
 
                             interaction = new MiniGameInteraction(
                                     "Hai perso",
-                                    true,
                                     blackjackChecker.getHands(),
                                     MiniGameInteractionType.LOSE
                             );
@@ -155,6 +152,7 @@ public class BlackJackControl extends MiniGame{
                 case "exit":
                     if (isPlaying) {
                         interaction.setInfo("Devi terminare la mano prima di uscire");
+                        interaction.setResult(MiniGameInteractionType.EXIT);
                     } else {
                         interaction.setInfo("Hai abbandonato il tavolo");
                     }

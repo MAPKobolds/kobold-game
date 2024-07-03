@@ -4,4 +4,5 @@ public enum MiniGameInteractionType {
     INFO,
     WIN,
     LOSE,
+    EXIT,
 }

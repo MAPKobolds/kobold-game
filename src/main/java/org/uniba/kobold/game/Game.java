@@ -4,23 +4,20 @@ import org.javatuples.Pair;
 import org.uniba.kobold.api.error.*;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
-import org.uniba.kobold.entities.inventory.availableItems.Bill;
 import org.uniba.kobold.entities.room.*;
 import org.uniba.kobold.entities.room.avaliableRooms.*;
 import org.uniba.kobold.game.minigames.*;
 import org.uniba.kobold.parser.Parser;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.parser.ParserUtils;
-
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Game {
     private final Parser parser;
     private RoomsMap roomPath;
-    private boolean inGame;
-    private MiniGameType currentGameType = MiniGameType.NONE;
     private MiniGame currentGame = null;
     private Room currentRoom;
 
@@ -73,7 +70,7 @@ public class Game {
 
         ParserOutput parsedCommand = parser.parse(
             command,
-            (inGame) ? currentGame.getCommands() : currentRoom.getCommands(),
+            (currentGame != null) ? currentGame.getCommands() : currentRoom.getCommands(),
             currentRoom.getItems(),
             currentRoom.getItems()
         );
@@ -84,10 +81,10 @@ public class Game {
             return;
         }
 
-        if (currentGameType == MiniGameType.NONE) {
+        if (currentGame == null) {
             RoomInteractionResult result = roomPath.getCurrentRoom().executeCommand(parsedCommand);
             try {
-                roomCommandSorter(result);
+                manageRoomInteraction(result);
             } catch (HttpInternalServerErrorException | HttpNotFoundException | HttpUnavailableException | HttpBadRequestException | HttpForbiddenException e) {
                 e.printStackTrace();
             }
@@ -101,9 +98,8 @@ public class Game {
         System.out.println(result.getInfo());
         MiniGameInteractionType type = result.getType();
 
-        if ((type == MiniGameInteractionType.INFO && result.getHasFinished()) || (type== MiniGameInteractionType.WIN || type== MiniGameInteractionType.LOSE)) {
-            inGame = false;
-            currentGameType = MiniGameType.NONE;
+        if (result.getType() == MiniGameInteractionType.EXIT) {
+            currentGame = null;
         }
 
         if (result.getType() == MiniGameInteractionType.WIN) {
@@ -113,7 +109,7 @@ public class Game {
         }
     }
 
-    public void roomCommandSorter(RoomInteractionResult result) throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
+    public void manageRoomInteraction(RoomInteractionResult result) throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         switch (result.getResultType()) {
             case DESCRIPTION -> System.out.println(result.getSubject());
             case UNLOCK -> this.roomPath.unlockPath(result.getSubject());
@@ -126,15 +122,13 @@ public class Game {
                 System.out.println(roomPath.getCurrentRoom().getDescription());
             }
             case PLAY -> {
-                inGame = true;
                 switch (result.getSubject()) {
                     case "blackjack" -> {
-                        currentGameType = MiniGameType.BLACKJACK;
                         currentGame = new BlackJackControl();
                     }
-                    case "trivia" -> currentGameType = MiniGameType.TRIVIA;
-                    case "monnezza" -> currentGameType = MiniGameType.MONNEZZA;
+//                    case "monnezza" -> currentGame = new SeekerMiniGame(new ArrayList<>());
                 }
+
                 System.out.println(currentGame.getDescription());
             }
         }

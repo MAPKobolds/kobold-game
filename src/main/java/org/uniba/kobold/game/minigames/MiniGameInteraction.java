@@ -2,13 +2,11 @@ package org.uniba.kobold.game.minigames;
 
 public class MiniGameInteraction {
     private String info;
-    private Boolean hasFinished;
     private Object result;
     private MiniGameInteractionType type;
 
-    public MiniGameInteraction(String info, Boolean hasFinished, Object result, MiniGameInteractionType type) {
+    public MiniGameInteraction(String info, Object result, MiniGameInteractionType type) {
         this.info = info;
-        this.hasFinished = hasFinished;
         this.result = result;
         this.type = type;
     }
@@ -17,9 +15,6 @@ public class MiniGameInteraction {
         return info;
     }
 
-    public Boolean getHasFinished() {
-        return hasFinished;
-    }
 
     public Object getResult() {
         return result;
@@ -41,7 +36,4 @@ public class MiniGameInteraction {
         this.result = obj;
     }
 
-    public void setHasFinished(Boolean hasFinished) {
-        this.hasFinished = hasFinished;
-    }
 }
