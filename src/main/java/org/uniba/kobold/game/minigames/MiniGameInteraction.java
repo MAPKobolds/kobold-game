@@ -33,6 +33,14 @@ public class MiniGameInteraction {
         this.info = info;
     }
 
+    public void setType(MiniGameInteractionType type) {
+        this.type = type;
+    }
+
+    public void setResult(Object obj) {
+        this.result = obj;
+    }
+
     public void setHasFinished(Boolean hasFinished) {
         this.hasFinished = hasFinished;
     }
