@@ -32,4 +32,8 @@ public class MiniGameInteraction {
     public void setInfo(String info) {
         this.info = info;
     }
+
+    public void setHasFinished(Boolean hasFinished) {
+        this.hasFinished = hasFinished;
+    }
 }
