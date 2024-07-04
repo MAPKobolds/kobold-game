@@ -1,5 +1,7 @@
 package org.uniba.kobold.gui;
 
+import org.uniba.kobold.entities.inventory.Inventory;
+import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.game.Game;
 import org.uniba.kobold.util.UtilMusic;
 
@@ -8,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * Class GuiLoadingScreen
@@ -74,7 +77,8 @@ public class GuiLoadingScreen extends GuiAbstractPanel {
                         SwingUtilities.invokeLater(() -> {
                             try {
                                 GuiGame guiGame = new GuiGame();
-                                new Game();
+                                Game g = new Game();
+                                testGameFlow(g);
                                 getParent().add(guiGame, "Game");
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
@@ -91,6 +95,10 @@ public class GuiLoadingScreen extends GuiAbstractPanel {
         });
 
         super.manageBackgroundLayout(this, backgroundPanel);
+    }
+
+    @Override
+    public void initComponents(int width, int height) {
     }
 
     /**
@@ -110,5 +118,22 @@ public class GuiLoadingScreen extends GuiAbstractPanel {
         backgroundPanel.setBounds(0, 0, width, height);
         progressBar.setBounds((int) widthOffset, (int) heightOffset, (int) (width * 0.80), (int) (height * 0.10));
         muteMusicButton.setBounds(0, 0, buttonWidth, buttonHeight);
+    }
+
+
+    /**
+     * Method to test the game flow
+     * @param g Game
+     */
+    private void testGameFlow(Game g) {
+        Item buba = new Item("buba", Set.of("a", "gug"), "buba", "/img/modricBR.png");
+        Inventory.addPiece(buba);
+        Item ba = new Item("ba", Set.of("a", "gg"), "bba", "/img/BR.png");
+        Inventory.addPiece(ba);
+        g.executeCommand("prendi mantello");
+        g.executeCommand("vai corridoio");
+        g.executeCommand("guarda a destra");
+        g.executeCommand("parla guardie");
+        g.executeCommand("vai bar");
     }
 }

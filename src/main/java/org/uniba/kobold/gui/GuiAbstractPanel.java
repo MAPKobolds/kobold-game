@@ -19,6 +19,16 @@ public abstract class GuiAbstractPanel extends JPanel {
                 });
         }
 
+        public void panelManager(int width, int height) {
+                initComponents(width, height);
+                addComponentListener(new ComponentAdapter() {
+                        @Override
+                        public void componentResized(ComponentEvent e) {
+                                updateLayout();
+                        }
+                });
+        }
+
         /**
          * Method to manage the layout of the background panel
          * @param parent the parent panel
@@ -41,6 +51,8 @@ public abstract class GuiAbstractPanel extends JPanel {
          * Method to initialize the components of the class GuiAbstractPanel
          */
         public abstract void initComponents();
+
+        public abstract void initComponents(int width, int height);
 
         public <T> void initComponents(T Object) {
         }

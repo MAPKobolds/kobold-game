@@ -92,6 +92,10 @@ public class GuiCredits extends GuiAbstractPanel{
         super.manageBackgroundLayout(this, backgroundPanel);
     }
 
+    @Override
+    public void initComponents(int width, int height) {
+    }
+
     /**
      * Method to update the layout of the class GuiCredits
      */

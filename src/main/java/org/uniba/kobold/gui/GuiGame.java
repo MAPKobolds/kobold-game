@@ -17,8 +17,8 @@ public class GuiGame extends JPanel {
     private static GuiGame instance;
     private static final String backgroundPath = "/img/pporc.png";
     private static final String mapPath = "/img/BR.png";
-    private static final GuiGamePanel gamePanel = new GuiGamePanel(backgroundPath);
-    private final JPanel mapPanel = new GuiMapPanel(mapPath);
+    private static final GuiBackgroundPanel gamePanel = new GuiBackgroundPanel(backgroundPath, 300, 300);
+    private final JPanel mapPanel = new GuiBackgroundPanel(mapPath, 200, 200);
     private JPanel dialogPanel;
     public static JLabel dialogText;
     private JTextField inputField;
@@ -65,10 +65,7 @@ public class GuiGame extends JPanel {
         dialogText = new JLabel();
         inventoryPanel = new JPanel();
         muteMusicButton = new JToggleButton();
-
         ManageTimer.getInstance();
-
-        isInventoryVisible = true;
         setBackground(Color.BLACK);
 
         //Setting the buttons up
@@ -118,6 +115,7 @@ public class GuiGame extends JPanel {
         //inventoryPanel settings
         inventoryPanel.setBackground(new Color(40, 0, 5));
         inventoryPanel.setLayout(new GridBagLayout());
+        isInventoryVisible = true;
 
         //Setting the saveButton logic
         saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -148,7 +146,6 @@ public class GuiGame extends JPanel {
         updateToolbar();
 
         dialogPanel.setBackground(new Color(40, 0, 5));
-        
         gameLayout();
     }
 
@@ -182,9 +179,11 @@ public class GuiGame extends JPanel {
             GridBagConstraints gridBagConstraints = new GridBagConstraints();
             gridManager(gridBagConstraints, i);
             inventoryPanel.add(itemButton, gridBagConstraints);
+            System.out.println(item.getName() + " added to the inventory");
         }
         inventoryPanel.revalidate();
         inventoryPanel.repaint();
+        gameLayout();
     }
 
     /**
@@ -198,7 +197,7 @@ public class GuiGame extends JPanel {
         gridBagConstraints.gridy = i / columns;
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 50;
-        gridBagConstraints.ipadx = 0;
+        gridBagConstraints.ipadx = 30;
         gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0;

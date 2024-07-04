@@ -128,6 +128,10 @@ public class GuiMenu extends GuiAbstractPanel {
         super.manageBackgroundLayout(this, backgroundPanel);
     }
 
+    @Override
+    public void initComponents(int width, int height) {
+    }
+
     /**
      * Method to check if the player is new
      * @param name the name of the player

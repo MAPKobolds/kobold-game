@@ -14,7 +14,7 @@ public class GuiHub extends JFrame {
     /**
      * Attributes of the GuiHub class
      */
-    private final static int width = 800;
+    private final static int width = 1000;
     private final static int height = 700;
 
     /**

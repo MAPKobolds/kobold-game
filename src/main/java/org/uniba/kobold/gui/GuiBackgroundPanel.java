@@ -22,13 +22,28 @@ public class GuiBackgroundPanel extends GuiAbstractPanel {
         this.backgroundPath = backgroundPath;
     }
 
+
+
     /**
-     * Method to initialize the components of the class GuiBackgroundPanel
+     * Overloaded constructor of the class GuiBackgroundPanel
      */
+    public GuiBackgroundPanel(String backgroundPath, int width, int height) {
+        panelManager(width, height);
+        this.backgroundPath = backgroundPath;
+    }
+
     @Override
     public void initComponents() {
-        int width = 800;
+        int width = 1000;
         int height = 700;
+        setMinimumSize(new Dimension(width, height));
+        setPreferredSize(new Dimension(width, height));
+        setRequestFocusEnabled(false);
+        setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    }
+
+    @Override
+    public void initComponents(int width, int height) {
         setMinimumSize(new Dimension(width, height));
         setPreferredSize(new Dimension(width, height));
         setRequestFocusEnabled(false);

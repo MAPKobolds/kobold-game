@@ -76,6 +76,10 @@ public class GuiLoadGame extends GuiAbstractPanel {
         layeredPane.add(containerPanel, JLayeredPane.PALETTE_LAYER);
     }
 
+    @Override
+    public void initComponents(int width, int height) {
+    }
+
     /**
      * Method to add a SaveInstancePanel to the containerPanel
      * @param savePanel the SaveInstancePanel to add
@@ -133,11 +137,11 @@ public class GuiLoadGame extends GuiAbstractPanel {
             GuiLoadGame.addSave(this);
         }
 
-        /**
-         * Method to initialize the components of the SaveInstancePanel class
-         */
         @Override
         public void initComponents() {
+        }
+
+        public void initComponents(int width, int height) {
         }
 
         /**
