@@ -33,7 +33,7 @@ class TriviaService {
     }
 
     public static Quiz getTrivia() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
-        String responseBody = getRequest("https://opentdb.com/api.php?amount=10&category=11&difficulty=easy");
+        String responseBody = getRequest("https://opentdb.com/api.php?amount=6&category=11&difficulty=easy");
 
         Gson gson = new Gson();
 
