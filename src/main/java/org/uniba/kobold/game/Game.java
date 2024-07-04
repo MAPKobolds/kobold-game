@@ -59,7 +59,8 @@ public class Game {
             Pair.with(r9, new RoomPath(Arrays.asList(Pair.with(r8, true))))
         ));
 
-        //TODO: Gestire l'ordine di esecuzione di GuiGame.dialogText.setText("<html>" + roomPath.getCurrentRoom().getDescription() + "<html>");
+        ToGui toGui = new ToGui();
+        toGui.updateLabel(r1.getDescription());
         System.out.println(roomPath.getCurrentRoom().getDescription());
     }
 
