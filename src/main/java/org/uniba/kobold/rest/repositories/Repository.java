@@ -1,7 +1,6 @@
 package org.uniba.kobold.rest.repositories;
 import org.uniba.kobold.rest.db.DBConnection;
 import org.uniba.kobold.rest.CRUDInterface;
-import org.uniba.kobold.rest.models.Player;
 
 import java.sql.*;
 
