@@ -15,6 +15,7 @@ import java.util.Set;
 public class GuiGame extends JPanel {
 
     private static GuiGame instance;
+    private static final int MAXITEMS = 10;
     private static final String backgroundPath = "/img/pporc.png";
     private static final String mapPath = "/img/BR.png";
     private static final GuiBackgroundPanel gamePanel = new GuiBackgroundPanel(backgroundPath, 300, 300);
@@ -30,7 +31,8 @@ public class GuiGame extends JPanel {
     private JButton toggleInventoryButton;
     private JToolBar toolBar;
     private boolean isInventoryVisible;
-
+    private final String temporaryItemName = "temporaryName";
+    private final String temporaryItemPath = "/img/buttonDefault.png";
 
     public GuiGame() {
         initComponents();
@@ -116,6 +118,7 @@ public class GuiGame extends JPanel {
         inventoryPanel.setBackground(new Color(40, 0, 5));
         inventoryPanel.setLayout(new GridBagLayout());
         isInventoryVisible = true;
+        fillInventory();
 
         //Setting the saveButton logic
         saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -165,24 +168,39 @@ public class GuiGame extends JPanel {
         gamePanel.updateBackground(imagePath);
     }
 
+    public void addItem(Item item) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                for (Component component : inventoryPanel.getComponents()) {
+                    if (component instanceof GuiObjectButton) {
+                        GuiObjectButton itemButton = (GuiObjectButton) component;
+                        if (temporaryItemName.equals(itemButton.getText())) {
+                            itemButton.setName(item.getName());
+                            itemButton.updateImage(item.getImage());
+                            itemButton.setVisible(true);
+                            setButtonAction(item, itemButton);
+                            inventoryPanel.revalidate();
+                            inventoryPanel.repaint();
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+    }
+
     /**
      * Method to update the inventory based on the game
      */
     public void fillInventory() {
-        inventoryPanel.removeAll();
-        Set<Item> items = Inventory.getItems();
-        int i = 0;
-        for (Item item : items) {
-            i++;
-            JButton itemButton = new GuiObjectButton(item.getName(), item.getImage());
-            setButtonAction(item, itemButton);
+        for (int i = 0; i < MAXITEMS; i++) {
+            GuiObjectButton itemButton = new GuiObjectButton(temporaryItemName,temporaryItemPath);
+            itemButton.setVisible(false);
             GridBagConstraints gridBagConstraints = new GridBagConstraints();
             gridManager(gridBagConstraints, i);
             inventoryPanel.add(itemButton, gridBagConstraints);
-            System.out.println(item.getName() + " added to the inventory");
         }
-        inventoryPanel.revalidate();
-        inventoryPanel.repaint();
         gameLayout();
     }
 
