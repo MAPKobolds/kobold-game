@@ -2,7 +2,6 @@ package org.uniba.kobold.gui;
 
 import org.uniba.kobold.util.SaveInstance;
 import org.uniba.kobold.util.UtilMusic;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
  * Class GuiLoadGame
  */
 public class GuiLoadGame extends GuiAbstractPanel {
+
     /**
      * Attributes of the GuiLoadGame class
      */
@@ -233,7 +233,6 @@ public class GuiLoadGame extends GuiAbstractPanel {
          */
         @Override
         public void updateLayout() {
-
             int saveWidth = backgroundPanel.getWidth();
             int saveHeight = (int) (containerPanel.getHeight() * 0.11);
 

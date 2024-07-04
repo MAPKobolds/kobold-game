@@ -18,7 +18,7 @@ public class ToGui implements GameToGui{
 
     @Override
     public void addItemToInventory(Item item) {
-        GuiGame.getInstance().fillInventory();
+        GuiGame.getInstance().addItem(item);
     }
 
 }
