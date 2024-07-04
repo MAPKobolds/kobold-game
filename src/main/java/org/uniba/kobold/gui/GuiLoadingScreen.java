@@ -73,7 +73,7 @@ public class GuiLoadingScreen extends GuiAbstractPanel {
                         Thread.sleep(1000);
                         SwingUtilities.invokeLater(() -> {
                             try {
-                                GugoGame guiGame = new GugoGame();
+                                GuiGame guiGame = new GuiGame();
                                 new Game();
                                 getParent().add(guiGame, "Game");
                             } catch (IOException ex) {

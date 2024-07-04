@@ -95,7 +95,7 @@ public class GuiMenu extends GuiAbstractPanel {
                     CardLayout loadingScreen = (CardLayout) getParent().getLayout();
                     loadingScreen.show(getParent(), "LoadingScreen");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Nome non valido.", "Errore", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Nome non valido o gia' occupato.", "Errore", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Nuova partita annullata.", "Annullato", JOptionPane.INFORMATION_MESSAGE);
@@ -135,7 +135,9 @@ public class GuiMenu extends GuiAbstractPanel {
      */
     private boolean isPlayerNew(String name) {
         for(SaveInstance save : SaveInstance.getInstances()) {
-            if(save.getSaveName().matches(name)) {
+            String saveName = save.getSaveName();
+            saveName = saveName.substring(0, saveName.indexOf(" - "));
+            if(saveName.matches(name)) {
                 return false;
             }
         }

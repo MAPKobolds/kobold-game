@@ -13,7 +13,7 @@ public class GuiBackgroundPanel extends GuiAbstractPanel {
      * Attributes of the class GuiBackgroundPanel
      */
     private final int width = 800;
-    private final int height = 600;
+    private final int height = 700;
     private String backgroundPath;
 
     /**

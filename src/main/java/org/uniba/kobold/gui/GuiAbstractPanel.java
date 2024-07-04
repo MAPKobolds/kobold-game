@@ -21,7 +21,7 @@ public abstract class GuiAbstractPanel extends JPanel {
 
         /**
          * Method to manage the layout of the background panel
-         * @param parent          the parent panel
+         * @param parent the parent panel
          * @param backgroundPanel the background panel
          */
         public void manageBackgroundLayout(JPanel parent, JPanel backgroundPanel) {
