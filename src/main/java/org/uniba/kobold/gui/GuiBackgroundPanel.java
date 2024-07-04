@@ -12,8 +12,6 @@ public class GuiBackgroundPanel extends GuiAbstractPanel {
     /**
      * Attributes of the class GuiBackgroundPanel
      */
-    private final int width = 800;
-    private final int height = 700;
     private String backgroundPath;
 
     /**
@@ -29,6 +27,8 @@ public class GuiBackgroundPanel extends GuiAbstractPanel {
      */
     @Override
     public void initComponents() {
+        int width = 800;
+        int height = 700;
         setMinimumSize(new Dimension(width, height));
         setPreferredSize(new Dimension(width, height));
         setRequestFocusEnabled(false);

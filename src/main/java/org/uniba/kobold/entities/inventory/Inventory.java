@@ -8,7 +8,7 @@ import java.util.Set;
 public class Inventory {
     private static Inventory instance;
     private static final Set<Item> items = new HashSet<>();
-    private static ToGui toGui = new ToGui();
+    private static final ToGui toGui = new ToGui();
 
     public static Inventory getInstance() {
         if (instance == null) {

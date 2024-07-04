@@ -9,8 +9,7 @@ public class GuiMapPanel extends GuiAbstractPanel {
     /**
      * Attributes of the class GuiBackgroundPanel
      */
-    private final int width = 200;
-    private final int height = 120;
+
     private String backgroundPath;
 
     /**
@@ -26,6 +25,8 @@ public class GuiMapPanel extends GuiAbstractPanel {
      */
     @Override
     public void initComponents() {
+        int width = 200;
+        int height = 120;
         setMinimumSize(new Dimension(width, height));
         setPreferredSize(new Dimension(width, height));
         setMaximumSize(new Dimension(width, height));
@@ -43,15 +44,5 @@ public class GuiMapPanel extends GuiAbstractPanel {
         ImageIcon backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource(backgroundPath)));
         Image image = backgroundImage.getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-    }
-
-    /**
-     * Method to update the background image
-     * @param newBackgroundPath the path to the new background image
-     */
-    public void updateBackground(String newBackgroundPath) {
-        this.backgroundPath = newBackgroundPath;
-        revalidate();
-        repaint();
     }
 }

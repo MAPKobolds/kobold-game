@@ -30,7 +30,6 @@ public class GuiGame extends JPanel {
     private JButton toggleInventoryButton;
     private JToolBar toolBar;
     private boolean isInventoryVisible;
-    private static Set<Item> items;
 
 
     public GuiGame() {
@@ -174,7 +173,7 @@ public class GuiGame extends JPanel {
      */
     public void fillInventory() {
         inventoryPanel.removeAll();
-        items = Inventory.getItems();
+        Set<Item> items = Inventory.getItems();
         int i = 0;
         for (Item item : items) {
             i++;
@@ -204,23 +203,6 @@ public class GuiGame extends JPanel {
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-    }
-
-    /**
-     * Method to remove an item from the inventory
-     * @param item the item to remove
-     */
-    public void removeItemFromInventory(Item item) {
-        for (Component component : inventoryPanel.getComponents()) {
-            if (component instanceof JButton button) {
-                if (button.getText().equals(item.getName())) {
-                    inventoryPanel.remove(button);
-                    gameLayout();
-                    break;
-                }
-            }
-        }
-        gameLayout();
     }
 
     public static void setDialogLabel(String message) {

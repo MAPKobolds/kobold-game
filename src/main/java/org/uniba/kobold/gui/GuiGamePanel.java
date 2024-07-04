@@ -9,8 +9,6 @@ import java.util.Objects;
         /**
          * Attributes of the class GuiBackgroundPanel
          */
-        private final int width = 500;
-        private final int height = 450;
         private String backgroundPath;
 
         /**
@@ -26,6 +24,8 @@ import java.util.Objects;
          */
         @Override
         public void initComponents() {
+            int width = 500;
+            int height = 450;
             setMinimumSize(new Dimension(width, height));
             setPreferredSize(new Dimension(width, height));
             setRequestFocusEnabled(false);

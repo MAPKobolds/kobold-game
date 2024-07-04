@@ -4,8 +4,6 @@ import org.uniba.kobold.util.Deserializer;
 import org.uniba.kobold.util.UtilMusic;
 import javax.swing.*;
 import java.awt.CardLayout;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.net.URL;
 
 /**
@@ -27,7 +25,7 @@ public class GuiHub extends JFrame {
         try {
             Deserializer.loadInstancesFromJSON();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error during JSON reading");
         }
         //JFrame Settings
         setTitle("Cerignolus: Città dei Coboldi");
