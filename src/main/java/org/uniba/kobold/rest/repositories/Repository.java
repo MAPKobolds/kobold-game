@@ -1,10 +1,9 @@
 package org.uniba.kobold.rest.repositories;
 import org.uniba.kobold.rest.db.DBConnection;
 import org.uniba.kobold.rest.CRUDInterface;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import org.uniba.kobold.rest.models.Player;
+
+import java.sql.*;
 
 public abstract class Repository<T> implements CRUDInterface<T> {
 
