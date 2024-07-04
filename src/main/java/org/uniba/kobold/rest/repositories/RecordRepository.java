@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecordRepository extends Repository<Record> {
 
@@ -13,7 +15,9 @@ public class RecordRepository extends Repository<Record> {
 
         String createTableSQL = "CREATE TABLE IF NOT EXISTS records (" +
                 "id INT AUTO_INCREMENT PRIMARY KEY, " +
-                "name VARCHAR(255))";
+                "name VARCHAR(255)," +
+                "time BIGINT" +
+                ")";
         try (Statement statement = connection.createStatement()) {
             statement.execute(createTableSQL);
         } catch (SQLException e) {
@@ -88,6 +92,30 @@ public class RecordRepository extends Repository<Record> {
             }
 
             return null;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public List<Record> getBestTime(int limit) {
+        try {
+            String selectSQL = "SELECT * FROM "+ RELATION + " ORDER BY time LIMIT ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+
+            preparedStatement.setInt(1, limit);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<Record> recordList = new ArrayList<>();
+
+            while (resultSet.next()) {
+                int recordId = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                Long time = resultSet.getLong("time");
+
+                recordList.add(new Record(name, time, recordId));
+            }
+
+            return recordList;
         } catch (SQLException e) {
             return null;
         }
