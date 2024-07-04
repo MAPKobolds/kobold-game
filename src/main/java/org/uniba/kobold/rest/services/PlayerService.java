@@ -1,4 +1,4 @@
-package org.uniba.kobold.rest.service;
+package org.uniba.kobold.rest.services;
 
 import org.uniba.kobold.rest.CRUDInterface;
 import org.uniba.kobold.rest.models.Player;
