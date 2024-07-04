@@ -1,6 +1,5 @@
 package org.uniba.kobold.gui;
 
-import org.uniba.kobold.util.Deserializer;
 import org.uniba.kobold.util.SaveInstance;
 import org.uniba.kobold.util.UtilMusic;
 
@@ -231,20 +230,20 @@ public class GuiLoadGame extends GuiAbstractPanel {
         @Override
         public void updateLayout() {
 
-            // Calcola le dimensioni in base alle dimensioni attuali del backgroundPanel
-            int saveWidth = (int) (backgroundPanel.getWidth() * 0.85);
-            int saveHeight = (int) (backgroundPanel.getHeight() * 0.10);
+            int saveWidth = backgroundPanel.getWidth();
+            int saveHeight = (int) (containerPanel.getHeight() * 0.11);
 
             // Imposta le dimensioni minime e massime
             setMinimumSize(new Dimension(saveWidth, saveHeight));
             setMaximumSize(new Dimension(saveWidth, saveHeight));
 
+            setBounds(0, 0, saveWidth, saveHeight);
             //This is where the magic happens
             loadInfoLabel.setHorizontalTextPosition(SwingConstants.CENTER);
             loadInfoLabel.setVerticalTextPosition(SwingConstants.CENTER);
             loadInfoLabel.setBounds((int) (saveWidth * 0.05), (int) (saveHeight * 0.10), (int) (saveWidth * 0.50), saveHeight);
-            loadButton.setBounds((int) (saveWidth * 0.70), (int) (saveHeight * 0.10), 100, 50);
-            deleteButton.setBounds((int) (saveWidth * 0.82), (int) (saveHeight * 0.10), 100, 50);
+            loadButton.setBounds((int) (saveWidth * 0.50), (int) (saveHeight * 0.10), 100, 50);
+            deleteButton.setBounds((int) (saveWidth * 0.66), (int) (saveHeight * 0.10), 100, 50);
         }
     }
 }

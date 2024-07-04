@@ -24,7 +24,7 @@ public class Deserializer {
      */
     public static void loadInstancesFromJSON() throws IOException {
         for (String saveName : scanSaves()) {
-            loadFromJson("src/main/resources/saves/" + saveName + ".json");
+            new SaveInstance(saveName);
         }
     }
 

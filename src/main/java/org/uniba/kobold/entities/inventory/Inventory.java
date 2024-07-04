@@ -1,11 +1,14 @@
 package org.uniba.kobold.entities.inventory;
 
+import org.uniba.kobold.game.ToGui;
+
 import java.util.HashSet;
 import java.util.Set;
 
 public class Inventory {
     private static Inventory instance;
     private static final Set<Item> items = new HashSet<>();
+    private static ToGui toGui = new ToGui();
 
     public static Inventory getInstance() {
         if (instance == null) {
@@ -18,7 +21,7 @@ public class Inventory {
         if(!items.contains(item)) {
             items.add(item);
         }
-        //TODO: Update game gui Game.getInstance().updateInventoryBasedOnGame(item);
+        toGui.addItemToInventory(item);
     }
 
     public static void removePiece(Item item) {

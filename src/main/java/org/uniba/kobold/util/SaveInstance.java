@@ -1,6 +1,5 @@
 package org.uniba.kobold.util;
 
-import org.uniba.kobold.gui.GuiGame;
 import org.uniba.kobold.gui.GuiLoadGame;
 
 import java.io.IOException;
