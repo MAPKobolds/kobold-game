@@ -7,6 +7,7 @@ import org.uniba.kobold.rest.services.RecordService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("records")
 public class RecordController {
@@ -64,6 +65,17 @@ public class RecordController {
         } else {
             return Response.ok(jsonString, MediaType.APPLICATION_JSON).build();
         }
+    }
+
+    @GET
+    @Path("/best")
+    @Produces("application/json")
+    public Response getBestFive() {
+        List<Record> records = recordService.getBest(5);
+
+        String jsonString = gson.toJson(records);
+
+        return Response.ok(jsonString, MediaType.APPLICATION_JSON).build();
     }
 
 }
