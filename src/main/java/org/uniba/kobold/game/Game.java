@@ -5,7 +5,6 @@ import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.entities.room.*;
 import org.uniba.kobold.entities.room.avaliableRooms.*;
-import org.uniba.kobold.errors.RoomNotAccessibleError;
 import org.uniba.kobold.parser.Parser;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.parser.ParserUtils;
@@ -16,6 +15,8 @@ import java.util.Arrays;
 public class Game {
     private final Parser parser;
     private RoomsMap roomPath;
+    private static String playerName;
+    private static Game instance;
 
     public Game() throws IOException {
         StartingRoom r1 = new StartingRoom();
@@ -58,6 +59,7 @@ public class Game {
             Pair.with(r9, new RoomPath(Arrays.asList(Pair.with(r8, true))))
         ));
 
+        //TODO: Gestire l'ordine di esecuzione di GuiGame.dialogText.setText("<html>" + roomPath.getCurrentRoom().getDescription() + "<html>");
         System.out.println(roomPath.getCurrentRoom().getDescription());
     }
 
@@ -90,5 +92,28 @@ public class Game {
                 System.out.println(roomPath.getCurrentRoom().getDescription());
             }
         }
+    }
+
+    public static Game getInstance() {
+        if (instance == null) {
+            try {
+                instance = new Game();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return instance;
+    }
+
+    public static String getPlayerName() {
+        return playerName;
+    }
+
+    /**
+     * Set the player name
+     * @param name the name of the player
+     */
+    public static void setPlayerName(String name) {
+        playerName = name;
     }
 }
