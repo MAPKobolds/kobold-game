@@ -2,7 +2,7 @@ package org.uniba.kobold.rest.controllers;
 
 import com.google.gson.Gson;
 import org.uniba.kobold.rest.models.Player;
-import org.uniba.kobold.rest.service.PlayerService;
+import org.uniba.kobold.rest.services.PlayerService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
