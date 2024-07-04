@@ -4,36 +4,44 @@ import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
 public class KingKoboldControl extends MiniGame {
 
-    private boolean firstQ = false;
     private boolean secondQ = false;
     private boolean thirdQ = false;
     private boolean fourthQ = false;
 
     private int normalEnding = 0;
 
-    private List<String> options = List.of(
-            "<esci> per uscire",
-            "1) parlare con il Re Coboldo",
+    private List<String> options = new ArrayList<>
+            (Arrays.asList(
+            "\nScegli tra le seguenti opzioni: ",
+            "\n<esci> per uscire",
+            "1) parla con il re Coboldo di quanto è bello rubare",
             "2) sfidare il Re Coboldo a Sasso Carta Forbici",
-            "3) offrire qualcosa al Re Coboldo",
-            "4) guardare sotto il trono"
-    );
+            "\t - sasso",
+            "\t - carta",
+            "\t - forbici",
+            "3) offri da bere al Re Coboldo",
+            "4) ispeziona sotto il trono"
+            ));
 
-    public void RockRockRockControl() {
+    public KingKoboldControl() {
         this.description = "Benvento davanti a me il sommo Re Coboldo colui che è sopra di tutti e sopra tutto\n" +
                 "Cosa ti porta da me :? \n" +
-                "Scegli tra le seguenti opzioni: " + String.join("\n", options);
+                 String.join("\n", options);
 
 
         this.commands.add(new Command("1", Set.of("uno")));
         this.commands.add(new Command("2", Set.of("due")));
         this.commands.add(new Command("3", Set.of("tre")));
         this.commands.add(new Command("4", Set.of("quattro")));
+        this.commands.add(new Command("5", Set.of("cinque")));
+        this.commands.add(new Command("6", Set.of("sei")));
         this.commands.add(new Command("carta", Set.of("carta")));
         this.commands.add(new Command("sasso", Set.of("sasso")));
         this.commands.add(new Command("forbici", Set.of("forbici")));
@@ -52,68 +60,75 @@ public class KingKoboldControl extends MiniGame {
             case "1" -> {
 
                 if (normalEnding < 3) {
-                    interaction.setInfo("Il Re Coboldo ti guarda e ti dice che accoglie la tua proposta e ti chiede di parlarne di più");
+                    interaction.setInfo("Il Re Coboldo ti guarda e ti dice che accoglie la tua proposta e ti chiede di parlarne di più\n");
                     interaction.setType(MiniGameInteractionType.INFO);
                     normalEnding++;
                     if (normalEnding == 3) {
-                        options.set(0, "1) accetti di diventare suo consigliere personale e parli di più sulle tue idee per il regno");
-                        interaction.setInfo("Il Re Coboldo ti guarda e ti invita a diventare suo consigliere personale e ti chiede di parlare di più sulle tue idee per il regno" +
+                        options.set(2, "1) accetti di diventare suo consigliere personale e parli di più sulle tue idee per il regno");
+                        interaction.setInfo("Il Re Coboldo ti guarda e ti invita a diventare suo consigliere personale e ti chiede di parlare di più sulle tue idee per il regno\n" +
                                 String.join("\n", options));
                         interaction.setType(MiniGameInteractionType.INFO);
                     }
+                    interaction.addInfo(String.join("\n", options));
                 } else {
-                    interaction.setInfo("Il re Coboldo ti prende in braccio dicendo che sei il suo consigliere personale e che ti vuole bene");
+                    interaction.setInfo("Il re Coboldo ti prende in braccio dicendo che sei il suo consigliere personale e che ti vuole bene\n");
                     interaction.setType(MiniGameInteractionType.EXIT);
                 }
             }
 
             case "2" -> {
                 if (!secondQ) {
-                    interaction.setInfo("Il Re Coboldo ti guarda ed accetta la sfida a Sasso Carta Forbici");
+                    interaction.setInfo("Il Re Coboldo ti guarda ed accetta la sfida a Sasso Carta Forbici\n");
                     interaction.setType(MiniGameInteractionType.INFO);
                     secondQ = true;
                 } else {
-                    interaction.setInfo("Il Re Coboldo ti guarda e dice che sta già giocando con te");
+                    interaction.setInfo("Il Re Coboldo ti guarda e dice che sta già giocando con te\n");
                     interaction.setType(MiniGameInteractionType.INFO);
                 }
+                interaction.addInfo(String.join("\n", options));
             }
 
             case "sasso", "carta", "forbici" -> {
                 if (secondQ) {
-                    interaction.setInfo("il Re Coboldo ha scelto sasso e il suo Sasso vince su tutto perchè è il Re.");
+                    interaction.setInfo("il Re Coboldo ha scelto sasso e il suo Sasso vince su tutto perchè è il Re.\n");
                     interaction.setType(MiniGameInteractionType.INFO);
                     secondQ = false;
                 } else {
-                    interaction.setInfo("Il Re Coboldo ti guarda e dice che sta già giocando con te");
+                    interaction.setInfo("Il Re Coboldo ti guarda e dice che sta già giocando con te\n");
                     interaction.setType(MiniGameInteractionType.INFO);
                 }
+                interaction.addInfo(String.join("\n", options));
             }
 
             case "3" -> {
                 if (Inventory.contains("GinMoncello")) {
-                    interaction.setInfo("Il Re Coboldo ti guarda e ti chiede di bere con lui il GinMoncello ma dopo che lui ha bevuto tutto il GinMoncello cade nel sonno profondo");
+                    interaction.setInfo("Il Re Coboldo ti guarda e ti chiede di bere con lui il GinMoncello ma dopo che lui ha bevuto tutto il GinMoncello cade nel sonno profondo\n");
                     interaction.setType(MiniGameInteractionType.INFO);
-                    options.add("5) uccidi il Re Coboldo e prendi il suo trono");
-                    options.add("6) scappa via");
+                    options.addAll(List.of("5) uccidi il Re Coboldo e prendi il suo trono", "6) scappa via\n"));
                     thirdQ = true;
                 } else {
-                    interaction.setInfo("Non hai nulla da offrire al Re Coboldo");
+                    interaction.setInfo("Non hai nulla da offrire al Re Coboldo\n");
                     interaction.setType(MiniGameInteractionType.INFO);
                 }
+                interaction.addInfo(String.join("\n", options));
             }
 
             case "4" -> {
                 if (!fourthQ){
-                    interaction.setInfo("Vedi sotto il trono dell' olio di macchina ");
+                    interaction.setInfo("Vedi sotto il trono dell' olio di macchina \n");
+                    options.set(8, "4) butta qualcosa di infiammabile sotto il trono\n");
+                    interaction.addInfo(String.join("\n", options));
                     interaction.setType(MiniGameInteractionType.INFO);
                     fourthQ = true;
-                    options.set(4, "4) butta qualcosa di infiammabile sotto il trono");
+
                 }else{
-                    if (Inventory.contains("FireMaul")) {
-                        interaction.setInfo("Cerignolus brucia e tu scappi via");
+                    if (Inventory.contains("maglio")) {
+                        interaction.setInfo("Cerignolus brucia e tu scappi via\n");
                         interaction.setType(MiniGameInteractionType.EXIT);
                     } else {
-                        interaction.setInfo("Non hai nulla di infiammabile da buttare sotto il trono");
+
+                        interaction.setInfo("Non hai nulla di infiammabile da buttare sotto il trono\n");
+                        interaction.addInfo(String.join("\n", options));
                         interaction.setType(MiniGameInteractionType.INFO);
                     }
                 }
@@ -121,20 +136,24 @@ public class KingKoboldControl extends MiniGame {
 
             case "5" -> {
                 if (thirdQ) {
-                    interaction.setInfo("uccidi il Re Coboldo e prendi il suo trono");
+                    interaction.setInfo("uccidi il Re Coboldo e prendi il suo trono\n");
                     interaction.setType(MiniGameInteractionType.EXIT);
                 }
             }
 
             case "6" -> {
                 if (thirdQ) {
-                    interaction.setInfo("scappi via con la tua auto");
+                    interaction.setInfo("scappi via con la tua auto\n");
                     interaction.setType(MiniGameInteractionType.EXIT);
                 }
             }
+
+            case "exit" -> {
+                interaction.setInfo("Hai abbandonato il Re Coboldo\n");
+                interaction.setType(MiniGameInteractionType.EXIT);
+            }
         }
 
-        interaction.addInfo(String.join("\n", options));
         return interaction;
     }
 }

@@ -14,7 +14,6 @@ import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.parser.ParserUtils;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -121,16 +120,11 @@ public class Game {
             }
             case PLAY -> {
                 switch (result.getSubject()) {
-                    case "blackjack" -> {
-                        currentGame = new BlackJackControl();
-                    }
-                    case "rullo" -> {
-                        List<Pair<Boolean, Item>> list = Arrays.asList(Pair.with(false, new Bill(20)), Pair.with(true, new Cloak()));
-                        currentGame = new SeekerMiniGame(list);
+                    case "king" -> {
+                        currentGame = new KingKoboldControl();
+                        System.out.println(currentGame.getDescription());
                     }
                 }
-
-                System.out.println(currentGame.getDescription());
             }
         }
     }
