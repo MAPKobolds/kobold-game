@@ -8,13 +8,13 @@ public class Item {
     private String name;
     private Set<String> alias;
     private String description;
-    private ImageIcon image;
+    private String image;
 
     public Item(String name, Set<String> alias, String description, String imagePath) {
         this.name = name;
         this.alias = alias;
         this.description = description;
-        this.image = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));
+        this.image = imagePath;
     }
 
     public Set<String> getAlias() {
@@ -29,7 +29,7 @@ public class Item {
         return name;
     }
 
-    public ImageIcon getImage() {
+    public String getImage() {
         return image;
     }
 }
