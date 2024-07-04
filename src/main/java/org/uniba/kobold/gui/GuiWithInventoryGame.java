@@ -1,11 +1,14 @@
 package org.uniba.kobold.gui;
 
+import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Set;
+
 /**
  * Class GuiWithInventoryGame
  */
@@ -14,9 +17,8 @@ public class GuiWithInventoryGame extends GuiGame {
     /**
      * Attributes of the class GuiWithInventoryGame
      */
-    private static final int MAXITEMS = 20;
-    private static final Item[] items = new Item[MAXITEMS];
-    private JPanel inventoryPanel;
+    private static JPanel inventoryPanel = new JPanel();
+    private final Set<Item> items = Inventory.getItems();
 
     /**
      * Constructor of the class GuiWithInventoryGame
@@ -37,28 +39,60 @@ public class GuiWithInventoryGame extends GuiGame {
     }
 
     /**
-     * Method to fill the inventory
+     * Method to update the inventory based on the game
      */
-    private void fillInventory() {
-        for (int i = 0; i < items.length; i++) {
-            //TODO: Adattare agli item
-            items[i] = new Item("Item" + i, "Description" + i);
-            items[i].getItemButton().addActionListener(_ -> {
-                //TODO: Azione dell'oggetto generica quindi da togliere sta roba
-                gamePanel.updateBackground("/img/BR.png");
+    public void fillInventory() {
+
+        for(Item item: items)
+        {
+            JButton itemButton;
+            itemButton = new GuiObjectButton(item.getName(), item.getImage());
+            itemButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 2) {
+                        GuiGame.updateGamePanel("/img/modric.png");
+                    } else if (e.getClickCount() == 1) {
+                        dialogText.setText("<html>" + item.getDescription() + "<html>");
+                    }
+                }
             });
             GridBagConstraints gridBagConstraints = new GridBagConstraints();
-            gridManager(gridBagConstraints, i);
-            inventoryPanel.add(items[i].getItemButton(), gridBagConstraints);
+            gridManager(gridBagConstraints, items.size());
+            inventoryPanel.add(itemButton, gridBagConstraints);
+            gameLayout();
         }
     }
+
+    /**
+     * Method to add an item to inventory
+     * @param item the item to add
+     */
+    /*public void addItemToInventory(Item item) {
+        JButton itemButton;
+        itemButton = new GuiObjectButton(item.getName(), item.getImage());
+        itemButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    GuiGame.updateGamePanel("/img/modric.png");
+                } else if (e.getClickCount() == 1) {
+                    dialogText.setText("<html>" + item.getDescription() + "<html>");
+                }
+            }
+        });
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        gridManager(gridBagConstraints, inventoryPanel.getComponentCount());
+        inventoryPanel.add(itemButton, gridBagConstraints);
+        gameLayout();
+    }*/
 
     /**
      * Method to manage the grid layout
      * @param gridBagConstraints the grid layout manager
      * @param i the index of the item
      */
-    private void gridManager(GridBagConstraints gridBagConstraints, int i) {
+    private static void gridManager(GridBagConstraints gridBagConstraints, int i) {
         gridBagConstraints.gridx = i % 3;
         gridBagConstraints.gridy = i / 3;
         if(i % 3 == 0) gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;

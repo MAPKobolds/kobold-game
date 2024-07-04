@@ -3,14 +3,14 @@ package org.uniba.kobold.gui;
 import javax.swing.*;
 
 /**
- * Class GuiNoInventoryGameGame
+ * Class GuiNoInventoryGame
  */
-public class GuiNoInventoryGameGame extends GuiGame {
+public class GuiNoInventoryGame extends GuiGame {
 
     /**
-     * Constructor of the class GuiNoInventoryGameGame
+     * Constructor of the class GuiNoInventoryGame
      */
-    public GuiNoInventoryGameGame() {
+    public GuiNoInventoryGame() {
         gameLayout();
     }
 
