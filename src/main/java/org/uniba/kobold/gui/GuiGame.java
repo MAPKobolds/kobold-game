@@ -1,45 +1,38 @@
 package org.uniba.kobold.gui;
 
+import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.game.Game;
-import org.uniba.kobold.game.GameToGui;
-import org.uniba.kobold.parser.Parser;
 import org.uniba.kobold.util.ManageTimer;
 import org.uniba.kobold.util.SaveInstance;
 import org.uniba.kobold.util.UtilMusic;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
+import java.util.Set;
 
-/**
- * Abstract class for the game GUI
- */
-public abstract class GuiGame extends JPanel implements GameToGui {
+public class GuiGame extends JPanel {
 
-    /**
-     * Attributes of the class GuiNoInventoryGameGame
-     */
+    private static GuiGame instance;
     private static final String backgroundPath = "/img/pporc.png";
     private static final String mapPath = "/img/BR.png";
-    private static boolean toggledInventory = true;
+    private static final GuiGamePanel gamePanel = new GuiGamePanel(backgroundPath);
+    private final JPanel mapPanel = new GuiMapPanel(mapPath);
+    private JPanel dialogPanel;
     public static JLabel dialogText;
-    protected static JLabel timerLabel;
-    protected static GuiBackgroundPanel gamePanel = new GuiBackgroundPanel(backgroundPath);
-    protected JPanel dialogPanel;
-    protected JTextField inputField;
-    protected JToolBar toolBar;
-    protected JToggleButton muteMusicButton;
-    protected JButton saveButton;
-    protected JButton menuButton;
-    protected JButton toggleInventoryButton;
-    protected JPanel mapPanel;
+    private JTextField inputField;
+    private JPanel inventoryPanel;
+    private JButton menuButton;
+    private JToggleButton muteMusicButton;
+    private JButton saveButton;
+    private static JLabel timerLabel;
+    private JButton toggleInventoryButton;
+    private JToolBar toolBar;
+    private boolean isInventoryVisible;
+    private static Set<Item> items;
 
-    /**
-     * Constructor of the class GuiGame
-     */
+
     public GuiGame() {
         initComponents();
         addComponentListener(new ComponentAdapter() {
@@ -54,34 +47,29 @@ public abstract class GuiGame extends JPanel implements GameToGui {
         });
     }
 
-    @Override
-    public void updateLabelBasedOnGame(String text) {
-        dialogText.setText("<html>" + text + "<html>");
-    }
-
-    @Override
-    public void updateImageBasedOnGame(String imagePath) {
-        updateGamePanel(imagePath);
-    }
-
-    @Override
-    public void updateInventoryBasedOnGame(Item item) {
-
-    }
-
     /**
-     * Method to initialize the components of the GuiGame class
+     * Method to get the instance of the class
+     * @return the instance of the class
      */
-    protected void initComponents() {
-        dialogPanel = new JPanel();
-        dialogText = new JLabel();
-        inputField = new JTextField();
+    public static GuiGame getInstance() {
+        if (instance == null) {
+            instance = new GuiGame();
+        }
+        return instance;
+    }
+
+    private void initComponents() {
         toolBar = new JToolBar();
-        mapPanel = new GuiBackgroundPanel(mapPath);
-        muteMusicButton = new JToggleButton();
         timerLabel = new JLabel();
+        dialogPanel = new JPanel();
+        inputField = new JTextField();
+        dialogText = new JLabel();
+        inventoryPanel = new JPanel();
+        muteMusicButton = new JToggleButton();
+
         ManageTimer.getInstance();
 
+        isInventoryVisible = true;
         setBackground(Color.BLACK);
 
         //Setting the buttons up
@@ -102,6 +90,8 @@ public abstract class GuiGame extends JPanel implements GameToGui {
                 new Color(40, 0, 5),
                 Color.WHITE
         ).getButton();
+        toggleInventoryButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        toggleInventoryButton.addActionListener(_ -> toggleInventory());
 
         //Setting the muteMusicButton
         muteMusicButton.setPreferredSize(new Dimension(40, 10));
@@ -113,27 +103,11 @@ public abstract class GuiGame extends JPanel implements GameToGui {
         dialogText.setHorizontalAlignment(SwingConstants.CENTER);
 
         //Setting the inputField
-        inputField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String userInput = inputField.getText();
-                inputField.setText("");
-                //TODO: metodo input
+        inputField.addActionListener(_ -> {
+            String userInput = inputField.getText();
+            inputField.setText("");
+            //TODO: metodo input
 
-            }
-        });
-
-        //Setting the toggleInventoryButton
-        toggleInventoryButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        toggleInventoryButton.addActionListener(_-> {
-            CardLayout cardLayout = (CardLayout) getParent().getLayout();
-            if(toggledInventory) {
-                cardLayout.show(getParent(), "noInventoryGame");
-                toggledInventory = false;
-            } else {
-                cardLayout.show(getParent(), "Game");
-                toggledInventory = true;
-            }
         });
 
         //Setting the timerLabel
@@ -142,7 +116,11 @@ public abstract class GuiGame extends JPanel implements GameToGui {
         timerLabel.setFocusable(false);
         timerLabel.setText("00:00:00");
 
-        //Setting the saveButton
+        //inventoryPanel settings
+        inventoryPanel.setBackground(new Color(40, 0, 5));
+        inventoryPanel.setLayout(new GridBagLayout());
+
+        //Setting the saveButton logic
         saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         saveButton.addActionListener(_ -> {
             Object[] options = {"Sì", "No"};
@@ -153,7 +131,7 @@ public abstract class GuiGame extends JPanel implements GameToGui {
             }
         });
 
-        //Setting the menuButton
+        //Setting the menuButton logic
         menuButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         menuButton.addActionListener(_ -> {
             Object[] options = {"Sì", "No"};
@@ -168,9 +146,11 @@ public abstract class GuiGame extends JPanel implements GameToGui {
         toolBar.setRollover(true);
         toolBar.setFloatable(false);
         toolBar.setBackground(Color.BLACK);
+        updateToolbar();
 
         dialogPanel.setBackground(new Color(40, 0, 5));
-        generalLayout();
+        
+        gameLayout();
     }
 
     /**
@@ -190,6 +170,82 @@ public abstract class GuiGame extends JPanel implements GameToGui {
     }
 
     /**
+     * Method to update the inventory based on the game
+     */
+    public void fillInventory() {
+        inventoryPanel.removeAll();
+        items = Inventory.getItems();
+        int i = 0;
+        for (Item item : items) {
+            i++;
+            JButton itemButton = new GuiObjectButton(item.getName(), item.getImage());
+            setButtonAction(item, itemButton);
+            GridBagConstraints gridBagConstraints = new GridBagConstraints();
+            gridManager(gridBagConstraints, i);
+            inventoryPanel.add(itemButton, gridBagConstraints);
+        }
+        inventoryPanel.revalidate();
+        inventoryPanel.repaint();
+    }
+
+    /**
+     * Method to manage the grid layout
+     * @param gridBagConstraints the grid layout manager
+     * @param i the index of the item
+     */
+    private static void gridManager(GridBagConstraints gridBagConstraints, int i) {
+        int columns = 2;
+        gridBagConstraints.gridx = i % columns;
+        gridBagConstraints.gridy = i / columns;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 50;
+        gridBagConstraints.ipadx = 0;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0;
+        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+    }
+
+    /**
+     * Method to remove an item from the inventory
+     * @param item the item to remove
+     */
+    public void removeItemFromInventory(Item item) {
+        for (Component component : inventoryPanel.getComponents()) {
+            if (component instanceof JButton button) {
+                if (button.getText().equals(item.getName())) {
+                    inventoryPanel.remove(button);
+                    gameLayout();
+                    break;
+                }
+            }
+        }
+        gameLayout();
+    }
+
+    public static void setDialogLabel(String message) {
+        dialogText.setText("<html>" + message + "<html>");
+    }
+
+    /**
+     * Method to set the action of the button
+     * @param itemButton the button
+     */
+    private void setButtonAction(Item item,JButton itemButton) {
+        itemButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    //TODO: Interaction with the item
+                    updateGamePanel("/img/modricBR.png");
+                } else if (e.getClickCount() == 1) {
+                    dialogText.setText("<html>" + item.getDescription() + "<html>");
+                }
+            }
+        });
+    }
+
+    /**
      * Method to update the toolbar
      */
     protected void updateToolbar() {
@@ -205,48 +261,84 @@ public abstract class GuiGame extends JPanel implements GameToGui {
         toolBar.add(menuButton);
     }
 
-    public void generalLayout() {
-        GroupLayout dialogLayout = new GroupLayout(dialogPanel);
-        dialogPanel.setLayout(dialogLayout);
-        dialogLayout.setHorizontalGroup(
-                dialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(GroupLayout.Alignment.TRAILING, dialogLayout.createSequentialGroup()
+    /**
+     * Method to toggle the inventory
+     */
+    private void toggleInventory() {
+        isInventoryVisible = !isInventoryVisible;
+        inventoryPanel.setVisible(isInventoryVisible);
+        revalidate();
+        repaint();
+    }
+
+    public void gameLayout() {
+        GroupLayout dialogPanelLayout = new GroupLayout(dialogPanel);
+        dialogPanel.setLayout(dialogPanelLayout);
+        dialogPanelLayout.setHorizontalGroup(
+                dialogPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(dialogPanelLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(dialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(inputField)
-                                        .addComponent(dialogText, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap())
-        );
-        dialogLayout.setVerticalGroup(
-                dialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(dialogLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(dialogText, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+                                .addComponent(inputField, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(inputField, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(dialogText, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        dialogPanelLayout.setVerticalGroup(
+                dialogPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(dialogPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(dialogPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(inputField, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(dialogText, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap())
         );
 
-        GroupLayout gameLayout = new GroupLayout(gamePanel);
-        gamePanel.setLayout(gameLayout);
-        gameLayout.setHorizontalGroup(
-                gameLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(gameLayout.createSequentialGroup()
-                                .addGap(0, 0, 0)
-                                .addComponent(mapPanel, 250, 250, 250)
-                                .addContainerGap()
-                                .addGap(0, 0, Short.MAX_VALUE))
+        GroupLayout mapPanelLayout = new GroupLayout(mapPanel);
+        mapPanel.setLayout(mapPanelLayout);
+        mapPanelLayout.setHorizontalGroup(
+                mapPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGap(0, 200, Short.MAX_VALUE)
         );
-        gameLayout.setVerticalGroup(
-                gameLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(gameLayout.createSequentialGroup()
-                                .addComponent(mapPanel, 200, 200, 200)
-                                .addContainerGap()
-                                .addGap(0, 439, Short.MAX_VALUE))
+        mapPanelLayout.setVerticalGroup(
+                mapPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGap(0, 155, Short.MAX_VALUE)
+        );
+
+        GroupLayout gamePanelLayout = new GroupLayout(gamePanel);
+        gamePanel.setLayout(gamePanelLayout);
+        gamePanelLayout.setHorizontalGroup(
+                gamePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(gamePanelLayout.createSequentialGroup()
+                                .addComponent(mapPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 409, Short.MAX_VALUE))
+        );
+        gamePanelLayout.setVerticalGroup(
+                gamePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(gamePanelLayout.createSequentialGroup()
+                                .addComponent(mapPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 278, Short.MAX_VALUE))
+        );
+
+        GroupLayout layout = new GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(toolBar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(dialogPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(inventoryPanel, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(gamePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(toolBar, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(inventoryPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(gamePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dialogPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
     }
-    /**
-     * Method to update the layout of the components of the gameLayout
-     */
-    public abstract void gameLayout();
 }
