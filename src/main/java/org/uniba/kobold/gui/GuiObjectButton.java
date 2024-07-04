@@ -9,7 +9,7 @@ public class GuiObjectButton extends JButton{
     /**
      * Attributes of the class GuiObjectButton
      */
-    private final String objectImagePath;
+    private String objectImagePath;
 
     /**
      * Constructor of the class GuiObjectButton
@@ -32,8 +32,8 @@ public class GuiObjectButton extends JButton{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        ImageIcon img = new ImageIcon(Objects.requireNonNull(getClass().getResource(objectImagePath)));
-        Image image = img.getImage();
+        ImageIcon imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource(objectImagePath)));
+        Image image = imageIcon.getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
     }
 

@@ -1,10 +1,12 @@
 package org.uniba.kobold.gui;
 
+import org.uniba.kobold.util.SaveInstance;
 import org.uniba.kobold.util.UtilMusic;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import org.uniba.kobold.game.Game;
 
 /**
  * Class GuiMenu
@@ -81,8 +83,23 @@ public class GuiMenu extends GuiAbstractPanel {
 
         //gameStartButton logic
         gameStartButton.addActionListener(_ -> {
-            CardLayout loadingScreen = (CardLayout) getParent().getLayout();
-            loadingScreen.show(getParent(), "LoadingScreen");
+            JTextField playerInput = new JTextField();
+            Object[] message = {
+                    "Inserisci il nome del personaggio:", playerInput
+            };
+            int option = JOptionPane.showConfirmDialog(null, message, "Nome Personaggio", JOptionPane.OK_CANCEL_OPTION);
+            if (option == JOptionPane.OK_OPTION) {
+                String playerName = playerInput.getText();
+                if (playerName != null && !playerName.trim().isEmpty() && isPlayerNew(playerInput.getText())) {
+                    Game.setPlayerName(playerName);
+                    CardLayout loadingScreen = (CardLayout) getParent().getLayout();
+                    loadingScreen.show(getParent(), "LoadingScreen");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Nome non valido.", "Errore", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Nuova partita annullata.", "Annullato", JOptionPane.INFORMATION_MESSAGE);
+            }
         });
 
         //loadGameButton logic
@@ -109,6 +126,20 @@ public class GuiMenu extends GuiAbstractPanel {
 
         //Background panel management
         super.manageBackgroundLayout(this, backgroundPanel);
+    }
+
+    /**
+     * Method to check if the player is new
+     * @param name the name of the player
+     * @return true if the player is new, false otherwise
+     */
+    private boolean isPlayerNew(String name) {
+        for(SaveInstance save : SaveInstance.getInstances()) {
+            if(save.getSaveName().matches(name)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

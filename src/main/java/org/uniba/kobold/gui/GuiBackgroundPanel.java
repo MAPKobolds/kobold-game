@@ -42,8 +42,8 @@ public class GuiBackgroundPanel extends GuiAbstractPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        ImageIcon img = new ImageIcon(Objects.requireNonNull(getClass().getResource(backgroundPath)));
-        Image image = img.getImage();
+        ImageIcon backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource(backgroundPath)));
+        Image image = backgroundImage.getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
     }
 
@@ -53,6 +53,7 @@ public class GuiBackgroundPanel extends GuiAbstractPanel {
      */
     public void updateBackground(String newBackgroundPath) {
         this.backgroundPath = newBackgroundPath;
+        revalidate();
         repaint();
     }
 }

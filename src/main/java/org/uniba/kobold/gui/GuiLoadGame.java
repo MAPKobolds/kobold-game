@@ -1,27 +1,28 @@
 package org.uniba.kobold.gui;
 
-import org.uniba.kobold.game.SaveInstance;
+import org.uniba.kobold.util.Deserializer;
+import org.uniba.kobold.util.SaveInstance;
 import org.uniba.kobold.util.UtilMusic;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  * Class GuiLoadGame
  */
 public class GuiLoadGame extends GuiAbstractPanel {
-
     /**
      * Attributes of the GuiLoadGame class
      */
-    private final String bgImagePath = "/img/pporc.png";
-    private final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel(bgImagePath);
-    private final String containerImagePath = "/img/BR.png";
-    private final GuiBackgroundPanel containerPanel = new GuiBackgroundPanel(containerImagePath);
-    private final JLayeredPane layeredPane = new JLayeredPane();
+    private static final String bgImagePath = "/img/pporc.png";
+    private static final GuiBackgroundPanel backgroundPanel = new GuiBackgroundPanel(bgImagePath);
+    private static final String containerImagePath = "/img/BR.png";
+    private static final GuiBackgroundPanel containerPanel = new GuiBackgroundPanel(containerImagePath);
+    private static final JLayeredPane layeredPane = new JLayeredPane();
     private JButton menuButton;
     private final JToggleButton muteMusicButton = new JToggleButton();
 
@@ -37,6 +38,7 @@ public class GuiLoadGame extends GuiAbstractPanel {
             }
         });
     }
+
 
     /**
      * Method to initialize the components of the GuiLoadGame class
@@ -64,20 +66,25 @@ public class GuiLoadGame extends GuiAbstractPanel {
             });
         }
 
-        //Temporaneo finché non avremo salvataggi veri
-        for (int i = 0; i < 3; i++) {
-            SaveInstance saveGame = new SaveInstance();
-            SaveInstancePanel savePanel = new SaveInstancePanel(saveGame);
-        }
-
-        // Add the menuButton to the JLayeredPane with a higher depth value
         if (menuButton != null) layeredPane.add(menuButton, JLayeredPane.PALETTE_LAYER);
         layeredPane.add(backgroundPanel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(muteMusicButton, JLayeredPane.PALETTE_LAYER);
 
-        //Container of the save games panel settings
+        //containerPanel settings
+        containerPanel.setOpaque(false);
+        containerPanel.setRequestFocusEnabled(false);
+        containerPanel.setLayout(new BoxLayout(containerPanel, BoxLayout.Y_AXIS));
+        layeredPane.add(containerPanel, JLayeredPane.PALETTE_LAYER);
+    }
 
-        fillContainerPanel();
+    /**
+     * Method to add a SaveInstancePanel to the containerPanel
+     * @param savePanel the SaveInstancePanel to add
+     */
+    public static void addSave(SaveInstancePanel savePanel) {
+        containerPanel.add(savePanel);
+        containerPanel.revalidate();
+        containerPanel.repaint();
     }
 
     /**
@@ -101,22 +108,9 @@ public class GuiLoadGame extends GuiAbstractPanel {
     }
 
     /**
-     * Method to fill the containerPanel with the SaveInstancePanels
-     */
-    private void fillContainerPanel() {
-        containerPanel.setRequestFocusEnabled(false);
-        containerPanel.setLayout(new BoxLayout(containerPanel, BoxLayout.Y_AXIS));
-        for (SaveInstancePanel savePanel : SaveInstancePanel.getInstances()) {
-            savePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            containerPanel.add(savePanel);
-        }
-        layeredPane.add(containerPanel, JLayeredPane.PALETTE_LAYER);
-    }
-
-    /**
      * Inner class SaveInstancePanel
      */
-    public class SaveInstancePanel extends GuiAbstractPanel {
+    public static class SaveInstancePanel extends GuiAbstractPanel {
 
         /**
          * Attributes of the SaveInstancePanel class
@@ -137,6 +131,7 @@ public class GuiLoadGame extends GuiAbstractPanel {
                     updateLayout();
                 }
             });
+            GuiLoadGame.addSave(this);
         }
 
         /**
@@ -159,10 +154,12 @@ public class GuiLoadGame extends GuiAbstractPanel {
         @Override
         public <T> void initComponents(T object) {
             setBackground(new Color(40, 0, 5));
+            setBorder(BorderFactory.createLineBorder(Color.BLACK));
             try {
                 if (object instanceof SaveInstance save) {
                     instances.add(this);
                     setLayout(null);
+
                     //Initializations
                     loadButton = new GuiGenericButton(
                             "Carica",
@@ -180,15 +177,35 @@ public class GuiLoadGame extends GuiAbstractPanel {
 
                     //loadButton settings
                     loadButton.addActionListener(_ -> {
-                        //Qui andrà richiamato il metodo che seleziona il salvataggio e poi loading screen
-                        CardLayout loadingScreen = (CardLayout) GuiLoadGame.this.getParent().getLayout();
-                        loadingScreen.show(GuiLoadGame.this.getParent(), "LoadingScreen");
+                        Object[] options = {"Sì", "No"};
+                        int response = JOptionPane.showOptionDialog(null, "Vuoi caricare questo salvataggio?",
+                                "Carica", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                        if (response == JOptionPane.YES_OPTION) {
+                            save.loadSave();
+                            CardLayout loadingScreen = (CardLayout) getParent().getLayout();
+                            loadingScreen.show(getParent(), "LoadingScreen");
+                        }
                     });
 
                     //deleteButton settings
                     deleteButton.addActionListener(_ -> {
-                        SaveInstance.getInstances().remove(save);
-                        updateLayout();
+                        Object[] options = {"Sì", "No"};
+                        int response = JOptionPane.showOptionDialog(null, "Vuoi eliminare questo salvataggio?",
+                                "Elimina", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                        if (response == JOptionPane.YES_OPTION) {
+                            try {
+                                save.deleteSave();
+                                JOptionPane.showMessageDialog(null, "File cancellato correttamente",
+                                        "Conferma", JOptionPane.INFORMATION_MESSAGE);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            instances.remove(this);
+                            containerPanel.remove(this);
+                            containerPanel.revalidate();
+                            containerPanel.repaint();
+                            updateLayout();
+                        }
                     });
 
                     //loadInfoLabel settings

@@ -54,8 +54,8 @@ public class GuiHub extends JFrame {
         GuiCredits credits = new GuiCredits();
         GuiLoadGame loadGame = new GuiLoadGame();
         GuiLoadingScreen loadingScreen = new GuiLoadingScreen();
-        GuiWithInventoryGameGame withInventoryCard = new GuiWithInventoryGameGame();
-        GuiNoInventoryGameGame noInventoryCard = new GuiNoInventoryGameGame();
+        GuiWithInventoryGame withInventoryCard = new GuiWithInventoryGame();
+        GuiNoInventoryGame noInventoryCard = new GuiNoInventoryGame();
 
         //Card layout management
         cards.add(menu, "Menu");

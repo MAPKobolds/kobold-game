@@ -1,16 +1,23 @@
 package org.uniba.kobold.gui;
 
+import org.uniba.kobold.entities.inventory.Item;
+import org.uniba.kobold.game.Game;
+import org.uniba.kobold.game.GameToGui;
+import org.uniba.kobold.parser.Parser;
 import org.uniba.kobold.util.ManageTimer;
+import org.uniba.kobold.util.SaveInstance;
 import org.uniba.kobold.util.UtilMusic;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * Abstract class for the game GUI
  */
-public abstract class GuiGame extends JPanel {
+public abstract class GuiGame extends JPanel implements GameToGui {
 
     /**
      * Attributes of the class GuiNoInventoryGameGame
@@ -18,8 +25,9 @@ public abstract class GuiGame extends JPanel {
     private static final String backgroundPath = "/img/pporc.png";
     private static final String mapPath = "/img/BR.png";
     private static boolean toggledInventory = true;
+    public static JLabel dialogText;
     protected static JLabel timerLabel;
-    protected GuiBackgroundPanel gamePanel = new GuiBackgroundPanel(backgroundPath);
+    protected static GuiBackgroundPanel gamePanel = new GuiBackgroundPanel(backgroundPath);
     protected JPanel dialogPanel;
     protected JTextField inputField;
     protected JToolBar toolBar;
@@ -28,7 +36,6 @@ public abstract class GuiGame extends JPanel {
     protected JButton menuButton;
     protected JButton toggleInventoryButton;
     protected JPanel mapPanel;
-    public static JLabel dialogText;
 
     /**
      * Constructor of the class GuiGame
@@ -45,6 +52,21 @@ public abstract class GuiGame extends JPanel {
                 updateToolbar();
             }
         });
+    }
+
+    @Override
+    public void updateLabelBasedOnGame(String text) {
+        dialogText.setText("<html>" + text + "<html>");
+    }
+
+    @Override
+    public void updateImageBasedOnGame(String imagePath) {
+        updateGamePanel(imagePath);
+    }
+
+    @Override
+    public void updateInventoryBasedOnGame(Item item) {
+
     }
 
     /**
@@ -85,12 +107,21 @@ public abstract class GuiGame extends JPanel {
         muteMusicButton.setPreferredSize(new Dimension(40, 10));
         UtilMusic.initButton(muteMusicButton);
 
+        //Setting the dialogText
         dialogText.setFont(new Font("Arial", Font.BOLD, 16));
         dialogText.setForeground(Color.WHITE);
         dialogText.setHorizontalAlignment(SwingConstants.CENTER);
 
-        //TODO: Remove this line
-        dialogText.setText("Testo di prova");
+        //Setting the inputField
+        inputField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String userInput = inputField.getText();
+                inputField.setText("");
+                //TODO: metodo input
+
+            }
+        });
 
         //Setting the toggleInventoryButton
         toggleInventoryButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -113,12 +144,24 @@ public abstract class GuiGame extends JPanel {
 
         //Setting the saveButton
         saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        saveButton.addActionListener(_ -> {
+            Object[] options = {"Sì", "No"};
+            int response = JOptionPane.showOptionDialog(null, "Vuoi salvare la partita?", "Conferma Salvataggio", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            if (response == JOptionPane.YES_OPTION) {
+                new SaveInstance(Game.getPlayerName());
+                JOptionPane.showMessageDialog(null, "Partita salvata con successo!", "Salvataggio", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
 
         //Setting the menuButton
         menuButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         menuButton.addActionListener(_ -> {
-            CardLayout cardLayout = (CardLayout) getParent().getLayout();
-            cardLayout.show(getParent(), "Menu");
+            Object[] options = {"Sì", "No"};
+            int response = JOptionPane.showOptionDialog(null, "Vuoi davvero abbandonare senza salvare?", "Torna al Menu", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            if (response == JOptionPane.YES_OPTION) {
+                CardLayout cardLayout = (CardLayout) getParent().getLayout();
+                cardLayout.show(getParent(), "Menu");
+            }
         });
 
         //Setting the toolbar
@@ -136,6 +179,14 @@ public abstract class GuiGame extends JPanel {
      */
     public static void setTimeLabel(String time) {
         timerLabel.setText(" " + time + " ");
+    }
+
+    /**
+     * Method to update the game panel
+     * @param imagePath the path to the image
+     */
+    public static void updateGamePanel(String imagePath) {
+        gamePanel.updateBackground(imagePath);
     }
 
     /**
@@ -159,7 +210,7 @@ public abstract class GuiGame extends JPanel {
         dialogPanel.setLayout(dialogLayout);
         dialogLayout.setHorizontalGroup(
                 dialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(dialogLayout.createSequentialGroup()
+                        .addGroup(GroupLayout.Alignment.TRAILING, dialogLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(dialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addComponent(inputField)

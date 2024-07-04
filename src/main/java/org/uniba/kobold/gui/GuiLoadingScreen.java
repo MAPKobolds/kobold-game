@@ -1,11 +1,13 @@
 package org.uniba.kobold.gui;
 
+import org.uniba.kobold.game.Game;
 import org.uniba.kobold.util.UtilMusic;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.IOException;
 
 /**
  * Class GuiLoadingScreen
