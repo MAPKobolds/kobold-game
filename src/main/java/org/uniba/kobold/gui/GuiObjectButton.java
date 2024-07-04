@@ -44,4 +44,9 @@ public class GuiObjectButton extends JButton{
     public JButton getButton() {
         return this;
     }
+
+    public void updateImage(String objectImagePath) {
+        this.objectImagePath = objectImagePath;
+        repaint();
+    }
 }
