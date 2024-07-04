@@ -5,4 +5,5 @@ public enum MiniGameInteractionType {
     WIN,
     LOSE,
     EXIT,
+    WIN_AND_EXIT
 }

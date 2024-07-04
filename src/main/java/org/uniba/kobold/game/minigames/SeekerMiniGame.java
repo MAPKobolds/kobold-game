@@ -2,6 +2,7 @@ package org.uniba.kobold.game.minigames;
 
 import org.javatuples.Pair;
 import org.uniba.kobold.entities.inventory.Item;
+import org.uniba.kobold.entities.inventory.availableItems.Bill;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 
@@ -25,11 +26,14 @@ public class SeekerMiniGame extends MiniGame {
         description = "Cerca i tuoi pezzi in mezzo alla spazzatura \n" +
             "ecco la lista dei comandi disponibili: \n" +
             "cerca destra/sinistra -> per andare avanti al prossimo pezzo \n" +
+            "guarda -> guarda l'oggetto corrente \n" +
             "prendi -> per prendere il pezzo giusto \n";
 
         commands.add(new Command("cerca destra", Set.of("sposta", "vai")));
         commands.add(new Command("cerca sinistra", Set.of("sposta", "vai")));
-        commands.add(new Command("prendi",Set.of("seleziona","s")));
+        commands.add(new Command("prendi", Set.of("seleziona")));
+        commands.add(new Command("guarda", Set.of("vedi")));
+        commands.add(new Command("esci", Set.of("via")));
     }
 
     private void seekTo(Boolean direction) {
@@ -38,7 +42,7 @@ public class SeekerMiniGame extends MiniGame {
         if(currentItemIndex >= itemList.size()) {
             currentItemIndex = 0;
         } else if (currentItemIndex <= 0) {
-            currentItemIndex = itemList.size();
+            currentItemIndex = itemList.size() - 1;
         }
 
     }
@@ -68,7 +72,11 @@ public class SeekerMiniGame extends MiniGame {
             this.pickItem();
 
             if (this.isGameFinished()) {
-                interaction.setInfo("Hai collezzionato tutti i pezzi!!");
+                interaction.setInfo("L'hai preso! Ora hai collezzionato tutti i pezzi!!");
+                interaction.setType(MiniGameInteractionType.WIN_AND_EXIT);
+
+                //TODO: REPLACE WITH CAR'S PART
+                interaction.setResult(new Bill(20));
             } else {
                 interaction.setInfo("Hai trovato un pezzo, te ne mancano " + itemsToFindCount);
             }
@@ -91,13 +99,21 @@ public class SeekerMiniGame extends MiniGame {
         switch (output.getCommand().getName()) {
             case "cerca destra":
                 seekTo(true);
-                interaction.setInfo("Hai cercato a destra");
+                interaction.setInfo("Hai cercato a destra, hai trovato " + getCurrentItem().getValue1().getDescription());
                 break;
             case "cerca sinistra":
                 seekTo(false);
-                interaction.setInfo("Hai cercato a sinistra");
+                interaction.setInfo("Hai cercato a sinistra hai trovato " + getCurrentItem().getValue1().getDescription());
+                break;
+            case "guarda":
+                interaction.setInfo(getCurrentItem().getValue1().getDescription());
+                break;
             case "prendi":
                 interaction = this.pickItemInteraction();
+                break;
+            case "esci":
+                interaction.setType(MiniGameInteractionType.EXIT);
+                break;
         }
 
         return interaction;

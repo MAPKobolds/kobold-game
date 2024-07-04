@@ -4,6 +4,8 @@ import org.javatuples.Pair;
 import org.uniba.kobold.api.error.*;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
+import org.uniba.kobold.entities.inventory.availableItems.Bill;
+import org.uniba.kobold.entities.inventory.availableItems.Cloak;
 import org.uniba.kobold.entities.room.*;
 import org.uniba.kobold.entities.room.avaliableRooms.*;
 import org.uniba.kobold.game.minigames.*;
@@ -14,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Game {
     private final Parser parser;
@@ -36,29 +39,24 @@ public class Game {
         roomPath = new RoomsMap(Arrays.asList(
                 Pair.with(r1, new RoomPath(Arrays.asList(Pair.with(r2, true)))),
                 Pair.with(r2, new RoomPath(
-                        Arrays.asList(
-                                Pair.with(r1, true),
-                                Pair.with(r3, false)
-                        )
+                    Arrays.asList(Pair.with(r1, true), Pair.with(r3, false))
                 )),
                 Pair.with(r3, new RoomPath(Arrays.asList(Pair.with(r4, true)))),
                 Pair.with(r4, new RoomPath(
-                        Arrays.asList(
-                                Pair.with(r3, true),
-                                Pair.with(r5, true),
-                                Pair.with(r6, true),
-                                Pair.with(r7, true),
-                                Pair.with(r8, false)
-                        )
+                    Arrays.asList(
+                        Pair.with(r3, true),
+                        Pair.with(r5, true),
+                        Pair.with(r6, true),
+                        Pair.with(r7, true),
+                        Pair.with(r8, false)
+                    )
                 )),
                 Pair.with(r5, new RoomPath(Arrays.asList(Pair.with(r4, true)))),
                 Pair.with(r6, new RoomPath(Arrays.asList(Pair.with(r4, true)))),
                 Pair.with(r7, new RoomPath(Arrays.asList(Pair.with(r4, true)))),
                 Pair.with(r8, new RoomPath(
-                        Arrays.asList(
-                                Pair.with(r9, true),
-                                Pair.with(r4, true)
-                        ))),
+                    Arrays.asList(Pair.with(r9, true), Pair.with(r4, true))
+                )),
                 Pair.with(r9, new RoomPath(Arrays.asList(Pair.with(r8, true))))
         ));
 
@@ -98,11 +96,11 @@ public class Game {
         System.out.println(result.getInfo());
         MiniGameInteractionType type = result.getType();
 
-        if (result.getType() == MiniGameInteractionType.EXIT) {
+        if (result.getType() == MiniGameInteractionType.EXIT || result.getType() == MiniGameInteractionType.WIN_AND_EXIT) {
             currentGame = null;
         }
 
-        if (result.getType() == MiniGameInteractionType.WIN) {
+        if (result.getType() == MiniGameInteractionType.WIN || result.getType() == MiniGameInteractionType.WIN_AND_EXIT) {
             Inventory.addPiece((Item) result.getResult());
         } else {
             Inventory.removePiece((Item) result.getResult());
@@ -126,7 +124,10 @@ public class Game {
                     case "blackjack" -> {
                         currentGame = new BlackJackControl();
                     }
-//                    case "monnezza" -> currentGame = new SeekerMiniGame(new ArrayList<>());
+                    case "rullo" -> {
+                        List<Pair<Boolean, Item>> list = Arrays.asList(Pair.with(false, new Bill(20)), Pair.with(true, new Cloak()));
+                        currentGame = new SeekerMiniGame(list);
+                    }
                 }
 
                 System.out.println(currentGame.getDescription());

@@ -19,7 +19,8 @@ public final class ForgeRoom extends Room {
                 Arrays.asList(),
                 Arrays.asList(),
                 Arrays.asList(
-                    new Command("vai spiazzale", Set.of("muoviti"))
+                    new Command("vai spiazzale", Set.of("muoviti")),
+                    new Command("guarda rullo", Set.of("ispeziona", "vai", "interagisci"))
                 )
         );
     }
@@ -48,6 +49,10 @@ public final class ForgeRoom extends Room {
             case "vai spiazzale":
                 result.setResultType(RoomInteractionResultType.MOVE);
                 result.setSubject("spiazzale");
+                break;
+            case "guarda rullo":
+                result.setResultType(RoomInteractionResultType.PLAY);
+                result.setSubject("rullo");
                 break;
             default:
                 result.setResultType(RoomInteractionResultType.NOTHING);
