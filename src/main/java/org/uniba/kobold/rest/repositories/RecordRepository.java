@@ -1,19 +1,23 @@
 package org.uniba.kobold.rest.repositories;
 
-import org.uniba.kobold.rest.models.Player;
+import org.uniba.kobold.rest.models.Record;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-public class PlayerRepository extends Repository<Player> {
+public class RecordRepository extends Repository<Record> {
 
-    public PlayerRepository() {
-        RELATION = "players";
+    public RecordRepository() {
+        RELATION = "records";
 
-        String createTableSQL = "CREATE TABLE IF NOT EXISTS Players (" +
+        String createTableSQL = "CREATE TABLE IF NOT EXISTS records (" +
                 "id INT AUTO_INCREMENT PRIMARY KEY, " +
-                "name VARCHAR(255))";
+                "name VARCHAR(255)," +
+                "time BIGINT" +
+                ")";
         try (Statement statement = connection.createStatement()) {
             statement.execute(createTableSQL);
         } catch (SQLException e) {
@@ -22,12 +26,14 @@ public class PlayerRepository extends Repository<Player> {
     }
 
     @Override
-    public Player save(Player player) {
+    public Record save(Record record) {
         try {
-            String sql = "INSERT INTO "+ RELATION + " (name)" + " VALUES (?)";
+            String sql = "INSERT INTO "+ RELATION + " (name, time)" + " VALUES (?, ?)";
             PreparedStatement preparedStmt = connection.prepareStatement(sql, new String[]{ "ID" });
 
-            preparedStmt.setString (1, player.getName());
+            preparedStmt.setString (1, record.getName());
+            preparedStmt.setLong(2, record.getTime());
+
             int executedSt = preparedStmt.executeUpdate();
 
             return executedSt == 1 ? this.getInsertedOne(preparedStmt) : null;
@@ -52,13 +58,13 @@ public class PlayerRepository extends Repository<Player> {
     }
 
     @Override
-    public Player updateById(Player entity, int id) {
+    public Record updateById(Record entity, int id) {
         try {
-            String sql = "UPDATE "+ RELATION + " SET name = ?" + " WHERE ID = ?";
+            String sql = "UPDATE "+ RELATION + " SET name = ?, time = ?" + " WHERE ID = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(sql, new String[]{ "ID" });
 
             preparedStmt.setString(1, entity.getName());
-            preparedStmt.setInt(2, id);
+            preparedStmt.setLong(2, entity.getTime());
 
             int executedSt = preparedStmt.executeUpdate();
 
@@ -69,7 +75,7 @@ public class PlayerRepository extends Repository<Player> {
     }
 
     @Override
-    public Player getById(int id) {
+    public Record getById(int id) {
         try {
             String selectSQL = "SELECT * FROM "+ RELATION + " WHERE id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
@@ -78,16 +84,40 @@ public class PlayerRepository extends Repository<Player> {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                int playerId = resultSet.getInt("id");
+                int recordId = resultSet.getInt("id");
                 String name = resultSet.getString("name");
+                Long time = resultSet.getLong("time");
 
-                return new Player(name, playerId);
+                return new Record(name, time, recordId);
             }
 
             return null;
         } catch (SQLException e) {
             return null;
         }
+    }
 
+    public List<Record> getBestTime(int limit) {
+        try {
+            String selectSQL = "SELECT * FROM "+ RELATION + " ORDER BY time LIMIT ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+
+            preparedStatement.setInt(1, limit);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<Record> recordList = new ArrayList<>();
+
+            while (resultSet.next()) {
+                int recordId = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                Long time = resultSet.getLong("time");
+
+                recordList.add(new Record(name, time, recordId));
+            }
+
+            return recordList;
+        } catch (SQLException e) {
+            return null;
+        }
     }
 }
