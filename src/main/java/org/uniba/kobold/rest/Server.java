@@ -1,6 +1,5 @@
 package org.uniba.kobold.rest;
 
-import org.uniba.kobold.rest.controllers.PlayerController;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -37,7 +36,6 @@ public class Server {
 
     private static ResourceConfig getControllers() {
         ResourceConfig config = new ResourceConfig(new Class[] {
-            PlayerController.class,
             RecordController.class
         });
 
