@@ -61,7 +61,7 @@ public class ManageTimer {
     /**
      * startTimer Method to start the timer.
      */
-    public void startTimer(final String time) {
+    public void loadTimer(final String time) {
         running = true;
         if (time.equals("00:00:00")) {
             seconds = 0;
