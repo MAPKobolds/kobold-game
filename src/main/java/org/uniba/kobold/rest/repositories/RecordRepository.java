@@ -1,7 +1,6 @@
 package org.uniba.kobold.rest.repositories;
 
 import org.uniba.kobold.rest.models.Record;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -92,6 +91,5 @@ public class RecordRepository extends Repository<Record> {
         } catch (SQLException e) {
             return null;
         }
-
     }
 }
