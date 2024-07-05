@@ -6,6 +6,9 @@ import java.util.Set;
 
 public class FireMaul extends Item {
     public FireMaul() {
-        super("maglio", Set.of("maglio di fuoco"), "Un maglio di fuoco che brucia tutto ciò che tocca", "/img/BR.png");
+        super(
+                "maglio", Set.of("maglio di fuoco"),
+                "Un maglio di fuoco che brucia tutto ciò che tocca",
+                "/img/BR.png");
     }
 }

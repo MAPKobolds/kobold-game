@@ -5,7 +5,10 @@ import java.util.Set;
 
 public class Cloak extends Item {
     public Cloak() {
-        super("mantello", Set.of("mantello", "cappa", "mantellaccio" , "un mantello nero" , "/img/BR.png"), "Un mantello nero usurato,ti va stretto,\n ma è sufficente a coprire quasi tutto il tuo corpo.", "/img/BR.png");
+        super(
+                "mantello", Set.of("mantello", "cappa", "mantellaccio" , "un mantello nero" , "/img/BR.png"),
+                "Un mantello nero usurato,ti va stretto,\nma è sufficente a coprire quasi tutto il tuo corpo.",
+                "/img/BR.png");
     }
 
 }

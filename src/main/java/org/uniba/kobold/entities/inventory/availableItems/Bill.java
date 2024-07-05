@@ -8,7 +8,10 @@ public class Bill extends Item {
     private int value;
 
     public Bill(int value) {
-        super("banconota", Set.of("banconota", "soldi", "denaro", "biglietto", "banconota da " + value + " euro", "/img/banconota.png"), "Una banconota da " + value + " euro.", "/img/BR.png");
+        super(
+                "banconota",
+                Set.of("banconota", "soldi", "denaro", "biglietto", "banconota da " + value + " euro", "/img/banconota.png"),
+                "Una banconota da " + value + " euro.", "/img/BR.png");
         this.value = value;
     }
 

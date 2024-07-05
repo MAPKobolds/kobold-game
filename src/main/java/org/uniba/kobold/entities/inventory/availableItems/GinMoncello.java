@@ -6,6 +6,9 @@ import java.util.Set;
 
 public class GinMoncello extends Item {
     public GinMoncello() {
-        super("GinMoncello", Set.of(),"Un liquore a base di gin e limoncello", "/img/BR.png");
+        super(
+                "GinMoncello", Set.of(),
+                "Un liquore a base di gin e limoncello",
+                "/img/BR.png");
     }
 }
