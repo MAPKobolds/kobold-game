@@ -1,13 +1,12 @@
 package org.uniba.kobold.guiRef;
 
 import org.uniba.kobold.game.Game;
-import org.uniba.kobold.gui.GuiBackgroundPanel;
 import org.uniba.kobold.gui.GuiGenericButton;
 import org.uniba.kobold.gui.GuiLoadGame;
 import org.uniba.kobold.util.SaveInstance;
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
+import java.util.Objects;
 
 
 public class GuiMenuRef extends JPanel {
@@ -18,8 +17,11 @@ public class GuiMenuRef extends JPanel {
     private JPanel buttonsContainer;
     private JButton loadButton;
     private JButton siteButton;
-    private final String IMAGEPATH = "/img/pporc.png";
+    private final String backgroundPath = "/img/pporc.png";
 
+    /**
+     * Constructor of the class GuiBackgroundPanel
+     */
     public GuiMenuRef() {
         initComponents();
     }
@@ -27,8 +29,9 @@ public class GuiMenuRef extends JPanel {
     /**
      * Method to initialize the components of the MainMenu class
      */
-    private void initComponents() {
-        buttonsContainer = new GuiBackgroundPanel(IMAGEPATH);
+    public void initComponents() {
+        buttonsContainer = new JPanel();
+        buttonsContainer.setOpaque(false);
         gameStartButton = new GuiGenericButton(
                 "Inizia Partita",
                 new Color(40, 0, 5),
@@ -48,13 +51,13 @@ public class GuiMenuRef extends JPanel {
         ).getButton();
 
         siteButton = new GuiGenericButton(
-                "Sito",
+                "Sito Koboldico",
                 new Color(40, 0, 5),
                 Color.WHITE
         ).getButton();
 
         exitButton = new GuiGenericButton(
-                "Esci",
+                "Esci dal gioco",
                 new Color(40, 0, 5),
                 Color.WHITE
         ).getButton();
@@ -69,10 +72,8 @@ public class GuiMenuRef extends JPanel {
             if (option == JOptionPane.OK_OPTION) {
                 String playerName = playerInput.getText();
                 if (playerName != null && !playerName.trim().isEmpty() && isPlayerNew(playerInput.getText())) {
-                    //TODO Switch panels
                     Game.setPlayerName(playerName);
-                    CardLayout loadingScreen = (CardLayout) getParent().getLayout();
-                    loadingScreen.show(getParent(), "LoadingScreen");
+                    GuiHubRef.changeTo(PagesEnum.LOADING);
                 } else {
                     JOptionPane.showMessageDialog(null, "Nome non valido o gia' occupato.", "Errore", JOptionPane.ERROR_MESSAGE);
                 }
@@ -83,18 +84,12 @@ public class GuiMenuRef extends JPanel {
 
         //loadGameButton logic
         loadButton.addActionListener(_ -> {
-            GuiLoadGame load = new GuiLoadGame();
             //TODO Switch panels
-            //GuiHub.cards.add(load, "SaveInstances");
-            CardLayout loadGame = (CardLayout) getParent().getLayout();
-            loadGame.show(getParent(), "SaveInstances");
         });
 
         //CreditsButton logic
         creditsButton.addActionListener(_ -> {
-            //TODO Switch panels
-            CardLayout credits = (CardLayout) getParent().getLayout();
-            credits.show(getParent(), "Credits");
+            GuiHubRef.changeTo(PagesEnum.ACKNOWLEDGEMENT);
         });
 
         //SiteButton logic
@@ -106,6 +101,17 @@ public class GuiMenuRef extends JPanel {
         setLayout();
     }
 
+    /**
+     * Method to paint the background image
+     * @param g the graphics
+     */
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        ImageIcon backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource(backgroundPath)));
+        Image image = backgroundImage.getImage();
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+    }
 
     /**
      * Method to check if the player is new
@@ -157,16 +163,16 @@ public class GuiMenuRef extends JPanel {
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(200, 200, 200)
                                 .addComponent(buttonsContainer, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(227, 227, 227))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(347, 347, 347)
+                                .addGap(297, 297, 297)
                                 .addComponent(buttonsContainer, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(53, 53, 53))
         );

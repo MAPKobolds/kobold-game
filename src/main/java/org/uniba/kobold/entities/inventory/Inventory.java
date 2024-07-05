@@ -21,7 +21,7 @@ public class Inventory {
         if(!items.contains(item)) {
             items.add(item);
         }
-        toGui.addItemToInventory(item);
+        toGui.addItemGui(item);
     }
 
     public static void removePiece(Item item) {

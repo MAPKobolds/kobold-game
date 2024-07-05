@@ -1,5 +1,5 @@
 package org.uniba.kobold.util;
-import org.uniba.kobold.gui.GuiGame;
+import org.uniba.kobold.guiRef.GuiGameRef;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -42,7 +42,9 @@ public class ManageTimer {
                         minutes = 0;
                         hours++;
                     }
-                    GuiGame.setTimeLabel(getTime());
+                    //todo: change this
+                    // GuiGame.setTimeLabel(getTime());
+                    GuiGameRef.setTimeLabel(getTime());
                 }
             };
             timer.scheduleAtFixedRate(taskTimer, DELAY, PERIOD);
@@ -67,13 +69,16 @@ public class ManageTimer {
             seconds = 0;
             minutes = 0;
             hours = 0;
-            GuiGame.setTimeLabel("00:00:00");
+            //TODO: change this
+            // GuiGame.setTimeLabel("00:00:00");
+            GuiGameRef.setTimeLabel("00:00:00");
         } else {
             String[] split = time.trim().split(":");
             hours = Integer.parseInt(split[0]);
             minutes = Integer.parseInt(split[1]);
             seconds = Integer.parseInt(split[2]);
-            GuiGame.setTimeLabel(time.trim());
+            //GuiGame.setTimeLabel(time.trim());
+            GuiGameRef.setTimeLabel(time.trim());
         }
     }
 

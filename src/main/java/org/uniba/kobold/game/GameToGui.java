@@ -20,5 +20,5 @@ public interface GameToGui{
      * This method is called by the game to update the GUI based on the current game state.
      * @param item the item to be added to the inventory
      */
-    void addItemToInventory(Item item);
+    void addItemGui(Item item);
 }

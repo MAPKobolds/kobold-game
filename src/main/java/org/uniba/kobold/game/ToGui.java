@@ -1,24 +1,31 @@
 package org.uniba.kobold.game;
 
 import org.uniba.kobold.entities.inventory.Item;
-import org.uniba.kobold.gui.GuiGame;
+import org.uniba.kobold.guiRef.GuiGameRef;
+
+import javax.swing.*;
 
 public class ToGui implements GameToGui{
 
     @Override
     public void updateLabel(String text) {
-        //TODO: GuiGame.dialogText.setText("<html>" + text + "<html>");
-        GuiGame.setDialogLabel(text);
+        SwingUtilities.invokeLater(() -> GuiGameRef.setDialogLabel(text));
     }
 
     @Override
     public void updateImage(String imagePath) {
-        GuiGame.updateGamePanel(imagePath);
+        //TODO: Ora è nel refactor
+        //GuiGame.updateGamePanel(imagePath);
+        SwingUtilities.invokeLater(() -> GuiGameRef.updateGamePanel(imagePath));
     }
 
     @Override
-    public void addItemToInventory(Item item) {
-        GuiGame.getInstance().addItem(item);
+    public void addItemGui(Item item) {
+        SwingUtilities.invokeLater(() -> GuiGameRef.addItem(item));
     }
+    //TODO: Ora è nel refactor
+    /*public void addItemGui(Item item) {
+        GuiGame.getInstance().addItem(item);
+    }*/
 
 }
