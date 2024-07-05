@@ -28,6 +28,8 @@ public class Game {
         PowerHouseRoom r7 = new PowerHouseRoom();
         PalaceEntryRoom r8 = new PalaceEntryRoom();
         ThroneRoom r9 = new ThroneRoom();
+        //TODO: Qui per output in gui
+        ToGui toGui = new ToGui();
 
         parser = new Parser(ParserUtils.loadFileListInSet(new File("src/main/resources/stopwords.txt")));
         roomPath = new RoomsMap(Arrays.asList(
@@ -59,7 +61,7 @@ public class Game {
             Pair.with(r9, new RoomPath(Arrays.asList(Pair.with(r8, true))))
         ));
 
-        ToGui toGui = new ToGui();
+        //TODO: Qui per output in gui
         toGui.updateLabel(r1.getDescription());
         System.out.println(roomPath.getCurrentRoom().getDescription());
     }
