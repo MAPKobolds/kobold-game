@@ -4,7 +4,7 @@ import org.uniba.kobold.gui.GuiGenericButton;
 
 import javax.swing.*;
 
-public class GuiMenuRef extends JPanel{
+public class GuiMenuRef extends JPanel {
 
     private JButton gameStartButton;
     public GuiMenuRef() {

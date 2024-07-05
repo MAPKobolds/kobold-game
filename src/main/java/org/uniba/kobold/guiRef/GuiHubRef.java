@@ -4,7 +4,6 @@ import org.uniba.kobold.util.UtilMusic;
 import javax.swing.*;
 import java.awt.CardLayout;
 import java.net.URL;
-import org.uniba.kobold.guiRef.GuiMenuRef;
 
 /**
  * Main hub of the game
@@ -37,7 +36,7 @@ public class GuiHubRef extends JFrame {
         setIconImage(image != null ? image.getImage() : null);
 
         //Add cards to the frame and starts the music
-        masterPanel = addMenu();
+        masterPanel = getInitialPanel();
         add(masterPanel);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -45,11 +44,21 @@ public class GuiHubRef extends JFrame {
         //music.start();
     }
 
-    private JPanel addMenu() {
+    private JPanel getInitialPanel() {
         JPanel cards = new JPanel(new CardLayout());
 
         GuiMenuRef menuRef = new GuiMenuRef();
         cards.add(menuRef, "menu");
+
         return cards;
+    }
+
+    private void switchPanel(JPanel panel, String name) {
+        if(panel.getComponents().length < 2) {
+            throw new Error("There must be at least 2 panels");
+        }
+
+        masterPanel.remove(masterPanel.getComponents().length);
+        masterPanel.add(panel, name);
     }
 }
