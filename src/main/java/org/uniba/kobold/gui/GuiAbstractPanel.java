@@ -1,5 +1,7 @@
 package org.uniba.kobold.gui;
 
+import org.uniba.kobold.util.SaveInstance;
+
 import javax.swing.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -54,8 +56,9 @@ public abstract class GuiAbstractPanel extends JPanel {
 
         public abstract void initComponents(int width, int height);
 
-        public <T> void initComponents(T Object) {
+        public void initComponents(SaveInstance save){
         }
+
         /**
          * Method to update the layout of the class GuiAbstractPanel
          */
