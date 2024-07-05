@@ -97,8 +97,8 @@ public class GuiLoadGame extends GuiAbstractPanel {
     public void updateLayout() {
         int width = getWidth();
         int height = getHeight();
-        int buttonHeight = 50 * height / 600;
-        int buttonWidth = 50 * height / 600;
+        int buttonHeight = 50 * height / 700;
+        int buttonWidth = 50 * height / 700;
         double widthOffset = width * 0.10;
 
         //This is where the magic happens
@@ -155,76 +155,80 @@ public class GuiLoadGame extends GuiAbstractPanel {
          * Method to initialize the components of the SaveInstancePanel class
          */
         @Override
-        public <T> void initComponents(T object) {
+        public void initComponents(SaveInstance save) {
             setBackground(new Color(40, 0, 5));
             setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                instances.add(this);
+                setLayout(null);
+
+                //Initializations
+                loadButton = new GuiGenericButton(
+                        "Carica",
+                        new Color(40, 0, 5),
+                        Color.WHITE,
+                        new Dimension(100, 50)
+                ).getButton();
+                deleteButton = new GuiGenericButton(
+                        "Elimina",
+                        new Color(40, 0, 5),
+                        Color.WHITE,
+                        new Dimension(100, 50)
+                ).getButton();
+                loadInfoLabel = new JLabel();
+
+                //loadButton logic
+                loadButton.addActionListener(_ -> {
+                    Object[] options = {"Sì", "No"};
+                    int response = JOptionPane.showOptionDialog(null, "Vuoi caricare questo salvataggio?",
+                            "Carica", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                    if (response == JOptionPane.YES_OPTION) {
+                        startLoadingScreen(save);
+                    }
+                });
+
+                //deleteButton settings
+                deleteButton.addActionListener(_ -> {
+                    Object[] options = {"Sì", "No"};
+                    int response = JOptionPane.showOptionDialog(null, "Vuoi eliminare questo salvataggio?",
+                            "Elimina", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                    if (response == JOptionPane.YES_OPTION) {
+                        try {
+                            save.deleteSave();
+                            JOptionPane.showMessageDialog(null, "File cancellato correttamente",
+                                    "Conferma", JOptionPane.INFORMATION_MESSAGE);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        instances.remove(this);
+                        containerPanel.remove(this);
+                        containerPanel.revalidate();
+                        containerPanel.repaint();
+                        updateLayout();
+                    }
+                });
+
+                //loadInfoLabel settings
+                loadInfoLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 14));
+                loadInfoLabel.setForeground(Color.WHITE);
+                loadInfoLabel.setText(save.getSaveName() + " - " + save.getSaveDate());
+
+                //Adding components to the panel
+                add(loadButton);
+                add(deleteButton);
+                add(loadInfoLabel);
+            }
+
+        private void startLoadingScreen(SaveInstance save) {
+            CardLayout loadingScreen = (CardLayout) GuiHub.cards.getLayout();
+            loadingScreen.show(GuiHub.cards, "LoadingScreen");
+            SwingUtilities.invokeLater(() -> onLoadingComplete(save));
+        }
+
+        private void onLoadingComplete(SaveInstance save) {
             try {
-                if (object instanceof SaveInstance save) {
-                    instances.add(this);
-                    setLayout(null);
-
-                    //Initializations
-                    loadButton = new GuiGenericButton(
-                            "Carica",
-                            new Color(40, 0, 5),
-                            Color.WHITE,
-                            new Dimension(100, 50)
-                    ).getButton();
-                    deleteButton = new GuiGenericButton(
-                            "Elimina",
-                            new Color(40, 0, 5),
-                            Color.WHITE,
-                            new Dimension(100, 50)
-                    ).getButton();
-                    loadInfoLabel = new JLabel();
-
-                    //loadButton settings
-                    loadButton.addActionListener(_ -> {
-                        Object[] options = {"Sì", "No"};
-                        int response = JOptionPane.showOptionDialog(null, "Vuoi caricare questo salvataggio?",
-                                "Carica", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-                        if (response == JOptionPane.YES_OPTION) {
-                            save.loadSave();
-                            CardLayout loadingScreen = (CardLayout) getParent().getLayout();
-                            loadingScreen.show(getParent(), "LoadingScreen");
-                        }
-                    });
-
-                    //deleteButton settings
-                    deleteButton.addActionListener(_ -> {
-                        Object[] options = {"Sì", "No"};
-                        int response = JOptionPane.showOptionDialog(null, "Vuoi eliminare questo salvataggio?",
-                                "Elimina", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-                        if (response == JOptionPane.YES_OPTION) {
-                            try {
-                                save.deleteSave();
-                                JOptionPane.showMessageDialog(null, "File cancellato correttamente",
-                                        "Conferma", JOptionPane.INFORMATION_MESSAGE);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                            instances.remove(this);
-                            containerPanel.remove(this);
-                            containerPanel.revalidate();
-                            containerPanel.repaint();
-                            updateLayout();
-                        }
-                    });
-
-                    //loadInfoLabel settings
-                    loadInfoLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 14));
-                    loadInfoLabel.setForeground(Color.WHITE);
-                    loadInfoLabel.setText(save.getSaveName() + " - " + save.getSaveDate());
-
-                    //Adding components to the panel
-                    add(loadButton);
-                    add(deleteButton);
-                    add(loadInfoLabel);
-                }
-            } catch (ClassCastException e){
-                throw new IllegalArgumentException("Object is not of type SaveInstance");
-            } catch (NullPointerException e){
-                throw new IllegalArgumentException("Object is null");
+                save.loadSave();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -233,7 +237,7 @@ public class GuiLoadGame extends GuiAbstractPanel {
          */
         @Override
         public void updateLayout() {
-            int saveWidth = backgroundPanel.getWidth();
+            int saveWidth = containerPanel.getWidth();
             int saveHeight = (int) (containerPanel.getHeight() * 0.11);
 
             // Imposta le dimensioni minime e massime
