@@ -36,10 +36,6 @@ public class Parser {
         return -1;
     }
 
-    /* ATTENZIONE: il parser è implementato in modo abbastanza independete dalla lingua, ma riconosce solo 
-    * frasi semplici del tipo <azione> <oggetto> <oggetto>. Eventuali articoli o preposizioni vengono semplicemente
-    * rimossi.
-    */
 
     public ParserOutput parse(String command, List<Command> commands, List<Item> Items, List<Item> inventory) {
         List<String> tokens = ParserUtils.parseString(command, stopwords);
