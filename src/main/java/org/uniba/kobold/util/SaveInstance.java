@@ -2,6 +2,7 @@ package org.uniba.kobold.util;
 
 import org.uniba.kobold.gui.GuiLoadGame;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,8 +38,7 @@ public class SaveInstance {
 
             setSaveDate(new Date());
             instances.add(this);
-            new GuiLoadGame.SaveInstancePanel(this);
-            Serializer.saveToJson(this, this.saveName);
+            SwingUtilities.invokeLater(() -> new GuiLoadGame.SaveInstancePanel(this));
         }
     }
 
@@ -57,7 +57,7 @@ public class SaveInstance {
         }
     }
 
-    public void loadSave(){
+    public void loadSave() {
         Deserializer.loadFromJson("src/main/resources/saves/" + this.saveName + ".json");
     }
 
