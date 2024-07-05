@@ -121,7 +121,7 @@ public class Game {
             case PLAY -> {
                 switch (result.getSubject()) {
                     case "king" -> {
-                        currentGame = new KingKoboldControl();
+                        currentGame = new BarManControl();
                         System.out.println(currentGame.getDescription());
                     }
                 }

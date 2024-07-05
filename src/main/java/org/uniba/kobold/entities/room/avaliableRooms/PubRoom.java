@@ -53,7 +53,7 @@ public final class PubRoom extends Room {
                 break;
             case "gioca blackjack":
                 result.setResultType(RoomInteractionResultType.PLAY);
-                result.setSubject("blackjack");
+                result.setSubject("king");
                 break;
             default:
                 result.setResultType(RoomInteractionResultType.NOTHING);
