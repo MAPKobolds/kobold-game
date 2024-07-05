@@ -1,11 +1,13 @@
 package org.uniba.kobold.game.minigames;
 
 import org.uniba.kobold.entities.inventory.Inventory;
-import org.uniba.kobold.entities.inventory.availableItems.Birra;
+import org.uniba.kobold.entities.inventory.availableItems.Beers;
 import org.uniba.kobold.entities.inventory.availableItems.GinMoncello;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
+import org.uniba.kobold.util.ColorText;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -17,21 +19,23 @@ public class BarManControl extends MiniGame{
 
     public BarManControl() {
 
-        options.add("1) Compra qualcosa dal barman");
-        options.add("2) Chiedi al barman cosa consiglia");
-        options.add("3) Chiedi al barman come funziona qui sotto");
-        options.add("4) Esci");
+        options.add(ColorText.setTextBlue("1)") + " [" + ColorText.setTextBlue("compra") +"]" + "<"+ColorText.setTextBlue("oggetto")+"> qualcosa dal barman");
+        options.add(ColorText.setTextBlue("2)") + " Chiedi al barman cosa consiglia");
+        options.add(ColorText.setTextBlue("3)") + " Chiedi al barman come funziona qui sotto");
+        options.add(ColorText.setTextBlue("Esci"));
 
-        market.add("1) GinMoncello [500]");
-        market.add("2) pacco da 2^4 birre [50]");
-        market.add("3) Esci");
+        market.add(ColorText.setTextGreen("GinMoncello") + " [500]");
+        market.add("pacco da 2^4 " + ColorText.setTextGreen("birre") + " [50]");
+        market.add(ColorText.setTextBlue("Esci"));
 
         this.description = "Benvenuto al bar, cosa vuoi fare?"+ "\n" + String.join("\n", options);
         this.commands.add(new Command("1", Set.of("uno")));
         this.commands.add(new Command("2", Set.of("due")));
         this.commands.add(new Command("3", Set.of("tre")));
         this.commands.add(new Command("4", Set.of("exit", "e")));
-
+        this.commands.add(new Command("compra ginmoncello", Set.of("compra ginmoncello","ginmoncello")));
+        this.commands.add(new Command("compra birre", Set.of("compra birre", "birre")));
+        this.commands.add(new Command("esci", Set.of("esci")));
     }
 
     @Override
@@ -53,7 +57,7 @@ public class BarManControl extends MiniGame{
                         state = 1;
                     }
                     case "2" -> {
-                        interaction.setInfo("Il barman ti dice che il suo liquore migliore è il GinMoncello");
+                        interaction.setInfo("Il barman ti dice che il suo liquore migliore è il " + ColorText.setTextGreen("GinMoncello"));
                         interaction.setType(MiniGameInteractionType.INFO);
                     }
 
@@ -62,16 +66,16 @@ public class BarManControl extends MiniGame{
                         interaction.setType(MiniGameInteractionType.INFO);
                     }
 
-                    case "4" -> {
+                    case "esci" -> {
                         interaction.setInfo("Arrivederci");
-                        interaction.setType(MiniGameInteractionType.INFO);
+                        interaction.setType(MiniGameInteractionType.EXIT);
                     }
                 }
                 break;
 
             case 1:
                 switch (output.getCommand().getName()) {
-                    case "1" -> {
+                    case "compra ginmoncello" -> {
                         interaction.setInfo("Hai comprato il GinMoncello");
                         if (Inventory.getMoney() >= 500) {
                             if (Inventory.contains("GinMoncello")) {
@@ -79,15 +83,15 @@ public class BarManControl extends MiniGame{
                                 interaction.setType(MiniGameInteractionType.INFO);
                             } else {
                                 Inventory.removeMoney(500);
-                                Inventory.addPiece(new GinMoncello());
-                                interaction.setType(MiniGameInteractionType.INFO);
+                                interaction.setResult(new GinMoncello());
+                                interaction.setType(MiniGameInteractionType.WIN);
                             }
                         }else{
                             interaction.setInfo("Non hai abbastanza soldi");
                             interaction.setType(MiniGameInteractionType.INFO);
                         }
                     }
-                    case "2" -> {
+                    case "compra birre" -> {
                         if (Inventory.getMoney() >= 50) {
                             if (Inventory.contains("birra")) {
                                 interaction.setInfo("Hai già comprato il pacco da 2^4 birre");
@@ -95,15 +99,15 @@ public class BarManControl extends MiniGame{
                             } else {
                                 Inventory.removeMoney(50);
                                 interaction.setInfo("Hai comprato il pacco da 2^4 birre");
-                                Inventory.addPiece(new Birra());
-                                interaction.setType(MiniGameInteractionType.INFO);
+                                interaction.setResult(new Beers());
+                                interaction.setType(MiniGameInteractionType.WIN);
                             }
                         }else{
                             interaction.setInfo("Non hai abbastanza soldi");
                             interaction.setType(MiniGameInteractionType.INFO);
                         }
                     }
-                    case "3" -> {
+                    case "esci" -> {
                         interaction.setInfo("Buona Sbronza " + "\n" + String.join("\n", options));
                         interaction.setType(MiniGameInteractionType.INFO);
                         state = 0;

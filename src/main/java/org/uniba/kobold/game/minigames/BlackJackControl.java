@@ -5,6 +5,7 @@ import org.uniba.kobold.api.error.*;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
+import org.uniba.kobold.util.ColorText;
 
 import java.util.Set;
 
@@ -12,29 +13,30 @@ public class BlackJackControl extends MiniGame{
     BlackjackChecker blackjackChecker;
     Boolean isPlaying = false;
     Boolean hasBet = false;
-    int bettedMoney = 0;
+    int scommettitedMoney = 0;
 
     public BlackJackControl() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         blackjackChecker = new BlackjackChecker();
 
         description =
-                "Benvento al BlackJack \n" +
+                ColorText.setTextPurple("\n[Benvento al BlackJack] \n") +
+                        "Il Coboldo Crupier ti da il benvenuto al tavolo del BlackJack\n"+
                         "ecco la lista dei comandi disponibili: \n" +
-                        "play/p -> per iniziare una nuova mano \n" +
-                        "hit/h -> per chiedere una carta \n" +
-                        "stand/s -> per fermarsi\n" +
+                        ColorText.setTextBlue("gioca/g") + " -> per iniziare una nuova mano \n" +
+                        ColorText.setTextBlue("carta/c") + " -> per chiedere una carta \n" +
+                        ColorText.setTextBlue("stai/s") + " -> per fermarsi\n" +
                         "come puoi vedere noi coboldi siamo molto bravi a giocare a Blackjack e qui non si gioca con numeri ma con pile di banconote!\n" +
-                        "bet/b <500/200/100/50>-> per scommettere\n" +
-                        "exit/e -> per uscire dal gioco";
+                        ColorText.setTextBlue("scommetti") +" " + ColorText.setTextPurple("<500/200/100/50>") + "-> per scommettere\n" +
+                        ColorText.setTextBlue("esci/e") +" -> per uscire dal gioco";
 
-        commands.add(new Command("hit",Set.of("hit","h")));
-        commands.add(new Command("stand",Set.of("stand","s")));
-        commands.add(new Command("bet 50",Set.of("50")));
-        commands.add(new Command("bet 100",Set.of("100")));
-        commands.add(new Command("bet 200",Set.of("200")));
-        commands.add(new Command("bet 500",Set.of("500")));
-        commands.add(new Command("exit",Set.of("exit","e")));
-        commands.add(new Command("play",Set.of("play","p")));
+        commands.add(new Command("carta",Set.of("carta","c")));
+        commands.add(new Command("stai",Set.of("stai","s")));
+        commands.add(new Command("scommetti 50",Set.of("50")));
+        commands.add(new Command("scommetti 100",Set.of("100")));
+        commands.add(new Command("scommetti 200",Set.of("200")));
+        commands.add(new Command("scommetti 500",Set.of("500")));
+        commands.add(new Command("esci",Set.of("esci","e")));
+        commands.add(new Command("gioca",Set.of("gioca","g")));
 
     }
 
@@ -49,18 +51,18 @@ public class BlackJackControl extends MiniGame{
 
         try {
             switch (output.getCommand().getName()) {
-                case "play":
+                case "gioca":
                     if (!isPlaying) {
                         if (hasBet) {
                             blackjackChecker.playRound();
                             if (blackjackChecker.getHandValue(blackjackChecker.getPlayerHand()) == 21) {
                                 hasBet = false;
-                                Inventory.addMoney(bettedMoney);
+                                Inventory.addMoney(scommettitedMoney);
 
                                 interaction = new MiniGameInteraction(
-                                        "Hai vinto",
+                                        ColorText.setTextGreen("Hai vinto " + scommettitedMoney + " euro"),
                                         blackjackChecker.getHands(),
-                                        MiniGameInteractionType.WIN
+                                        MiniGameInteractionType.INFO
                                 );
 
                             } else {
@@ -71,26 +73,26 @@ public class BlackJackControl extends MiniGame{
                             }
                         } else {
                             interaction.setResult(blackjackChecker.getHands());
-                            interaction.setInfo("Devi prima puntare qualcosa");
+                            interaction.setInfo(ColorText.setTextRed("Devi prima puntare qualcosa"));
                         }
                     } else {
-                        interaction.setInfo("Hai già iniziato una mano");
+                        interaction.setInfo(ColorText.setTextRed("Hai già iniziato una mano"));
                     }
                     break;
 
-                case "hit":
+                case "carta":
                     if (isPlaying) {
                         blackjackChecker.hit();
                         if (blackjackChecker.getHandValue(blackjackChecker.getPlayerHand()) > 21) {
-                            Inventory.removeMoney(bettedMoney);
+                            Inventory.removeMoney(scommettitedMoney);
 
                             isPlaying = false;
                             hasBet = false;
 
                             interaction = new MiniGameInteraction(
-                                    "Hai perso",
+                                    ColorText.setTextRed("Hai perso " + scommettitedMoney + " euro"),
                                     blackjackChecker.getHands(),
-                                    MiniGameInteractionType.LOSE
+                                    MiniGameInteractionType.INFO
                             );
 
                         } else {
@@ -98,11 +100,11 @@ public class BlackJackControl extends MiniGame{
                             interaction.setResult(blackjackChecker.getHands());
                         }
                     } else {
-                        interaction.setInfo("Devi iniziare una mano prima");
+                        interaction.setInfo(ColorText.setTextRed("Devi iniziare una mano prima"));
                     }
                     break;
 
-                case "stand":
+                case "stai":
                     if (isPlaying) {
 
                         hasBet = false;
@@ -112,49 +114,49 @@ public class BlackJackControl extends MiniGame{
                                          blackjackChecker.isWinner(blackjackChecker.getPlayerHand(), blackjackChecker.getDealerHand());
 
                         if (hasWon) {
-                            Inventory.addMoney(bettedMoney);
+                            Inventory.addMoney(scommettitedMoney);
                         } else {
-                            Inventory.removeMoney(bettedMoney);
+                            Inventory.removeMoney(scommettitedMoney);
                         }
-
-                        interaction.setInfo(hasWon ? "Hai vinto" : "Hai perso");
+                        String finalResult = (hasWon ? "Hai vinto "   : "Hai perso ") + scommettitedMoney + " euro";
+                        interaction.setInfo((hasWon ? ColorText.setTextGreen(finalResult) : ColorText.setTextRed(finalResult)));
                         interaction.setResult(blackjackChecker.getHands());
-                        interaction.setType(hasWon ? MiniGameInteractionType.WIN : MiniGameInteractionType.LOSE);
+                        
                     } else {
-                        interaction.setInfo("Devi iniziare una mano prima");
+                        interaction.setInfo(ColorText.setTextRed("Devi iniziare una mano prima"));
                     }
                     break;
 
-                case "bet 50" :
-                case "bet 100" :
-                case "bet 200" :
-                case "bet 500" :
+                case "scommetti 50" :
+                case "scommetti 100" :
+                case "scommetti 200" :
+                case "scommetti 500" :
                     if (isPlaying) {
-                        interaction.setInfo("Devi terminare la mano prima di scommettere");
+                        interaction.setInfo(ColorText.setTextRed("Devi terminare la mano prima di scommettere"));
                     } else {
                         if (!hasBet) {
                             int value = Integer.parseInt(output.getCommand().getName().split(" ")[1]);
 
                             if (Inventory.getMoney() >= value) {
                                 hasBet = true;
-                                bettedMoney = value;
-                                interaction.setInfo("Hai scommesso " + value + " euro");
+                                scommettitedMoney = value;
+                                interaction.setInfo("Hai scommesso " + ColorText.setTextPurple(String.valueOf(value)) + " euro");
 
                             } else {
-                                interaction.setInfo("Non hai abbastanza soldi");
+                                interaction.setInfo(ColorText.setTextRed("Non hai abbastanza soldi"));
                             }
                         } else {
-                            interaction.setInfo("Hai già scommesso");
+                            interaction.setInfo(ColorText.setTextRed("Hai già scommesso"));
                         }
                     }
                     break;
 
-                case "exit":
+                case "esci":
                     if (isPlaying) {
-                        interaction.setInfo("Devi terminare la mano prima di uscire");
-                        interaction.setResult(MiniGameInteractionType.EXIT);
+                        interaction.setInfo(ColorText.setTextRed("Devi terminare la mano prima di uscire"));
                     } else {
                         interaction.setInfo("Hai abbandonato il tavolo");
+                        interaction.setResult(MiniGameInteractionType.EXIT);
                     }
                 break;
             }

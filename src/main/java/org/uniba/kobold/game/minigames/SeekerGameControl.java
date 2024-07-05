@@ -5,17 +5,31 @@ import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.entities.inventory.availableItems.Bill;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
+import org.uniba.kobold.util.ColorText;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class SeekerMiniGame extends MiniGame {
+public class SeekerGameControl extends MiniGame {
     private int currentItemIndex = 0;
     private int itemsToFindCount;
     private List<Pair<Boolean, Item>> itemList = new ArrayList<>();
 
-    public SeekerMiniGame(List<Pair<Boolean, Item>> items) {
+    public SeekerGameControl() {
+        List<Pair<Boolean, Item>> items = List.of(
+            Pair.with(true, new Item("Chiave", Set.of("chiave"),"Una chiave di ferro", "/img/BR.png")),
+            Pair.with(false, new Item("Pietra", Set.of("pietra"),"Una pietra", "/img/BR.png")),
+            Pair.with(false, new Item("Bottiglia", Set.of("bottiglia"),"Una bottiglia di vetro", "/img/BR.png")),
+            Pair.with(false, new Item("Ciondolo", Set.of("ciondolo"),"Un ciondolo d'oro", "/img/BR.png")),
+            Pair.with(false, new Item("Anello", Set.of("anello"),"Un anello di diamanti", "/img/BR.png")),
+            Pair.with(false, new Item("Orologio", Set.of("orologio"),"Un orologio da polso", "/img/BR.png")),
+            Pair.with(false, new Item("Portafoglio", Set.of("portafoglio"),"Un portafoglio di pelle", "/img/BR.png")),
+            Pair.with(false, new Item("Occhiali", Set.of("occhiali"),"Un paio di occhiali da sole", "/img/BR.png")),
+            Pair.with(false, new Item("Cappello", Set.of("cappello"),"Un cappello di lana", "/img/BR.png")),
+            Pair.with(false, new Item("Sciarpa", Set.of("sciarpa"),"Una sciarpa di seta", "/img/BR.png"))
+        );
+
         itemsToFindCount = (int) items.stream().filter(object -> object.getValue0()).count();
 
         if(itemsToFindCount == 0 || itemsToFindCount == items.size()) {
@@ -28,6 +42,27 @@ public class SeekerMiniGame extends MiniGame {
             "cerca destra/sinistra -> per andare avanti al prossimo pezzo \n" +
             "guarda -> guarda l'oggetto corrente \n" +
             "prendi -> per prendere il pezzo giusto \n";
+
+        commands.add(new Command("cerca destra", Set.of("sposta", "vai")));
+        commands.add(new Command("cerca sinistra", Set.of("sposta", "vai")));
+        commands.add(new Command("prendi", Set.of("seleziona")));
+        commands.add(new Command("guarda", Set.of("vedi")));
+        commands.add(new Command("esci", Set.of("via")));
+    }
+
+    public SeekerGameControl(List<Pair<Boolean, Item>> items) {
+        itemsToFindCount = (int) items.stream().filter(object -> object.getValue0()).count();
+
+        if(itemsToFindCount == 0 || itemsToFindCount == items.size()) {
+            throw new Error("There must be at least 2 items: one to find and a fake one");
+        }
+
+        itemList.addAll(items);
+        description = "Cerca i tuoi pezzi in mezzo alla spazzatura \n" +
+                "ecco la lista dei comandi disponibili: \n" +
+                ColorText.setTextBlue( "cerca <destra/sinistra>") + " -> per andare avanti al prossimo pezzo \n" +
+                ColorText.setTextBlue("guarda") + " -> guarda l'oggetto corrente \n" +
+                ColorText.setTextBlue("prendi") + " -> per prendere il pezzo giusto \n";
 
         commands.add(new Command("cerca destra", Set.of("sposta", "vai")));
         commands.add(new Command("cerca sinistra", Set.of("sposta", "vai")));
@@ -58,7 +93,7 @@ public class SeekerMiniGame extends MiniGame {
 
         itemList.remove(currentItemIndex);
         currentItemIndex = 0;
-        itemsToFindCount--;;
+        itemsToFindCount--;
     }
 
     private boolean isGameFinished() {
