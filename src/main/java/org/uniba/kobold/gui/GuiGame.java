@@ -1,16 +1,14 @@
 package org.uniba.kobold.gui;
 
-import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.game.Game;
 import org.uniba.kobold.util.ManageTimer;
 import org.uniba.kobold.util.SaveInstance;
+import org.uniba.kobold.util.Serializer;
 import org.uniba.kobold.util.UtilMusic;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Set;
 
 public class GuiGame extends JPanel {
 
@@ -126,8 +124,9 @@ public class GuiGame extends JPanel {
             Object[] options = {"Sì", "No"};
             int response = JOptionPane.showOptionDialog(null, "Vuoi salvare la partita?", "Conferma Salvataggio", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (response == JOptionPane.YES_OPTION) {
-                new SaveInstance(Game.getPlayerName());
+                SaveInstance save = new SaveInstance(Game.getPlayerName());
                 JOptionPane.showMessageDialog(null, "Partita salvata con successo!", "Salvataggio", JOptionPane.INFORMATION_MESSAGE);
+                Serializer.saveToJson(save, save.getSaveName());
             }
         });
 
@@ -139,6 +138,7 @@ public class GuiGame extends JPanel {
             if (response == JOptionPane.YES_OPTION) {
                 CardLayout cardLayout = (CardLayout) getParent().getLayout();
                 cardLayout.show(getParent(), "Menu");
+                ManageTimer.resetTimer();
             }
         });
 
