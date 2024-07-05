@@ -4,24 +4,9 @@ import org.uniba.kobold.gui.GuiGenericButton;
 
 import javax.swing.*;
 
-/**
- * Class GuiMenu
- */
-public class GuiMenuRef extends JPanel {
+public class GuiMenuRef extends JPanel{
 
-    /**
-     * Attributes of the MainMenu class
-     */
-    private static final String bgURL = "/img/pporc.png";
-    private static final JToggleButton muteMusicButton = new JToggleButton();
-    private static JButton gameStartButton;
-    private static JButton loadGameButton;
-    private static JButton creditsButton;
-    private static JButton exitButton;
-
-    /**
-     * Constructor of the class GuiMenu
-     */
+    private JButton gameStartButton;
     public GuiMenuRef() {
         initComponents();
     }

@@ -56,15 +56,9 @@ public class GuiHub extends JFrame {
     private static JPanel getCards() {
         JPanel cards = new JPanel(new CardLayout());
         GuiMenu menu = new GuiMenu();
-        GuiCredits credits = new GuiCredits();
-        GuiLoadGame loadGame = new GuiLoadGame();
-        GuiLoadingScreen loadingScreen = new GuiLoadingScreen();
 
         //Card layout management
         cards.add(menu, "Menu");
-        cards.add(credits, "Credits");
-        cards.add(loadGame, "SaveInstances");
-        cards.add(loadingScreen, "LoadingScreen");
 
         return cards;
     }

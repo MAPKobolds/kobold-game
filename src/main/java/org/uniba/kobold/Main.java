@@ -1,11 +1,9 @@
 package org.uniba.kobold;
 
-import org.uniba.kobold.game.Game;
-import org.uniba.kobold.gui.GuiHub;
-import org.uniba.kobold.guiRef.GuiHubRef;
 import org.uniba.kobold.rest.Server;
 import org.uniba.kobold.socket.WebServerSocket;
 import java.io.IOException;
+import org.uniba.kobold.guiRef.GuiHubRef;
 
 public class Main {
     public static void main(String[] args) throws IOException {

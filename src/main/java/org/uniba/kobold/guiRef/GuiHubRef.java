@@ -1,11 +1,10 @@
 package org.uniba.kobold.guiRef;
 
-import org.uniba.kobold.gui.GuiMenu;
 import org.uniba.kobold.util.UtilMusic;
-
 import javax.swing.*;
-import java.awt.*;
+import java.awt.CardLayout;
 import java.net.URL;
+import org.uniba.kobold.guiRef.GuiMenuRef;
 
 /**
  * Main hub of the game
@@ -23,33 +22,34 @@ public class GuiHubRef extends JFrame {
      * Constructor of the class GuiHub
      */
     public GuiHubRef() {
+        //JFrame Settings
         setTitle("Cerignolus: Città dei Coboldi");
         setSize(width, height);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(true);
 
         //Logo Settings
-        URL logo = GuiMenu.class.getResource("/img/BR.png");
+        URL logo = GuiHubRef.class.getResource("/img/BR.png");
         ImageIcon image = null;
         if (logo != null) {
             image = new ImageIcon(logo);
         }
         setIconImage(image != null ? image.getImage() : null);
 
-        setLocationRelativeTo(null);
-        setVisible(true);
-
+        //Add cards to the frame and starts the music
         masterPanel = addMenu();
         add(masterPanel);
-
+        setLocationRelativeTo(null);
+        setVisible(true);
         UtilMusic music = UtilMusic.getInstance();
         //music.start();
     }
 
     private JPanel addMenu() {
         JPanel cards = new JPanel(new CardLayout());
-        cards.add(new GuiHubRef(), "menu");
 
+        GuiMenuRef menuRef = new GuiMenuRef();
+        cards.add(menuRef, "menu");
         return cards;
     }
 }

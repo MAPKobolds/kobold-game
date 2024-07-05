@@ -104,6 +104,8 @@ public class GuiMenu extends GuiAbstractPanel {
 
         //loadGameButton logic
         loadGameButton.addActionListener(_ -> {
+            GuiLoadGame load = new GuiLoadGame();
+            //GuiHub.cards.add(load, "SaveInstances");
             CardLayout loadGame = (CardLayout) getParent().getLayout();
             loadGame.show(getParent(), "SaveInstances");
         });
