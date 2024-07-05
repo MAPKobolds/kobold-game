@@ -7,7 +7,7 @@ import java.net.URL;
 
 public class GuiHubRef extends JFrame {
 
-    private JPanel masterPanel;
+    private static JPanel masterPanel;
     private JToggleButton muteMusicButton;
     private JToolBar toolBar;
     private final int WIDTH = 1000;
@@ -71,14 +71,30 @@ public class GuiHubRef extends JFrame {
         return cards;
     }
 
-
-    private void switchPanel(JPanel panel, String name) {
+    private static void switchPanel(JPanel panel, String name) {
         if(panel.getComponents().length < 2) {
             throw new Error("There must be at least 2 panels");
         }
 
         masterPanel.remove(masterPanel.getComponents().length);
         masterPanel.add(panel, name);
+    }
+
+    public static void changeTo(PagesEnum page) {
+        switch (page) {
+            case LOADING:
+                GuiHubRef.switchPanel(new JPanel(), page.name());
+                break;
+            case ACKNOWLEDGEMENT:
+                GuiHubRef.switchPanel(new JPanel(), page.name());
+                break;
+            case GAME_SAVES:
+                GuiHubRef.switchPanel(new JPanel(), page.name());
+                break;
+            case NEW_GAME:
+                GuiHubRef.switchPanel(new JPanel(), page.name());
+                break;
+        }
     }
 
     private void setLayout() {
