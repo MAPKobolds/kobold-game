@@ -1,7 +1,5 @@
 package org.uniba.kobold.gui;
 
-import org.uniba.kobold.entities.inventory.Inventory;
-import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.game.Game;
 import org.uniba.kobold.util.UtilMusic;
 import javax.swing.*;
@@ -9,7 +7,6 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.IOException;
-import java.util.Set;
 
 /**
  * Class GuiLoadingScreen
@@ -76,7 +73,7 @@ public class GuiLoadingScreen extends GuiAbstractPanel {
                         SwingUtilities.invokeLater(() -> {
                             try {
                                 GuiGame gui = new GuiGame();
-                                GuiHub.cards.add(gui, "Game");
+                                GuiHub.masterPanel.add(gui, "Game");
                                 Game g = new Game();
                                 testGameFlow(g);
                             } catch (IOException ex) {

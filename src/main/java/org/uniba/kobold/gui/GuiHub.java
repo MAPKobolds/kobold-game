@@ -16,7 +16,7 @@ public class GuiHub extends JFrame {
      */
     private final static int width = 1000;
     private final static int height = 700;
-    public static JPanel cards;
+    public static JPanel masterPanel;
 
     /**
      * Constructor of the class GuiHub
@@ -43,17 +43,17 @@ public class GuiHub extends JFrame {
         setIconImage(image != null ? image.getImage() : null);
 
         //Add cards to the frame and starts the music
-        cards = getCards();
-        add(cards);
+        masterPanel = getCards();
+        add(masterPanel);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+
         UtilMusic music = UtilMusic.getInstance();
         //music.start();
     }
 
     private static JPanel getCards() {
-
         JPanel cards = new JPanel(new CardLayout());
         GuiMenu menu = new GuiMenu();
         GuiCredits credits = new GuiCredits();
@@ -65,6 +65,7 @@ public class GuiHub extends JFrame {
         cards.add(credits, "Credits");
         cards.add(loadGame, "SaveInstances");
         cards.add(loadingScreen, "LoadingScreen");
+
         return cards;
     }
 }

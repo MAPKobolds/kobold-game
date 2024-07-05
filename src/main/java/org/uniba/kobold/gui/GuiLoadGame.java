@@ -219,8 +219,8 @@ public class GuiLoadGame extends GuiAbstractPanel {
             }
 
         private void startLoadingScreen(SaveInstance save) {
-            CardLayout loadingScreen = (CardLayout) GuiHub.cards.getLayout();
-            loadingScreen.show(GuiHub.cards, "LoadingScreen");
+            CardLayout loadingScreen = (CardLayout) GuiHub.masterPanel.getLayout();
+            loadingScreen.show(GuiHub.masterPanel, "LoadingScreen");
             SwingUtilities.invokeLater(() -> onLoadingComplete(save));
         }
 
