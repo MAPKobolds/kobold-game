@@ -5,7 +5,6 @@ import org.uniba.kobold.gui.GuiBackgroundPanel;
 import org.uniba.kobold.gui.GuiGenericButton;
 import org.uniba.kobold.gui.GuiLoadGame;
 import org.uniba.kobold.util.SaveInstance;
-
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
@@ -100,9 +99,6 @@ public class GuiMenuRef extends JPanel {
 
         //SiteButton logic
         siteButton.addActionListener(_ -> {
-            URL uri = new URL("http://localhost:4200");
-            Desktop dt = Desktop.getDesktop();
-
         });
 
         //Exit button logic
