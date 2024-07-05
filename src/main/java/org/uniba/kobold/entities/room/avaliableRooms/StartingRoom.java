@@ -7,8 +7,11 @@ import org.uniba.kobold.entities.room.RoomInteractionResult;
 import org.uniba.kobold.entities.room.RoomInteractionResultType;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
+import org.uniba.kobold.util.ColorText;
+
 import javax.swing.*;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 public final class StartingRoom extends Room {
@@ -16,10 +19,10 @@ public final class StartingRoom extends Room {
     public StartingRoom() {
         super("caverna",
             "Ti svegli in una caverna buia, non ricordi come ci sei arrivato, ma senti un forte dolore alla testa.\n" +
-                    "Guardandoti intorno è buio pesto, senti qualcosa di appiccicoso sotto di te.\n",
+                    "Guardandoti intorno è buio pesto, senti qualcosa di appiccicoso " + ColorText.setTextBlue("sotto") +" di te.\n",
             new ImageIcon("/img/BR.png"),
-            Arrays.asList(new Cloak()),
-            Arrays.asList(),
+                List.of(new Cloak()),
+                List.of(),
             Arrays.asList(
                 new Command("vai corridoio", Set.of("muoviti")),
                 new Command("prendi", Set.of("raccogli", "solleva"))
@@ -32,45 +35,27 @@ public final class StartingRoom extends Room {
         RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
 
         switch (command.getCommand().getName()) {
-            case "guarda giù":
-                result.setSubject("Guardi giù e vedi un qualcosa di appiccicoso sotto di te di colore verde scuro, che esce da un tessuto nero, sembra un mantello nero.");
+            case "guarda giu":
+                if (!Inventory.contains("mantello")) {
+                    result.setSubject("Guardi giù e vedi un qualcosa di appiccicoso sotto di te di colore verde scuro, che esce da un tessuto nero, sembra un " + ColorText.setTextGreen("mantello") + " nero.");
+                }else{
+                    result.setSubject("Dopo aver preso il " + ColorText.setTextGreen("mantello") + ", guardi giù e vedi un essere umanoide, che purtroppo si è trovato nel posto sbagliato al momento sbagliato. Data la tua conoscenza nerd sembra un " + ColorText.setTextBlue("Coboldo") + " morto.");
+                }
                 break;
             case "guarda davanti":
-                result.setSubject("Guardi davanti un corridoio buio");
-                break;
-            case "guarda dietro":
-                result.setSubject("Guardi dietro e vedi una parete");
+                result.setSubject("Guardi davanti un " + ColorText.setTextPurple("corridoio") + " buio");
                 break;
             case "guarda sopra":
                 result.setSubject("Guardi sopra e vedi il buco da cui sei caduto");
                 break;
+            case "guarda dietro":
             case "guarda destra":
-                result.setSubject("Guardi a destra e vedi una parete");
-                break;
             case "guarda sinistra":
-                result.setSubject("Guardi a sinistra e vedi una parete");
-                break;
-            case "prendi":
-                if (command.getItem() != null && command.getItem().getName().equals("mantello")) {
-                    result.setResultType(RoomInteractionResultType.ADD_ITEM);
-                    result.setSubject("Hai preso il mantello");
-                    result.setArgument(command.getItem());
-                } else {
-                    result.setSubject("Cosa vuoi prendere?");
-                }
-                break;
-            case "ispeziona":
-                if (command.getItem().getName().equals("mantello")) {
-                    result.setResultType(RoomInteractionResultType.ADD_ITEM);
-                    result.setSubject(command.getItem().getDescription() + "\nHai indossato il mantello, ora sei irriconoscibile");
-                } else {
-                    result.setSubject("Non c'è niente da ispezionare");
-                }
+                result.setSubject("Vedi una parete");
                 break;
             case "vai corridoio":
                 result.setResultType(RoomInteractionResultType.MOVE);
                 result.setSubject("corridoio");
-
                 break;
             default:
                 result.setResultType(RoomInteractionResultType.NOTHING);

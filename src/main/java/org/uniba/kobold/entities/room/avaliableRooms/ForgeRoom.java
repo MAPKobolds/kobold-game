@@ -5,19 +5,22 @@ import org.uniba.kobold.entities.room.RoomInteractionResult;
 import org.uniba.kobold.entities.room.RoomInteractionResultType;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
+import org.uniba.kobold.util.ColorText;
+
 import javax.swing.*;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 public final class ForgeRoom extends Room {
 
     public ForgeRoom() {
         super("fucine",
-                "Le fucine sono un posto molto caldo, pezzi di metallo  su un RULLO fra cui carrozzerie di auto vengono fusi. Sul nastro ci sono pezzi di carrozzeria." +
-                        "Ti sembra di aver visto qualcosa di interessante sul RULLO",
+                "Le fucine sono un posto molto caldo,vedi dei pezzi di metallo su un "+ ColorText.setTextBlue("rullo") +" fra cui delle carrozzerie di auto che vengono fusi. Sul nastro ci sono pezzi di carrozzeria." +
+                        "Ti sembra di aver visto qualcosa di interessante sul" + ColorText.setTextBlue("rullo"),
                 new ImageIcon("/img/BR.png"),
-                Arrays.asList(),
-                Arrays.asList(),
+                List.of(),
+                List.of(),
                 Arrays.asList(
                     new Command("vai spiazzale", Set.of("muoviti")),
                     new Command("guarda rullo", Set.of("ispeziona", "vai", "interagisci"))
@@ -31,11 +34,11 @@ public final class ForgeRoom extends Room {
 
         switch (command.getCommand().getName()) {
             case "guarda davanti":
-                result.setSubject("Di fronte, vedi un RULLO dove stanno passando numerosi pezzi di auto, forse potrebbe esserci" +
+                result.setSubject("Di fronte, vedi un " + ColorText.setTextBlue("rullo") +" dove stanno passando numerosi pezzi di auto, forse potrebbe esserci" +
                         "qualcosa di familiare attraverso quella ferraglia");
                 break;
             case "guarda dietro":
-                result.setSubject("Guardi dietro e vedi l'uscita che porta allo SPIAZZALE");
+                result.setSubject("Guardi dietro e vedi l'uscita che porta allo " + ColorText.setTextOrange("spiazzale"));
                 break;
             case "guarda destra":
                 result.setSubject("Guardi a destra e vedi numerosi coboldi che trasportano pezzi di metallo");

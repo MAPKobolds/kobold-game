@@ -8,22 +8,26 @@ import org.uniba.kobold.entities.room.RoomInteractionResult;
 import org.uniba.kobold.entities.room.RoomInteractionResultType;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
+import org.uniba.kobold.util.ColorText;
+
 import javax.swing.*;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 public final class HallwayRoom extends Room {
 
     public HallwayRoom() {
         super("corridoio",
-                "Sei in un corridoio che si apre ad una strada. Di fronte a te vedi un BAR preceduto" +
-                    " da delle guardie, forse loro sanno qualcosa su questo posto",
+                "Sei in un corridoio che si apre ad una strada. Di fronte a te vedi una " + ColorText.setTextPurple("taverna") + " preceduta" +
+                    " da delle " + ColorText.setTextOrange("guardie") + ", forse loro sanno qualcosa su questo posto",
             new ImageIcon("/img/BR.png"),
-            Arrays.asList(),
-            Arrays.asList(new TwinGuards()),
+                List.of(),
+                List.of(new TwinGuards()),
             Arrays.asList(
                 new Command("parla guardie", Set.of()),
-                new Command("vai bar", Set.of("muoviti"))
+                new Command("vai taverna", Set.of("muoviti caverna")),
+                new Command("vai caverna", Set.of("muoviti caverna"))
             )
         );
     }
@@ -34,30 +38,40 @@ public final class HallwayRoom extends Room {
 
         switch (command.getCommand().getName()) {
             case "guarda davanti":
-                result.setSubject("Guardi davanti e vedi un gruppo di guardie, forse ci dovresti parlare");
+                result.setSubject("Guardi davanti e vedi un gruppo di " + ColorText.setTextOrange("guardie") + ", forse ci dovresti parlare");
                 break;
             case "guarda dietro":
-                result.setSubject("Guardi dietro e vedi la caverna da cui sei arrivato");
+                result.setSubject("Guardi dietro e vedi la "+ ColorText.setTextPurple("caverna") + " da cui sei arrivato");
                 break;
             case "guarda destra":
             case "guarda sinistra":
             case "guarda sopra":
                 result.setSubject("Una normale (Gauss shit) parete");
                 break;
+            case "guarda giu":
+                result.setSubject("bel pavimento!");
+                break;
             case "parla guardie":
                 InteractionResult interactionResult = getCharacterByName("guardie").interact(Inventory.contains("mantello"));
 
                 if(interactionResult == InteractionResult.SUCCESSFUL) {
                     result.setResultType(RoomInteractionResultType.UNLOCK);
-                    result.setSubject("bar");
+                    result.setSubject("taverna");
                 }
 
                 break;
-            case "vai bar":
-                result.setResultType(RoomInteractionResultType.MOVE);
-                result.setSubject("bar");
+                
+            case "vai taverna":
 
+                result.setResultType(RoomInteractionResultType.MOVE);
+                result.setSubject("taverna");
                 break;
+
+            case "vai caverna":
+                result.setResultType(RoomInteractionResultType.MOVE);
+                result.setSubject("caverna");
+                break;
+
             default:
                 result.setResultType(RoomInteractionResultType.NOTHING);
         }
