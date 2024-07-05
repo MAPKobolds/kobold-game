@@ -74,7 +74,16 @@ public class ManageTimer {
             minutes = Integer.parseInt(split[1]);
             seconds = Integer.parseInt(split[2]);
             GuiGame.setTimeLabel(time.trim());
-
         }
+    }
+
+    /**
+     * Resets the timer to zero.
+     */
+    public static void resetTimer() {
+        seconds = 0;
+        minutes = 0;
+        hours = 0;
+        running = false;
     }
 }
