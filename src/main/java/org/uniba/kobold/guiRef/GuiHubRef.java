@@ -52,6 +52,14 @@ public class GuiHubRef extends JFrame {
             image = new ImageIcon(logo);
         }
         setIconImage(image != null ? image.getImage() : null);
+
+        //Add cards to the frame and starts the music
+        masterPanel = getInitialPanel();
+        add(masterPanel);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        UtilMusic music = UtilMusic.getInstance();
+        //music.start();
     }
 
     private JPanel getInitialPanel() {
@@ -59,6 +67,7 @@ public class GuiHubRef extends JFrame {
 
         GuiMenuRef menuRef = new GuiMenuRef();
         cards.add(menuRef, "menu");
+
         return cards;
     }
 
