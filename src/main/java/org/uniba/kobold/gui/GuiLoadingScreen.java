@@ -75,7 +75,8 @@ public class GuiLoadingScreen extends GuiAbstractPanel {
                         Thread.sleep(1000);
                         SwingUtilities.invokeLater(() -> {
                             try {
-                                new GuiGame();
+                                GuiGame gui = new GuiGame();
+                                GuiHub.cards.add(gui, "Game");
                                 Game g = new Game();
                                 testGameFlow(g);
                             } catch (IOException ex) {
