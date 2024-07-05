@@ -16,6 +16,7 @@ public class GuiHub extends JFrame {
      */
     private final static int width = 1000;
     private final static int height = 700;
+    public static JPanel cards;
 
     /**
      * Constructor of the class GuiHub
@@ -41,10 +42,8 @@ public class GuiHub extends JFrame {
         }
         setIconImage(image != null ? image.getImage() : null);
 
-        //Card layout inits
-        JPanel cards = getCards();
-
         //Add cards to the frame and starts the music
+        cards = getCards();
         add(cards);
         pack();
         setLocationRelativeTo(null);
