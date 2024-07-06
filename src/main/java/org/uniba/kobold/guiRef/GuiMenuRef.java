@@ -2,9 +2,13 @@ package org.uniba.kobold.guiRef;
 
 import org.uniba.kobold.game.Game;
 import org.uniba.kobold.gui.GuiGenericButton;
+import org.uniba.kobold.util.BrowserNavigator;
 import org.uniba.kobold.util.SaveInstance;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Objects;
 
 
@@ -65,7 +69,7 @@ public class GuiMenuRef extends JPanel {
         gameStartButton.addActionListener(_ -> {
             JTextField playerInput = new JTextField();
             Object[] message = {
-                    "Inserisci il nome del personaggio:", playerInput
+                "Inserisci il nome del personaggio:", playerInput
             };
             int option = JOptionPane.showConfirmDialog(null, message, "Nome Personaggio", JOptionPane.OK_CANCEL_OPTION);
             if (option == JOptionPane.OK_OPTION) {
@@ -87,6 +91,11 @@ public class GuiMenuRef extends JPanel {
 
         //SiteButton logic
         siteButton.addActionListener(_ -> {
+            try {
+                BrowserNavigator.goToSite("http://localhost:4200");
+            } catch (Error e) {
+                JOptionPane.showMessageDialog(null, "Non posso aprire il browser.", "Errore", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         //Exit button logic
@@ -170,4 +179,5 @@ public class GuiMenuRef extends JPanel {
                                 .addGap(53, 53, 53))
         );
     }
+
 }
