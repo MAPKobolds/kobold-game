@@ -15,10 +15,12 @@ import java.util.Arrays;
 public class Game {
     private final Parser parser;
     private RoomsMap roomPath;
-    private static String playerName;
+    private String playerName;
     private static Game instance;
 
-    public Game() throws IOException {
+    public Game(String playerName) throws IOException {
+        this.playerName = playerName;
+
         StartingRoom r1 = new StartingRoom();
         HallwayRoom r2 = new HallwayRoom();
         PubRoom r3 = new PubRoom();
@@ -97,27 +99,8 @@ public class Game {
         }
     }
 
-    public static Game getInstance() {
-        if (instance == null) {
-            try {
-                instance = new Game();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return instance;
-    }
-
     public String getPlayerName() {
         return playerName;
-    }
-
-    /**
-     * Set the player name
-     * @param name the name of the player
-     */
-    public static void setPlayerName(String name) {
-        playerName = name;
     }
 
     public Room getCurrentRoom() {

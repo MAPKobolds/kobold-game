@@ -91,7 +91,6 @@ public class GuiMenu extends GuiAbstractPanel {
             if (option == JOptionPane.OK_OPTION) {
                 String playerName = playerInput.getText();
                 if (playerName != null && !playerName.trim().isEmpty() && isPlayerNew(playerInput.getText())) {
-                    Game.setPlayerName(playerName);
                     CardLayout loadingScreen = (CardLayout) getParent().getLayout();
                     loadingScreen.show(getParent(), "LoadingScreen");
                 } else {

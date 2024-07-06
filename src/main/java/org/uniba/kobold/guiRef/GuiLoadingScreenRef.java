@@ -1,4 +1,6 @@
 package org.uniba.kobold.guiRef;
+import org.uniba.kobold.game.Game;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
@@ -11,11 +13,11 @@ public class GuiLoadingScreenRef extends JPanel{
     private static final String BACKGROUND_PATH = "/img/pporc.png";
     private JProgressBar progressBar;
 
-    public GuiLoadingScreenRef() {
-        initComponents();
+    public GuiLoadingScreenRef(Game game) {
+        initComponents(game);
     }
 
-    public void initComponents() {
+    public void initComponents(Game game) {
         progressBar = new JProgressBar(0, 100);
 
         //Progress Bar Settings
@@ -40,11 +42,13 @@ public class GuiLoadingScreenRef extends JPanel{
                 }
                 progressBar.setString("Kobold is ready!");
                 Thread.sleep(1000);
-                SwingUtilities.invokeLater(() -> GuiHubRef.changeTo(PagesEnum.NEW_GAME));
+
+                SwingUtilities.invokeLater(() -> GuiHubRef.changeTo(PagesEnum.NEW_GAME, game));
             } catch (InterruptedException ex) {
                 System.err.println("Thread was interrupted: " + ex.getMessage());
             }
         });
+
         progressBarThread.start();
         setLayout();
     }

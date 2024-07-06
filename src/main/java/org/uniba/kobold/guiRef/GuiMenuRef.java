@@ -66,19 +66,25 @@ public class GuiMenuRef extends JPanel {
         ).getButton();
 
         //gameStartButton logic
-        gameStartButton.addActionListener(_ -> this.createNewGame());
+        gameStartButton.addActionListener(_ -> {
+            try {
+                this.createNewGame();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         //loadGameButton logic
-        loadButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.GAME_SAVES));
+        loadButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.GAME_SAVES, null));
 
         //CreditsButton logic
-        creditsButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.ACKNOWLEDGEMENT));
+        creditsButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.ACKNOWLEDGEMENT, null));
 
         //SiteButton logic
         siteButton.addActionListener(_ -> goToAppSite());
 
         //Exit button logic
-        exitButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.EXIT));
+        exitButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.EXIT, null));
 
         setLayout();
     }
@@ -152,7 +158,7 @@ public class GuiMenuRef extends JPanel {
         }
     }
 
-    private void createNewGame() {
+    private void createNewGame() throws IOException {
         JTextField playerInput = new JTextField();
         Object[] message = { "Inserisci il nome del personaggio:", playerInput };
         int option = JOptionPane.showConfirmDialog(null, message, "Nome Personaggio", JOptionPane.OK_CANCEL_OPTION);
@@ -181,8 +187,7 @@ public class GuiMenuRef extends JPanel {
             return;
         }
 
-        Game.setPlayerName(playerName);
-        GuiHubRef.changeTo(PagesEnum.LOADING);
+        GuiHubRef.changeTo(PagesEnum.NEW_GAME, new Game(playerName));
     }
 
 }

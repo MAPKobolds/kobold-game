@@ -1,5 +1,6 @@
 package org.uniba.kobold.guiRef;
 
+import org.uniba.kobold.game.Game;
 import org.uniba.kobold.util.UtilMusic;
 import javax.swing.*;
 import java.awt.*;
@@ -87,13 +88,10 @@ public class GuiHubRef extends JFrame {
     }
 
 
-    public static void changeTo(PagesEnum page) {
+    public static void changeTo(PagesEnum page, Game game) {
         switch (page) {
             case MENU:
                 GuiHubRef.switchPanel(new GuiMenuRef(), page.name());
-                break;
-            case LOADING:
-                GuiHubRef.switchPanel(new GuiLoadingScreenRef(), page.name());
                 break;
             case ACKNOWLEDGEMENT:
                 GuiHubRef.switchPanel(new GuiCreditsRef(), page.name());
@@ -102,7 +100,7 @@ public class GuiHubRef extends JFrame {
                 GuiHubRef.switchPanel(new GuiLoadRef(), page.name());
                 break;
             case NEW_GAME:
-                GuiHubRef.switchPanel(new GuiGameRef(), page.name());
+                GuiHubRef.switchPanel(new GuiGameRef(game), page.name());
                 break;
             case EXIT:
                 System.exit(0);

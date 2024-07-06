@@ -28,7 +28,7 @@ public class GuiGameRef extends JPanel {
     /**
      * Creates new form containerPanel
      */
-    public GuiGameRef() {
+    public GuiGameRef(Game game) {
         initComponents();
         ManageTimer.getInstance();
     }
@@ -109,7 +109,7 @@ public class GuiGameRef extends JPanel {
             if (response == JOptionPane.YES_OPTION) {
                 GuiHubRef.setNormalToolbar();
                 ManageTimer.resetTimer();
-                GuiHubRef.changeTo(PagesEnum.MENU);
+                GuiHubRef.changeTo(PagesEnum.MENU, null);
             }
         });
 

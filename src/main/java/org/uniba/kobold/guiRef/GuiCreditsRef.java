@@ -38,7 +38,7 @@ public class GuiCreditsRef extends JPanel {
                 Color.WHITE
         ).getButton();
 
-        menuButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.MENU));
+        menuButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.MENU, null));
 
         tokensPanel.setOpaque(false);
         porcelliPanel.setOpaque(false);

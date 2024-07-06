@@ -71,14 +71,10 @@ public class GuiLoadingScreen extends GuiAbstractPanel {
                         progressBar.setString("Kobold is ready!");
                         Thread.sleep(1000);
                         SwingUtilities.invokeLater(() -> {
-                            try {
-                                GuiGame gui = new GuiGame();
-                                GuiHub.masterPanel.add(gui, "Game");
-                                Game g = new Game();
-                                testGameFlow(g);
-                            } catch (IOException ex) {
-                                throw new RuntimeException(ex);
-                            }
+                            GuiGame gui = new GuiGame();
+                            GuiHub.masterPanel.add(gui, "Game");
+//                                Game g = new Game();
+//                                testGameFlow(g);
                             CardLayout menu = (CardLayout) getParent().getLayout();
                             menu.show(getParent(), "Game");
                         });

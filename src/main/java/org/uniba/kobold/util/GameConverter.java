@@ -27,8 +27,7 @@ public class GameConverter {
             GameState gameState = gson.fromJson(json, GameState.class);
 
             //Extract items and timer state and sets them
-            new Game();
-            GuiHubRef.changeTo(PagesEnum.LOADING);
+
             Set<Item> items = gameState.items;
             String timerState = gameState.timerState;
             Inventory.setItems(items);
