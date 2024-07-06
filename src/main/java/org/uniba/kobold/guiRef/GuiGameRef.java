@@ -155,7 +155,7 @@ public class GuiGameRef extends JPanel {
     }
 
     public static void setDialogLabel(String message) {
-        dialogText.setText("<html>" + message + "<html>");
+        dialogText.setText("<html>" + message + "</html>");
     }
 
     public static void setTimeLabel(String time) {
