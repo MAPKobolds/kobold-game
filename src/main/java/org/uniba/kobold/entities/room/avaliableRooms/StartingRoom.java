@@ -1,13 +1,11 @@
 package org.uniba.kobold.entities.room.avaliableRooms;
 
-import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.availableItems.Cloak;
 import org.uniba.kobold.entities.room.Room;
 import org.uniba.kobold.entities.room.RoomInteractionResult;
 import org.uniba.kobold.entities.room.RoomInteractionResultType;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
-import javax.swing.*;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -17,7 +15,7 @@ public final class StartingRoom extends Room {
         super("caverna",
             "Ti svegli in una caverna buia, non ricordi come ci sei arrivato, ma senti un forte dolore alla testa.\n" +
                     "Guardandoti intorno è buio pesto, senti qualcosa di appiccicoso sotto di te.\n",
-            new ImageIcon("/img/BR.png"),
+            "/img/BR.png",
             Arrays.asList(new Cloak()),
             Arrays.asList(),
             Arrays.asList(

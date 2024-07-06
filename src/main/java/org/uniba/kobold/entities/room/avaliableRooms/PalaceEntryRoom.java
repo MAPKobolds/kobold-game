@@ -15,7 +15,7 @@ public final class PalaceEntryRoom extends Room {
         super("palazzo",
                 "Dopo aver sfondato il cancello del palazzo hai ucciso numerose guardie, nonostante ciò la macchina è integra." +
                         "Il corridoio è illuminato da torce, in fondo puoi vedere in lontananza il TRONO",
-                new ImageIcon("/img/BR.png"),
+                "/img/BR.png",
                 Arrays.asList(),
                 Arrays.asList(),
                 Arrays.asList(

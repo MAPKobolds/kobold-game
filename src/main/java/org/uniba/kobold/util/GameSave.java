@@ -26,7 +26,7 @@ public class GameSave {
                     throw new Error("Invalid save file");
                 }
 
-                saves.add(new GameSaveInstance(stringSave[0], Integer.parseInt(stringSave[1]), GameConverter.deserialize(filePath).getDate()));
+                saves.add(new GameSaveInstance(stringSave[0], Integer.parseInt(stringSave[1]), GameConverter.deserialize(filePath).getDate(), filePath));
             }
         } catch (IOException e) {
             throw new Error("Error during JSON reading", e);

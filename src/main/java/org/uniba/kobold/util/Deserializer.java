@@ -66,9 +66,8 @@ public class Deserializer {
             //Extract items and timer state and sets them
             //new Game();
             GuiHubRef.changeTo(PagesEnum.LOADING, null);
-            Set<Item> items = gameState.items;
+
             String timerState = gameState.timerState;
-            Inventory.setItems(items);
 
             ManageTimer.getInstance().loadTimer(timerState);
         } catch (IOException e) {

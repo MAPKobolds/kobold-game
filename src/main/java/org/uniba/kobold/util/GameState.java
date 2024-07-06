@@ -1,25 +1,27 @@
 package org.uniba.kobold.util;
 
-import org.uniba.kobold.entities.inventory.Item;
-import org.uniba.kobold.entities.room.Room;
-
+import org.uniba.kobold.entities.inventory.Inventory;
+import org.uniba.kobold.entities.room.RoomsMap;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Set;
 
 public class GameState {
-    Set<Item> items;
+    Inventory inventory;
     String timerState;
-    String currentRoom;
+    RoomsMap roomsMap;
     String date = (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")).format(new Date());
 
-    public GameState(Set<Item> items, String timerState, String currentRoom) {
-        this.items = items;
+    public GameState(Inventory inventory, String timerState, RoomsMap roomsMap) {
+        this.inventory = inventory;
         this.timerState = timerState;
-        this.currentRoom = currentRoom;
+        this.roomsMap = roomsMap;
     }
 
     public String getDate() {
         return date;
+    }
+
+    public RoomsMap getCurrentRoom() {
+        return roomsMap;
     }
 }

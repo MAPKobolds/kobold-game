@@ -15,7 +15,7 @@ public final class ForgeRoom extends Room {
         super("fucine",
                 "Le fucine sono un posto molto caldo, pezzi di metallo  su un RULLO fra cui carrozzerie di auto vengono fusi. Sul nastro ci sono pezzi di carrozzeria." +
                         "Ti sembra di aver visto qualcosa di interessante sul RULLO",
-                new ImageIcon("/img/BR.png"),
+                "/img/BR.png",
                 Arrays.asList(),
                 Arrays.asList(),
                 Arrays.asList(

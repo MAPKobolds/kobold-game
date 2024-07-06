@@ -18,7 +18,7 @@ public final class HallwayRoom extends Room {
         super("corridoio",
                 "Sei in un corridoio che si apre ad una strada. Di fronte a te vedi un BAR preceduto" +
                     " da delle guardie, forse loro sanno qualcosa su questo posto",
-            new ImageIcon("/img/BR.png"),
+            "/img/BR.png",
             Arrays.asList(),
             Arrays.asList(new TwinGuards()),
             Arrays.asList(

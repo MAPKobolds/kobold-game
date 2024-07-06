@@ -1,16 +1,14 @@
 package org.uniba.kobold.util;
 
-import org.uniba.kobold.guiRef.GuiLoadRef;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.nio.file.Path;
 
 public class GameSaveInstance {
+    private Path filePath;
     private String playerName;
     private int saveCount;
     private String saveDate;
 
-    public GameSaveInstance(String playerName, int saveCount, String saveDate) {
+    public GameSaveInstance(String playerName, int saveCount, String saveDate, Path filePath) {
         if (saveCount < 0) {
             throw new IllegalArgumentException("Save count cannot be negative");
         }
@@ -18,6 +16,7 @@ public class GameSaveInstance {
         this.playerName = playerName;
         this.saveCount = saveCount;
         this.saveDate = saveDate;
+        this.filePath = filePath;
     }
 
     public int getSaveCount() {
@@ -28,6 +27,9 @@ public class GameSaveInstance {
     }
     public String getPlayerName() {
         return playerName;
+    }
+    public Path getFilePath() {
+        return filePath;
     }
 
     @Override

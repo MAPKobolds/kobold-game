@@ -1,7 +1,5 @@
 package org.uniba.kobold.entities.inventory;
 
-import javax.swing.*;
-import java.util.Objects;
 import java.util.Set;
 
 public class Item {

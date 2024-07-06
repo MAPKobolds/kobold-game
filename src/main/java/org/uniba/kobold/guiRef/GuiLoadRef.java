@@ -2,13 +2,8 @@ package org.uniba.kobold.guiRef;
 
 import org.uniba.kobold.game.Game;
 import org.uniba.kobold.gui.GuiGenericButton;
-import org.uniba.kobold.gui.GuiHub;
-import org.uniba.kobold.util.GameSave;
-import org.uniba.kobold.util.GameSaveInstance;
-import org.uniba.kobold.util.SaveInstance;
-
+import org.uniba.kobold.util.*;
 import java.util.List;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -85,7 +80,13 @@ public class GuiLoadRef extends JPanel {
         JLabel loadInfoLabel = new JLabel();
 
         //loadButton logic
-        loadButton.addActionListener(_ -> this.loadScreen(save));
+        loadButton.addActionListener(_ -> {
+            try {
+                this.loadScreen(save);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         //deleteButton settings
         deleteButton.addActionListener(_ -> {
@@ -113,19 +114,6 @@ public class GuiLoadRef extends JPanel {
         return savePanel;
     }
 
-    private static void startLoadingScreen(GameSaveInstance save) {
-        CardLayout loadingScreen = (CardLayout) GuiHub.masterPanel.getLayout();
-        loadingScreen.show(GuiHub.masterPanel, "LoadingScreen");
-        SwingUtilities.invokeLater(() -> onLoadingComplete(save));
-    }
-
-    private static void onLoadingComplete(GameSaveInstance save) {
-        try {
-            GameSave.loadSave(save);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -188,7 +176,7 @@ public class GuiLoadRef extends JPanel {
         }
     }
 
-    private void loadScreen(GameSaveInstance save) {
+    private void loadScreen(GameSaveInstance save) throws IOException {
         Object[] options = {"Sì", "No"};
         int response = JOptionPane.showOptionDialog(
                 null,
@@ -202,7 +190,10 @@ public class GuiLoadRef extends JPanel {
         );
 
         if (response == JOptionPane.YES_OPTION) {
-            startLoadingScreen(save);
+            GameState g = GameConverter.deserialize(save.getFilePath());
+
+
+            GuiHubRef.changeTo(PagesEnum.NEW_GAME, new Game("CIAO"));
         } else {
             throw new Error("Cannot open dialog");
         }

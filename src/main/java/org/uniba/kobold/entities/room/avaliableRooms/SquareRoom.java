@@ -19,7 +19,7 @@ public final class SquareRoom extends Room {
                         "\nPISTA" +
                         "\nPALAZZO" +
                         "\nGENERATORE",
-                new ImageIcon("/img/BR.png"),
+                "/img/BR.png",
                 Arrays.asList(),
                 Arrays.asList(),
                 Arrays.asList(

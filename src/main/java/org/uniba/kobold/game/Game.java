@@ -16,7 +16,6 @@ public class Game {
     private final Parser parser;
     private RoomsMap roomPath;
     private String playerName;
-    private static Game instance;
 
     public Game(String playerName) throws IOException {
         this.playerName = playerName;
@@ -103,7 +102,7 @@ public class Game {
         return playerName;
     }
 
-    public Room getCurrentRoom() {
-        return roomPath.getCurrentRoom();
+    public RoomsMap getCurrentRoomMap() {
+        return roomPath;
     }
 }

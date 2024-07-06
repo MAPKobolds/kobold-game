@@ -17,7 +17,7 @@ public final class PubRoom extends Room {
                 "Il bar è pieno di coboldi, di fronte a te c'è un bancone con un coboldo barista. " +
                         "Sulla tua sinistra ci sono dei coboldi che giocano a carte" +
                         "Sulla tua destra c'è un'uscita che da su uno SPIAZZALE",
-                new ImageIcon("/img/BR.png"),
+                "/img/BR.png",
                 Arrays.asList(),
                 Arrays.asList(),
                 Arrays.asList(

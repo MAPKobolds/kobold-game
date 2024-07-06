@@ -4,13 +4,12 @@ import org.uniba.kobold.entities.character.Character;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
-import javax.swing.*;
 import java.util.*;
 
-abstract public class Room {
+public abstract class Room {
     private final String name;
     private String description = "";
-    private final ImageIcon backgroundImage;
+    private final String backgroundImage;
     private final List<Item> items;
     private Map<String, Character> characters = new HashMap<>();
     private List<Command> commands = new ArrayList<>(Arrays.asList(
@@ -22,7 +21,7 @@ abstract public class Room {
         new Command("guarda sinistra", Set.of("sinistra", "sx", "lato sinistro"))
     ));
 
-    public Room(String name, String description, ImageIcon backgroundImage, List<Item> items, List<Character> charactersList, List<Command> commands) {
+    public Room(String name, String description, String backgroundImage, List<Item> items, List<Character> charactersList, List<Command> commands) {
         this.name = name;
         this.description = description;
         this.backgroundImage = backgroundImage;
@@ -49,10 +48,6 @@ abstract public class Room {
 
     public Character updateCharacter(String name, Character character) {
         return characters.replace(name, character);
-    }
-
-    public ImageIcon getBackgroundImage() {
-        return backgroundImage;
     }
 
     public List<Command> getCommands() {
