@@ -117,7 +117,7 @@ public class KingKoboldControl extends MiniGame {
             case "4" -> {
                 if (!fourthQ){
                     interaction.setInfo("Vedi sotto il trono dell' olio di macchina \n");
-                    options.set(8, ColorText.setTextGreen("4) butta qualcosa di infiammabile sotto il trono\n"));
+                    options.set(8, ColorText.setTextGreen("4) butta qualcosa di infiammabile sotto il trono"));
                     interaction.addInfo(String.join("\n", options));
                     interaction.setType(MiniGameInteractionType.INFO);
                     fourthQ = true;

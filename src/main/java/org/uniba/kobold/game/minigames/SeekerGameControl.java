@@ -28,7 +28,7 @@ public class SeekerGameControl extends MiniGame {
             Pair.with(false, new Item("Occhiali", Set.of("occhiali"),"Un paio di occhiali da sole", "/img/BR.png")),
             Pair.with(false, new Item("Cappello", Set.of("cappello"),"Un cappello di lana", "/img/BR.png")),
             Pair.with(false, new Item("Sciarpa", Set.of("sciarpa"),"Una sciarpa di seta", "/img/BR.png")),
-            Pair.with(true, new Item("cofano", Set.of("cofano"),"Il cofano della tua auto", "/img/BR.png"))
+            Pair.with(true, new Item("Cofano", Set.of("cofano"),"Il cofano ", "/img/BR.png"))
         );
 
         itemsToFindCount = (int) items.stream().filter(object -> object.getValue0()).count();
@@ -40,9 +40,9 @@ public class SeekerGameControl extends MiniGame {
         itemList.addAll(items);
         description = "Cerca i tuoi pezzi in mezzo alla spazzatura \n" +
             "ecco la lista dei comandi disponibili: \n" +
-            "cerca destra/sinistra -> per andare avanti al prossimo pezzo \n" +
-            "guarda -> guarda l'oggetto corrente \n" +
-            "prendi -> per prendere il pezzo giusto \n";
+            ColorText.setTextBlue("cerca <destra/sinistra>") + " -> per andare avanti al prossimo pezzo \n" +
+            ColorText.setTextBlue("guarda") +"-> guarda l'oggetto corrente \n" +
+            ColorText.setTextBlue("prendi") +" -> per prendere il pezzo giusto \n";
 
         commands.add(new Command("cerca destra", Set.of("sposta", "vai")));
         commands.add(new Command("cerca sinistra", Set.of("sposta", "vai")));
@@ -108,7 +108,7 @@ public class SeekerGameControl extends MiniGame {
             this.pickItem();
 
             if (this.isGameFinished()) {
-                interaction.setInfo("L'hai preso! Ora hai collezzionato tutti i pezzi!!");
+                interaction.setInfo("L'hai preso! Ora hai collezionato tutti i pezzi!!");
                 interaction.setType(MiniGameInteractionType.WIN_AND_EXIT);
                 interaction.setResult(new CarBody());
             } else {

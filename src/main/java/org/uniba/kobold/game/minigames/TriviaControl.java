@@ -5,6 +5,7 @@ import org.uniba.kobold.api.trivia.TriviaChecker;
 import org.uniba.kobold.entities.inventory.availableItems.Engine;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
+import org.uniba.kobold.util.ColorText;
 
 import java.util.List;
 import java.util.Set;
@@ -29,10 +30,10 @@ public class TriviaControl extends MiniGame{
         questions = triviaChecker.getQuestions();
         answers = triviaChecker.getAnswersShuffled();
 
-        this.description = "Rispondi a 3 domande su 6 correttamente per vincere il gioco"+ "\n" ;
+        this.description = ColorText.setTextBlue("Rispondi a 3 domande su 6 correttamente per vincere il gioco\n");
         this.description += questions[0];
         for (int i = 0; i < answers.getFirst().size(); i++) {
-            this.description += "\n" + (i + 1) + ") " + answers.getFirst().get(i);
+            this.description += ColorText.setTextBlue("\n" + (i + 1) + ") ") + answers.getFirst().get(i);
         }
     }
 
@@ -62,14 +63,14 @@ public class TriviaControl extends MiniGame{
             if (triviaChecker.isCorrect(round, answerIndex)) {
 
                 if (score == 2) {
-                    result.setInfo("Il direttore ti vede con ammirazione e poichè non lo pagano abbastanza ti consegna un motore nuovo di zecca!");
+                    result.setInfo("Il direttore ti vede con ammirazione e poichè non lo pagano abbastanza ti consegna un "+ ColorText.setTextGreen("motore") +" nuovo di zecca!");
                     result.setResult(new Engine());
                     result.setType(MiniGameInteractionType.WIN);
                 } else {
-                    String ToSend = "Risposta corretta" + "\n" + questions[round];
+                    String ToSend = ColorText.setTextGreen("Risposta corretta") + "\n" + questions[round];
 
                     for (int i = 0; i < answers.get(round).size(); i++) {
-                        ToSend += "\n" + (i + 1) + ") " + answers.get(round).get(i);
+                        ToSend += "\n" + ColorText.setTextBlue((i + 1) + ") ") + answers.get(round).get(i);
                     }
 
                     result.setInfo(ToSend);
@@ -78,10 +79,10 @@ public class TriviaControl extends MiniGame{
                 }
 
             } else {
-                String ToSend = "Risposta sbagliata" + "\n" + questions[round];
+                String ToSend = ColorText.setTextRed("Risposta sbagliata") + "\n" + questions[round];
 
                 for (int i = 0; i < answers.get(round).size(); i++) {
-                    ToSend += "\n" + (i + 1) + ") " + answers.get(round).get(i);
+                    ToSend += "\n" + ColorText.setTextBlue((i + 1) + ") ") + answers.get(round).get(i);
                 }
 
                 result.setInfo(ToSend);
