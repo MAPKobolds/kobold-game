@@ -1,8 +1,14 @@
 package org.uniba.kobold.util;
 
+import org.uniba.kobold.guiRef.GuiLoadRef;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class GameSaveInstance {
     private String playerName;
     private int saveCount;
+    private String saveDate;
 
     public GameSaveInstance(String playerName, int saveCount) {
         if (saveCount < 0) {
@@ -11,6 +17,7 @@ public class GameSaveInstance {
 
         this.playerName = playerName;
         this.saveCount = saveCount;
+        setSaveDate(new Date());
     }
 
     public int getSaveCount() {
@@ -21,6 +28,14 @@ public class GameSaveInstance {
         this.saveCount = saveCount;
     }
 
+    public void setSaveDate(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        saveDate = formatter.format(date);
+    }
+
+    public String getSaveDate() {
+        return this.saveDate;
+    }
     public String getPlayerName() {
         return playerName;
     }

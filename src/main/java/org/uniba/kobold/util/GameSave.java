@@ -11,6 +11,7 @@ import java.util.List;
 
 public class GameSave {
     final static String FOLDER_PATH = "src/main/resources/saves/";
+    public static GameSave instance;
 
     public static List<GameSaveInstance> getSavingName() throws Error {
         Path dirPath = Paths.get(FOLDER_PATH);
@@ -43,7 +44,7 @@ public class GameSave {
         }
     }
 
-    private static int getNumberOfUserSave(String name) throws Error {
+    public static int getNumberOfUserSave(String name) throws Error {
         try {
             return (int) getSavingName().stream().filter(n -> n.getPlayerName().contains(name)).count();
         } catch (Error e) {
@@ -51,13 +52,10 @@ public class GameSave {
         }
     }
 
-    public GameSaveInstance save(String name) {
+    public static void save(String name) {
         int newNumberOfUserSave = getNumberOfUserSave(name) + 1;
 
-        //save
-
-        return new GameSaveInstance(name, newNumberOfUserSave);
-
+        Serializer.saveToJson(new GameSaveInstance(name, newNumberOfUserSave), name);
     }
 
 }

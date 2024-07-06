@@ -29,13 +29,13 @@ public class Serializer {
      * @param save the instance of the game
      * @param fileName the path of the file
      */
-    public static void saveToJson(SaveInstance save, String fileName) {
+    public static void saveToJson(GameSaveInstance save, String fileName) {
         Gson gson = new Gson();
 
         String timerState = ManageTimer.getTime();
         GameState gameState = new GameState(possessedItems, timerState);
         String json = gson.toJson(gameState);
-        String filePath = "src/main/resources/saves/" + fileName + ".json";
+        String filePath = "src/main/resources/saves/" + fileName + "-" + save.getSaveCount() + ".json";
 
         try {
             Files.write(Paths.get(filePath), json.getBytes());
