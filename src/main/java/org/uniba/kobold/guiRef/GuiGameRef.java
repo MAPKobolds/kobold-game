@@ -1,9 +1,11 @@
 package org.uniba.kobold.guiRef;
 
+import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.game.Game;
 import org.uniba.kobold.gui.GuiGenericButton;
 import org.uniba.kobold.gui.GuiObjectButton;
+import org.uniba.kobold.util.GameConverter;
 import org.uniba.kobold.util.ManageTimer;
 import org.uniba.kobold.util.GameSave;
 
@@ -29,11 +31,11 @@ public class GuiGameRef extends JPanel {
      * Creates new form containerPanel
      */
     public GuiGameRef(Game game) {
-        initComponents();
+        initComponents(game);
         ManageTimer.getInstance();
     }
 
-    private void initComponents() {
+    private void initComponents(Game game) {
         dialogPanel = new JPanel();
         dialogText = new JLabel();
         inventoryPanel = new JPanel();
@@ -92,14 +94,7 @@ public class GuiGameRef extends JPanel {
 
         //Setting the saveButton logic
         saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        saveButton.addActionListener(_ -> {
-            Object[] options = {"Sì", "No"};
-            int response = JOptionPane.showOptionDialog(null, "Vuoi salvare la partita?", "Conferma Salvataggio", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-            if (response == JOptionPane.YES_OPTION) {
-//                GameSave.save(Game.getPlayerName());
-                JOptionPane.showMessageDialog(null, "Partita salvata con successo!", "Salvataggio", JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
+        saveButton.addActionListener(_ -> this.saveGame(game));
 
         //Setting the menuButton logic
         menuButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -226,5 +221,15 @@ public class GuiGameRef extends JPanel {
                                         .addComponent(gamePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addComponent(dialogPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+    }
+    private void saveGame(Game game) {
+        Object[] options = {"Sì", "No"};
+        int response = JOptionPane.showOptionDialog(null, "Vuoi salvare la partita?", "Conferma Salvataggio", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+        if (response == JOptionPane.YES_OPTION) {
+            GameConverter.serialize(game, ManageTimer.getTime(), Inventory.getItems());
+
+            JOptionPane.showMessageDialog(null, "Partita salvata con successo!", "Salvataggio", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 }

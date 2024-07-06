@@ -41,7 +41,7 @@ public class GameConverter {
     public static void serialize(Game game, String time, Set<Item> items) {
         Gson gson = new Gson();
 
-        GameState gameState = new GameState(items, time, game.getCurrentRoom());
+        GameState gameState = new GameState(items, time, game.getCurrentRoom().getName());
         String json = gson.toJson(gameState);
         String filePath = "src/main/resources/saves/" + game.getPlayerName() + "-" + (GameSave.getNumberOfUserSave(game.getPlayerName()) + 1) + ".json";
 

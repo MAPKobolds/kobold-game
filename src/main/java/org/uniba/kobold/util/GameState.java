@@ -8,9 +8,9 @@ import java.util.Set;
 public class GameState {
     Set<Item> items;
     String timerState;
-    Room currentRoom;
+    String currentRoom;
 
-    public GameState(Set<Item> items, String timerState, Room currentRoom) {
+    public GameState(Set<Item> items, String timerState, String currentRoom) {
         this.items = items;
         this.timerState = timerState;
         this.currentRoom = currentRoom;
