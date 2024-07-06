@@ -5,5 +5,6 @@ public enum PagesEnum {
     NEW_GAME,
     GAME_SAVES,
     LOADING,
-    MENU
+    MENU,
+    EXIT
 }

@@ -104,6 +104,9 @@ public class GuiHubRef extends JFrame {
             case NEW_GAME:
                 GuiHubRef.switchPanel(new GuiGameRef(), page.name());
                 break;
+            case EXIT:
+                System.exit(0);
+                break;
         }
     }
 

@@ -108,7 +108,7 @@ public class GuiMenuRef extends JPanel {
         });
 
         //Exit button logic
-        exitButton.addActionListener(_ -> System.exit(0));
+        exitButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.EXIT));
         setLayout();
     }
 
