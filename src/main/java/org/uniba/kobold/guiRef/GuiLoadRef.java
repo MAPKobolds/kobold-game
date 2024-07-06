@@ -1,7 +1,6 @@
 package org.uniba.kobold.guiRef;
 
 import org.uniba.kobold.game.Game;
-import org.uniba.kobold.gui.GuiGenericButton;
 import org.uniba.kobold.util.*;
 import java.util.List;
 import javax.swing.*;

@@ -3,14 +3,11 @@ package org.uniba.kobold.guiRef;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.game.Game;
-import org.uniba.kobold.gui.GuiGenericButton;
-import org.uniba.kobold.gui.GuiObjectButton;
 import org.uniba.kobold.util.GameConverter;
 import org.uniba.kobold.util.ManageTimer;
-import org.uniba.kobold.util.GameSave;
-
 import javax.swing.*;
 import java.awt.*;
+
 public class GuiGameRef extends JPanel {
 
     private JPanel dialogPanel;

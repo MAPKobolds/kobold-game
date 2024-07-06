@@ -1,16 +1,11 @@
 package org.uniba.kobold.guiRef;
 
 import org.uniba.kobold.game.Game;
-import org.uniba.kobold.gui.GuiGenericButton;
 import org.uniba.kobold.util.BrowserNavigator;
-import org.uniba.kobold.util.SaveInstance;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Objects;
-
 
 public class GuiMenuRef extends JPanel {
     

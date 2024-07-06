@@ -1,7 +1,5 @@
 package org.uniba.kobold.guiRef;
 
-import org.uniba.kobold.gui.GuiGenericButton;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;

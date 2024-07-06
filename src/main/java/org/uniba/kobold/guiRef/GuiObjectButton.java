@@ -1,4 +1,4 @@
-package org.uniba.kobold.gui;
+package org.uniba.kobold.guiRef;
 
 import javax.swing.*;
 import java.awt.*;

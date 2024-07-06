@@ -52,8 +52,4 @@ public class GameSave {
         }
     }
 
-    public static void loadSave(GameSaveInstance save) {
-        Deserializer.loadFromJson("src/main/resources/saves/"
-                + save.getPlayerName() + "-" + save.getSaveCount() + ".json");
-    }
 }
