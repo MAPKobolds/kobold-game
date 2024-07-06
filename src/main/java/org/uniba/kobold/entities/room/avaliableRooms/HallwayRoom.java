@@ -1,8 +1,6 @@
 package org.uniba.kobold.entities.room.avaliableRooms;
 
-import org.uniba.kobold.entities.InteractionResult;
 import org.uniba.kobold.entities.character.availableCharacters.TwinGuards;
-import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.room.Room;
 import org.uniba.kobold.entities.room.RoomInteractionResult;
 import org.uniba.kobold.entities.room.RoomInteractionResultType;
@@ -40,42 +38,39 @@ public final class HallwayRoom extends Room {
             case "guarda davanti":
                 result.setSubject("Guardi davanti e vedi un gruppo di " + ColorText.setTextOrange("guardie") + ", forse ci dovresti parlare");
                 break;
+
             case "guarda dietro":
                 result.setSubject("Guardi dietro e vedi la "+ ColorText.setTextPurple("caverna") + " da cui sei arrivato");
                 break;
+
             case "guarda destra":
             case "guarda sinistra":
             case "guarda sopra":
                 result.setSubject("Una normale (Gauss shit) parete");
                 break;
+
             case "guarda giu":
                 result.setSubject("bel pavimento!");
                 break;
+
             case "parla guardie":
-                InteractionResult interactionResult = getCharacterByName("guardie").interact(Inventory.contains("mantello"));
-
-                if(interactionResult == InteractionResult.SUCCESSFUL) {
-                    result.setResultType(RoomInteractionResultType.UNLOCK);
-                    result.setSubject("taverna");
-                }
-
+                result.setSubject("guardie");
+                result.setResultType(RoomInteractionResultType.PLAY);
                 break;
                 
             case "vai taverna":
-
-                result.setResultType(RoomInteractionResultType.MOVE);
                 result.setSubject("taverna");
+                result.setResultType(RoomInteractionResultType.MOVE);
                 break;
 
             case "vai caverna":
-                result.setResultType(RoomInteractionResultType.MOVE);
                 result.setSubject("caverna");
+                result.setResultType(RoomInteractionResultType.MOVE);
                 break;
 
             default:
                 result.setResultType(RoomInteractionResultType.NOTHING);
         }
-
         return result;
     }
 

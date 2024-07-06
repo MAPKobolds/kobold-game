@@ -17,12 +17,12 @@ public final class SquareRoom extends Room {
 
     public SquareRoom() {
         super("spiazzale",
-                "Lo spiazzale si trova all'uscita del BAR ed è un posto di ritrovo dei coboldi, circondato da altri palazzi abitati da altri coboldi." +
+                "Lo spiazzale si trova all'uscita del BAR ed è un posto di ritrovo dei coboldi, circondato da altri palazzi abitati da altri coboldi.\n" +
                         "Di fronte a te noti dei cartelli che indicano dei luoghi di interesse: " +
-                        ColorText.setTextOrange("\nfucine") +
-                        ColorText.setTextOrange("\npiste") +
-                        ColorText.setTextOrange("\ngeneratore") +
-                        ColorText.setTextOrange("\npalazzo reale"),
+                        ColorText.setTextPurple("\nfucine") +
+                        ColorText.setTextPurple("\npiste") +
+                        ColorText.setTextPurple("\ngeneratore") +
+                        ColorText.setTextPurple("\npalazzo reale"),
                 new ImageIcon("/img/BR.png"),
                 List.of(),
                 List.of(),
@@ -42,8 +42,8 @@ public final class SquareRoom extends Room {
 
         switch (command.getCommand().getName()) {
             case "guarda davanti":
-                result.setSubject("Di fronte, oltre ai cartelli c'è l'entrata del " + ColorText.setTextOrange("palazzo")+". È protetta e chiusa, è impossibile" +
-                        ColorText.setTextBlue("entrarci, forse qualcosa di veloce la potrebbe sfondare"));
+                result.setSubject("Di fronte, oltre ai cartelli c'è l'entrata del " + ColorText.setTextPurple("palazzo\n")+". È protetta e chiusa, è impossibile entrarci, " +
+                        ColorText.setTextBlue("forse qualcosa di veloce la potrebbe sfondare"));
                 break;
             case "guarda dietro":
                 result.setSubject("Guardi dietro e vedi la " + ColorText.setTextOrange("taverna") + "da dove sei arrivato");
@@ -67,19 +67,18 @@ public final class SquareRoom extends Room {
             case "vai generatore":
                 result.setResultType(RoomInteractionResultType.MOVE);
                 result.setSubject(command.getCommand().getName().split(" ")[1]);
-
                 break;
 
             case "vai palazzo":
 
                 if (Inventory.contains("auto")) {
                     result.setResultType(RoomInteractionResultType.MOVE);
-                    result.setSubject("palazzo reale");
+                    result.setSubject("palazzo");
                 } else {
                     result.setResultType(RoomInteractionResultType.DESCRIPTION);
-                    result.setSubject("Il palazzo è chiuso, forse dovresti cercare qualcosa per sfondare il cancello");
+                    result.setSubject(ColorText.setTextRed("Il palazzo è chiuso, forse dovresti cercare qualcosa per sfondare il cancello"));
                 }
-
+            break;
             default:
                 result.setResultType(RoomInteractionResultType.NOTHING);
         }
