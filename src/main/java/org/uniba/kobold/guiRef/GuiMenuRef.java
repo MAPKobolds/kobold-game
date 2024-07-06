@@ -68,19 +68,28 @@ public class GuiMenuRef extends JPanel {
         //gameStartButton logic
         gameStartButton.addActionListener(_ -> {
             JTextField playerInput = new JTextField();
-            Object[] message = {
-                "Inserisci il nome del personaggio:", playerInput
-            };
+            Object[] message = { "Inserisci il nome del personaggio:", playerInput };
             int option = JOptionPane.showConfirmDialog(null, message, "Nome Personaggio", JOptionPane.OK_CANCEL_OPTION);
-            if (option == JOptionPane.OK_OPTION) {
-                String playerName = playerInput.getText();
-                if (playerName != null && !playerName.trim().isEmpty() && isPlayerNew(playerInput.getText())) {
-                    Game.setPlayerName(playerName);
-                    GuiHubRef.changeTo(PagesEnum.LOADING);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Nome non valido o gia' occupato.", "Errore", JOptionPane.ERROR_MESSAGE);
-                }
+
+            if (option != JOptionPane.OK_OPTION) {
+                return;
             }
+
+            String playerName = playerInput.getText().trim();
+
+            if (playerName.trim().isEmpty() || playerName.contains("-")) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Il nome non deve contenere '-' e deve avere almeno un carattere.",
+                        "Errore",
+                        JOptionPane.ERROR_MESSAGE
+                );
+
+                return;
+            }
+
+            Game.setPlayerName(playerName);
+            GuiHubRef.changeTo(PagesEnum.LOADING);
         });
 
         //loadGameButton logic
@@ -113,22 +122,6 @@ public class GuiMenuRef extends JPanel {
         ImageIcon backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource(BACKGROUND_PATH)));
         Image image = backgroundImage.getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-    }
-
-    /**
-     * Method to check if the player is new
-     * @param name the name of the player
-     * @return true if the player is new, false otherwise
-     */
-    private boolean isPlayerNew(String name) {
-        for (SaveInstance save : SaveInstance.getInstances()) {
-            String saveName = save.getSaveName();
-            saveName = saveName.substring(0, saveName.indexOf(" - "));
-            if (saveName.matches(name)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     private void setLayout() {
