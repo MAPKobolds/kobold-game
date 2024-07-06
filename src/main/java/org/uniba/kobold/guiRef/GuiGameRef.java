@@ -5,8 +5,7 @@ import org.uniba.kobold.game.Game;
 import org.uniba.kobold.gui.GuiGenericButton;
 import org.uniba.kobold.gui.GuiObjectButton;
 import org.uniba.kobold.util.ManageTimer;
-import org.uniba.kobold.util.SaveInstance;
-import org.uniba.kobold.util.Serializer;
+import org.uniba.kobold.util.GameSave;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +23,7 @@ public class GuiGameRef extends JPanel {
     private boolean isInventoryVisible;
     private static JLabel timerLabel;
     private static int inventoryCount = 0;
-    private final String backgroundPath = "/img/pporc.png";
+    private static final String BACKGROUND_PATH = "/img/pporc.png";
 
     /**
      * Creates new form containerPanel
@@ -37,7 +36,7 @@ public class GuiGameRef extends JPanel {
         dialogPanel = new JPanel();
         dialogText = new JLabel();
         inventoryPanel = new JPanel();
-        gamePanel = new GuiBackgroundRef(backgroundPath);
+        gamePanel = new GuiBackgroundRef(BACKGROUND_PATH);
         roomName = new JLabel();
         inputField = new JTextField();
         timerLabel = new JLabel();
@@ -97,9 +96,8 @@ public class GuiGameRef extends JPanel {
             Object[] options = {"Sì", "No"};
             int response = JOptionPane.showOptionDialog(null, "Vuoi salvare la partita?", "Conferma Salvataggio", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (response == JOptionPane.YES_OPTION) {
-                SaveInstance save = new SaveInstance(Game.getPlayerName());
+                GameSave.save(Game.getPlayerName());
                 JOptionPane.showMessageDialog(null, "Partita salvata con successo!", "Salvataggio", JOptionPane.INFORMATION_MESSAGE);
-                Serializer.saveToJson(save, save.getSaveName());
             }
         });
 
@@ -170,15 +168,20 @@ public class GuiGameRef extends JPanel {
         GroupLayout dialogPanelLayout = new GroupLayout(dialogPanel);
         dialogPanel.setLayout(dialogPanelLayout);
         dialogPanelLayout.setHorizontalGroup(
-                dialogPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                dialogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(dialogPanelLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(dialogText, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(inputField, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dialogText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addContainerGap())
         );
         dialogPanelLayout.setVerticalGroup(
-                dialogPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(dialogText, GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                dialogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(dialogText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(dialogPanelLayout.createSequentialGroup()
+                                .addComponent(inputField, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 119, Short.MAX_VALUE))
         );
 
         GroupLayout gamePanelLayout = new GroupLayout(gamePanel);

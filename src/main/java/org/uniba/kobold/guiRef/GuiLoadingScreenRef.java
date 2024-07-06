@@ -8,7 +8,7 @@ public class GuiLoadingScreenRef extends JPanel{
     /**
      * Attributes of the class GuiLoadingScreenRef
      */
-    private final String backgroundPath = "/img/pporc.png";
+    private static final String BACKGROUND_PATH = "/img/pporc.png";
     private JProgressBar progressBar;
 
     public GuiLoadingScreenRef() {
@@ -56,14 +56,12 @@ public class GuiLoadingScreenRef extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        ImageIcon backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource(backgroundPath)));
+        ImageIcon backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource(BACKGROUND_PATH)));
         Image image = backgroundImage.getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
     }
     
     private void setLayout() {
-        setPreferredSize(new java.awt.Dimension(1000, 675));
-
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -76,8 +74,8 @@ public class GuiLoadingScreenRef extends JPanel{
         layout.setVerticalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(502, Short.MAX_VALUE)
-                                .addComponent(progressBar, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(450, Short.MAX_VALUE)
+                                .addComponent(progressBar, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                                 .addGap(62, 62, 62))
         );
     }

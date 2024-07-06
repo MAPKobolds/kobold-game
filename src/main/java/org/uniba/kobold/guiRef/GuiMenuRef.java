@@ -2,7 +2,6 @@ package org.uniba.kobold.guiRef;
 
 import org.uniba.kobold.game.Game;
 import org.uniba.kobold.gui.GuiGenericButton;
-import org.uniba.kobold.gui.GuiLoadGame;
 import org.uniba.kobold.util.SaveInstance;
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +16,7 @@ public class GuiMenuRef extends JPanel {
     private JPanel buttonsContainer;
     private JButton loadButton;
     private JButton siteButton;
-    private final String backgroundPath = "/img/pporc.png";
+    private static final String BACKGROUND_PATH = "/img/pporc.png";
 
     /**
      * Constructor of the class GuiBackgroundPanel
@@ -84,7 +83,7 @@ public class GuiMenuRef extends JPanel {
 
         //loadGameButton logic
         loadButton.addActionListener(_ -> {
-            //TODO Switch panels
+            GuiHubRef.changeTo(PagesEnum.GAME_SAVES);
         });
 
         //CreditsButton logic
@@ -108,7 +107,7 @@ public class GuiMenuRef extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        ImageIcon backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource(backgroundPath)));
+        ImageIcon backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource(BACKGROUND_PATH)));
         Image image = backgroundImage.getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
     }

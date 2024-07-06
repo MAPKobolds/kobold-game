@@ -93,7 +93,7 @@ public class GuiHubRef extends JFrame {
                 GuiHubRef.switchPanel(new GuiCreditsRef(), page.name());
                 break;
             case GAME_SAVES:
-                GuiHubRef.switchPanel(new JPanel(), page.name());
+                GuiHubRef.switchPanel(new GuiLoadRef(), page.name());
                 break;
             case NEW_GAME:
                 GuiHubRef.switchPanel(new GuiGameRef(), page.name());

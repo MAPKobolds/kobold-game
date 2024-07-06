@@ -210,7 +210,7 @@ public class GuiLoadGame extends GuiAbstractPanel {
                 //loadInfoLabel settings
                 loadInfoLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 14));
                 loadInfoLabel.setForeground(Color.WHITE);
-                loadInfoLabel.setText(save.getSaveName() + " - " + save.getSaveDate());
+                loadInfoLabel.setText(save.getSaveName() + "-" + save.getSaveDate());
 
                 //Adding components to the panel
                 add(loadButton);

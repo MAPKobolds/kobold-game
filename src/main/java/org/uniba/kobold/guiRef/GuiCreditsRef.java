@@ -14,10 +14,10 @@ public class GuiCreditsRef extends JPanel {
     private JPanel sgaramellaPanel;
     private JPanel tokensPanel;
     private JPanel zippoPanel;
-    private static final String backgroundPath = "/img/pporc.png";
-    private static final String porcelliPath = "/img/PorcelliToken.png";
-    private static final String sgaramellaPath = "/img/SgaramellaToken.png";
-    private static final String zippoPath = "/img/ZippoToken.png";
+    private static final String BACKGROUND_PATH = "/img/pporc.png";
+    private static final String PORCELLI_PATH = "/img/PorcelliToken.png";
+    private static final String SGARAMELLA_PATH = "/img/SgaramellaToken.png";
+    private static final String ZIPPO_PATH = "/img/ZippoToken.png";
     
     /**
      * Creates new form GuiCreditsRef
@@ -28,9 +28,9 @@ public class GuiCreditsRef extends JPanel {
 
     private void initComponents() {
         tokensPanel = new JPanel();
-        porcelliPanel = new GuiBackgroundRef(porcelliPath);
-        sgaramellaPanel = new GuiBackgroundRef(sgaramellaPath);
-        zippoPanel = new GuiBackgroundRef(zippoPath);
+        porcelliPanel = new GuiBackgroundRef(PORCELLI_PATH);
+        sgaramellaPanel = new GuiBackgroundRef(SGARAMELLA_PATH);
+        zippoPanel = new GuiBackgroundRef(ZIPPO_PATH);
         creditsLabel = new JLabel();
         menuButton = new GuiGenericButton(
                 "Menu",
@@ -50,7 +50,7 @@ public class GuiCreditsRef extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Image image = new ImageIcon(Objects.requireNonNull(getClass().getResource(backgroundPath))).getImage();
+        Image image = new ImageIcon(Objects.requireNonNull(getClass().getResource(BACKGROUND_PATH))).getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
     }
 
@@ -130,8 +130,8 @@ public class GuiCreditsRef extends JPanel {
                                 .addGap(70, 70, 70))
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(231, 231, 231)
-                                .addComponent(menuButton, GroupLayout.PREFERRED_SIZE, 530, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(239, Short.MAX_VALUE))
+                                .addComponent(menuButton, GroupLayout.PREFERRED_SIZE, 530, Short.MAX_VALUE)
+                                .addContainerGap(239, 239))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
