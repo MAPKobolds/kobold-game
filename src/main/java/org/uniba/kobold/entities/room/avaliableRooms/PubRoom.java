@@ -26,7 +26,7 @@ public final class PubRoom extends Room {
                     new Command("vai spiazzale", Set.of("muoviti")),
                     new Command("gioca blackjack", Set.of("gioca","blackjack", "carte")),
                     new Command("vai caverna", Set.of("caverna")),
-                    new Command("parla barista", Set.of("parla","barista"))
+                    new Command("parla barista", Set.of("barista"))
                 )
         );
     }
