@@ -66,31 +66,7 @@ public class GuiMenuRef extends JPanel {
         ).getButton();
 
         //gameStartButton logic
-        gameStartButton.addActionListener(_ -> {
-            JTextField playerInput = new JTextField();
-            Object[] message = { "Inserisci il nome del personaggio:", playerInput };
-            int option = JOptionPane.showConfirmDialog(null, message, "Nome Personaggio", JOptionPane.OK_CANCEL_OPTION);
-
-            if (option != JOptionPane.OK_OPTION) {
-                return;
-            }
-
-            String playerName = playerInput.getText().trim();
-
-            if (playerName.trim().isEmpty() || playerName.contains("-")) {
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Il nome non deve contenere '-' e deve avere almeno un carattere.",
-                        "Errore",
-                        JOptionPane.ERROR_MESSAGE
-                );
-
-                return;
-            }
-
-            Game.setPlayerName(playerName);
-            GuiHubRef.changeTo(PagesEnum.LOADING);
-        });
+        gameStartButton.addActionListener(_ -> this.createNewGame());
 
         //loadGameButton logic
         loadButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.GAME_SAVES));
@@ -99,16 +75,11 @@ public class GuiMenuRef extends JPanel {
         creditsButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.ACKNOWLEDGEMENT));
 
         //SiteButton logic
-        siteButton.addActionListener(_ -> {
-            try {
-                BrowserNavigator.goToSite("http://localhost:4200");
-            } catch (Error e) {
-                JOptionPane.showMessageDialog(null, "Non posso aprire il browser.", "Errore", JOptionPane.ERROR_MESSAGE);
-            }
-        });
+        siteButton.addActionListener(_ -> goToAppSite());
 
         //Exit button logic
         exitButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.EXIT));
+
         setLayout();
     }
 
@@ -171,6 +142,47 @@ public class GuiMenuRef extends JPanel {
                                 .addComponent(buttonsContainer, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(53, 53, 53))
         );
+    }
+
+    private void goToAppSite() {
+        try {
+            BrowserNavigator.goToSite("http://localhost:4200");
+        } catch (Error e) {
+            JOptionPane.showMessageDialog(null, "Non posso aprire il browser.", "Errore", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void createNewGame() {
+        JTextField playerInput = new JTextField();
+        Object[] message = { "Inserisci il nome del personaggio:", playerInput };
+        int option = JOptionPane.showConfirmDialog(null, message, "Nome Personaggio", JOptionPane.OK_CANCEL_OPTION);
+
+        if (option != JOptionPane.OK_OPTION) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Impossibile aprire la finestra di dialogo.",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE
+            );
+
+            return;
+        }
+
+        String playerName = playerInput.getText().trim();
+
+        if (playerName.isEmpty() || playerName.contains("-")) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Il nome non deve contenere '-' e deve avere almeno un carattere.",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE
+            );
+
+            return;
+        }
+
+        Game.setPlayerName(playerName);
+        GuiHubRef.changeTo(PagesEnum.LOADING);
     }
 
 }
