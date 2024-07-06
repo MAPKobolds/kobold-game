@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Set;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
+import org.uniba.kobold.game.Game;
+import org.uniba.kobold.guiRef.GuiHubRef;
+import org.uniba.kobold.guiRef.PagesEnum;
 
 
 /**
@@ -60,6 +63,8 @@ public class Deserializer {
             GameState gameState = gson.fromJson(json, GameState.class);
 
             //Extract items and timer state and sets them
+            new Game();
+            GuiHubRef.changeTo(PagesEnum.LOADING);
             Set<Item> items = gameState.items;
             String timerState = gameState.timerState;
             Inventory.setItems(items);

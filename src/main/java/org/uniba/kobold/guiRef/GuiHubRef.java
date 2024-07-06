@@ -7,6 +7,7 @@ import java.net.URL;
 
 public class GuiHubRef extends JFrame {
 
+    private static GuiHubRef instance;
     private static JPanel masterPanel;
     private static JToggleButton muteMusicButton;
     private static JToolBar toolBar;
@@ -15,7 +16,12 @@ public class GuiHubRef extends JFrame {
 
 
     public GuiHubRef() {
+        instance = this;
         initComponents();
+    }
+
+    public static boolean isGuiActive() {
+        return instance != null;
     }
 
     private void initComponents() {

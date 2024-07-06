@@ -1,8 +1,12 @@
 package org.uniba.kobold.guiRef;
 
+import org.uniba.kobold.game.Game;
 import org.uniba.kobold.gui.GuiGenericButton;
+import org.uniba.kobold.gui.GuiHub;
 import org.uniba.kobold.util.GameSave;
 import org.uniba.kobold.util.GameSaveInstance;
+import org.uniba.kobold.util.SaveInstance;
+
 import java.util.List;
 
 import javax.swing.*;
@@ -84,8 +88,7 @@ public class GuiLoadRef extends JPanel {
             int response = JOptionPane.showOptionDialog(null, "Vuoi caricare questo salvataggio?",
                     "Carica", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (response == JOptionPane.YES_OPTION) {
-                //TODO: Deserializzare gameState
-                GuiHubRef.changeTo(PagesEnum.NEW_GAME);
+                startLoadingScreen(save);
             }
         });
 
@@ -123,12 +126,27 @@ public class GuiLoadRef extends JPanel {
         return savePanel;
     }
 
+    private static void startLoadingScreen(GameSaveInstance save) {
+        CardLayout loadingScreen = (CardLayout) GuiHub.masterPanel.getLayout();
+        loadingScreen.show(GuiHub.masterPanel, "LoadingScreen");
+        SwingUtilities.invokeLater(() -> onLoadingComplete(save));
+    }
+
+    private static void onLoadingComplete(GameSaveInstance save) {
+        try {
+            GameSave.loadSave(save);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Image image = new ImageIcon(Objects.requireNonNull(getClass().getResource(BACKGROUND_PATH))).getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
     }
+
 
     private void setLayout() {
         scroller.setViewportView(savesContainer);

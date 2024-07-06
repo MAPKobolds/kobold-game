@@ -30,6 +30,7 @@ public class GuiGameRef extends JPanel {
      */
     public GuiGameRef() {
         initComponents();
+        ManageTimer.getInstance();
     }
 
     private void initComponents() {
@@ -41,7 +42,6 @@ public class GuiGameRef extends JPanel {
         inputField = new JTextField();
         timerLabel = new JLabel();
 
-        ManageTimer.getInstance();
         inventoryPanel.setLayout(new GridBagLayout());
         setBackground(Color.BLACK);
 
@@ -108,13 +108,15 @@ public class GuiGameRef extends JPanel {
             int response = JOptionPane.showOptionDialog(null, "Vuoi davvero abbandonare senza salvare?", "Torna al Menu", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (response == JOptionPane.YES_OPTION) {
                 GuiHubRef.setNormalToolbar();
-                GuiHubRef.changeTo(PagesEnum.MENU);
                 ManageTimer.resetTimer();
+                GuiHubRef.changeTo(PagesEnum.MENU);
             }
         });
 
         dialogPanel.setBackground(new Color(40, 0, 5));
-        GuiHubRef.setGameToolbar(timerLabel, saveButton, menuButton, toggleInventoryButton);
+        if (GuiHubRef.isGuiActive()) {
+            GuiHubRef.setGameToolbar(timerLabel, saveButton, menuButton, toggleInventoryButton);
+        }
         setLayout();
     }
 

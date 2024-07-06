@@ -76,8 +76,6 @@ public class GuiMenuRef extends JPanel {
                 } else {
                     JOptionPane.showMessageDialog(null, "Nome non valido o gia' occupato.", "Errore", JOptionPane.ERROR_MESSAGE);
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Nuova partita annullata.", "Annullato", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
