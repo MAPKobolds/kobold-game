@@ -2,9 +2,13 @@ package org.uniba.kobold.guiRef;
 
 import org.uniba.kobold.game.Game;
 import org.uniba.kobold.gui.GuiGenericButton;
+import org.uniba.kobold.util.BrowserNavigator;
 import org.uniba.kobold.util.SaveInstance;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Objects;
 
 
@@ -62,22 +66,7 @@ public class GuiMenuRef extends JPanel {
         ).getButton();
 
         //gameStartButton logic
-        gameStartButton.addActionListener(_ -> {
-            JTextField playerInput = new JTextField();
-            Object[] message = {
-                    "Inserisci il nome del personaggio:", playerInput
-            };
-            int option = JOptionPane.showConfirmDialog(null, message, "Nome Personaggio", JOptionPane.OK_CANCEL_OPTION);
-            if (option == JOptionPane.OK_OPTION) {
-                String playerName = playerInput.getText();
-                if (playerName != null && !playerName.trim().isEmpty() && isPlayerNew(playerInput.getText())) {
-                    Game.setPlayerName(playerName);
-                    GuiHubRef.changeTo(PagesEnum.LOADING);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Nome non valido o gia' occupato.", "Errore", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
+        gameStartButton.addActionListener(_ -> this.createNewGame());
 
         //loadGameButton logic
         loadButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.GAME_SAVES));
@@ -86,11 +75,11 @@ public class GuiMenuRef extends JPanel {
         creditsButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.ACKNOWLEDGEMENT));
 
         //SiteButton logic
-        siteButton.addActionListener(_ -> {
-        });
+        siteButton.addActionListener(_ -> goToAppSite());
 
         //Exit button logic
-        exitButton.addActionListener(_ -> System.exit(0));
+        exitButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.EXIT));
+
         setLayout();
     }
 
@@ -104,22 +93,6 @@ public class GuiMenuRef extends JPanel {
         ImageIcon backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource(BACKGROUND_PATH)));
         Image image = backgroundImage.getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-    }
-
-    /**
-     * Method to check if the player is new
-     * @param name the name of the player
-     * @return true if the player is new, false otherwise
-     */
-    private boolean isPlayerNew(String name) {
-        for (SaveInstance save : SaveInstance.getInstances()) {
-            String saveName = save.getSaveName();
-            saveName = saveName.substring(0, saveName.indexOf(" - "));
-            if (saveName.matches(name)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     private void setLayout() {
@@ -170,4 +143,46 @@ public class GuiMenuRef extends JPanel {
                                 .addGap(53, 53, 53))
         );
     }
+
+    private void goToAppSite() {
+        try {
+            BrowserNavigator.goToSite("http://localhost:4200");
+        } catch (Error e) {
+            JOptionPane.showMessageDialog(null, "Non posso aprire il browser.", "Errore", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void createNewGame() {
+        JTextField playerInput = new JTextField();
+        Object[] message = { "Inserisci il nome del personaggio:", playerInput };
+        int option = JOptionPane.showConfirmDialog(null, message, "Nome Personaggio", JOptionPane.OK_CANCEL_OPTION);
+
+        if (option != JOptionPane.OK_OPTION) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Impossibile aprire la finestra di dialogo.",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE
+            );
+
+            return;
+        }
+
+        String playerName = playerInput.getText().trim();
+
+        if (playerName.isEmpty() || playerName.contains("-")) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Il nome non deve contenere '-' e deve avere almeno un carattere.",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE
+            );
+
+            return;
+        }
+
+        Game.setPlayerName(playerName);
+        GuiHubRef.changeTo(PagesEnum.LOADING);
+    }
+
 }

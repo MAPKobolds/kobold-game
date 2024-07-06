@@ -46,6 +46,7 @@ public class GuiLoadRef extends JPanel {
         scroller.setBorder(null);
         scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
         initSaves();
         setLayout();
     }
@@ -53,6 +54,7 @@ public class GuiLoadRef extends JPanel {
     private void initSaves() {
         List<GameSaveInstance> saves = GameSave.getSavingName();
         savesContainer.setLayout(new BoxLayout(savesContainer, BoxLayout.Y_AXIS));
+        savesContainer.removeAll();
 
         for(GameSaveInstance save : saves) {
             JPanel savePanel = createSavePanel(save);
@@ -62,7 +64,7 @@ public class GuiLoadRef extends JPanel {
         savesContainer.repaint();
     }
 
-    public static JPanel createSavePanel(GameSaveInstance save) {
+    private JPanel createSavePanel(GameSaveInstance save) {
         JPanel savePanel = new JPanel(new BorderLayout());
         savePanel.setBackground(new Color(40, 0, 5));
         savePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -83,31 +85,16 @@ public class GuiLoadRef extends JPanel {
         JLabel loadInfoLabel = new JLabel();
 
         //loadButton logic
-        loadButton.addActionListener(_ -> {
-            Object[] options = {"Sì", "No"};
-            int response = JOptionPane.showOptionDialog(null, "Vuoi caricare questo salvataggio?",
-                    "Carica", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-            if (response == JOptionPane.YES_OPTION) {
-                startLoadingScreen(save);
-            }
-        });
+        loadButton.addActionListener(_ -> this.loadScreen(save));
 
         //deleteButton settings
         deleteButton.addActionListener(_ -> {
-            Object[] options = {"Sì", "No"};
-            int response = JOptionPane.showOptionDialog(null, "Vuoi eliminare questo salvataggio?",
-                    "Elimina", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-            if (response == JOptionPane.YES_OPTION) {
-                try {
-                    GameSave.deleteSave(save);
-                    JOptionPane.showMessageDialog(null, "File cancellato correttamente",
-                            "Conferma", JOptionPane.INFORMATION_MESSAGE);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                savesContainer.remove(savePanel);
-                savesContainer.revalidate();
-                savesContainer.repaint();
+            try {
+                this.deleteGame(save);
+
+                this.initSaves();
+            } catch (Error e) {
+                System.err.println(e.getMessage());
             }
         });
 
@@ -147,7 +134,6 @@ public class GuiLoadRef extends JPanel {
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
     }
 
-
     private void setLayout() {
         scroller.setViewportView(savesContainer);
         scrollContainer.add(scroller);
@@ -174,5 +160,51 @@ public class GuiLoadRef extends JPanel {
                                 .addComponent(menuButton, GroupLayout.DEFAULT_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                                 .addGap(31, 31, 31))
         );
+    }
+
+    private void deleteGame(GameSaveInstance save) {
+        Object[] options = {"Sì", "No"};
+        int response = JOptionPane.showOptionDialog(
+                null,
+                "Vuoi eliminare questo salvataggio?",
+                "Elimina",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+
+        if (response != JOptionPane.YES_OPTION) {
+            throw new Error("Cannot open dialog");
+        }
+
+        try {
+            GameSave.deleteSave(save);
+            JOptionPane.showMessageDialog(null, "File cancellato correttamente",
+                    "Conferma", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            throw new Error("Cannot delete file");
+        }
+    }
+
+    private void loadScreen(GameSaveInstance save) {
+        Object[] options = {"Sì", "No"};
+        int response = JOptionPane.showOptionDialog(
+                null,
+                "Vuoi caricare questo salvataggio?",
+                "Carica",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+
+        if (response == JOptionPane.YES_OPTION) {
+            startLoadingScreen(save);
+        } else {
+            throw new Error("Cannot open dialog");
+        }
     }
 }
