@@ -74,8 +74,8 @@ public class GuiGameRef extends JPanel {
         inputField.addActionListener(_ -> {
             String userInput = inputField.getText();
             inputField.setText("");
-            //TODO: metodo input
 
+            game.executeCommand(userInput);
         });
 
         //Setting the timerLabel

@@ -17,11 +17,15 @@ public class GameState {
         this.roomsMap = roomsMap;
     }
 
+    public Inventory getInventory() {
+        return inventory;
+    }
+
     public String getDate() {
         return date;
     }
 
-    public RoomsMap getCurrentRoom() {
+    public RoomsMap getRoomsMap() {
         return roomsMap;
     }
 }

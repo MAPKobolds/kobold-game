@@ -16,6 +16,7 @@ public class Game {
     private final Parser parser;
     private RoomsMap roomPath;
     private String playerName;
+    private ToGui toGui = new ToGui();
 
     public Game(String playerName) throws IOException {
         this.playerName = playerName;
@@ -30,7 +31,6 @@ public class Game {
         PalaceEntryRoom r8 = new PalaceEntryRoom();
         ThroneRoom r9 = new ThroneRoom();
         //TODO: Qui per output in gui
-        ToGui toGui = new ToGui();
 
         parser = new Parser(ParserUtils.loadFileListInSet(new File("src/main/resources/stopwords.txt")));
         roomPath = new RoomsMap(Arrays.asList(
@@ -63,8 +63,15 @@ public class Game {
         ));
 
         //TODO: Qui per output in gui
-        toGui.updateLabel(r1.getDescription());
-        System.out.println(roomPath.getCurrentRoom().getDescription());
+        this.printAndConsole(this.roomPath.getCurrentRoom().getDescription());
+    }
+
+    public Game(String playerName, RoomsMap roomPath) throws IOException {
+        parser = new Parser(ParserUtils.loadFileListInSet(new File("src/main/resources/stopwords.txt")));
+        this.playerName = playerName;
+        this.roomPath = roomPath;
+
+        this.printAndConsole(this.roomPath.getCurrentRoom().getDescription());
     }
 
     public void executeCommand(String command) {
@@ -85,15 +92,15 @@ public class Game {
         RoomInteractionResult result = roomPath.getCurrentRoom().executeCommand(parsedCommand);
 
         switch (result.getResultType()) {
-            case DESCRIPTION -> System.out.println(result.getSubject());
+            case DESCRIPTION -> this.printAndConsole(result.getSubject());
             case UNLOCK -> this.roomPath.unlockPath(result.getSubject());
             case ADD_ITEM -> {
-                System.out.println(result.getSubject());
+                this.printAndConsole(result.getSubject());
                 Inventory.addPiece((Item) result.getArgument());
             }
             case MOVE -> {
                 roomPath.moveTo(result.getSubject());
-                System.out.println(roomPath.getCurrentRoom().getDescription());
+                this.printAndConsole(roomPath.getCurrentRoom().getDescription());
             }
         }
     }
@@ -104,5 +111,10 @@ public class Game {
 
     public RoomsMap getCurrentRoomMap() {
         return roomPath;
+    }
+
+    private void printAndConsole(String string) {
+        toGui.updateLabel(string);
+        System.out.println(roomPath.getCurrentRoom().getDescription());
     }
 }

@@ -1,5 +1,6 @@
 package org.uniba.kobold.guiRef;
 
+import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.game.Game;
 import org.uniba.kobold.util.*;
 import java.util.List;
@@ -190,9 +191,9 @@ public class GuiLoadRef extends JPanel {
 
         if (response == JOptionPane.YES_OPTION) {
             GameState g = GameConverter.deserialize(save.getFilePath());
+            Inventory.setInventory(g.getInventory());
 
-
-            GuiHubRef.changeTo(PagesEnum.NEW_GAME, new Game("CIAO"));
+            GuiHubRef.changeTo(PagesEnum.NEW_GAME, new Game(save.getPlayerName(), g.getRoomsMap()));
         } else {
             throw new Error("Cannot open dialog");
         }
