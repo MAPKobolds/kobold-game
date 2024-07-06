@@ -4,7 +4,6 @@ import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.game.Game;
 import org.uniba.kobold.util.ManageTimer;
 import org.uniba.kobold.util.SaveInstance;
-import org.uniba.kobold.util.Serializer;
 import org.uniba.kobold.util.UtilMusic;
 import javax.swing.*;
 import java.awt.*;
@@ -170,21 +169,18 @@ public class GuiGame extends JPanel {
     }
 
     public void addItem(Item item) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                for (Component component : inventoryPanel.getComponents()) {
-                    if (component instanceof GuiObjectButton) {
-                        GuiObjectButton itemButton = (GuiObjectButton) component;
-                        if (temporaryItemName.equals(itemButton.getText())) {
-                            itemButton.setName(item.getName());
-                            itemButton.updateImage(item.getImage());
-                            itemButton.setVisible(true);
-                            setButtonAction(item, itemButton);
-                            inventoryPanel.revalidate();
-                            inventoryPanel.repaint();
-                            break;
-                        }
+        SwingUtilities.invokeLater(() -> {
+            for (Component component : inventoryPanel.getComponents()) {
+                if (component instanceof GuiObjectButton) {
+                    GuiObjectButton itemButton = (GuiObjectButton) component;
+                    if (temporaryItemName.equals(itemButton.getText())) {
+                        itemButton.setName(item.getName());
+                        itemButton.updateImage(item.getImage());
+                        itemButton.setVisible(true);
+                        setButtonAction(item, itemButton);
+                        inventoryPanel.revalidate();
+                        inventoryPanel.repaint();
+                        break;
                     }
                 }
             }

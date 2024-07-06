@@ -14,9 +14,6 @@ public class GuiLoadRef extends JPanel {
 
     private static final String BACKGROUND_PATH = "/img/pporc.png";
     private JPanel scrollContainer;
-    private JPanel jPanel3;
-    private JPanel jPanel4;
-    private JPanel jPanel5;
     private JButton menuButton;
     private static JPanel savesContainer;
     private JScrollPane scroller;
@@ -29,9 +26,6 @@ public class GuiLoadRef extends JPanel {
         scrollContainer = new JPanel();
         scroller = new JScrollPane();
         savesContainer = new JPanel();
-        jPanel3 = new JPanel();
-        jPanel4 = new JPanel();
-        jPanel5 = new JPanel();
         menuButton = new GuiGenericButton(
         "Torna al Menu",
                 new Color(40, 0, 5),

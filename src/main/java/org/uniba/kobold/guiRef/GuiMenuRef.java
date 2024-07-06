@@ -82,14 +82,10 @@ public class GuiMenuRef extends JPanel {
         });
 
         //loadGameButton logic
-        loadButton.addActionListener(_ -> {
-            GuiHubRef.changeTo(PagesEnum.GAME_SAVES);
-        });
+        loadButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.GAME_SAVES));
 
         //CreditsButton logic
-        creditsButton.addActionListener(_ -> {
-            GuiHubRef.changeTo(PagesEnum.ACKNOWLEDGEMENT);
-        });
+        creditsButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.ACKNOWLEDGEMENT));
 
         //SiteButton logic
         siteButton.addActionListener(_ -> {
