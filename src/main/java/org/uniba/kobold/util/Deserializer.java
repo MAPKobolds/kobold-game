@@ -18,6 +18,7 @@ import org.uniba.kobold.guiRef.PagesEnum;
 /**
  * Deserializer class to deserialize the JSON file
  */
+@Deprecated()
 public class Deserializer {
 
     /**

@@ -4,11 +4,10 @@ import com.google.gson.Gson;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.game.Game;
-import org.uniba.kobold.guiRef.GuiHubRef;
-import org.uniba.kobold.guiRef.PagesEnum;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Set;
 
@@ -18,21 +17,13 @@ public class GameConverter {
      * itemsFromJSON method to take items from JSON and fill the Inventory
      * @param filePath the path of the file
      */
-    public static void deserialize(String filePath) {
+    public static GameState deserialize(Path filePath) {
         try {
-            String json = new String(Files.readAllBytes(Paths.get(filePath)));
+            String json = new String(Files.readAllBytes(filePath));
             Gson gson = new Gson();
 
             //Deserialize the JSON file
-            GameState gameState = gson.fromJson(json, GameState.class);
-
-            //Extract items and timer state and sets them
-
-            Set<Item> items = gameState.items;
-            String timerState = gameState.timerState;
-            Inventory.setItems(items);
-
-            ManageTimer.getInstance().loadTimer(timerState);
+            return gson.fromJson(json, GameState.class);
         } catch (IOException e) {
             throw new RuntimeException("Error during JSON reading", e);
         }

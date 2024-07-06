@@ -16,6 +16,7 @@ import java.util.HashMap;
  * SaveInstance class to save instances of the game
 
  */
+@Deprecated()
 public class SaveInstance {
 
     /**

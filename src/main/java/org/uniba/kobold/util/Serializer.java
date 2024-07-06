@@ -17,6 +17,7 @@ import javax.swing.*;
 /**
  * Serializer class to serialize the JSON file
  */
+@Deprecated()
 public class Serializer {
 
 }

@@ -10,38 +10,24 @@ public class GameSaveInstance {
     private int saveCount;
     private String saveDate;
 
-    public GameSaveInstance(String playerName, int saveCount) {
+    public GameSaveInstance(String playerName, int saveCount, String saveDate) {
         if (saveCount < 0) {
             throw new IllegalArgumentException("Save count cannot be negative");
         }
 
         this.playerName = playerName;
         this.saveCount = saveCount;
-        setSaveDate(new Date());
+        this.saveDate = saveDate;
     }
 
     public int getSaveCount() {
         return saveCount;
     }
-
-    public void setSaveCount(int saveCount) {
-        this.saveCount = saveCount;
-    }
-
-    public void setSaveDate(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        saveDate = formatter.format(date);
-    }
-
     public String getSaveDate() {
         return this.saveDate;
     }
     public String getPlayerName() {
         return playerName;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
     }
 
     @Override
