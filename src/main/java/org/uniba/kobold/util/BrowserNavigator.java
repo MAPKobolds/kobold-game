@@ -9,7 +9,7 @@ public class BrowserNavigator {
     public static void goToSite(String url) {
         try {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                Desktop.getDesktop().browse(new URI("http://localhost:4200"));
+                Desktop.getDesktop().browse(new URI(url));
             }
         } catch (URISyntaxException | IOException e) {
             throw new Error("Cannot go to the browser");
