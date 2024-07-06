@@ -13,12 +13,10 @@ public class Tester {
         Game game = new Game();
 
         Inventory.addMoney(800);
-        game.executeCommand("prendi mantello");
-        game.executeCommand("vai corridoio");
-        game.executeCommand("parla guardie");
-        game.executeCommand("vai taverna");
-        game.executeCommand("vai spiazzale");
-        game.executeCommand("vai fucine");
+        Inventory.addPiece(new SteeringWheel());
+        Inventory.addPiece(new CarBody());
+        Inventory.addPiece(new Engine());
+
 
         while (true) {
             String input = System.console().readLine();
