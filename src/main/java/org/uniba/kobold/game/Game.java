@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 public class Game {
     private final Parser parser;
@@ -49,7 +48,7 @@ public class Game {
                         Pair.with(r5, true),
                         Pair.with(r6, true),
                         Pair.with(r7, true),
-                        Pair.with(r8, false)
+                        Pair.with(r8, true)
                     )
                 )),
                 Pair.with(r5, new RoomPath(List.of(Pair.with(r4, true)))),
@@ -67,16 +66,19 @@ public class Game {
     public void executeCommand(String command) {
         Room currentRoom = roomPath.getCurrentRoom();
 
+        List<Item> items = new ArrayList<>(Inventory.getInventory());
+        items.addAll(currentRoom.getItems());
+
         ParserOutput parsedCommand = parser.parse(
             command,
             (currentGame != null) ? currentGame.getCommands() : currentRoom.getCommands(),
-            currentRoom.getItems(),
-            currentRoom.getItems()
-        );
+                items,
+                currentRoom.getItems()
+            );
+
 
         if (parsedCommand == null || parsedCommand.getCommand() == null) {
             System.out.print("Cosa vuoi fare non sto capendo?\n");
-
             return;
         }
 
@@ -95,6 +97,7 @@ public class Game {
     }
 
     private void manageMiniGameInteraction(MiniGameInteraction result) {
+
         System.out.println(result.getInfo());
         MiniGameInteractionType type = result.getType();
 
@@ -103,6 +106,10 @@ public class Game {
         }
         if (result.getType() == MiniGameInteractionType.WIN || result.getType() == MiniGameInteractionType.WIN_AND_EXIT) {
             Inventory.addPiece((Item) result.getResult());
+        }
+        if (result.getType() == MiniGameInteractionType.UNLOCK) {
+            roomPath.unlockPath(result.getResult().toString());
+            currentGame = null;
         }
     }
 
@@ -126,8 +133,12 @@ public class Game {
             case PLAY -> {
                 switch (result.getSubject()) {
                     case "blackjack" -> currentGame = new BlackJackControl();
+                    case "cassiera" -> currentGame = new CashierControl();
+                    case "guardie" -> currentGame = new TwinGuardsControl();
+                    case "trivia" -> currentGame = new TriviaControl();
                     case "barman" -> currentGame = new BarManControl();
                     case "rullo" -> currentGame = new SeekerGameControl();
+                    case "re" -> currentGame = new KingKoboldControl();
                 }
                 System.out.println(currentGame.getDescription());
             }
