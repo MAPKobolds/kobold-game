@@ -13,7 +13,6 @@ public class TriviaChecker {
 
         quiz = TriviaService.getTrivia();
         isCorrect = new int[quiz.getResults().size()];
-        System.out.println(quiz);
     }
 
     public String[] getQuestions() {
