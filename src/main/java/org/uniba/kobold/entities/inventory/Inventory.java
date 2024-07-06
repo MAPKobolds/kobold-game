@@ -1,8 +1,7 @@
 package org.uniba.kobold.entities.inventory;
 
-import org.uniba.kobold.entities.inventory.availableItems.Bill;
-
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Inventory {
@@ -33,13 +32,8 @@ public class Inventory {
         items.add(item);
     }
 
-    public static void removePiece(Item item) {
-        for (Item i : items) {
-            if (i.equals(item)) {
-                items.remove(i);
-                break;
-            }
-        }
+    public static void removePiece(String name) {
+        items.removeIf(i -> ((Item) i).getName().equals(name));
     }
 
     public static boolean contains(String name) {
@@ -50,15 +44,7 @@ public class Inventory {
         return items;
     }
 
-    public static boolean findCurrency(int value) {
-        boolean found = false;
-        for (Item item : items) {
-            if (item instanceof Bill){
-                if (((Bill) item).getValue() == value) {
-                    found = true;
-                }
-            }
-        }
-        return found;
+    public static List<Item> getInventory() {
+        return List.copyOf(items);
     }
 }
