@@ -220,7 +220,7 @@ public class GuiGame extends JPanel {
     }
 
     public static void setDialogLabel(String message) {
-        dialogText.setText("<html>" + message + "<html>");
+        dialogText.setText("<html>" + message + "</html>");
     }
 
     /**
@@ -235,7 +235,7 @@ public class GuiGame extends JPanel {
                     //TODO: Interaction with the item
                     updateGamePanel("/img/modricBR.png");
                 } else if (e.getClickCount() == 1) {
-                    dialogText.setText("<html>" + item.getDescription() + "<html>");
+                    dialogText.setText("<html>" + item.getDescription() + "</html>");
                 }
             }
         });
