@@ -23,7 +23,8 @@ abstract public class Room {
         new Command("guarda sopra", Set.of("sopra", "alto", "cielo", "testa", "su" , "guarda su" , "guarda sopra" , "guarda alto" , "guarda cielo" , "guarda testa")),
         new Command("guarda destra", Set.of("destra", "dx", "lato destro" , "guarda destra" , "guarda dx" , "guarda lato destro")),
         new Command("guarda sinistra", Set.of("sinistra", "sx", "lato sinistro", "guarda sinistra" , "guarda sx" , "guarda lato sinistro")),
-        new Command("ispeziona", Set.of("esamina"))
+        new Command("ispeziona", Set.of("esamina")),
+        new Command("prendi", Set.of("raccogli", "acquisisci", "prendere", "raccogliere", "acquisire"))
     ));
 
     public Room(String name, String description, ImageIcon backgroundImage, List<Item> items, List<Character> charactersList, List<Command> commands) {
@@ -93,8 +94,7 @@ abstract public class Room {
     }
 
     public RoomInteractionResult generalCommands(ParserOutput command){
-        return switch (command.getCommand().getName())
-        {
+        return switch (command.getCommand().getName()) {
             case "ispeziona" -> ispeziona(command);
             case "prendi" -> prendi(command);
             default -> executeCommand(command);
