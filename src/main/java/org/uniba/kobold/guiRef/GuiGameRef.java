@@ -96,7 +96,7 @@ public class GuiGameRef extends JPanel {
             Object[] options = {"Sì", "No"};
             int response = JOptionPane.showOptionDialog(null, "Vuoi salvare la partita?", "Conferma Salvataggio", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (response == JOptionPane.YES_OPTION) {
-                GameSave.save(Game.getPlayerName());
+//                GameSave.save(Game.getPlayerName());
                 JOptionPane.showMessageDialog(null, "Partita salvata con successo!", "Salvataggio", JOptionPane.INFORMATION_MESSAGE);
             }
         });

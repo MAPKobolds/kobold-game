@@ -123,7 +123,7 @@ public class GuiGame extends JPanel {
             Object[] options = {"Sì", "No"};
             int response = JOptionPane.showOptionDialog(null, "Vuoi salvare la partita?", "Conferma Salvataggio", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (response == JOptionPane.YES_OPTION) {
-                SaveInstance save = new SaveInstance(Game.getPlayerName());
+//                SaveInstance save = new SaveInstance(Game.getPlayerName());
                 JOptionPane.showMessageDialog(null, "Partita salvata con successo!", "Salvataggio", JOptionPane.INFORMATION_MESSAGE);
                 //TODO: Ref gui consequence
                 // Serializer.saveToJson(save, save.getSaveName());

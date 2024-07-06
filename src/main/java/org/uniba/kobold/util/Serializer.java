@@ -19,28 +19,4 @@ import javax.swing.*;
  */
 public class Serializer {
 
-    /**
-     * Set of items possessed by the player
-     */
-    private static final Set<Item> possessedItems = Inventory.getItems();
-
-    /**
-     * Method to save the game to a json file
-     * @param save the instance of the game
-     * @param fileName the path of the file
-     */
-    public static void saveToJson(GameSaveInstance save, String fileName) {
-        Gson gson = new Gson();
-
-        String timerState = ManageTimer.getTime();
-        GameState gameState = new GameState(possessedItems, timerState);
-        String json = gson.toJson(gameState);
-        String filePath = "src/main/resources/saves/" + fileName + "-" + save.getSaveCount() + ".json";
-
-        try {
-            Files.write(Paths.get(filePath), json.getBytes());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

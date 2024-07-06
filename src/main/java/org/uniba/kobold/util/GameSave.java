@@ -52,12 +52,6 @@ public class GameSave {
         }
     }
 
-    public static void save(String name) {
-        int newNumberOfUserSave = getNumberOfUserSave(name) + 1;
-
-        Serializer.saveToJson(new GameSaveInstance(name, newNumberOfUserSave), name);
-    }
-
     public static void loadSave(GameSaveInstance save) {
         Deserializer.loadFromJson("src/main/resources/saves/"
                 + save.getPlayerName() + "-" + save.getSaveCount() + ".json");

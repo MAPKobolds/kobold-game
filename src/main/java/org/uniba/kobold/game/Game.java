@@ -108,7 +108,7 @@ public class Game {
         return instance;
     }
 
-    public static String getPlayerName() {
+    public String getPlayerName() {
         return playerName;
     }
 
@@ -118,5 +118,9 @@ public class Game {
      */
     public static void setPlayerName(String name) {
         playerName = name;
+    }
+
+    public Room getCurrentRoom() {
+        return roomPath.getCurrentRoom();
     }
 }
