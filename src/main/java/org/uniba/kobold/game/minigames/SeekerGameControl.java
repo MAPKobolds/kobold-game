@@ -2,7 +2,7 @@ package org.uniba.kobold.game.minigames;
 
 import org.javatuples.Pair;
 import org.uniba.kobold.entities.inventory.Item;
-import org.uniba.kobold.entities.inventory.availableItems.Bill;
+import org.uniba.kobold.entities.inventory.availableItems.CarBody;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 import org.uniba.kobold.util.ColorText;
@@ -14,20 +14,21 @@ import java.util.Set;
 public class SeekerGameControl extends MiniGame {
     private int currentItemIndex = 0;
     private int itemsToFindCount;
-    private List<Pair<Boolean, Item>> itemList = new ArrayList<>();
+    private final List<Pair<Boolean, Item>> itemList = new ArrayList<>();
 
     public SeekerGameControl() {
         List<Pair<Boolean, Item>> items = List.of(
-            Pair.with(true, new Item("Chiave", Set.of("chiave"),"Una chiave di ferro", "/img/BR.png")),
-            Pair.with(false, new Item("Pietra", Set.of("pietra"),"Una pietra", "/img/BR.png")),
+            Pair.with(true, new Item("Portelle Destre", Set.of("portelle dx"),"delle portelle", "/img/BR.png")),
+            Pair.with(true, new Item("Portelle Sinistre", Set.of("portelle sx"),"delle portelle", "/img/BR.png")),
             Pair.with(false, new Item("Bottiglia", Set.of("bottiglia"),"Una bottiglia di vetro", "/img/BR.png")),
             Pair.with(false, new Item("Ciondolo", Set.of("ciondolo"),"Un ciondolo d'oro", "/img/BR.png")),
             Pair.with(false, new Item("Anello", Set.of("anello"),"Un anello di diamanti", "/img/BR.png")),
             Pair.with(false, new Item("Orologio", Set.of("orologio"),"Un orologio da polso", "/img/BR.png")),
-            Pair.with(false, new Item("Portafoglio", Set.of("portafoglio"),"Un portafoglio di pelle", "/img/BR.png")),
+            Pair.with(true, new Item("Scheletro auto", Set.of("scheletro auto"),"Lo scheletro di un auto", "/img/BR.png")),
             Pair.with(false, new Item("Occhiali", Set.of("occhiali"),"Un paio di occhiali da sole", "/img/BR.png")),
             Pair.with(false, new Item("Cappello", Set.of("cappello"),"Un cappello di lana", "/img/BR.png")),
-            Pair.with(false, new Item("Sciarpa", Set.of("sciarpa"),"Una sciarpa di seta", "/img/BR.png"))
+            Pair.with(false, new Item("Sciarpa", Set.of("sciarpa"),"Una sciarpa di seta", "/img/BR.png")),
+            Pair.with(true, new Item("cofano", Set.of("cofano"),"Il cofano della tua auto", "/img/BR.png"))
         );
 
         itemsToFindCount = (int) items.stream().filter(object -> object.getValue0()).count();
@@ -109,9 +110,7 @@ public class SeekerGameControl extends MiniGame {
             if (this.isGameFinished()) {
                 interaction.setInfo("L'hai preso! Ora hai collezzionato tutti i pezzi!!");
                 interaction.setType(MiniGameInteractionType.WIN_AND_EXIT);
-
-                //TODO: REPLACE WITH CAR'S PART
-                interaction.setResult(new Bill(20));
+                interaction.setResult(new CarBody());
             } else {
                 interaction.setInfo("Hai trovato un pezzo, te ne mancano " + itemsToFindCount);
             }

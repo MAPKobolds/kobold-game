@@ -2,6 +2,7 @@ package org.uniba.kobold.game.minigames;
 
 import org.uniba.kobold.api.error.*;
 import org.uniba.kobold.api.trivia.TriviaChecker;
+import org.uniba.kobold.entities.inventory.availableItems.Engine;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 
@@ -61,7 +62,8 @@ public class TriviaControl extends MiniGame{
             if (triviaChecker.isCorrect(round, answerIndex)) {
 
                 if (score == 2) {
-                    result.setInfo("Hai vinto il gioco");
+                    result.setInfo("Il direttore ti vede con ammirazione e poichè non lo pagano abbastanza ti consegna un motore nuovo di zecca!");
+                    result.setResult(new Engine());
                     result.setType(MiniGameInteractionType.WIN);
                 } else {
                     String ToSend = "Risposta corretta" + "\n" + questions[round];
