@@ -10,7 +10,7 @@ public class Tester {
 
     public static void main(String[] args) throws IOException {
 
-        Game game = new Game();
+        Game game = new Game("Paolo");
 
         Inventory.addMoney(800);
         Inventory.addPiece(new SteeringWheel());

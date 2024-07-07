@@ -20,7 +20,7 @@ public final class StartingRoom extends Room {
         super("caverna",
             "Ti svegli in una caverna buia, non ricordi come ci sei arrivato, ma senti un forte dolore alla testa.\n" +
                     "Guardandoti intorno è buio pesto, senti qualcosa di appiccicoso " + ColorText.setTextBlue("sotto") +" di te.\n",
-            new ImageIcon("/img/BR.png"),
+            "/img/BR.png",
                 List.of(new Cloak()),
             Arrays.asList(
                 new Command("vai corridoio", Set.of("muoviti")),

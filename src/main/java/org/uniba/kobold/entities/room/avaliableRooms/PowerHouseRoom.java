@@ -19,7 +19,7 @@ public final class PowerHouseRoom extends Room {
                 "L'edificio contenente il generatore è il più pulito e ordinato di questo inferno.\nSu tutte le pareti sono stati piazzati dei motori di autovetture " +
                         "che producono energia. \n" +
                         "L'unico essere in questo posto, seduto ad una scrivania è un coboldo,\nsembra dirigere questo posto dal suo computer è " + ColorText.setTextBlue("davanti") + " a te",
-                new ImageIcon("/img/BR.png"),
+                "/img/BR.png",
                 List.of(),
                 List.of(
                         new Command("vai spiazzale", Set.of("muoviti")),

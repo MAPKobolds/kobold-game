@@ -20,7 +20,7 @@ public final class PalaceEntryRoom extends Room {
         super("palazzo",
                 "Dopo aver sfondato il cancello del palazzo hai ucciso numerose guardie, nonostante ciò la macchina è integra.\n" +
                         "Il corridoio è illuminato da torce, in fondo puoi vedere in lontananza \nIl " + ColorText.setTextPurple("trono") + " del re coboldo",
-                new ImageIcon("/img/BR.png"),
+                "/img/BR.png",
                 List.of(new FireMaul()),
                 Arrays.asList(
                     new Command("vai spiazzale", Set.of("muoviti")),

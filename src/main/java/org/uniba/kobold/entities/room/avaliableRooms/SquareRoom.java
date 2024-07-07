@@ -23,7 +23,7 @@ public final class SquareRoom extends Room {
                         ColorText.setTextPurple("\npiste") +
                         ColorText.setTextPurple("\ngeneratore") +
                         ColorText.setTextPurple("\npalazzo reale"),
-                new ImageIcon("/img/BR.png"),
+                "/img/BR.png",
                 List.of(),
                 Arrays.asList(
                     new Command("vai taverna", Set.of("taverna")),

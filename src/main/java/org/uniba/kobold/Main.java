@@ -14,8 +14,6 @@ public class Main {
         WebServerSocket.startServerA();
         WebServerSocket.startServerB();
 
-        Tester.main(args);
-
         EventQueue.invokeLater(() -> new GuiHubRef().setVisible(true));
     }
 }
