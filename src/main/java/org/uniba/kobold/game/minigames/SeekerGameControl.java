@@ -110,7 +110,7 @@ public class SeekerGameControl extends MiniGame {
 
             if (this.isGameFinished()) {
                 interaction.setInfo("L'hai preso! Ora hai collezionato tutti i pezzi!!");
-                interaction.setType(MiniGameInteractionType.WIN_AND_EXIT);
+                interaction.setType(MiniGameInteractionType.WIN);
                 interaction.setResult(new CarBody());
             } else {
                 interaction.setInfo("Hai trovato un pezzo, te ne mancano " + itemsToFindCount);

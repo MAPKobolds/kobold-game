@@ -53,40 +53,41 @@ public class TriviaControl extends MiniGame{
                 result.setType(MiniGameInteractionType.EXIT);
             }
         }
+        if (answerIndex == -1) {
+            result.setInfo("Non ho capito la tua risposta, riprova");
+            return result;
+        }else {
+            if (round >= 5) {
+                result.setInfo("Non abbiamo così tante domande ,_,");
+                result.setType(MiniGameInteractionType.EXIT);
+            } else {
+                round+=1;
+                if (triviaChecker.isCorrect(round - 1, answerIndex)) {
 
-        if ( round >= 5 ){
-            result.setInfo("Non abbiamo così tante domande ,_,");
-            result.setType(MiniGameInteractionType.EXIT);
-        } else {
+                    if (score == 2) {
+                        result.setInfo("Il direttore ti vede con ammirazione e poichè non lo pagano abbastanza ti consegna un " + ColorText.setTextGreen("motore") + " nuovo di zecca!");
+                        result.setResult(new Engine());
+                        result.setType(MiniGameInteractionType.WIN);
+                    } else {
+                        String ToSend = ColorText.setTextGreen("Risposta corretta") + "\n" + questions[round];
 
-            round++;
+                        for (int i = 0; i < answers.get(round).size(); i++) {
+                            ToSend += "\n" + ColorText.setTextBlue((i + 1) + ") ") + answers.get(round).get(i);
+                        }
 
-            if (triviaChecker.isCorrect(round, answerIndex)) {
+                        result.setInfo(ToSend);
 
-                if (score == 2) {
-                    result.setInfo("Il direttore ti vede con ammirazione e poichè non lo pagano abbastanza ti consegna un "+ ColorText.setTextGreen("motore") +" nuovo di zecca!");
-                    result.setResult(new Engine());
-                    result.setType(MiniGameInteractionType.WIN);
+                        score++;
+                    }
                 } else {
-                    String ToSend = ColorText.setTextGreen("Risposta corretta") + "\n" + questions[round];
+                    String ToSend = ColorText.setTextRed("Risposta sbagliata") + "\n" + questions[round];
 
                     for (int i = 0; i < answers.get(round).size(); i++) {
                         ToSend += "\n" + ColorText.setTextBlue((i + 1) + ") ") + answers.get(round).get(i);
                     }
 
                     result.setInfo(ToSend);
-
-                    score++;
                 }
-
-            } else {
-                String ToSend = ColorText.setTextRed("Risposta sbagliata") + "\n" + questions[round];
-
-                for (int i = 0; i < answers.get(round).size(); i++) {
-                    ToSend += "\n" + ColorText.setTextBlue((i + 1) + ") ") + answers.get(round).get(i);
-                }
-
-                result.setInfo(ToSend);
             }
         }
 
