@@ -121,17 +121,19 @@ public class Game {
         System.out.println(result.getInfo());
         MiniGameInteractionType type = result.getType();
 
-        if (result.getType() == MiniGameInteractionType.EXIT || result.getType() == MiniGameInteractionType.WIN_AND_EXIT) {
+        if (       result.getType() == MiniGameInteractionType.EXIT
+                || result.getType() == MiniGameInteractionType.WIN
+                || result.getType() == MiniGameInteractionType.UNLOCK
+        ) {
             currentGame = null;
         }
 
-        if (result.getType() == MiniGameInteractionType.WIN || result.getType() == MiniGameInteractionType.WIN_AND_EXIT) {
+        if (result.getType() == MiniGameInteractionType.WIN) {
             inventory.addPiece((Item) result.getResult());
         }
 
         if (result.getType() == MiniGameInteractionType.UNLOCK) {
             roomPath.unlockPath(result.getResult().toString());
-            currentGame = null;
         }
     }
 
@@ -139,7 +141,10 @@ public class Game {
         switch (result.getResultType()) {
             case NOTHING -> this.printAndConsole("Non posso fare nulla");
             case DESCRIPTION -> this.printAndConsole(result.getSubject());
-            case UNLOCK -> this.roomPath.unlockPath(result.getSubject());
+            case UNLOCK -> {
+                this.printAndConsole( "hai sbloccato il percorso per " +ColorText.setTextPurple( result.getSubject()));
+                this.roomPath.unlockPath(result.getSubject());
+            }
             case ADD_ITEM -> {
                 System.out.println(result.getSubject());
                 inventory.addPiece((Item) result.getArgument());
