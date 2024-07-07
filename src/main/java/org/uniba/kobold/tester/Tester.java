@@ -12,11 +12,6 @@ public class Tester {
 
         Game game = new Game("Paolo");
 
-//        Inventory.addMoney(800);
-//        Inventory.addPiece(new SteeringWheel());
-//        Inventory.addPiece(new CarBody());
-//        Inventory.addPiece(new Engine());
-
 
         while (true) {
             String input = System.console().readLine();

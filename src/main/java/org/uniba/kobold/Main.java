@@ -10,10 +10,12 @@ import java.awt.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Server.startServer();
+        /*Server.startServer();
         WebServerSocket.startServerA();
         WebServerSocket.startServerB();
 
-        EventQueue.invokeLater(() -> new GuiHubRef().setVisible(true));
+        EventQueue.invokeLater(() -> new GuiHubRef().setVisible(true));*/
+
+        Tester.main(args);
     }
 }

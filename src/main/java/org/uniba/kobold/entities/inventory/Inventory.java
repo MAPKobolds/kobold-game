@@ -1,5 +1,6 @@
 package org.uniba.kobold.entities.inventory;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,7 +10,7 @@ public class Inventory {
     private int money = 0;
 
     public Inventory(List<Item> items, int money) {
-        items.addAll(items);
+        this.items.addAll(items);
         this.money = money;
     }
 

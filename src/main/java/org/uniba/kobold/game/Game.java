@@ -25,14 +25,14 @@ public class Game {
     private final Parser parser;
     private RoomsMap roomPath;
     private String playerName;
-    private ToGui toGui = new ToGui();
+    //private ToGui toGui = new ToGui();
     private MiniGame currentGame = null;
     private Inventory inventory;
 
-    public Game(String playerName) throws IOException {
+    public Game(String playerName ) throws IOException {
         this.timeManager = new TimeManager();
         this.playerName = playerName;
-        this.inventory = new Inventory(List.of(new Car()), 400);
+        this.inventory = new Inventory(List.of(new Car()), 800);
 
         StartingRoom r1 = new StartingRoom();
         HallwayRoom r2 = new HallwayRoom();
@@ -179,8 +179,12 @@ public class Game {
         return timeManager;
     }
 
-    private void printAndConsole(String string) {
-        toGui.updateLabel(string);
-        System.out.println(roomPath.getCurrentRoom().getDescription());
+    private void printAndConsole(String arg) {
+        //toGui.updateLabel(string);
+        System.out.println(arg);
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 }

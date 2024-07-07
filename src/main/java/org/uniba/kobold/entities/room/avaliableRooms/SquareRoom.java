@@ -30,7 +30,8 @@ public final class SquareRoom extends Room {
                     new Command("vai fucine", Set.of("fucine")),
                     new Command("vai circuito", Set.of("vai piste","piste")),
                     new Command("vai palazzo", Set.of("vai palazzo reale","palazzo reale","palazzo")),
-                    new Command("vai generatore", Set.of("vai generatore","generatore"))
+                    new Command("vai generatore", Set.of("vai generatore","generatore")),
+                    new Command("sfonda cancello", Set.of("sfonda cancello"))
                 )
         );
     }
