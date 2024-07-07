@@ -5,55 +5,48 @@ import java.util.List;
 import java.util.Set;
 
 public class Inventory {
-    private static Inventory instance;
-    private static final Set<Item> items = new HashSet<>();
-    private static int money = 0;
+    private final Set<Item> items = new HashSet<>();
+    private int money = 0;
 
-    public static Inventory getInstance() {
-        if (instance == null) {
-            instance = new Inventory();
-        }
-        return instance;
+    public Inventory(List<Item> items, int money) {
+        items.addAll(items);
+        this.money = money;
     }
 
-    public static void addMoney(int value) {
-        money += value;
+    public void addMoney(int value) {
+        this.money += value;
     }
 
-    public static void removeMoney(int value) {
-        money -= value;
+    public void removeMoney(int value) {
+        this.money -= value;
     }
 
-    public static int getMoney() {
-        return money;
+    public int getMoney() {
+        return this.money;
     }
     
-    public static void addPiece(Item item) {
-        items.add(item);
+    public void addPiece(Item item) {
+        this.items.add(item);
     }
 
-    public static void removePiece(String name) {
-        items.removeIf(i -> ((Item) i).getName().equals(name));
+    public void removePiece(String name) {
+        this.items.removeIf(i -> ((Item) i).getName().equals(name));
     }
 
-    public static boolean contains(String name) {
-        return items.stream().anyMatch(i -> ((Item) i).getName().equals(name));
+    public boolean contains(String name) {
+        return this.items.stream().anyMatch(i -> ((Item) i).getName().equals(name));
     }
 
-    public static void setInventory(Inventory inventory) {
-        Inventory.instance = inventory;
+    public void setItems(Set<Item> deserializedItems) {
+        this.items.clear();
+        deserializedItems.forEach(this::addPiece);
     }
 
-    public static void setItems(Set<Item> deserializedItems) {
-        items.clear();
-        deserializedItems.forEach(Inventory::addPiece);
+    public Set<Item> getItems() {
+        return this.items;
     }
 
-    public static Set<Item> getItems() {
-        return items;
-    }
-
-    public static List<Item> getInventory() {
-        return List.copyOf(items);
+    public List<Item> getInventory() {
+        return List.copyOf(this.items);
     }
 }

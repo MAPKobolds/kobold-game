@@ -1,8 +1,10 @@
 package org.uniba.kobold.entities.room.avaliableRooms;
 
+import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.room.Room;
 import org.uniba.kobold.entities.room.RoomInteractionResult;
 import org.uniba.kobold.entities.room.RoomInteractionResultType;
+import org.uniba.kobold.game.minigames.MiniGameInteraction;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 import org.uniba.kobold.util.ColorText;
@@ -28,7 +30,7 @@ public final class HallwayRoom extends Room {
     }
 
     @Override
-    public RoomInteractionResult executeCommand(ParserOutput command) {
+    public RoomInteractionResult executeCommand(ParserOutput command, Inventory inventory) {
         RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
 
         switch (command.getCommand().getName()) {

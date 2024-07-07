@@ -50,7 +50,7 @@ public class KingKoboldControl extends MiniGame {
     }
 
     @Override
-    public MiniGameInteraction play(ParserOutput output) {
+    public MiniGameInteraction play(ParserOutput output, Inventory inventory) {
         MiniGameInteraction interaction = new MiniGameInteraction(
                 ColorText.setTextBlue("Cosa vuoi fare?"),
                 null,
@@ -102,7 +102,7 @@ public class KingKoboldControl extends MiniGame {
             }
 
             case "3" -> {
-                if (Inventory.contains("GinMoncello")) {
+                if (inventory.contains("GinMoncello")) {
                     interaction.setInfo("Il Re Coboldo ti guarda e ti chiede di bere con lui il GinMoncello ma dopo che lui ha bevuto tutto il GinMoncello cade nel sonno profondo\n");
                     interaction.setType(MiniGameInteractionType.INFO);
                     options.addAll(List.of(ColorText.setTextGreen("5) uccidi il Re Coboldo e prendi il suo trono"),ColorText.setTextGreen( "6) scappa via\n")));
@@ -123,7 +123,7 @@ public class KingKoboldControl extends MiniGame {
                     fourthQ = true;
 
                 }else{
-                    if (Inventory.contains("maglio")) {
+                    if (inventory.contains("maglio")) {
                         interaction.setInfo(ColorText.setTextGreen("Cerignolus brucia e tu scappi via\n"));
                         interaction.setType(MiniGameInteractionType.EXIT);
                     } else {

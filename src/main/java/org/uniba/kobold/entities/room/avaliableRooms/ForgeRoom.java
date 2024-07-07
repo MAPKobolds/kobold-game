@@ -31,7 +31,7 @@ public final class ForgeRoom extends Room {
     }
 
     @Override
-    public RoomInteractionResult executeCommand(ParserOutput command) {
+    public RoomInteractionResult executeCommand(ParserOutput command, Inventory inventory) {
         RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
 
         switch (command.getCommand().getName()) {
@@ -56,7 +56,7 @@ public final class ForgeRoom extends Room {
                 result.setSubject("spiazzale");
                 break;
             case "guarda rullo":
-                if (!Inventory.contains("carrozzeria")){
+                if (!inventory.contains("carrozzeria")){
                     result.setSubject("rullo");
                     result.setResultType(RoomInteractionResultType.PLAY);
                 } else {
@@ -67,11 +67,11 @@ public final class ForgeRoom extends Room {
                 result.setSubject("Vedi una grande forgia, potresti creare qualcosa di utile, c'è scritto che per "+ ColorText.setTextBlue("usa") +"rla devi avere tutti i pezzi necessari per creare un'auto : " + ColorText.setTextGreen("carrozzeria motore  volante"));
                 break;
             case "usa forgia":
-                if (Inventory.contains("carrozzeria") && Inventory.contains("motore") && Inventory.contains("volante")){
-                    Inventory.removePiece("carrozzeria");
-                    Inventory.removePiece("motore");
-                    Inventory.removePiece("volante");
-                    Inventory.addPiece(new Car());
+                if (inventory.contains("carrozzeria") && inventory.contains("motore") && inventory.contains("volante")){
+                    inventory.removePiece("carrozzeria");
+                    inventory.removePiece("motore");
+                    inventory.removePiece("volante");
+                    inventory.addPiece(new Car());
                     result.setSubject("Hai creato la tua " + ColorText.setTextGreen("auto") + "!");
                 } else {
                     result.setSubject(ColorText.setTextRed("Non hai tutti i pezzi necessari per creare un auto"));

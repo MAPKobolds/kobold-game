@@ -191,7 +191,7 @@ public class GuiLoadRef extends JPanel {
 
         if (response == JOptionPane.YES_OPTION) {
             GameState g = GameConverter.deserialize(save.getFilePath());
-            Inventory.setInventory(g.getInventory());
+//            Inventory.setInventory(g.getInventory());
 
             GuiHubRef.changeTo(PagesEnum.NEW_GAME, new Game(save.getPlayerName(), g.getRoomsMap(), g.getTimer(), g.getInventory()));
         }

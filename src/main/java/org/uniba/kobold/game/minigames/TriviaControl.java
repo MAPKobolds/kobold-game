@@ -2,6 +2,7 @@ package org.uniba.kobold.game.minigames;
 
 import org.uniba.kobold.api.error.*;
 import org.uniba.kobold.api.trivia.TriviaChecker;
+import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.availableItems.Engine;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
@@ -38,7 +39,7 @@ public class TriviaControl extends MiniGame{
     }
 
     @Override
-    public MiniGameInteraction play(ParserOutput output) {
+    public MiniGameInteraction play(ParserOutput output, Inventory inventory) {
         MiniGameInteraction result = new MiniGameInteraction("dummy", null , MiniGameInteractionType.INFO);
         int answerIndex = -1;
 

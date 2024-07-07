@@ -4,6 +4,7 @@ import org.javatuples.Pair;
 import org.uniba.kobold.api.error.*;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
+import org.uniba.kobold.entities.inventory.availableItems.Car;
 import org.uniba.kobold.entities.room.*;
 import org.uniba.kobold.entities.room.avaliableRooms.*;
 import org.uniba.kobold.errors.RoomNotAccessibleError;
@@ -26,10 +27,12 @@ public class Game {
     private String playerName;
     private ToGui toGui = new ToGui();
     private MiniGame currentGame = null;
+    private Inventory inventory;
 
     public Game(String playerName) throws IOException {
         this.timeManager = new TimeManager();
         this.playerName = playerName;
+        this.inventory = new Inventory(List.of(new Car()), 400);
 
         StartingRoom r1 = new StartingRoom();
         HallwayRoom r2 = new HallwayRoom();
@@ -75,7 +78,7 @@ public class Game {
         parser = new Parser(ParserUtils.loadFileListInSet(new File("src/main/resources/stopwords.txt")));
         this.playerName = playerName;
         this.roomPath = roomPath;
-        Inventory.setInventory(inventory);
+        this.inventory = inventory;
 
         this.printAndConsole(this.roomPath.getCurrentRoom().getDescription());
     }
@@ -83,7 +86,7 @@ public class Game {
     public void executeCommand(String command) {
         Room currentRoom = roomPath.getCurrentRoom();
 
-        List<Item> items = new ArrayList<>(Inventory.getInventory());
+        List<Item> items = new ArrayList<>(inventory.getItems().stream().toList());
         items.addAll(currentRoom.getItems());
 
         ParserOutput parsedCommand = parser.parse(
@@ -100,14 +103,14 @@ public class Game {
         }
 
         if (currentGame == null) {
-            RoomInteractionResult result = roomPath.getCurrentRoom().generalCommands(parsedCommand);
+            RoomInteractionResult result = roomPath.getCurrentRoom().generalCommands(parsedCommand, inventory);
             try {
                 manageRoomInteraction(result);
             } catch (HttpInternalServerErrorException | HttpNotFoundException | HttpUnavailableException | HttpBadRequestException | HttpForbiddenException e) {
                 e.printStackTrace();
             }
         } else {
-           MiniGameInteraction result = currentGame.play(parsedCommand);
+           MiniGameInteraction result = currentGame.play(parsedCommand, inventory);
            manageMiniGameInteraction(result);
         }
         System.out.println();
@@ -123,7 +126,7 @@ public class Game {
         }
 
         if (result.getType() == MiniGameInteractionType.WIN || result.getType() == MiniGameInteractionType.WIN_AND_EXIT) {
-            Inventory.addPiece((Item) result.getResult());
+            inventory.addPiece((Item) result.getResult());
         }
 
         if (result.getType() == MiniGameInteractionType.UNLOCK) {
@@ -139,7 +142,7 @@ public class Game {
             case UNLOCK -> this.roomPath.unlockPath(result.getSubject());
             case ADD_ITEM -> {
                 System.out.println(result.getSubject());
-                Inventory.addPiece((Item) result.getArgument());
+                inventory.addPiece((Item) result.getArgument());
             }
             case MOVE -> {
                 try {

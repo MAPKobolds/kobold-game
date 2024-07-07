@@ -1,5 +1,6 @@
 package org.uniba.kobold.entities.room.avaliableRooms;
 
+import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.room.Room;
 import org.uniba.kobold.entities.room.RoomInteractionResult;
 import org.uniba.kobold.entities.room.RoomInteractionResultType;
@@ -26,7 +27,7 @@ public final class CircuitRoom extends Room {
     }
 
     @Override
-    public RoomInteractionResult executeCommand(ParserOutput command) {
+    public RoomInteractionResult executeCommand(ParserOutput command, Inventory inventory) {
         RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
 
         switch (command.getCommand().getName()) {

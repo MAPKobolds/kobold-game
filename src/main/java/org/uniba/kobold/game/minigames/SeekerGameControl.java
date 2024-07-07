@@ -1,6 +1,7 @@
 package org.uniba.kobold.game.minigames;
 
 import org.javatuples.Pair;
+import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.entities.inventory.availableItems.CarBody;
 import org.uniba.kobold.parser.ParserOutput;
@@ -123,7 +124,7 @@ public class SeekerGameControl extends MiniGame {
     }
 
     @Override
-    public MiniGameInteraction play(ParserOutput output) {
+    public MiniGameInteraction play(ParserOutput output, Inventory inventory) {
         MiniGameInteraction interaction = new MiniGameInteraction(
             "Utilizza i comandi disponibili",
             null,

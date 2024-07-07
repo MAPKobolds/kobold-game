@@ -36,7 +36,7 @@ public final class SquareRoom extends Room {
     }
 
     @Override
-    public RoomInteractionResult executeCommand(ParserOutput command) {
+    public RoomInteractionResult executeCommand(ParserOutput command, Inventory inventory) {
         RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
 
         switch (command.getCommand().getName()) {
@@ -69,7 +69,7 @@ public final class SquareRoom extends Room {
                 break;
 
             case "sfonda cancello":
-                if (Inventory.contains("auto")) {
+                if (inventory.contains("auto")) {
                     result.setResultType(RoomInteractionResultType.UNLOCK);
                     result.setSubject("palazzo");
                 } else {
@@ -80,7 +80,7 @@ public final class SquareRoom extends Room {
 
             case "vai palazzo":
 
-                if (Inventory.contains("auto")) {
+                if (inventory.contains("auto")) {
                     result.setResultType(RoomInteractionResultType.MOVE);
                     result.setSubject("palazzo");
                 } else {

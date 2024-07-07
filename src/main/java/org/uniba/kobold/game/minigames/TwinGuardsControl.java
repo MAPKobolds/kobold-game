@@ -17,7 +17,7 @@ public class TwinGuardsControl extends MiniGame{
         this.commands.add(new Command("2", Set.of("Andare via")));
     }
     @Override
-    public MiniGameInteraction play(ParserOutput output) {
+    public MiniGameInteraction play(ParserOutput output, Inventory inventory) {
         MiniGameInteraction interaction = new MiniGameInteraction(
                 "I due guardiani ti guardano male e ti respingono\n",
                 null,
@@ -26,7 +26,7 @@ public class TwinGuardsControl extends MiniGame{
 
         switch (output.getCommand().getName() ) {
             case "1":
-                if (Inventory.contains("mantello")){
+                if (inventory.contains("mantello")){
                     interaction.setInfo("I due guardiani ti guardano e ti fanno passare, non sospetta nulla, adesso puoi accedere alla " + ColorText.setTextPurple("taverna"));
                     interaction.setResult("taverna");
                     interaction.setType(MiniGameInteractionType.UNLOCK);

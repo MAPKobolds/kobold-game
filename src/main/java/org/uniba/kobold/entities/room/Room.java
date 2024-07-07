@@ -52,10 +52,10 @@ abstract public class Room {
         return commands;
     }
 
-    public RoomInteractionResult ispeziona (ParserOutput command) {
+    public RoomInteractionResult ispeziona (ParserOutput command, Inventory inventory) {
         RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
         if (command.getItem() != null) {
-            if (Inventory.contains(command.getItem().getName()))
+            if (inventory.contains(command.getItem().getName()))
                 result.setSubject(command.getItem().getDescription());
             else {
                 result.setSubject("Non hai questo oggetto");
@@ -66,11 +66,11 @@ abstract public class Room {
         return result;
     }
 
-    public RoomInteractionResult prendi (ParserOutput command){
+    public RoomInteractionResult prendi (ParserOutput command, Inventory inventory){
         RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
         if (command.getItem() != null) {
-            if (items.contains(command.getItem()) && !Inventory.contains(command.getItem().getName())) {
-                Inventory.addPiece(command.getItem());
+            if (items.contains(command.getItem()) && !inventory.contains(command.getItem().getName())) {
+                inventory.addPiece(command.getItem());
                 result.setSubject("Hai preso " + ColorText.setTextGreen(command.getItem().getName()));
             } else {
                 result.setSubject("Non c'è nessun " + ColorText.setTextGreen(command.getItem().getName()) + " qui");
@@ -81,13 +81,13 @@ abstract public class Room {
         return result;
     }
 
-    public RoomInteractionResult generalCommands(ParserOutput command){
+    public RoomInteractionResult generalCommands(ParserOutput command, Inventory inventory){
         return switch (command.getCommand().getName()) {
-            case "ispeziona" -> ispeziona(command);
-            case "prendi" -> prendi(command);
-            default -> executeCommand(command);
+            case "ispeziona" -> ispeziona(command, inventory);
+            case "prendi" -> prendi(command, inventory);
+            default -> executeCommand(command, inventory);
         };
     }
 
-    public abstract RoomInteractionResult executeCommand(ParserOutput command);
+    public abstract RoomInteractionResult executeCommand(ParserOutput command, Inventory inventory);
 }

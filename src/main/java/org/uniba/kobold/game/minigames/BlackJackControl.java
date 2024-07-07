@@ -41,7 +41,7 @@ public class BlackJackControl extends MiniGame{
     }
 
     @Override
-    public MiniGameInteraction play(ParserOutput output) {
+    public MiniGameInteraction play(ParserOutput output, Inventory inventory) {
 
         MiniGameInteraction interaction = new MiniGameInteraction(
                 "Stanno succedendo cose strane",
@@ -57,7 +57,7 @@ public class BlackJackControl extends MiniGame{
                             blackjackChecker.playRound();
                             if (blackjackChecker.getHandValue(blackjackChecker.getPlayerHand()) == 21) {
                                 hasBet = false;
-                                Inventory.addMoney(scommettitedMoney);
+                                inventory.addMoney(scommettitedMoney);
 
                                 interaction = new MiniGameInteraction(
                                         ColorText.setTextGreen("Hai vinto " + scommettitedMoney + " euro"),
@@ -84,7 +84,7 @@ public class BlackJackControl extends MiniGame{
                     if (isPlaying) {
                         blackjackChecker.hit();
                         if (blackjackChecker.getHandValue(blackjackChecker.getPlayerHand()) > 21) {
-                            Inventory.removeMoney(scommettitedMoney);
+                            inventory.removeMoney(scommettitedMoney);
 
                             isPlaying = false;
                             hasBet = false;
@@ -114,9 +114,9 @@ public class BlackJackControl extends MiniGame{
                                          blackjackChecker.isWinner(blackjackChecker.getPlayerHand(), blackjackChecker.getDealerHand());
 
                         if (hasWon) {
-                            Inventory.addMoney(scommettitedMoney);
+                            inventory.addMoney(scommettitedMoney);
                         } else {
-                            Inventory.removeMoney(scommettitedMoney);
+                            inventory.removeMoney(scommettitedMoney);
                         }
                         String finalResult = (hasWon ? "Hai vinto "   : "Hai perso ") + scommettitedMoney + " euro";
                         interaction.setInfo((hasWon ? ColorText.setTextGreen(finalResult) : ColorText.setTextRed(finalResult)));
@@ -137,7 +137,7 @@ public class BlackJackControl extends MiniGame{
                         if (!hasBet) {
                             int value = Integer.parseInt(output.getCommand().getName().split(" ")[1]);
 
-                            if (Inventory.getMoney() >= value) {
+                            if (inventory.getMoney() >= value) {
                                 hasBet = true;
                                 scommettitedMoney = value;
                                 interaction.setInfo("Hai scommesso " + ColorText.setTextPurple(String.valueOf(value)) + " euro");

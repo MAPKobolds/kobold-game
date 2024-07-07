@@ -39,7 +39,7 @@ public class BarManControl extends MiniGame{
     }
 
     @Override
-    public MiniGameInteraction play(ParserOutput output) {
+    public MiniGameInteraction play(ParserOutput output, Inventory inventory) {
 
         MiniGameInteraction interaction = new MiniGameInteraction(
                 "Cosa vuoi fare?",
@@ -77,12 +77,12 @@ public class BarManControl extends MiniGame{
                 switch (output.getCommand().getName()) {
                     case "compra ginmoncello" -> {
                         interaction.setInfo("Hai comprato il GinMoncello");
-                        if (Inventory.getMoney() >= 500) {
-                            if (Inventory.contains("GinMoncello")) {
+                        if (inventory.getMoney() >= 500) {
+                            if (inventory.contains("GinMoncello")) {
                                 interaction.setInfo("Hai già comprato il GinMoncello");
                                 interaction.setType(MiniGameInteractionType.INFO);
                             } else {
-                                Inventory.removeMoney(500);
+                                inventory.removeMoney(500);
                                 interaction.setResult(new GinMoncello());
                                 interaction.setType(MiniGameInteractionType.WIN);
                             }
@@ -92,12 +92,12 @@ public class BarManControl extends MiniGame{
                         }
                     }
                     case "compra birre" -> {
-                        if (Inventory.getMoney() >= 50) {
-                            if (Inventory.contains("birra")) {
+                        if (inventory.getMoney() >= 50) {
+                            if (inventory.contains("birra")) {
                                 interaction.setInfo("Hai già comprato il pacco da 2^4 birre");
                                 interaction.setType(MiniGameInteractionType.INFO);
                             } else {
-                                Inventory.removeMoney(50);
+                                inventory.removeMoney(50);
                                 interaction.setInfo("Hai comprato il pacco da 2^4 birre");
                                 interaction.setResult(new Beers());
                                 interaction.setType(MiniGameInteractionType.WIN);

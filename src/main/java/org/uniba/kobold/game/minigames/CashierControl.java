@@ -1,6 +1,7 @@
 package org.uniba.kobold.game.minigames;
 
 import org.javatuples.Pair;
+import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.availableItems.SteeringWheel;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
@@ -29,7 +30,7 @@ public class CashierControl extends MiniGame{
 
     }
     @Override
-    public MiniGameInteraction play(ParserOutput output) {
+    public MiniGameInteraction play(ParserOutput output, Inventory inventory) {
         MiniGameInteraction interaction = new MiniGameInteraction(
                 "Due buttafuori coboldi si avvicinano a te e ti portano a lavorare per 3 anni nelle fucine per ripagare il debito perchè :\n",
                 null,
