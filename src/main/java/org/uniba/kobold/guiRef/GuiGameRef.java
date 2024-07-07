@@ -29,6 +29,7 @@ public class GuiGameRef extends JPanel {
      */
     public GuiGameRef(Game game) {
         initComponents(game);
+        isInventoryVisible = true;
 
         try {
             this.tickTime(game);
@@ -76,23 +77,16 @@ public class GuiGameRef extends JPanel {
         dialogText.setHorizontalAlignment(SwingConstants.CENTER);
 
         //Setting the inputField
-        inputField.addActionListener(_ -> {
-            String userInput = inputField.getText();
-            inputField.setText("");
-
-            game.executeCommand(userInput);
-        });
+        inputField.addActionListener(_ -> readInput(game));
 
         //Setting the timerLabel
         timerLabel.setOpaque(true);
         timerLabel.setFont(new Font("Arial", Font.BOLD, 16));
         timerLabel.setFocusable(false);
-        timerLabel.setText("00:00:00");
 
         //inventoryPanel settings
         inventoryPanel.setBackground(new Color(40, 0, 5));
         inventoryPanel.setLayout(new GridBagLayout());
-        isInventoryVisible = true;
 
         //Setting the saveButton logic
         saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -100,18 +94,10 @@ public class GuiGameRef extends JPanel {
 
         //Setting the menuButton logic
         menuButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        menuButton.addActionListener(_ -> {
-            Object[] options = {"Sì", "No"};
-            int response = JOptionPane.showOptionDialog(null, "Vuoi davvero abbandonare senza salvare?", "Torna al Menu", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-
-            if (response == JOptionPane.YES_OPTION) {
-                this.setGameRunning(false);
-                GuiHubRef.setNormalToolbar();
-                GuiHubRef.changeTo(PagesEnum.MENU, null);
-            }
-        });
+        menuButton.addActionListener(_ -> this.goToMenu());
 
         dialogPanel.setBackground(new Color(40, 0, 5));
+
         if (GuiHubRef.isGuiActive()) {
             GuiHubRef.setGameToolbar(timerLabel, saveButton, menuButton, toggleInventoryButton);
         }
@@ -248,5 +234,23 @@ public class GuiGameRef extends JPanel {
 
     public void setGameRunning(boolean gameRunning) {
         isGameRunning = gameRunning;
+    }
+
+    private void readInput(Game game) {
+        String userInput = inputField.getText();
+        inputField.setText("");
+
+        game.executeCommand(userInput);
+    }
+
+    private void goToMenu() {
+        Object[] options = {"Sì", "No"};
+        int response = JOptionPane.showOptionDialog(null, "Vuoi davvero abbandonare senza salvare?", "Torna al Menu", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+        if (response == JOptionPane.YES_OPTION) {
+            this.setGameRunning(false);
+            GuiHubRef.setNormalToolbar();
+            GuiHubRef.changeTo(PagesEnum.MENU, null);
+        }
     }
 }
