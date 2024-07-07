@@ -11,6 +11,13 @@ public class Tester {
     public static void main(String[] args) throws IOException {
 
         Game game = new Game("Paolo");
+        game.getInventory().addPiece(new Car());
+        game.executeCommand("prendi mantello");
+        game.executeCommand("vai corridoio");
+        game.executeCommand("parla guardie");
+        game.executeCommand("1");
+        game.executeCommand("vai taverna");
+        game.executeCommand("vai spiazzale");
 
 
         while (true) {
