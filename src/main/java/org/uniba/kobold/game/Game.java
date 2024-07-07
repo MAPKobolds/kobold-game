@@ -4,7 +4,6 @@ import org.javatuples.Pair;
 import org.uniba.kobold.api.error.*;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
-import org.uniba.kobold.entities.inventory.availableItems.Car;
 import org.uniba.kobold.entities.room.*;
 import org.uniba.kobold.entities.room.avaliableRooms.*;
 import org.uniba.kobold.errors.RoomNotAccessibleError;
@@ -25,14 +24,13 @@ public class Game {
     private final Parser parser;
     private RoomsMap roomPath;
     private String playerName;
-    //private ToGui toGui = new ToGui();
     private MiniGame currentGame = null;
     private Inventory inventory;
 
     public Game(String playerName ) throws IOException {
         this.timeManager = new TimeManager();
         this.playerName = playerName;
-        this.inventory = new Inventory(List.of(new Car()), 800);
+        this.inventory = new Inventory(List.of(), 800);
 
         StartingRoom r1 = new StartingRoom();
         HallwayRoom r2 = new HallwayRoom();
@@ -180,7 +178,6 @@ public class Game {
     }
 
     private void printAndConsole(String arg) {
-        //toGui.updateLabel(string);
         System.out.println(arg);
     }
 

@@ -20,7 +20,7 @@ public class RoomDeserializer implements JsonDeserializer<Room> {
             case "fucine" -> roomClass = ForgeRoom.class;
             case "palazzo" -> roomClass = PalaceEntryRoom.class;
             case "generatore" -> roomClass = PowerHouseRoom.class;
-            case "bar" -> roomClass = PubRoom.class;
+            case "taverna" -> roomClass = PubRoom.class;
             case "spiazzale" -> roomClass = SquareRoom.class;
             case "caverna" -> roomClass = StartingRoom.class;
             case "trono" -> roomClass = ThroneRoom.class;

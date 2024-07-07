@@ -2,7 +2,7 @@ package org.uniba.kobold.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.uniba.kobold.entities.inventory.Inventory;
+import org.uniba.kobold.entities.inventory.*;
 import org.uniba.kobold.entities.room.Room;
 import org.uniba.kobold.entities.room.RoomDeserializer;
 import org.uniba.kobold.game.Game;
@@ -21,7 +21,8 @@ public class GameConverter {
         try {
             String json = new String(Files.readAllBytes(filePath));
             Gson gson = new GsonBuilder()
-                    .registerTypeAdapter(Room.class, new RoomDeserializer()).create();
+                    .registerTypeAdapter(Room.class, new RoomDeserializer())
+                    .create();
 
             //Deserialize the JSON file
             return gson.fromJson(json, GameState.class);
@@ -30,12 +31,13 @@ public class GameConverter {
         }
     }
 
-    public static void serialize(Game game, Inventory inventory, String time) {
+    public static void serialize(Game game, String time) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Room.class, new RoomDeserializer())
+                .registerTypeAdapter(Item.class, new ItemDeserializer())
                 .create();
 
-        GameState gameState = new GameState(inventory, time, game.getCurrentRoomMap());
+        GameState gameState = new GameState(game.getInventory(), time, game.getCurrentRoomMap());
         String json = gson.toJson(gameState);
         String filePath = "src/main/resources/saves/" + game.getPlayerName() + "-" + (GameSave.getNumberOfUserSave(game.getPlayerName()) + 1) + ".json";
 

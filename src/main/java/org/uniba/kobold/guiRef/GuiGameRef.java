@@ -85,7 +85,7 @@ public class GuiGameRef extends JPanel {
         //inventoryPanel settings
         inventoryPanel.setBackground(new Color(40, 0, 5));
         inventoryPanel.setLayout(new GridBagLayout());
-//        Inventory.getItems().forEach(item -> addItem(item));
+        game.getInventory().getItems().forEach(item -> addItem(item));
 
         //Setting the saveButton logic
         saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -225,7 +225,7 @@ public class GuiGameRef extends JPanel {
         int response = JOptionPane.showOptionDialog(null, "Vuoi salvare la partita?", "Conferma Salvataggio", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
         if (response == JOptionPane.YES_OPTION) {
-//            GameConverter.serialize(game, Inventory.getInstance(), game.getTimeManager().getTime());
+            GameConverter.serialize(game, game.getTimeManager().getTime());
 
             JOptionPane.showMessageDialog(null, "Partita salvata con successo!", "Salvataggio", JOptionPane.INFORMATION_MESSAGE);
         }
