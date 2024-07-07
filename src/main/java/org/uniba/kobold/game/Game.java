@@ -25,7 +25,6 @@ public class Game {
     private final Parser parser;
     private RoomsMap roomPath;
     private String playerName;
-    //private ToGui toGui = new ToGui();
     private MiniGame currentGame = null;
     private Inventory inventory;
 
@@ -70,7 +69,6 @@ public class Game {
         ));
 
         //TODO: Qui per output in gui
-        this.printAndConsole(this.roomPath.getCurrentRoom().getDescription());
     }
 
     public Game(String playerName, RoomsMap roomPath, String time, Inventory inventory) throws IOException {
@@ -80,10 +78,10 @@ public class Game {
         this.roomPath = roomPath;
         this.inventory = inventory;
 
-        this.printAndConsole(this.roomPath.getCurrentRoom().getDescription());
     }
 
-    public void executeCommand(String command) {
+    public GameCommandResult executeCommand(String command) {
+        GameCommandResult result = new GameCommandResult(GameCommandResultType.DESCRIPTION, "");
         Room currentRoom = roomPath.getCurrentRoom();
 
         List<Item> items = new ArrayList<>(inventory.getItems().stream().toList());
@@ -98,28 +96,27 @@ public class Game {
 
 
         if (parsedCommand == null || parsedCommand.getCommand() == null) {
-            System.out.print("Cosa vuoi fare non sto capendo?\n");
-            return;
+            result.setDescription("Cosa vuoi fare non sto capendo?");
+            return result;
         }
 
         if (currentGame == null) {
-            RoomInteractionResult result = roomPath.getCurrentRoom().generalCommands(parsedCommand, inventory);
+            RoomInteractionResult interactionResult = roomPath.getCurrentRoom().generalCommands(parsedCommand, inventory);
             try {
-                manageRoomInteraction(result);
+                result = manageRoomInteraction(interactionResult);
             } catch (HttpInternalServerErrorException | HttpNotFoundException | HttpUnavailableException | HttpBadRequestException | HttpForbiddenException e) {
                 e.printStackTrace();
             }
         } else {
-           MiniGameInteraction result = currentGame.play(parsedCommand, inventory);
-           manageMiniGameInteraction(result);
+           MiniGameInteraction miniGameInteraction = currentGame.play(parsedCommand, inventory);
+           result = manageMiniGameInteraction(miniGameInteraction);
         }
-        System.out.println();
+
+        return result;
     }
 
-    private void manageMiniGameInteraction(MiniGameInteraction result) {
-
-        System.out.println(result.getInfo());
-        MiniGameInteractionType type = result.getType();
+    private GameCommandResult manageMiniGameInteraction(MiniGameInteraction result) {
+        GameCommandResult g = new GameCommandResult(GameCommandResultType.DESCRIPTION, result.getInfo());
 
         if (       result.getType() == MiniGameInteractionType.EXIT
                 || result.getType() == MiniGameInteractionType.WIN
@@ -130,31 +127,40 @@ public class Game {
 
         if (result.getType() == MiniGameInteractionType.WIN) {
             inventory.addPiece((Item) result.getResult());
+            g.setGameCommandResultType(GameCommandResultType.REFRESH_INVENTORY);
         }
 
         if (result.getType() == MiniGameInteractionType.UNLOCK) {
             roomPath.unlockPath(result.getResult().toString());
         }
+
+        return g;
     }
 
-    public void manageRoomInteraction(RoomInteractionResult result) throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
+    public GameCommandResult manageRoomInteraction(RoomInteractionResult result) throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
+        GameCommandResult gameCommandResult = new GameCommandResult(GameCommandResultType.DESCRIPTION, "");
+
         switch (result.getResultType()) {
-            case NOTHING -> this.printAndConsole("Non posso fare nulla");
-            case DESCRIPTION -> this.printAndConsole(result.getSubject());
+            case NOTHING -> gameCommandResult.setDescription("Non posso fare nulla");
+            case DESCRIPTION -> gameCommandResult.setDescription(result.getSubject());
             case UNLOCK -> {
                 this.printAndConsole( "hai sbloccato il percorso per " +ColorText.setTextPurple( result.getSubject()));
                 this.roomPath.unlockPath(result.getSubject());
             }
             case ADD_ITEM -> {
-                System.out.println(result.getSubject());
+                gameCommandResult.setDescription(result.getSubject());
+                gameCommandResult.setGameCommandResultType(GameCommandResultType.REFRESH_INVENTORY);
+
                 inventory.addPiece((Item) result.getArgument());
             }
             case MOVE -> {
                 try {
                     roomPath.moveTo(result.getSubject());
-                    this.printAndConsole(roomPath.getCurrentRoom().getDescription());
+                    gameCommandResult.setDescription(roomPath.getCurrentRoom().getDescription());
+                    gameCommandResult.setGameCommandResultType(GameCommandResultType.MOVE);
+
                 } catch (RoomNotAccessibleError e) {
-                    this.printAndConsole(ColorText.setTextRed("Non puoi andare in quella direzione devi fare prima qualcosa!!!\n"));
+                    gameCommandResult.setDescription(ColorText.setTextRed("Non puoi andare in quella direzione devi fare prima qualcosa!!!\n"));
                 }
             }
             case PLAY -> {
@@ -167,9 +173,12 @@ public class Game {
                     case "rullo" -> currentGame = new SeekerGameControl();
                     case "re" -> currentGame = new KingKoboldControl();
                 }
-                this.printAndConsole(currentGame.getDescription());
+
+                gameCommandResult.setDescription(currentGame.getDescription());
             }
         }
+
+        return gameCommandResult;
     }
 
     public String getPlayerName() {
@@ -185,7 +194,6 @@ public class Game {
     }
 
     private void printAndConsole(String arg) {
-        //toGui.updateLabel(string);
         System.out.println(arg);
     }
 
