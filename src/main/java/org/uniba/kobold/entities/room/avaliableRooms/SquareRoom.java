@@ -22,7 +22,8 @@ public final class SquareRoom extends Room {
                         ColorText.setTextPurple("\nfucine") +
                         ColorText.setTextPurple("\npiste") +
                         ColorText.setTextPurple("\ngeneratore") +
-                        ColorText.setTextPurple("\npalazzo reale"),
+                        ColorText.setTextPurple("\npalazzo reale \n") +
+                        "C'è un "+ ColorText.setTextPurple("cancello") + " chiuso che blocca l'accesso al palazzo reale lo devi " + ColorText.setTextBlue("sfondare") + " per entrare",
                 "/img/BR.png",
                 List.of(),
                 Arrays.asList(
@@ -63,6 +64,7 @@ public final class SquareRoom extends Room {
 
             case "vai bar":
             case "vai fucine":
+            case "vai palazzo":
             case "vai circuito":
             case "vai generatore":
                 result.setResultType(RoomInteractionResultType.MOVE);
@@ -79,16 +81,6 @@ public final class SquareRoom extends Room {
                 }
                 break;
 
-            case "vai palazzo":
-
-                if (inventory.contains("auto")) {
-                    result.setResultType(RoomInteractionResultType.MOVE);
-                    result.setSubject("palazzo");
-                } else {
-                    result.setResultType(RoomInteractionResultType.DESCRIPTION);
-                    result.setSubject(ColorText.setTextRed("Il palazzo è chiuso, forse dovresti cercare qualcosa per sfondare il cancello"));
-                }
-            break;
             default:
                 result.setResultType(RoomInteractionResultType.NOTHING);
         }
