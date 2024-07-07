@@ -8,21 +8,20 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GuiGameRef extends JPanel {
-
-    private JPanel dialogPanel;
     private static JLabel dialogText;
     private static GuiBackgroundRef gamePanel;
     private static JPanel inventoryPanel;
-    private JTextField inputField;
     private static JLabel roomName;
+    private static int inventoryCount = 0;
+    private static final String BACKGROUND_PATH = "/img/pporc.png";
+    private JPanel dialogPanel;
+    private JLabel timerLabel;
+    private JTextField inputField;
     private JButton menuButton;
     private JButton saveButton;
     private JButton toggleInventoryButton;
     private boolean isGameRunning = true;
     private boolean isInventoryVisible;
-    private static JLabel timerLabel;
-    private static int inventoryCount = 0;
-    private static final String BACKGROUND_PATH = "/img/pporc.png";
 
     /**
      * Creates new form containerPanel
@@ -46,7 +45,6 @@ public class GuiGameRef extends JPanel {
         roomName = new JLabel();
         inputField = new JTextField();
         timerLabel = new JLabel();
-
         inventoryPanel.setLayout(new GridBagLayout());
         setBackground(Color.BLACK);
 
@@ -87,6 +85,7 @@ public class GuiGameRef extends JPanel {
         //inventoryPanel settings
         inventoryPanel.setBackground(new Color(40, 0, 5));
         inventoryPanel.setLayout(new GridBagLayout());
+        Inventory.getItems().forEach(item -> addItem(item));
 
         //Setting the saveButton logic
         saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));

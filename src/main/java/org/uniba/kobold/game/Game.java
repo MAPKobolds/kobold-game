@@ -70,11 +70,12 @@ public class Game {
         this.printAndConsole(this.roomPath.getCurrentRoom().getDescription());
     }
 
-    public Game(String playerName, RoomsMap roomPath, String time) throws IOException {
+    public Game(String playerName, RoomsMap roomPath, String time, Inventory inventory) throws IOException {
         this.timeManager = new TimeManager(time);
         parser = new Parser(ParserUtils.loadFileListInSet(new File("src/main/resources/stopwords.txt")));
         this.playerName = playerName;
         this.roomPath = roomPath;
+        Inventory.setInventory(inventory);
 
         this.printAndConsole(this.roomPath.getCurrentRoom().getDescription());
     }
