@@ -3,6 +3,8 @@ package org.uniba.kobold.guiRef;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.game.Game;
+import org.uniba.kobold.game.GameCommandResult;
+import org.uniba.kobold.game.GameCommandResultType;
 import org.uniba.kobold.util.GameConverter;
 import javax.swing.*;
 import java.awt.*;
@@ -84,8 +86,7 @@ public class GuiGameRef extends JPanel {
 
         //inventoryPanel settings
         inventoryPanel.setBackground(new Color(40, 0, 5));
-        inventoryPanel.setLayout(new GridBagLayout());
-//        Inventory.getItems().forEach(item -> addItem(item));
+        this.refreshItem(game);
 
         //Setting the saveButton logic
         saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -103,11 +104,17 @@ public class GuiGameRef extends JPanel {
         setLayout();
     }
 
-    public static void addItem(Item item) {
+    public void refreshItem(Game game) {
+        inventoryPanel.setLayout(new GridBagLayout());
+        game.getInventory().getItems().forEach(this::addItem);
+    }
+
+    public void addItem(Item item) {
         JButton itemButton = new GuiObjectButton(item.getName(), item.getImage());
         itemButton.setVisible(true);
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridManager(gridBagConstraints, inventoryCount);
+
         inventoryPanel.add(itemButton, gridBagConstraints);
         inventoryPanel.revalidate();
         inventoryPanel.repaint();
@@ -225,7 +232,7 @@ public class GuiGameRef extends JPanel {
         int response = JOptionPane.showOptionDialog(null, "Vuoi salvare la partita?", "Conferma Salvataggio", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
         if (response == JOptionPane.YES_OPTION) {
-//            GameConverter.serialize(game, Inventory.getInstance(), game.getTimeManager().getTime());
+            GameConverter.serialize(game, game.getTimeManager().getTime());
 
             JOptionPane.showMessageDialog(null, "Partita salvata con successo!", "Salvataggio", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -239,7 +246,20 @@ public class GuiGameRef extends JPanel {
         String userInput = inputField.getText();
         inputField.setText("");
 
-        game.executeCommand(userInput);
+        refreshGUI(game.executeCommand(userInput), game);
+    }
+
+    public void refreshGUI(GameCommandResult gameCommandResult, Game game) {
+        GameCommandResultType type = gameCommandResult.getGameCommandResultType();
+        dialogText.setText(gameCommandResult.getDescription());
+
+        switch (type) {
+            case REFRESH_INVENTORY -> this.refreshItem(game);
+            case MOVE -> {
+                //TODO refresh bg
+                //refresh bg
+            }
+        }
     }
 
     private void goToMenu() {

@@ -7,14 +7,12 @@ import java.awt.*;
 import java.net.URL;
 
 public class GuiHubRef extends JFrame {
-
     private static GuiHubRef instance;
     private static JPanel masterPanel;
     private static JToggleButton muteMusicButton;
     private static JToolBar toolBar;
     private static final int WIDTH = 1000;
     private static final int HEIGHT = 700;
-
 
     public GuiHubRef() {
         instance = this;
@@ -48,7 +46,6 @@ public class GuiHubRef extends JFrame {
         toolBar.setFloatable(false);
         UtilMusic.initButton(muteMusicButton);
         toolBar.add(muteMusicButton);
-
 
         masterPanel = getInitialPanel();
         add(masterPanel);
@@ -87,7 +84,6 @@ public class GuiHubRef extends JFrame {
         masterPanel.repaint();
     }
 
-
     public static void changeTo(PagesEnum page, Game game) {
         switch (page) {
             case MENU:
@@ -109,7 +105,6 @@ public class GuiHubRef extends JFrame {
     }
 
     public static void setGameToolbar(JLabel timerLabel, JButton saveButton, JButton menuButton, JButton toggleInventoryButton) {
-
         double widthOffset = WIDTH * 0.005;
         toolBar.removeAll();
         toolBar.add(muteMusicButton);

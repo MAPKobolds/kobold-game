@@ -19,6 +19,6 @@ public class ToGui implements GameToGui{
 
     @Override
     public void addItemGui(Item item) {
-        SwingUtilities.invokeLater(() -> GuiGameRef.addItem(item));
+//        SwingUtilities.invokeLater(() -> GuiGameRef.addItem(item));
     }
 }
