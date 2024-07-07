@@ -4,6 +4,7 @@ import org.uniba.kobold.api.error.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Queue;
 
 public class TriviaChecker {
     Quiz quiz;
