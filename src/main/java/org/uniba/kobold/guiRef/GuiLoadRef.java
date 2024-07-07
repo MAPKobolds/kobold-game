@@ -193,9 +193,7 @@ public class GuiLoadRef extends JPanel {
             GameState g = GameConverter.deserialize(save.getFilePath());
             Inventory.setInventory(g.getInventory());
 
-            GuiHubRef.changeTo(PagesEnum.NEW_GAME, new Game(save.getPlayerName(), g.getRoomsMap()));
-        } else {
-            throw new Error("Cannot open dialog");
+            GuiHubRef.changeTo(PagesEnum.NEW_GAME, new Game(save.getPlayerName(), g.getRoomsMap(), g.getTimer()));
         }
     }
 }

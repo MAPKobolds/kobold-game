@@ -6,14 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class GameState {
-    Inventory inventory;
-    String timerState;
-    RoomsMap roomsMap;
-    String date = (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")).format(new Date());
+    private Inventory inventory;
+    private String timer;
+    private RoomsMap roomsMap;
+    private String date = (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")).format(new Date());
 
     public GameState(Inventory inventory, String timerState, RoomsMap roomsMap) {
         this.inventory = inventory;
-        this.timerState = timerState;
+        this.timer = timerState;
         this.roomsMap = roomsMap;
     }
 
@@ -23,6 +23,10 @@ public class GameState {
 
     public String getDate() {
         return date;
+    }
+
+    public String getTimer() {
+        return timer;
     }
 
     public RoomsMap getRoomsMap() {

@@ -8,17 +8,21 @@ import org.uniba.kobold.entities.room.avaliableRooms.*;
 import org.uniba.kobold.parser.Parser;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.parser.ParserUtils;
+import org.uniba.kobold.util.TimeManager;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
 public class Game {
+    private TimeManager timeManager;
     private final Parser parser;
     private RoomsMap roomPath;
     private String playerName;
     private ToGui toGui = new ToGui();
 
     public Game(String playerName) throws IOException {
+        this.timeManager = new TimeManager();
         this.playerName = playerName;
 
         StartingRoom r1 = new StartingRoom();
@@ -66,7 +70,8 @@ public class Game {
         this.printAndConsole(this.roomPath.getCurrentRoom().getDescription());
     }
 
-    public Game(String playerName, RoomsMap roomPath) throws IOException {
+    public Game(String playerName, RoomsMap roomPath, String time) throws IOException {
+        this.timeManager = new TimeManager(time);
         parser = new Parser(ParserUtils.loadFileListInSet(new File("src/main/resources/stopwords.txt")));
         this.playerName = playerName;
         this.roomPath = roomPath;
@@ -111,6 +116,10 @@ public class Game {
 
     public RoomsMap getCurrentRoomMap() {
         return roomPath;
+    }
+
+    public TimeManager getTimeManager() {
+        return timeManager;
     }
 
     private void printAndConsole(String string) {

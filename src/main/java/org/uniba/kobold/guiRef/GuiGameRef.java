@@ -4,7 +4,6 @@ import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.game.Game;
 import org.uniba.kobold.util.GameConverter;
-import org.uniba.kobold.util.ManageTimer;
 import javax.swing.*;
 import java.awt.*;
 
@@ -19,6 +18,7 @@ public class GuiGameRef extends JPanel {
     private JButton menuButton;
     private JButton saveButton;
     private JButton toggleInventoryButton;
+    private boolean isGameRunning = true;
     private boolean isInventoryVisible;
     private static JLabel timerLabel;
     private static int inventoryCount = 0;
@@ -29,7 +29,12 @@ public class GuiGameRef extends JPanel {
      */
     public GuiGameRef(Game game) {
         initComponents(game);
-        ManageTimer.getInstance();
+
+        try {
+            this.tickTime(game);
+        } catch (Exception e) {
+            timerLabel.setText("Invalid time");
+        }
     }
 
     private void initComponents(Game game) {
@@ -98,9 +103,10 @@ public class GuiGameRef extends JPanel {
         menuButton.addActionListener(_ -> {
             Object[] options = {"Sì", "No"};
             int response = JOptionPane.showOptionDialog(null, "Vuoi davvero abbandonare senza salvare?", "Torna al Menu", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
             if (response == JOptionPane.YES_OPTION) {
+                this.setGameRunning(false);
                 GuiHubRef.setNormalToolbar();
-                ManageTimer.resetTimer();
                 GuiHubRef.changeTo(PagesEnum.MENU, null);
             }
         });
@@ -150,8 +156,18 @@ public class GuiGameRef extends JPanel {
         dialogText.setText("<html>" + message + "</html>");
     }
 
-    public static void setTimeLabel(String time) {
-        timerLabel.setText(" " + time + " ");
+    public synchronized void tickTime(Game game) {
+        new Thread(() -> {
+            while (isGameRunning) {
+                timerLabel.setText(" " + game.getTimeManager().getTime() + " ");
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
     }
 
     public static void updateGamePanel(String path) {
@@ -224,9 +240,13 @@ public class GuiGameRef extends JPanel {
         int response = JOptionPane.showOptionDialog(null, "Vuoi salvare la partita?", "Conferma Salvataggio", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
         if (response == JOptionPane.YES_OPTION) {
-            GameConverter.serialize(game, Inventory.getInstance(), ManageTimer.getTime());
+            GameConverter.serialize(game, Inventory.getInstance(), game.getTimeManager().getTime());
 
             JOptionPane.showMessageDialog(null, "Partita salvata con successo!", "Salvataggio", JOptionPane.INFORMATION_MESSAGE);
         }
+    }
+
+    public void setGameRunning(boolean gameRunning) {
+        isGameRunning = gameRunning;
     }
 }
