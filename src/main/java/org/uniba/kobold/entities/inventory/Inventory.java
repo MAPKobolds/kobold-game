@@ -40,6 +40,15 @@ public class Inventory {
         return items.stream().anyMatch(i -> ((Item) i).getName().equals(name));
     }
 
+    public static void setInventory(Inventory inventory) {
+        Inventory.instance = inventory;
+    }
+
+    public static void setItems(Set<Item> deserializedItems) {
+        items.clear();
+        deserializedItems.forEach(Inventory::addPiece);
+    }
+
     public static Set<Item> getItems() {
         return items;
     }

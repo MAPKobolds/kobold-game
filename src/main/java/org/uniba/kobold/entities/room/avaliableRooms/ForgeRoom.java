@@ -8,7 +8,6 @@ import org.uniba.kobold.entities.room.RoomInteractionResultType;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 import org.uniba.kobold.util.ColorText;
-
 import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;

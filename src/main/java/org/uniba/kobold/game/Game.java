@@ -12,7 +12,7 @@ import org.uniba.kobold.parser.Parser;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.parser.ParserUtils;
 import org.uniba.kobold.util.ColorText;
-
+import org.uniba.kobold.util.TimeManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,11 +20,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Game {
+    private TimeManager timeManager;
     private final Parser parser;
-    private final RoomsMap roomPath;
+    private RoomsMap roomPath;
+    private String playerName;
+    private ToGui toGui = new ToGui();
     private MiniGame currentGame = null;
 
-    public Game() throws IOException {
+    public Game(String playerName) throws IOException {
+        this.timeManager = new TimeManager();
+        this.playerName = playerName;
+
         StartingRoom r1 = new StartingRoom();
         HallwayRoom r2 = new HallwayRoom();
         PubRoom r3 = new PubRoom();
@@ -48,7 +54,7 @@ public class Game {
                         Pair.with(r5, true),
                         Pair.with(r6, true),
                         Pair.with(r7, true),
-                        Pair.with(r8, true)
+                        Pair.with(r8, false)
                     )
                 )),
                 Pair.with(r5, new RoomPath(List.of(Pair.with(r4, true)))),
@@ -60,7 +66,18 @@ public class Game {
                 Pair.with(r9, new RoomPath(List.of(Pair.with(r8, true))))
         ));
 
-        System.out.println(roomPath.getCurrentRoom().getDescription());
+        //TODO: Qui per output in gui
+        this.printAndConsole(this.roomPath.getCurrentRoom().getDescription());
+    }
+
+    public Game(String playerName, RoomsMap roomPath, String time, Inventory inventory) throws IOException {
+        this.timeManager = new TimeManager(time);
+        parser = new Parser(ParserUtils.loadFileListInSet(new File("src/main/resources/stopwords.txt")));
+        this.playerName = playerName;
+        this.roomPath = roomPath;
+        Inventory.setInventory(inventory);
+
+        this.printAndConsole(this.roomPath.getCurrentRoom().getDescription());
     }
 
     public void executeCommand(String command) {
@@ -104,7 +121,7 @@ public class Game {
         if (result.getType() == MiniGameInteractionType.EXIT || result.getType() == MiniGameInteractionType.WIN_AND_EXIT) {
             currentGame = null;
         }
-        
+
         if (result.getType() == MiniGameInteractionType.WIN || result.getType() == MiniGameInteractionType.WIN_AND_EXIT) {
             Inventory.addPiece((Item) result.getResult());
         }
@@ -117,8 +134,8 @@ public class Game {
 
     public void manageRoomInteraction(RoomInteractionResult result) throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         switch (result.getResultType()) {
-            case NOTHING -> System.out.println("Non posso fare nulla");
-            case DESCRIPTION -> System.out.println(result.getSubject());
+            case NOTHING -> this.printAndConsole("Non posso fare nulla");
+            case DESCRIPTION -> this.printAndConsole(result.getSubject());
             case UNLOCK -> this.roomPath.unlockPath(result.getSubject());
             case ADD_ITEM -> {
                 System.out.println(result.getSubject());
@@ -127,9 +144,9 @@ public class Game {
             case MOVE -> {
                 try {
                     roomPath.moveTo(result.getSubject());
-                    System.out.println(roomPath.getCurrentRoom().getDescription());
+                    this.printAndConsole(roomPath.getCurrentRoom().getDescription());
                 } catch (RoomNotAccessibleError e) {
-                    System.out.println(ColorText.setTextRed("Non puoi andare in quella direzione devi fare prima qualcosa!!!\n"));
+                    this.printAndConsole(ColorText.setTextRed("Non puoi andare in quella direzione devi fare prima qualcosa!!!\n"));
                 }
             }
             case PLAY -> {
@@ -142,9 +159,25 @@ public class Game {
                     case "rullo" -> currentGame = new SeekerGameControl();
                     case "re" -> currentGame = new KingKoboldControl();
                 }
-                System.out.println(currentGame.getDescription());
+                this.printAndConsole(currentGame.getDescription());
             }
         }
     }
-}
 
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public RoomsMap getCurrentRoomMap() {
+        return roomPath;
+    }
+
+    public TimeManager getTimeManager() {
+        return timeManager;
+    }
+
+    private void printAndConsole(String string) {
+        toGui.updateLabel(string);
+        System.out.println(roomPath.getCurrentRoom().getDescription());
+    }
+}

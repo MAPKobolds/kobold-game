@@ -6,9 +6,7 @@ import org.uniba.kobold.entities.room.RoomInteractionResultType;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 import org.uniba.kobold.util.ColorText;
-
 import javax.swing.*;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -21,8 +19,8 @@ public final class CircuitRoom extends Room {
                 new ImageIcon("/img/BR.png"),
                 List.of(),
                 List.of(
-                        new Command("vai spiazzale", Set.of("muoviti")),
-                        new Command("parla cassiera", Set.of("parla"))
+                    new Command("vai spiazzale", Set.of("muoviti")),
+                    new Command("parla cassiera", Set.of("parla"))
                 )
         );
     }
@@ -48,7 +46,7 @@ public final class CircuitRoom extends Room {
                 result.setSubject("Guardi a sinistra e la pista, la forma ricorda il numero due");
                 break;
             case "guarda sopra":
-                result.setSubject("Vedi la parete dell'enorme caverna, è da tempo che non vedi il sole ...");
+                result.setSubject("Vedi la parete dell'enorme caverna, è da tempo che non vedi il sole...");
                 break;
             case "vai spiazzale":
                 result.setSubject("spiazzale");

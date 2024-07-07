@@ -6,7 +6,6 @@ import org.uniba.kobold.entities.room.RoomInteractionResultType;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 import org.uniba.kobold.util.ColorText;
-
 import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
@@ -40,35 +39,30 @@ public final class HallwayRoom extends Room {
             case "guarda dietro":
                 result.setSubject("Guardi dietro e vedi la "+ ColorText.setTextPurple("caverna") + " da cui sei arrivato");
                 break;
-
             case "guarda destra":
             case "guarda sinistra":
             case "guarda sopra":
                 result.setSubject("Una normale (Gauss shit) parete");
                 break;
-
             case "guarda giu":
                 result.setSubject("bel pavimento!");
                 break;
-
             case "parla guardie":
                 result.setSubject("guardie");
                 result.setResultType(RoomInteractionResultType.PLAY);
                 break;
-                
             case "vai taverna":
                 result.setSubject("taverna");
                 result.setResultType(RoomInteractionResultType.MOVE);
                 break;
-
             case "vai caverna":
                 result.setSubject("caverna");
                 result.setResultType(RoomInteractionResultType.MOVE);
                 break;
-
             default:
                 result.setResultType(RoomInteractionResultType.NOTHING);
         }
+
         return result;
     }
 

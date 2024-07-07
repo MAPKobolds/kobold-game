@@ -5,14 +5,13 @@ import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 import org.uniba.kobold.util.ColorText;
-
 import javax.swing.*;
 import java.util.*;
 
 abstract public class Room {
     private final String name;
     private String description = "";
-    private final ImageIcon backgroundImage;
+    private final String backgroundImage;
     private final List<Item> items;
     private List<Command> commands = new ArrayList<>(Arrays.asList(
         new Command("guarda giu", Set.of("giu", "terra", "pavimento", "sotto", "guarda sotto" , "guarda terra" , "guarda pavimento")),
@@ -25,7 +24,7 @@ abstract public class Room {
         new Command("prendi", Set.of("raccogli", "acquisisci", "prendere", "raccogliere", "acquisire"))
     ));
 
-    public Room(String name, String description, ImageIcon backgroundImage, List<Item> items, List<Command> commands) {
+    public Room(String name, String description, String backgroundImage, List<Item> items, List<Command> commands) {
         this.name = name;
         this.description = description;
         this.backgroundImage = backgroundImage;
@@ -45,7 +44,7 @@ abstract public class Room {
         return items;
     }
 
-    public ImageIcon getBackgroundImage() {
+    public String getBackgroundImage() {
         return backgroundImage;
     }
 

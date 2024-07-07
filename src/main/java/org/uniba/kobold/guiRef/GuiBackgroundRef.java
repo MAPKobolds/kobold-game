@@ -1,4 +1,4 @@
-package org.uniba.kobold.gui;
+package org.uniba.kobold.guiRef;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,32 +7,18 @@ import java.util.Objects;
 /**
  * Class GuiBackgroundPanel
  */
-public class GuiBackgroundPanel extends GuiAbstractPanel {
+public class GuiBackgroundRef extends JPanel {
 
     /**
      * Attributes of the class GuiBackgroundPanel
      */
-    private final int width = 800;
-    private final int height = 600;
     private String backgroundPath;
 
     /**
      * Constructor of the class GuiBackgroundPanel
      */
-    public GuiBackgroundPanel(String backgroundPath) {
-       panelManager();
+    public GuiBackgroundRef(String backgroundPath) {
         this.backgroundPath = backgroundPath;
-    }
-
-    /**
-     * Method to initialize the components of the class GuiBackgroundPanel
-     */
-    @Override
-    public void initComponents() {
-        setMinimumSize(new Dimension(width, height));
-        setPreferredSize(new Dimension(width, height));
-        setRequestFocusEnabled(false);
-        setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 
     /**
@@ -42,8 +28,8 @@ public class GuiBackgroundPanel extends GuiAbstractPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        ImageIcon img = new ImageIcon(Objects.requireNonNull(getClass().getResource(backgroundPath)));
-        Image image = img.getImage();
+        ImageIcon backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource(backgroundPath)));
+        Image image = backgroundImage.getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
     }
 
@@ -53,6 +39,7 @@ public class GuiBackgroundPanel extends GuiAbstractPanel {
      */
     public void updateBackground(String newBackgroundPath) {
         this.backgroundPath = newBackgroundPath;
+        revalidate();
         repaint();
     }
 }
