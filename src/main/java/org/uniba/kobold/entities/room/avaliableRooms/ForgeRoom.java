@@ -22,7 +22,6 @@ public final class ForgeRoom extends Room {
                         "Ti sembra di aver visto qualcosa di interessante sul " + ColorText.setTextBlue("rullo") + ",\nvedi a destra una " + ColorText.setTextBlue("forgia") + " per la fusione dei pezzi di metallo forse potresti creare qualcosa di utile",
                 new ImageIcon("/img/BR.png"),
                 List.of(),
-                List.of(),
                 Arrays.asList(
                     new Command("vai spiazzale", Set.of("muoviti")),
                     new Command("guarda rullo", Set.of("rullo")),

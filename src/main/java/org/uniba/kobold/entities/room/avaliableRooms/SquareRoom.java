@@ -25,7 +25,6 @@ public final class SquareRoom extends Room {
                         ColorText.setTextPurple("\npalazzo reale"),
                 new ImageIcon("/img/BR.png"),
                 List.of(),
-                List.of(),
                 Arrays.asList(
                     new Command("vai taverna", Set.of("taverna")),
                     new Command("vai fucine", Set.of("fucine")),
@@ -67,6 +66,16 @@ public final class SquareRoom extends Room {
             case "vai generatore":
                 result.setResultType(RoomInteractionResultType.MOVE);
                 result.setSubject(command.getCommand().getName().split(" ")[1]);
+                break;
+
+            case "sfonda cancello":
+                if (Inventory.contains("auto")) {
+                    result.setResultType(RoomInteractionResultType.UNLOCK);
+                    result.setSubject("palazzo");
+                } else {
+                    result.setResultType(RoomInteractionResultType.DESCRIPTION);
+                    result.setSubject(ColorText.setTextRed("Non hai nulla per sfondare il cancello"));
+                }
                 break;
 
             case "vai palazzo":

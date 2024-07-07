@@ -104,9 +104,11 @@ public class Game {
         if (result.getType() == MiniGameInteractionType.EXIT || result.getType() == MiniGameInteractionType.WIN_AND_EXIT) {
             currentGame = null;
         }
+        
         if (result.getType() == MiniGameInteractionType.WIN || result.getType() == MiniGameInteractionType.WIN_AND_EXIT) {
             Inventory.addPiece((Item) result.getResult());
         }
+
         if (result.getType() == MiniGameInteractionType.UNLOCK) {
             roomPath.unlockPath(result.getResult().toString());
             currentGame = null;

@@ -22,7 +22,6 @@ public final class StartingRoom extends Room {
                     "Guardandoti intorno è buio pesto, senti qualcosa di appiccicoso " + ColorText.setTextBlue("sotto") +" di te.\n",
             new ImageIcon("/img/BR.png"),
                 List.of(new Cloak()),
-                List.of(),
             Arrays.asList(
                 new Command("vai corridoio", Set.of("muoviti")),
                 new Command("prendi", Set.of("raccogli", "solleva"))

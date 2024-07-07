@@ -21,7 +21,6 @@ public final class PowerHouseRoom extends Room {
                         "L'unico essere in questo posto, seduto ad una scrivania è un coboldo,\nsembra dirigere questo posto dal suo computer è " + ColorText.setTextBlue("davanti") + " a te",
                 new ImageIcon("/img/BR.png"),
                 List.of(),
-                List.of(),
                 List.of(
                         new Command("vai spiazzale", Set.of("muoviti")),
                         new Command("parla direttore", Set.of("direttore")),

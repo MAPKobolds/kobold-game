@@ -1,6 +1,5 @@
 package org.uniba.kobold.entities.room;
 
-import org.uniba.kobold.entities.character.Character;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.parser.ParserOutput;
@@ -15,7 +14,6 @@ abstract public class Room {
     private String description = "";
     private final ImageIcon backgroundImage;
     private final List<Item> items;
-    private Map<String, Character> characters = new HashMap<>();
     private List<Command> commands = new ArrayList<>(Arrays.asList(
         new Command("guarda giu", Set.of("giu", "terra", "pavimento", "sotto", "guarda sotto" , "guarda terra" , "guarda pavimento")),
         new Command("guarda davanti",Set.of("avanti", "davanti", "dritto", "innanzi" , "guarda innanzi" , "guarda avanti" , "guarda dritto")),
@@ -27,12 +25,11 @@ abstract public class Room {
         new Command("prendi", Set.of("raccogli", "acquisisci", "prendere", "raccogliere", "acquisire"))
     ));
 
-    public Room(String name, String description, ImageIcon backgroundImage, List<Item> items, List<Character> charactersList, List<Command> commands) {
+    public Room(String name, String description, ImageIcon backgroundImage, List<Item> items, List<Command> commands) {
         this.name = name;
         this.description = description;
         this.backgroundImage = backgroundImage;
         this.items = items;
-        charactersList.forEach(c -> characters.put(c.getName(), c));
         this.commands.addAll(commands);
     }
 
@@ -46,14 +43,6 @@ abstract public class Room {
 
     public List<Item> getItems() {
         return items;
-    }
-
-    public Character getCharacterByName(String name) {
-        return characters.get(name);
-    }
-
-    public Character updateCharacter(String name, Character character) {
-        return characters.replace(name, character);
     }
 
     public ImageIcon getBackgroundImage() {

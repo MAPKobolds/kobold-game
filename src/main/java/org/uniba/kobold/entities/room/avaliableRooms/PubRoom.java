@@ -21,7 +21,6 @@ public final class PubRoom extends Room {
                         "\nsulla tua "+ ColorText.setTextBlue("destra")  +" c'è un'uscita che da su uno " + ColorText.setTextPurple("spiazzale"),
                 new ImageIcon("/img/BR.png"),
                 List.of(),
-                List.of(),
                 Arrays.asList(
                     new Command("vai spiazzale", Set.of("muoviti")),
                     new Command("gioca blackjack", Set.of("gioca","blackjack", "carte")),

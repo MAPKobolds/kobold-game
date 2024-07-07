@@ -22,7 +22,6 @@ public final class PalaceEntryRoom extends Room {
                         "Il corridoio è illuminato da torce, in fondo puoi vedere in lontananza \nIl " + ColorText.setTextPurple("trono") + " del re coboldo",
                 new ImageIcon("/img/BR.png"),
                 List.of(new FireMaul()),
-                Arrays.asList(),
                 Arrays.asList(
                     new Command("vai spiazzale", Set.of("muoviti")),
                     new Command("vai trono", Set.of("muoviti"))

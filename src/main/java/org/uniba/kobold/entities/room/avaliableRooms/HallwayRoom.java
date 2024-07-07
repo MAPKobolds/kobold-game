@@ -1,6 +1,5 @@
 package org.uniba.kobold.entities.room.avaliableRooms;
 
-import org.uniba.kobold.entities.character.availableCharacters.TwinGuards;
 import org.uniba.kobold.entities.room.Room;
 import org.uniba.kobold.entities.room.RoomInteractionResult;
 import org.uniba.kobold.entities.room.RoomInteractionResultType;
@@ -21,7 +20,6 @@ public final class HallwayRoom extends Room {
                     " da delle " + ColorText.setTextOrange("guardie") + ", forse loro sanno qualcosa su questo posto",
             new ImageIcon("/img/BR.png"),
                 List.of(),
-                List.of(new TwinGuards()),
             Arrays.asList(
                 new Command("parla guardie", Set.of()),
                 new Command("vai taverna", Set.of("muoviti caverna")),

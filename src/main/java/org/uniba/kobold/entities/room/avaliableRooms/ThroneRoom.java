@@ -20,7 +20,6 @@ public final class ThroneRoom extends Room {
                         "rottami è il " + ColorText.setTextOrange("re") +", ti guarda dall'alto verso il basso aspettando la tua mossa",
                 new ImageIcon("/img/BR.png"),
                 List.of(),
-                List.of(),
                 List.of(
                         new Command("vai palazzo", Set.of("muoviti")),
                         new Command("parla re", Set.of("parla"))

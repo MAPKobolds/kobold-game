@@ -20,7 +20,6 @@ public final class CircuitRoom extends Room {
                         " \nAlcuni hanno vinto alcune pezzi di auto e esultano, altri sono in completamente disperati per aver perso tutto.",
                 new ImageIcon("/img/BR.png"),
                 List.of(),
-                List.of(),
                 List.of(
                         new Command("vai spiazzale", Set.of("muoviti")),
                         new Command("parla cassiera", Set.of("parla"))
