@@ -12,13 +12,13 @@ import java.util.Set;
 public class CashierControl extends MiniGame{
 
     public CashierControl() {
-        this.description = "Amico mio, la prima puntata costa molto cara, \n" +
-                "se perdi sei fregato, per puntare scrivi su questo foglio il numero o il nome del pilota vincente\n" +
-                ColorText.setTextBlue("1) Hamilton\n") +
-                ColorText.setTextBlue("2) Verstappen\n") +
-                ColorText.setTextBlue("3) Vettel\n") +
-                ColorText.setTextBlue("4) Leclerc\n") +
-                ColorText.setTextBlue("Esci\n");
+        this.description = "Amico mio, la prima puntata costa molto cara, <br>" +
+                "se perdi sei fregato, per puntare scrivi su questo foglio il numero o il nome del pilota vincente<br>" +
+                ColorText.setTextBlue("1) Hamilton<br>") +
+                ColorText.setTextBlue("2) Verstappen<br>") +
+                ColorText.setTextBlue("3) Vettel<br>") +
+                ColorText.setTextBlue("4) Leclerc<br>") +
+                ColorText.setTextBlue("Esci<br>");
 
         this.commands.add(new Command("1", Set.of("Hamilton")));
         this.commands.add(new Command("2", Set.of("Verstappen")));
@@ -32,7 +32,7 @@ public class CashierControl extends MiniGame{
     @Override
     public MiniGameInteraction play(ParserOutput output, Inventory inventory) {
         MiniGameInteraction interaction = new MiniGameInteraction(
-                "Due buttafuori coboldi si avvicinano a te e ti portano a lavorare per 3 anni nelle fucine per ripagare il debito perchè :\n",
+                "Due buttafuori coboldi si avvicinano a te e ti portano a lavorare per 3 anni nelle fucine per ripagare il debito perchè :<br>",
                 null,
                 MiniGameInteractionType.EXIT
 
@@ -44,7 +44,7 @@ public class CashierControl extends MiniGame{
                 break;
             case "2":
                 interaction.setInfo("Hai scommesso su Verstappen hai vinto un magnifico premio!" +
-                        "\n" + ColorText.setTextGreen("Hai vinto un manubrio d'oro per la tua auto!"));
+                        "<br>" + ColorText.setTextGreen("Hai vinto un manubrio d'oro per la tua auto!"));
                 interaction.setResult(new SteeringWheel());
                 interaction.setType(MiniGameInteractionType.WIN);
                 break;

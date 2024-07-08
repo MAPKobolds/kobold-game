@@ -36,19 +36,19 @@ public final class PostPage {
     }
 
     private static String buildPage(String content) {
-        return "<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <title>Socket request</title>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "    Ecco il risultato della richiesta con socket client:\n" +
-                "    <br><br>\n" +
-                "    <code>\n" + content + "\n</code>\n" +
-                "        \n" +
-                "\n" +
-                "</body>\n" +
+        return "<!DOCTYPE html><br>" +
+                "<html lang=\"en\"><br>" +
+                "<head><br>" +
+                "    <meta charset=\"UTF-8\"><br>" +
+                "    <title>Socket request</title><br>" +
+                "</head><br>" +
+                "<body><br>" +
+                "    Ecco il risultato della richiesta con socket client:<br>" +
+                "    <br><br><br>" +
+                "    <code><br>" + content + "<br></code><br>" +
+                "        <br>" +
+                "<br>" +
+                "</body><br>" +
                 "</html>";
     }
 

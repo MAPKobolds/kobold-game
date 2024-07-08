@@ -40,7 +40,7 @@ public class HttpPage {
         printWriter.println("HTTP/1.1 200 OK");
         printWriter.println("Content-Type: text/html");
         printWriter.println("Content-Length: " + contentLength);
-        printWriter.println("\r\n");
+        printWriter.println("\r<br>");
     }
 
 }

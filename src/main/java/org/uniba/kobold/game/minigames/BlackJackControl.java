@@ -19,14 +19,14 @@ public class BlackJackControl extends MiniGame{
         blackjackChecker = new BlackjackChecker();
 
         description =
-                ColorText.setTextPurple("\n[Benvento al BlackJack] \n") +
-                        "Il Coboldo Crupier ti da il benvenuto al tavolo del BlackJack\n"+
-                        "ecco la lista dei comandi disponibili: \n" +
-                        ColorText.setTextBlue("gioca/g") + " -> per iniziare una nuova mano \n" +
-                        ColorText.setTextBlue("carta/c") + " -> per chiedere una carta \n" +
-                        ColorText.setTextBlue("stai/s") + " -> per fermarsi\n" +
-                        "come puoi vedere noi coboldi siamo molto bravi a giocare a Blackjack e qui non si gioca con numeri ma con pile di banconote!\n" +
-                        ColorText.setTextBlue("scommetti") +" " + ColorText.setTextPurple("<500/200/100/50>") + "-> per scommettere\n" +
+                ColorText.setTextPurple("<br>[Benvento al BlackJack] <br>") +
+                        "Il Coboldo Crupier ti da il benvenuto al tavolo del BlackJack<br>"+
+                        "ecco la lista dei comandi disponibili: <br>" +
+                        ColorText.setTextBlue("gioca/g") + " -> per iniziare una nuova mano <br>" +
+                        ColorText.setTextBlue("carta/c") + " -> per chiedere una carta <br>" +
+                        ColorText.setTextBlue("stai/s") + " -> per fermarsi<br>" +
+                        "come puoi vedere noi coboldi siamo molto bravi a giocare a Blackjack e qui non si gioca con numeri ma con pile di banconote!<br>" +
+                        ColorText.setTextBlue("scommetti") +" " + ColorText.setTextPurple("<500/200/100/50>") + "-> per scommettere<br>" +
                         ColorText.setTextBlue("esci/e") +" -> per uscire dal gioco";
 
         commands.add(new Command("carta",Set.of("carta","c")));

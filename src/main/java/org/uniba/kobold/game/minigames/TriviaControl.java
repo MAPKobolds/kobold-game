@@ -31,10 +31,10 @@ public class TriviaControl extends MiniGame{
         questions = triviaChecker.getQuestions();
         answers = triviaChecker.getAnswersShuffled();
 
-        this.description = ColorText.setTextBlue("Rispondi a 3 domande su 6 correttamente per vincere il gioco\n");
+        this.description = ColorText.setTextBlue("Rispondi a 3 domande su 6 correttamente per vincere il gioco<br>");
         this.description += questions[0];
         for (int i = 0; i < answers.getFirst().size(); i++) {
-            this.description += ColorText.setTextBlue("\n" + (i + 1) + ") ") + answers.getFirst().get(i);
+            this.description += ColorText.setTextBlue("<br>" + (i + 1) + ") ") + answers.getFirst().get(i);
         }
     }
 
@@ -69,10 +69,10 @@ public class TriviaControl extends MiniGame{
                         result.setResult(new Engine());
                         result.setType(MiniGameInteractionType.WIN);
                     } else {
-                        String ToSend = ColorText.setTextGreen("Risposta corretta") + "\n" + questions[round];
+                        String ToSend = ColorText.setTextGreen("Risposta corretta") + "<br>" + questions[round];
 
                         for (int i = 0; i < answers.get(round).size(); i++) {
-                            ToSend += "\n" + ColorText.setTextBlue((i + 1) + ") ") + answers.get(round).get(i);
+                            ToSend += "<br>" + ColorText.setTextBlue((i + 1) + ") ") + answers.get(round).get(i);
                         }
 
                         result.setInfo(ToSend);
@@ -80,10 +80,10 @@ public class TriviaControl extends MiniGame{
                         score++;
                     }
                 } else {
-                    String ToSend = ColorText.setTextRed("Risposta sbagliata") + "\n" + questions[round];
+                    String ToSend = ColorText.setTextRed("Risposta sbagliata") + "<br>" + questions[round];
 
                     for (int i = 0; i < answers.get(round).size(); i++) {
-                        ToSend += "\n" + ColorText.setTextBlue((i + 1) + ") ") + answers.get(round).get(i);
+                        ToSend += "<br>" + ColorText.setTextBlue((i + 1) + ") ") + answers.get(round).get(i);
                     }
 
                     result.setInfo(ToSend);

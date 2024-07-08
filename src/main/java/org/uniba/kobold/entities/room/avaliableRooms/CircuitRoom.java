@@ -16,7 +16,7 @@ public final class CircuitRoom extends Room {
     public CircuitRoom() {
         super("circuito",
                 "Nel circuito ci sono molti coboldi che scommettono, rivolgendosi alla " + ColorText.setTextOrange("cassiera") +
-                        " \nAlcuni hanno vinto alcune pezzi di auto e esultano, altri sono in completamente disperati per aver perso tutto.",
+                        " <br>Alcuni hanno vinto alcune pezzi di auto e esultano, altri sono in completamente disperati per aver perso tutto.",
                 "/img/BR.png",
                 List.of(),
                 List.of(

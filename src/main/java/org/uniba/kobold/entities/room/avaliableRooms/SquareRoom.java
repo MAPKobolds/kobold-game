@@ -17,12 +17,12 @@ public final class SquareRoom extends Room {
 
     public SquareRoom() {
         super("spiazzale",
-                "Lo spiazzale si trova all'uscita del BAR ed è un posto di ritrovo dei coboldi, circondato da altri palazzi abitati da altri coboldi.\n" +
+                "Lo spiazzale si trova all'uscita del BAR ed è un posto di ritrovo dei coboldi, circondato da altri palazzi abitati da altri coboldi.<br>" +
                         "Di fronte a te noti dei cartelli che indicano dei luoghi di interesse: " +
-                        ColorText.setTextPurple("\nfucine") +
-                        ColorText.setTextPurple("\npiste") +
-                        ColorText.setTextPurple("\ngeneratore") +
-                        ColorText.setTextPurple("\npalazzo reale \n") +
+                        ColorText.setTextPurple("<br>fucine") +
+                        ColorText.setTextPurple("<br>piste") +
+                        ColorText.setTextPurple("<br>generatore") +
+                        ColorText.setTextPurple("<br>palazzo reale <br>") +
                         "C'è un "+ ColorText.setTextPurple("cancello") + " chiuso che blocca l'accesso al palazzo reale lo devi " + ColorText.setTextBlue("sfondare") + " per entrare",
                 "/img/BR.png",
                 List.of(),
@@ -43,7 +43,7 @@ public final class SquareRoom extends Room {
 
         switch (command.getCommand().getName()) {
             case "guarda davanti":
-                result.setSubject("Di fronte, oltre ai cartelli c'è l'entrata del " + ColorText.setTextPurple("palazzo\n")+". È protetta e chiusa, è impossibile entrarci, " +
+                result.setSubject("Di fronte, oltre ai cartelli c'è l'entrata del " + ColorText.setTextPurple("palazzo<br>")+". È protetta e chiusa, è impossibile entrarci, " +
                         ColorText.setTextBlue("forse qualcosa di veloce la potrebbe sfondare"));
                 break;
             case "guarda dietro":

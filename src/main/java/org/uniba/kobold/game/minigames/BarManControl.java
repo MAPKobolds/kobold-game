@@ -28,7 +28,7 @@ public class BarManControl extends MiniGame{
         market.add("pacco da 2^4 " + ColorText.setTextGreen("birre") + " [50]");
         market.add(ColorText.setTextBlue("Esci"));
 
-        this.description = "Benvenuto al bar, cosa vuoi fare?"+ "\n" + String.join("\n", options);
+        this.description = "Benvenuto al bar, cosa vuoi fare?"+ "<br>" + String.join("<br>", options);
         this.commands.add(new Command("1", Set.of("uno")));
         this.commands.add(new Command("2", Set.of("due")));
         this.commands.add(new Command("3", Set.of("tre")));
@@ -52,7 +52,7 @@ public class BarManControl extends MiniGame{
                 switch (output.getCommand().getName()) {
 
                     case "1" -> {
-                        interaction.setInfo("\n"+String.join(("\n"), market));
+                        interaction.setInfo("<br>"+String.join(("<br>"), market));
                         interaction.setType(MiniGameInteractionType.INFO);
                         state = 1;
                     }
@@ -108,7 +108,7 @@ public class BarManControl extends MiniGame{
                         }
                     }
                     case "esci" -> {
-                        interaction.setInfo("Buona Sbronza " + "\n" + String.join("\n", options));
+                        interaction.setInfo("Buona Sbronza " + "<br>" + String.join("<br>", options));
                         interaction.setType(MiniGameInteractionType.INFO);
                         state = 0;
                     }

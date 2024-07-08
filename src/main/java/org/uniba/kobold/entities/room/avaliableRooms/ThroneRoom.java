@@ -35,7 +35,7 @@ public final class ThroneRoom extends Room {
         switch (command.getCommand().getName()) {
             case "guarda davanti":
                 result.setSubject("Di fronte, c'è l'enorme trono di cianfrusaglie del re coboldo." +
-                        "\nIl re ti sta fissando con aria quasi scocciata");
+                        "<br>Il re ti sta fissando con aria quasi scocciata");
                 break;
             case "guarda dietro":
                 result.setSubject("Guardi dietro e vedi il corridoio del " + ColorText.setTextPurple("palazzo") + ", " +

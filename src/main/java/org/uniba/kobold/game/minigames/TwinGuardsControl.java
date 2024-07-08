@@ -11,15 +11,15 @@ public class TwinGuardsControl extends MiniGame{
 
     public TwinGuardsControl() {
         this.description = "I due guardiani ti guardano e ti chiedono cosa vuoi fare :" +
-                ColorText.setTextBlue("\n1) Passare") +
-                ColorText.setTextBlue("\n2) Giocare con loro");
+                ColorText.setTextBlue("<br>1) Passare") +
+                ColorText.setTextBlue("<br>2) Giocare con loro");
         this.commands.add(new Command("1", Set.of("Passare")));
         this.commands.add(new Command("2", Set.of("Andare via")));
     }
     @Override
     public MiniGameInteraction play(ParserOutput output, Inventory inventory) {
         MiniGameInteraction interaction = new MiniGameInteraction(
-                "I due guardiani ti guardano male e ti respingono\n",
+                "I due guardiani ti guardano male e ti respingono<br>",
                 null,
                 MiniGameInteractionType.EXIT
         );

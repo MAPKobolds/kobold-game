@@ -17,8 +17,8 @@ public final class ForgeRoom extends Room {
 
     public ForgeRoom() {
         super("fucine",
-                "Le fucine sono un posto molto caldo,vedi dei pezzi di metallo su un "+ ColorText.setTextBlue("rullo") +" fra cui delle carrozzerie di auto che vengono fusi.\nSul nastro ci sono pezzi di carrozzeria." +
-                        "Ti sembra di aver visto qualcosa di interessante sul " + ColorText.setTextBlue("rullo") + ",\nvedi a destra una " + ColorText.setTextBlue("forgia") + " per la fusione dei pezzi di metallo forse potresti creare qualcosa di utile",
+                "Le fucine sono un posto molto caldo,vedi dei pezzi di metallo su un "+ ColorText.setTextBlue("rullo") +" fra cui delle carrozzerie di auto che vengono fusi.<br>Sul nastro ci sono pezzi di carrozzeria." +
+                        "Ti sembra di aver visto qualcosa di interessante sul " + ColorText.setTextBlue("rullo") + ",<br>vedi a destra una " + ColorText.setTextBlue("forgia") + " per la fusione dei pezzi di metallo forse potresti creare qualcosa di utile",
                 "/img/BR.png",
                 List.of(),
                 Arrays.asList(

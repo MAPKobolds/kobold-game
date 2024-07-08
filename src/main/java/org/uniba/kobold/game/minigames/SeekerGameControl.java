@@ -39,11 +39,11 @@ public class SeekerGameControl extends MiniGame {
         }
 
         itemList.addAll(items);
-        description = "Cerca i tuoi pezzi in mezzo alla spazzatura \n" +
-            "ecco la lista dei comandi disponibili: \n" +
-            ColorText.setTextBlue("cerca <destra/sinistra>") + " -> per andare avanti al prossimo pezzo \n" +
-            ColorText.setTextBlue("guarda") +"-> guarda l'oggetto corrente \n" +
-            ColorText.setTextBlue("prendi") +" -> per prendere il pezzo giusto \n";
+        description = "Cerca i tuoi pezzi in mezzo alla spazzatura <br>" +
+            "ecco la lista dei comandi disponibili: <br>" +
+            ColorText.setTextBlue("cerca <destra/sinistra>") + " -> per andare avanti al prossimo pezzo <br>" +
+            ColorText.setTextBlue("guarda") +"-> guarda l'oggetto corrente <br>" +
+            ColorText.setTextBlue("prendi") +" -> per prendere il pezzo giusto <br>";
 
         commands.add(new Command("cerca destra", Set.of("sposta", "vai")));
         commands.add(new Command("cerca sinistra", Set.of("sposta", "vai")));
@@ -60,11 +60,11 @@ public class SeekerGameControl extends MiniGame {
         }
 
         itemList.addAll(items);
-        description = "Cerca i tuoi pezzi in mezzo alla spazzatura \n" +
-                "ecco la lista dei comandi disponibili: \n" +
-                ColorText.setTextBlue( "cerca <destra/sinistra>") + " -> per andare avanti al prossimo pezzo \n" +
-                ColorText.setTextBlue("guarda") + " -> guarda l'oggetto corrente \n" +
-                ColorText.setTextBlue("prendi") + " -> per prendere il pezzo giusto \n";
+        description = "Cerca i tuoi pezzi in mezzo alla spazzatura <br>" +
+                "ecco la lista dei comandi disponibili: <br>" +
+                ColorText.setTextBlue( "cerca <destra/sinistra>") + " -> per andare avanti al prossimo pezzo <br>" +
+                ColorText.setTextBlue("guarda") + " -> guarda l'oggetto corrente <br>" +
+                ColorText.setTextBlue("prendi") + " -> per prendere il pezzo giusto <br>";
 
         commands.add(new Command("cerca destra", Set.of("sposta", "vai")));
         commands.add(new Command("cerca sinistra", Set.of("sposta", "vai")));

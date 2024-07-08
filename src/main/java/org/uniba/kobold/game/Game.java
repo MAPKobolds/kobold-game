@@ -164,7 +164,7 @@ public class Game {
                     gameCommandResult.setGameCommandResultType(GameCommandResultType.MOVE);
 
                 } catch (RoomNotAccessibleError e) {
-                    gameCommandResult.setDescription(ColorText.setTextRed("Non puoi andare in quella direzione devi fare prima qualcosa!!!\n"));
+                    gameCommandResult.setDescription(ColorText.setTextRed("Non puoi andare in quella direzione devi fare prima qualcosa!!!<br>"));
                 }
             }
             case PLAY -> {

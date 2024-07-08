@@ -2,31 +2,31 @@ package org.uniba.kobold.util;
 
 public class ColorText {
 
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_ORANGE = "\u001B[38;5;208m";
+    public static final String RESET = "</span><span style='color: white;'>";
+    public static final String RED = "<span style=\"color: rgb(255, 0, 0);\">";
+    public static final String GREEN = "<span style=\"color: rgb(0, 255, 0);\">";
+    public static final String BLUE = "<span style=\"color: rgb(0, 0, 255);\">";
+    public static final String PURPLE = "<span style=\"color: rgb(128, 0, 128);\">";
+    public static final String ORANGE = "<span style=\"color: rgb(255, 165, 0);\">";
 
     public static String setTextGreen(String text) {
-        return ANSI_GREEN + text + ANSI_RESET;
+        return GREEN + text + RESET;
     }
 
     public static String setTextRed(String text) {
-        return ANSI_RED + text + ANSI_RESET;
+        return RED + text + RESET;
     }
 
     public static String setTextBlue(String text) {
-        return ANSI_BLUE + text + ANSI_RESET;
+        return BLUE + text + RESET;
     }
 
     public static String setTextPurple(String text) {
-        return ANSI_PURPLE + text + ANSI_RESET;
+        return PURPLE + text + RESET;
     }
 
     public static  String setTextOrange(String text) {
-        return ANSI_ORANGE + text + ANSI_RESET;
+        return ORANGE + text + RESET;
     }
 
 }
