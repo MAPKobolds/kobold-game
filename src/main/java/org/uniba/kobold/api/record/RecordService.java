@@ -2,16 +2,15 @@ package org.uniba.kobold.api.record;
 
 import com.google.gson.Gson;
 import org.uniba.kobold.rest.models.Record;
-
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 public class RecordService {
     private String basePath = "http://localhost:8000/records";
     private Client client = ClientBuilder.newClient();
     private Gson gson = new Gson();
-
 
     public int saveGameRecord(String playerName, Long time) {
         Record record = new Record(playerName, time, 0);
@@ -28,6 +27,20 @@ public class RecordService {
             return response.getStatus();
         } catch (Exception e){
             throw new RuntimeException("Failed to make request to save record", e);
+        }
+    }
+
+    public List<Record> getBestRecord() {
+        WebTarget target = client.target(basePath + "/best");
+        String responseBody;
+
+        try {
+            Response resp = target.request(MediaType.APPLICATION_JSON).get();
+            responseBody = resp.readEntity(String.class);
+
+            return List.of(gson.fromJson(responseBody, Record[].class));
+        }catch (Exception e){
+            throw new RuntimeException("Failed to make request to " , e);
         }
     }
 
