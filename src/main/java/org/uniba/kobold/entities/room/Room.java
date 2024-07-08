@@ -52,7 +52,7 @@ abstract public class Room {
         return commands;
     }
 
-    public RoomInteractionResult ispeziona (ParserOutput command, Inventory inventory) {
+    public RoomInteractionResult inspect(ParserOutput command, Inventory inventory) {
         RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
         if (command.getItem() != null) {
             if (inventory.contains(command.getItem().getName()))
@@ -66,12 +66,13 @@ abstract public class Room {
         return result;
     }
 
-    public RoomInteractionResult prendi (ParserOutput command, Inventory inventory){
+    public RoomInteractionResult take (ParserOutput command, Inventory inventory){
         RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
         if (command.getItem() != null) {
             if (items.contains(command.getItem()) && !inventory.contains(command.getItem().getName())) {
-                inventory.addPiece(command.getItem());
+                result.setArgument(command.getItem());
                 result.setSubject("Hai preso " + ColorText.setTextGreen(command.getItem().getName()));
+                result.setResultType(RoomInteractionResultType.ADD_ITEM);
             } else {
                 result.setSubject("Non c'è nessun " + ColorText.setTextGreen(command.getItem().getName()) + " qui");
             }
@@ -83,8 +84,8 @@ abstract public class Room {
 
     public RoomInteractionResult generalCommands(ParserOutput command, Inventory inventory){
         return switch (command.getCommand().getName()) {
-            case "ispeziona" -> ispeziona(command, inventory);
-            case "prendi" -> prendi(command, inventory);
+            case "ispeziona" -> inspect(command, inventory);
+            case "prendi" -> take(command, inventory);
             default -> executeCommand(command, inventory);
         };
     }
