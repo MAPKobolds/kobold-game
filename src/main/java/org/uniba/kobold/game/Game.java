@@ -1,8 +1,8 @@
 package org.uniba.kobold.game;
 
-import com.google.gson.Gson;
 import org.javatuples.Pair;
 import org.uniba.kobold.api.error.*;
+import org.uniba.kobold.api.record.RecordService;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.entities.inventory.availableItems.Car;
@@ -16,17 +16,8 @@ import org.uniba.kobold.parser.ParserUtils;
 import org.uniba.kobold.rest.models.Record;
 import org.uniba.kobold.util.ColorText;
 import org.uniba.kobold.util.TimeManager;
-
-import javax.ws.rs.client.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +29,7 @@ public class Game {
     private String playerName;
     private MiniGame currentGame = null;
     private Inventory inventory;
+    private RecordService recordService = new RecordService();
 
     public Game(String playerName ) throws IOException {
         this.timeManager = new TimeManager();
@@ -216,29 +208,11 @@ public class Game {
         if (result.getType() == MiniGameInteractionType.END_GAME) {
             g.setGameCommandResultType(GameCommandResultType.END);
 
-            this.saveGameRecord(this.playerName, timeManager.getMilliSeconds());
+            this.recordService.saveGameRecord(this.playerName, timeManager.getMilliSeconds());
         }
 
         return g;
     }
 
-    private void saveGameRecord(String playerName, Long time) {
-        Gson gson = new Gson();
-        Record record = new Record(playerName, time, 0);
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8000/records");
 
-        try {
-            Invocation.Builder invocationBuilder = target
-                .request(MediaType.APPLICATION_JSON)
-                .header("Content-Type", "application/json");
-
-            Entity<?> entity = Entity.entity(gson.toJson(record), MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(entity, Response.class);
-
-            System.out.println("RECORD CREATED: " + response.getStatus());
-        } catch (Exception e){
-            throw new RuntimeException("Failed to make request to save record", e);
-        }
-    }
 }
