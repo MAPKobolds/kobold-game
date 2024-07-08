@@ -12,7 +12,6 @@ public class GuiGameRef extends JPanel {
     private JLabel dialogText;
     private JPanel inventoryPanel;
     private JLabel roomName;
-    private int inventoryCount = 0;
     private GuiBackgroundRef gamePanel;
     private JPanel dialogPanel;
     private JLabel timerLabel;
@@ -20,6 +19,7 @@ public class GuiGameRef extends JPanel {
     private JButton menuButton;
     private JButton saveButton;
     private JButton toggleInventoryButton;
+    private int inventoryCount = 0;
     private boolean isGameRunning = true;
     private boolean isInventoryVisible;
 
