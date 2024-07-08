@@ -32,6 +32,9 @@ public class GuiGameRef extends JPanel {
         initComponents(game);
         isInventoryVisible = true;
 
+        this.refreshItem(game);
+        this.refreshGUI(game.getCurrentRoomDescription(), game);
+
         try {
             this.tickTime(game);
         } catch (Exception e) {
@@ -86,7 +89,6 @@ public class GuiGameRef extends JPanel {
 
         //inventoryPanel settings
         inventoryPanel.setBackground(new Color(40, 0, 5));
-        this.refreshItem(game);
 
         //Setting the saveButton logic
         saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -105,6 +107,8 @@ public class GuiGameRef extends JPanel {
     }
 
     public void refreshItem(Game game) {
+        inventoryPanel.removeAll();
+
         inventoryPanel.setLayout(new GridBagLayout());
         game.getInventory().getItems().forEach(this::addItem);
     }

@@ -181,6 +181,10 @@ public class Game {
         return gameCommandResult;
     }
 
+    public  GameCommandResult getCurrentRoomDescription() {
+        return new GameCommandResult(GameCommandResultType.DESCRIPTION, roomPath.getCurrentRoom().getDescription());
+    }
+
     public String getPlayerName() {
         return playerName;
     }
