@@ -1,6 +1,5 @@
 package org.uniba.kobold.tester;
 
-import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.availableItems.*;
 import org.uniba.kobold.game.Game;
 
