@@ -258,7 +258,21 @@ public class GuiGameRef extends JPanel {
         switch (type) {
             case REFRESH_INVENTORY -> this.refreshItem(game);
             case MOVE -> this.updateGamePanel(game.getCurrentRoomMap().getCurrentRoom().getBackgroundImage());
+            case END -> this.endGame(game.getTimeManager().getTime());
         }
+    }
+
+    private void endGame(String time) {
+        this.isGameRunning = false;
+        this.saveButton.setVisible(false);
+        this.inputField.setEnabled(false);
+
+        JOptionPane.showMessageDialog(
+            null,
+            "Hai completato il gioco! \n Tempo di gioco: " + time,
+            "Gioco completato",
+            JOptionPane.INFORMATION_MESSAGE
+        );
     }
 
     private void goToMenu() {
