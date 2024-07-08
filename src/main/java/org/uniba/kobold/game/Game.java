@@ -118,7 +118,7 @@ public class Game {
     private GameCommandResult manageMiniGameInteraction(MiniGameInteraction result) {
         GameCommandResult g = new GameCommandResult(GameCommandResultType.DESCRIPTION, result.getInfo());
 
-        if (       result.getType() == MiniGameInteractionType.EXIT
+        if (result.getType() == MiniGameInteractionType.EXIT
                 || result.getType() == MiniGameInteractionType.WIN
                 || result.getType() == MiniGameInteractionType.UNLOCK
         ) {
@@ -132,6 +132,10 @@ public class Game {
 
         if (result.getType() == MiniGameInteractionType.UNLOCK) {
             roomPath.unlockPath(result.getResult().toString());
+        }
+
+        if (result.getType() == MiniGameInteractionType.END_GAME) {
+            g.setGameCommandResultType(GameCommandResultType.END);
         }
 
         return g;

@@ -6,4 +6,5 @@ public enum MiniGameInteractionType {
     LOSE,
     EXIT,
     UNLOCK,
+    END_GAME
 }

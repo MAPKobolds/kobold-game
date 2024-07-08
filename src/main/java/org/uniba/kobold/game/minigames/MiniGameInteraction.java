@@ -15,7 +15,6 @@ public class MiniGameInteraction {
         return info;
     }
 
-
     public Object getResult() {
         return result;
     }

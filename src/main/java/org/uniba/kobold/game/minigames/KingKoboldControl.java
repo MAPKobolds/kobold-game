@@ -73,7 +73,7 @@ public class KingKoboldControl extends MiniGame {
                     interaction.addInfo(String.join("\n", options));
                 } else {
                     interaction.setInfo("Il re Coboldo ti prende in braccio dicendo che sei il suo consigliere personale e che ti vuole bene\n");
-                    interaction.setType(MiniGameInteractionType.EXIT);
+                    interaction.setType(MiniGameInteractionType.END_GAME);
                 }
             }
 
@@ -125,7 +125,7 @@ public class KingKoboldControl extends MiniGame {
                 }else{
                     if (inventory.contains("maglio")) {
                         interaction.setInfo(ColorText.setTextGreen("Cerignolus brucia e tu scappi via\n"));
-                        interaction.setType(MiniGameInteractionType.EXIT);
+                        interaction.setType(MiniGameInteractionType.END_GAME);
                     } else {
 
                         interaction.setInfo(ColorText.setTextRed("Non hai nulla di infiammabile da buttare sotto il trono\n"));
@@ -137,15 +137,15 @@ public class KingKoboldControl extends MiniGame {
 
             case "5" -> {
                 if (thirdQ) {
-                    interaction.setInfo(ColorText.setTextGreen("uccidi il Re Coboldo e prendi il suo trono\n"));
-                    interaction.setType(MiniGameInteractionType.EXIT);
+                    interaction.setInfo(ColorText.setTextGreen("Uccidi il Re Coboldo e prendi il suo trono\n"));
+                    interaction.setType(MiniGameInteractionType.END_GAME);
                 }
             }
 
             case "6" -> {
                 if (thirdQ) {
-                    interaction.setInfo(ColorText.setTextGreen("scappi via con la tua auto\n"));
-                    interaction.setType(MiniGameInteractionType.EXIT);
+                    interaction.setInfo(ColorText.setTextGreen("Scappi via con la tua auto\n"));
+                    interaction.setType(MiniGameInteractionType.END_GAME);
                 }
             }
 
