@@ -77,4 +77,21 @@ public class TimeManager {
             seconds = Integer.parseInt(split[2]);
         }
     }
+
+    public long getMilliSeconds() {
+        return (long) getSeconds() * 1000 + (long) getMinutes() * 60 * 1000 + (long) getHours() * 60 * 60 * 1000;
+    }
+
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
 }
