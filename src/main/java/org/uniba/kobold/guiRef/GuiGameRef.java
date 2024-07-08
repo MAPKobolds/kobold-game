@@ -10,11 +10,10 @@ import java.awt.*;
 
 public class GuiGameRef extends JPanel {
     private static JLabel dialogText;
-    private static GuiBackgroundRef gamePanel;
     private static JPanel inventoryPanel;
     private static JLabel roomName;
     private static int inventoryCount = 0;
-    private static final String BACKGROUND_PATH = "/img/pporc.png";
+    private GuiBackgroundRef gamePanel;
     private JPanel dialogPanel;
     private JLabel timerLabel;
     private JTextField inputField;
@@ -45,7 +44,7 @@ public class GuiGameRef extends JPanel {
         dialogPanel = new JPanel();
         dialogText = new JLabel();
         inventoryPanel = new JPanel();
-        gamePanel = new GuiBackgroundRef(BACKGROUND_PATH);
+        gamePanel = new GuiBackgroundRef(game.getCurrentRoomMap().getCurrentRoom().getBackgroundImage());
         roomName = new JLabel();
         inputField = new JTextField();
         timerLabel = new JLabel();
@@ -165,7 +164,7 @@ public class GuiGameRef extends JPanel {
         }).start();
     }
 
-    public static void updateGamePanel(String path) {
+    public void updateGamePanel(String path) {
         gamePanel.updateBackground(path);
     }
 
@@ -258,10 +257,7 @@ public class GuiGameRef extends JPanel {
 
         switch (type) {
             case REFRESH_INVENTORY -> this.refreshItem(game);
-            case MOVE -> {
-                //TODO refresh bg
-                //refresh bg
-            }
+            case MOVE -> this.updateGamePanel(game.getCurrentRoomMap().getCurrentRoom().getBackgroundImage());
         }
     }
 
