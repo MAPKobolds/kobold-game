@@ -1,6 +1,5 @@
 package org.uniba.kobold.guiRef;
 
-import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.game.Game;
 import org.uniba.kobold.game.GameCommandResult;
