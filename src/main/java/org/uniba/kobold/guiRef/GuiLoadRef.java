@@ -1,6 +1,5 @@
 package org.uniba.kobold.guiRef;
 
-import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.game.Game;
 import org.uniba.kobold.util.*;
 import java.util.List;
@@ -14,7 +13,7 @@ public class GuiLoadRef extends JPanel {
     private static final String BACKGROUND_PATH = "/img/pporc.png";
     private JPanel scrollContainer;
     private JButton menuButton;
-    private static JPanel savesContainer;
+    private JPanel savesContainer;
     private JScrollPane scroller;
 
     public GuiLoadRef() {
