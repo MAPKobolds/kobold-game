@@ -9,10 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GuiGameRef extends JPanel {
-    private static JLabel dialogText;
-    private static JPanel inventoryPanel;
-    private static JLabel roomName;
-    private static int inventoryCount = 0;
+    private JLabel dialogText;
+    private JPanel inventoryPanel;
+    private JLabel roomName;
+    private int inventoryCount = 0;
     private GuiBackgroundRef gamePanel;
     private JPanel dialogPanel;
     private JLabel timerLabel;
@@ -146,8 +146,8 @@ public class GuiGameRef extends JPanel {
         repaint();
     }
 
-    public static void setDialogLabel(String message) {
-        dialogText.setText("<html>" + message + "</html>");
+    public void setDialogLabel(String message) {
+        this.dialogText.setText("<html>" + message + "</html>");
     }
 
     public synchronized void tickTime(Game game) {
