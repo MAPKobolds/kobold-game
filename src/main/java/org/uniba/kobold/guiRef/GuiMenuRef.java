@@ -15,7 +15,7 @@ public class GuiMenuRef extends JPanel {
     private JPanel buttonsContainer;
     private JButton loadButton;
     private JButton siteButton;
-    private static final String BACKGROUND_PATH = "/img/pporc.png";
+    private static final String BACKGROUND_PATH = "/img/wall.png";
 
     /**
      * Constructor of the class GuiBackgroundPanel

@@ -10,7 +10,7 @@ public class GuiLoadingScreenRef extends JPanel{
     /**
      * Attributes of the class GuiLoadingScreenRef
      */
-    private static final String BACKGROUND_PATH = "/img/pporc.png";
+    private static final String BACKGROUND_PATH = "/img/wall.png";
     private JProgressBar progressBar;
 
     public GuiLoadingScreenRef(Game game) {

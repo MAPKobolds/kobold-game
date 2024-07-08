@@ -74,9 +74,6 @@ public class GuiHubRef extends JFrame {
     }
 
     private static void switchPanel(JPanel panel, String name) {
-        /*if(panel.getComponents().length < 2) {
-            throw new Error("There must be at least 2 panels");
-        }*/
 
         masterPanel.remove(masterPanel.getComponents().length-1);
         masterPanel.add(panel, name);

@@ -1,5 +1,6 @@
 package org.uniba.kobold.guiRef;
 
+import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.game.Game;
 import org.uniba.kobold.game.GameCommandResult;
@@ -9,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GuiGameRef extends JPanel {
-    private JEditorPane dialogText;
+    private JTextPane dialogText;
     private JPanel inventoryPanel;
     private JLabel roomName;
     private GuiBackgroundRef gamePanel;
@@ -22,7 +23,7 @@ public class GuiGameRef extends JPanel {
     private int inventoryCount = 0;
     private boolean isGameRunning = true;
     private boolean isInventoryVisible;
-
+    Image backgroundImage = new ImageIcon("src/main/resources/img/rocks2.png").getImage();
     /**
      * Creates new form containerPanel
      */
@@ -40,10 +41,18 @@ public class GuiGameRef extends JPanel {
         }
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
+
     private void initComponents(Game game) {
         dialogPanel = new JPanel();
-        dialogText = new JEditorPane();
-        inventoryPanel = new JPanel();
+        dialogText = new JTextPane();
+        inventoryPanel = new GuiBackgroundPanel("src/main/resources/img/wall.png");
         gamePanel = new GuiBackgroundRef(game.getCurrentRoomMap().getCurrentRoom().getBackgroundImage());
         roomName = new JLabel();
         inputField = new JTextField();
@@ -52,30 +61,30 @@ public class GuiGameRef extends JPanel {
         setBackground(Color.BLACK);
 
         //Setting the buttons up
-        menuButton = new GuiGenericButton(
-                "Menu",
-                new Color(40, 0, 5),
-                Color.WHITE
+        menuButton = new GuiImageButton(
+                "src/main/resources/img/rocks.png",
+                "Menù"
         ).getButton();
 
-        saveButton = new GuiGenericButton(
-                "Salva",
-                new Color(40, 0, 5),
-                Color.WHITE
+
+        saveButton = new GuiImageButton(
+                "src/main/resources/img/rocks.png",
+                "Salva"
         ).getButton();
 
-        toggleInventoryButton = new GuiGenericButton(
-                "Mostra",
-                new Color(40, 0, 5),
-                Color.WHITE
+        toggleInventoryButton = new GuiImageButton(
+                "src/main/resources/img/rocks.png",
+                "Mostra"
         ).getButton();
+
         toggleInventoryButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         toggleInventoryButton.addActionListener(_ -> toggleInventory());
 
         //Setting the dialogText
-        dialogText.setFont(new Font("Arial", Font.BOLD, 16));
-        dialogText.setBackground(new Color(40, 0, 5));
+        dialogText.setBackground(new Color(0,0,0));
         dialogText.setContentType("text/html");
+        dialogText.setEditable(false);
+        dialogText.setFocusable(false);
 
         //Setting the inputField
         inputField.addActionListener(_ -> readInput(game));
@@ -85,8 +94,6 @@ public class GuiGameRef extends JPanel {
         timerLabel.setFont(new Font("Arial", Font.BOLD, 16));
         timerLabel.setFocusable(false);
 
-        //inventoryPanel settings
-        inventoryPanel.setBackground(new Color(40, 0, 5));
 
         //Setting the saveButton logic
         saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -98,6 +105,7 @@ public class GuiGameRef extends JPanel {
 
         dialogPanel.setBackground(new Color(40, 0, 5));
 
+
         if (GuiHubRef.isGuiActive()) {
             GuiHubRef.setGameToolbar(timerLabel, saveButton, menuButton, toggleInventoryButton);
         }
@@ -108,11 +116,14 @@ public class GuiGameRef extends JPanel {
         inventoryPanel.removeAll();
 
         inventoryPanel.setLayout(new GridBagLayout());
+        inventoryCount = 0;
         game.getInventory().getItems().forEach(this::addItem);
     }
 
     public void addItem(Item item) {
+        System.out.println(inventoryCount);
         JButton itemButton = new GuiObjectButton(item.getName(), item.getImage());
+        itemButton.setPreferredSize(new Dimension(70, 70));
         itemButton.setVisible(true);
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridManager(gridBagConstraints, inventoryCount);
@@ -124,14 +135,14 @@ public class GuiGameRef extends JPanel {
     }
 
     private static void gridManager(GridBagConstraints gridBagConstraints, int i) {
-        int columns = 3;
+        int columns = 2;
         gridBagConstraints.gridx = i % columns;
         gridBagConstraints.gridy = i / columns;
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = GridBagConstraints.NORTHEAST;
         gridBagConstraints.ipady = 50;
-        gridBagConstraints.ipadx = 30;
-        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHEAST;
+        gridBagConstraints.weightx = 0;
         gridBagConstraints.weighty = 0;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
     }
@@ -147,7 +158,37 @@ public class GuiGameRef extends JPanel {
     }
 
     public void setDialogLabel(String message) {
-        this.dialogText.setText("<html>" + message + "</html>");
+
+        this.dialogText.setText("<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "    \n" +
+                "    <!-- Embedding font using @font-face -->\n" +
+                "    <style>\n" +
+                "        @font-face {\n" +
+                "            font-family: 'Minecraft';\n" +
+                "            src: url('src/main/resources/fonts/minecraft.ttf') format('truetype');\n" +
+                "            font-weight: normal;\n" +
+                "            font-style: normal;\n" +
+                "        }\n" +
+                "        \n" +
+                "        /* Apply the custom font directly to elements */\n" +
+                "        body {\n" +
+                "            font-family: 'Minecraft', sans-serif;\n" +
+                "            font-size: 16px;\n" +
+                "        }\n" +
+                "        \n" +
+                "        h1, h2, h3 {\n" +
+                "            font-family: 'Minecraft', serif;\n" +
+                "        }\n" +
+                "    </style>\n" +
+                "    \n" +
+                "    <title>Minecraft Font Example</title>\n" +
+                "</head>\n" +
+                "<body>\n" +  message + "</body>\n" +
+                "</html>");
     }
 
     public synchronized void tickTime(Game game) {
@@ -253,7 +294,7 @@ public class GuiGameRef extends JPanel {
 
     public void refreshGUI(GameCommandResult gameCommandResult, Game game) {
         GameCommandResultType type = gameCommandResult.getGameCommandResultType();
-        dialogText.setText("<span style='color: white;'>" + gameCommandResult.getDescription() + "</span>");
+        setDialogLabel("<span style='color: white;'>" + gameCommandResult.getDescription() + "</span>");
         switch (type) {
             case REFRESH_INVENTORY -> this.refreshItem(game);
             case MOVE -> this.updateGamePanel(game.getCurrentRoomMap().getCurrentRoom().getBackgroundImage());

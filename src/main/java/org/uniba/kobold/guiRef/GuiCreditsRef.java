@@ -12,7 +12,7 @@ public class GuiCreditsRef extends JPanel {
     private JPanel sgaramellaPanel;
     private JPanel tokensPanel;
     private JPanel zippoPanel;
-    private static final String BACKGROUND_PATH = "/img/pporc.png";
+    private static final String BACKGROUND_PATH = "/img/wall.png";
     private static final String PORCELLI_PATH = "/img/PorcelliToken.png";
     private static final String SGARAMELLA_PATH = "/img/SgaramellaToken.png";
     private static final String ZIPPO_PATH = "/img/ZippoToken.png";

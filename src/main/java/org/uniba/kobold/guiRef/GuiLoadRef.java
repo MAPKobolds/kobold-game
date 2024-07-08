@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class GuiLoadRef extends JPanel {
 
-    private static final String BACKGROUND_PATH = "/img/pporc.png";
+    private static final String BACKGROUND_PATH = "/img/wall.png";
     private JPanel scrollContainer;
     private JButton menuButton;
     private JPanel savesContainer;
