@@ -24,7 +24,7 @@ public final class SquareRoom extends Room {
                         ColorText.setTextPurple("<br>generatore") +
                         ColorText.setTextPurple("<br>palazzo reale <br>") +
                         "C'è un "+ ColorText.setTextPurple("cancello") + " chiuso che blocca l'accesso al palazzo reale lo devi " + ColorText.setTextBlue("sfondare") + " per entrare",
-                "/img/BR.png",
+                "/img/rooms/square.png",
                 List.of(),
                 Arrays.asList(
                     new Command("vai taverna", Set.of("taverna")),

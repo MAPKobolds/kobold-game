@@ -9,6 +9,6 @@ public class FireMaul extends Item {
         super(
                 "maglio", Set.of("maglio di fuoco", "maglio", "magli"),
                 "Un maglio di fuoco che brucia tutto ciò che tocca",
-                "/img/BR.png");
+                "/img/items/firemaul.jpg");
     }
 }

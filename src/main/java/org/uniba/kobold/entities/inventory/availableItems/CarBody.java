@@ -11,7 +11,7 @@ public class CarBody extends Item {
                 "carrozzeria",
                 Set.of("carrozzeria"),
                 "La carrozzeria della tua auto, è rossa e lucida",
-                "/img/BR.png"
+                "/img/items/carbody.jpg"
         );
     }
 }

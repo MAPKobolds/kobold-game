@@ -10,7 +10,7 @@ public class Engine extends Item {
                 "motore",
                 Set.of("motore"),
                 "Il motore della tua auto, è un po' modificato ma va bene lo stesso",
-                "/img/BR.png"
+                "/img/items/engine.jpg"
         );
     }
 }

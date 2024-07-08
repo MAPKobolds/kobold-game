@@ -10,7 +10,7 @@ public class SteeringWheel extends Item {
                 "volante",
                 Set.of("volante","manubrio","manubrio d'oro"),
                 "Il volante della tua auto, è plastificato e lucido",
-                "/img/BR.png"
+                "/img/items/steeringwheel.jpg"
         );
     }
 }

@@ -19,7 +19,7 @@ public final class ThroneRoom extends Room {
         super("trono",
                 "Dopo tanta fatica sei arrivato dal capo di questo posto infernale. Il coboldo più grande che tu abbia mai visto è sul suo trono di " +
                         "rottami è il " + ColorText.setTextOrange("re") +", ti guarda dall'alto verso il basso aspettando la tua mossa",
-                "/img/BR.png",
+                "/img/rooms/throne.jpg",
                 List.of(),
                 List.of(
                         new Command("vai palazzo", Set.of("muoviti")),

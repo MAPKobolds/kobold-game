@@ -10,7 +10,7 @@ public class Car extends Item {
             "auto",
             Set.of(""),
             "La tua auto forse è un po modificata, ma va bene lo stesso",
-            "/img/BR.png"
+            "/img/items/car.jpg"
         );
     }
 }

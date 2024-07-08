@@ -9,6 +9,6 @@ public class GinMoncello extends Item {
         super(
                 "GinMoncello", Set.of("ginmoncello"),
                 "Un liquore a base di gin e limoncello",
-                "/img/BR.png");
+                "/img/items/ginmoncello.jpg");
     }
 }

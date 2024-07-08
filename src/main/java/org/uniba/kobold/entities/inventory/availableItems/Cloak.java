@@ -8,7 +8,7 @@ public class Cloak extends Item {
         super(
             "mantello", Set.of("mantello", "cappa", "mantellaccio" , "un mantello nero" , "/img/BR.png"),
             "Un mantello nero usurato,ti va stretto,<br>ma è sufficente a coprire quasi tutto il tuo corpo.",
-            "/img/BR.png"
+            "/img/items/cloak.jpg"
         );
     }
 
