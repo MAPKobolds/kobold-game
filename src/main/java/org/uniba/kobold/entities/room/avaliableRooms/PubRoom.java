@@ -20,7 +20,7 @@ public final class PubRoom extends Room {
                 "La " + ColorText.setTextPurple("taverna")+" è piena di coboldi,<br>"+ ColorText.setTextBlue("davanti")  +" a te c'è un bancone con un coboldo " + ColorText.setTextOrange("barista") +
                         "<br>sulla tua " + ColorText.setTextBlue("sinistra")  + " ci sono dei coboldi che giocano a carte, mentre" +
                         "<br>sulla tua "+ ColorText.setTextBlue("destra")  +" c'è un'uscita che da su uno " + ColorText.setTextPurple("spiazzale"),
-                "/img/BR.png",
+                "/img/rooms/tavern.jpg",
                 List.of(),
                 Arrays.asList(
                     new Command("vai spiazzale", Set.of("muoviti")),

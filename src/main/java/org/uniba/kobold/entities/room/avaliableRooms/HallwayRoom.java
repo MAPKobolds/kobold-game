@@ -19,7 +19,7 @@ public final class HallwayRoom extends Room {
         super("corridoio",
                 "Sei in un corridoio che si apre ad una strada. Di fronte a te vedi una " + ColorText.setTextPurple("taverna") + " preceduta" +
                     " da delle " + ColorText.setTextOrange("guardie") + ", forse loro sanno qualcosa su questo posto",
-            "/img/BR.png",
+            "/img/rooms/hallway.jpg",
                 List.of(),
             Arrays.asList(
                 new Command("parla guardie", Set.of()),

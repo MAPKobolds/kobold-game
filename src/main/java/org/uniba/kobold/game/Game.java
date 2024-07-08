@@ -5,7 +5,7 @@ import org.uniba.kobold.api.error.*;
 import org.uniba.kobold.api.record.RecordService;
 import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
-import org.uniba.kobold.entities.inventory.availableItems.Car;
+import org.uniba.kobold.entities.inventory.availableItems.*;
 import org.uniba.kobold.entities.room.*;
 import org.uniba.kobold.entities.room.avaliableRooms.*;
 import org.uniba.kobold.errors.RoomNotAccessibleError;
@@ -34,7 +34,7 @@ public class Game {
     public Game(String playerName ) throws IOException {
         this.timeManager = new TimeManager();
         this.playerName = playerName;
-        this.inventory = new Inventory(List.of(new Car()), 800);
+        this.inventory = new Inventory(List.of(new Engine() , new CarBody(), new SteeringWheel()), 800);
 
         StartingRoom r1 = new StartingRoom();
         HallwayRoom r2 = new HallwayRoom();

@@ -9,7 +9,6 @@ import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 import org.uniba.kobold.util.ColorText;
 
-import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -20,7 +19,7 @@ public final class StartingRoom extends Room {
         super("caverna",
             "Ti svegli in una caverna buia, non ricordi come ci sei arrivato, ma senti un forte dolore alla testa.<br>" +
                     "Guardandoti intorno è buio pesto, senti qualcosa di appiccicoso " + ColorText.setTextBlue("sotto") +" di te.<br>",
-            "/img/BR.png",
+                "/img/rooms/cave.jpg",
                 List.of(new Cloak()),
             Arrays.asList(
                 new Command("vai corridoio", Set.of("muoviti")),

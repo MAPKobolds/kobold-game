@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GuiGameRef extends JPanel {
-    private JLabel dialogText;
+    private JEditorPane dialogText;
     private JPanel inventoryPanel;
     private JLabel roomName;
     private GuiBackgroundRef gamePanel;
@@ -42,7 +42,7 @@ public class GuiGameRef extends JPanel {
 
     private void initComponents(Game game) {
         dialogPanel = new JPanel();
-        dialogText = new JLabel();
+        dialogText = new JEditorPane();
         inventoryPanel = new JPanel();
         gamePanel = new GuiBackgroundRef(game.getCurrentRoomMap().getCurrentRoom().getBackgroundImage());
         roomName = new JLabel();
@@ -74,8 +74,8 @@ public class GuiGameRef extends JPanel {
 
         //Setting the dialogText
         dialogText.setFont(new Font("Arial", Font.BOLD, 16));
-        dialogText.setForeground(Color.WHITE);
-        dialogText.setHorizontalAlignment(SwingConstants.CENTER);
+        dialogText.setBackground(new Color(40, 0, 5));
+        dialogText.setContentType("text/html");
 
         //Setting the inputField
         inputField.addActionListener(_ -> readInput(game));
@@ -253,8 +253,7 @@ public class GuiGameRef extends JPanel {
 
     public void refreshGUI(GameCommandResult gameCommandResult, Game game) {
         GameCommandResultType type = gameCommandResult.getGameCommandResultType();
-        dialogText.setText(gameCommandResult.getDescription());
-
+        dialogText.setText("<span style='color: white;'>" + gameCommandResult.getDescription() + "</span>");
         switch (type) {
             case REFRESH_INVENTORY -> this.refreshItem(game);
             case MOVE -> this.updateGamePanel(game.getCurrentRoomMap().getCurrentRoom().getBackgroundImage());

@@ -12,7 +12,7 @@ public class Beers extends Item implements InteractiveItem {
         super(
                 "birre", Set.of("birra"),
                 "Troppe birre forse è meglio non berle tutte",
-                "/img/BR.png");
+                "/img/items/beers.jpg");
     }
 
     @Override
