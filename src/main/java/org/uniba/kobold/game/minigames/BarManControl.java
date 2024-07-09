@@ -19,14 +19,14 @@ public class BarManControl extends MiniGame{
 
     public BarManControl() {
 
-        options.add(ColorText.setTextBlue("1)") + " [" + ColorText.setTextBlue("compra") +"]" + "<"+ColorText.setTextBlue("oggetto")+"> qualcosa dal barman");
+        options.add(ColorText.setTextBlue("1)") + " [" + ColorText.setTextBlue("compra") +"]" + "["+ColorText.setTextBlue("oggetto")+"] qualcosa dal barman");
         options.add(ColorText.setTextBlue("2)") + " Chiedi al barman cosa consiglia");
         options.add(ColorText.setTextBlue("3)") + " Chiedi al barman come funziona qui sotto");
-        options.add(ColorText.setTextBlue("Esci"));
+        options.add(ColorText.setTextBlue("esci"));
 
-        market.add(ColorText.setTextGreen("GinMoncello") + " [500]");
-        market.add("pacco da 2^4 " + ColorText.setTextGreen("birre") + " [50]");
-        market.add(ColorText.setTextBlue("Esci"));
+        market.add(ColorText.setTextGreen("GinMoncello") + ColorText.setTextYellow(" [500]"));
+        market.add("pacco da 2^4 " + ColorText.setTextGreen("birre") + ColorText.setTextYellow(" [50]"));
+        market.add(ColorText.setTextBlue("esci"));
 
         this.description = "Benvenuto al bar, cosa vuoi fare?"+ "<br>" + String.join("<br>", options);
         this.commands.add(new Command("1", Set.of("uno")));
@@ -52,17 +52,18 @@ public class BarManControl extends MiniGame{
                 switch (output.getCommand().getName()) {
 
                     case "1" -> {
-                        interaction.setInfo("<br>"+String.join(("<br>"), market));
+                        interaction.setInfo("Puoi comprare queste cose:<br>"+String.join(("<br>"), market));
                         interaction.setType(MiniGameInteractionType.INFO);
                         state = 1;
                     }
+
                     case "2" -> {
-                        interaction.setInfo("Il barman ti dice che il suo liquore migliore è il " + ColorText.setTextGreen("GinMoncello"));
+                        interaction.setInfo("Il barman ti dice che il suo liquore migliore è il " + ColorText.setTextGreen("GinMoncello") + "<br>" + this.description);
                         interaction.setType(MiniGameInteractionType.INFO);
                     }
 
                     case "3" -> {
-                        interaction.setInfo("Il barman ti dice che a cerignolus i clienti sono sempre i benvenuti , qui si gioca a carte , si ruba e si beve non ci piace chi non rispetta le regole");
+                        interaction.setInfo("Il barman ti dice che a cerignolus i clienti sono sempre i benvenuti , qui si gioca a carte , si ruba e si beve non ci piace chi non rispetta le regole" + "<br>" + this.description);
                         interaction.setType(MiniGameInteractionType.INFO);
                     }
 
@@ -76,39 +77,47 @@ public class BarManControl extends MiniGame{
             case 1:
                 switch (output.getCommand().getName()) {
                     case "compra ginmoncello" -> {
-                        interaction.setInfo("Hai comprato il GinMoncello");
+                        interaction.setInfo(ColorText.setTextGreen("Hai comprato il GinMoncello"));
                         if (inventory.getMoney() >= 500) {
                             if (inventory.contains("GinMoncello")) {
-                                interaction.setInfo("Hai già comprato il GinMoncello");
+                                interaction.setInfo(ColorText.setTextRed("Hai già comprato il GinMoncello!"));
                                 interaction.setType(MiniGameInteractionType.INFO);
+                                interaction.addInfo("<br>" + String.join("<br>", options));
+                                state = 0;
                             } else {
                                 inventory.removeMoney(500);
                                 interaction.setResult(new GinMoncello());
                                 interaction.setType(MiniGameInteractionType.WIN);
                             }
                         }else{
-                            interaction.setInfo("Non hai abbastanza soldi");
+                            interaction.setInfo(ColorText.setTextRed("Non hai abbastanza soldi"));
                             interaction.setType(MiniGameInteractionType.INFO);
+                            interaction.addInfo("<br>" + String.join("<br>", options));
+                            state = 0;
                         }
                     }
                     case "compra birre" -> {
                         if (inventory.getMoney() >= 50) {
                             if (inventory.contains("birra")) {
-                                interaction.setInfo("Hai già comprato il pacco da 2^4 birre");
+                                interaction.setInfo(ColorText.setTextRed("Hai già comprato il pacco da 2^4 birre"));
                                 interaction.setType(MiniGameInteractionType.INFO);
+                                interaction.addInfo("<br>" + String.join("<br>", options));
+                                state = 0;
                             } else {
                                 inventory.removeMoney(50);
-                                interaction.setInfo("Hai comprato il pacco da 2^4 birre");
+                                interaction.setInfo(ColorText.setTextGreen("Hai comprato il pacco da 2^4 birre"));
                                 interaction.setResult(new Beers());
                                 interaction.setType(MiniGameInteractionType.WIN);
                             }
                         }else{
-                            interaction.setInfo("Non hai abbastanza soldi");
+                            interaction.setInfo(ColorText.setTextRed("Non hai abbastanza soldi"));
                             interaction.setType(MiniGameInteractionType.INFO);
+                            interaction.addInfo("<br>" + String.join("<br>", options));
+                            state = 0;
                         }
                     }
                     case "esci" -> {
-                        interaction.setInfo("Buona Sbronza " + "<br>" + String.join("<br>", options));
+                        interaction.setInfo(ColorText.setTextGreen("Buona sbronza! " + "<br>" + String.join("<br>", options)));
                         interaction.setType(MiniGameInteractionType.INFO);
                         state = 0;
                     }

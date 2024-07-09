@@ -13,7 +13,6 @@ import org.uniba.kobold.game.minigames.*;
 import org.uniba.kobold.parser.Parser;
 import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.parser.ParserUtils;
-import org.uniba.kobold.rest.models.Record;
 import org.uniba.kobold.util.ColorText;
 import org.uniba.kobold.util.TimeManager;
 import java.io.File;
@@ -38,7 +37,7 @@ public class Game {
 
         StartingRoom r1 = new StartingRoom();
         HallwayRoom r2 = new HallwayRoom();
-        PubRoom r3 = new PubRoom();
+        TavernRoom r3 = new TavernRoom();
         SquareRoom r4 = new SquareRoom();
         ForgeRoom r5 = new ForgeRoom();
         CircuitRoom r6 = new CircuitRoom();
@@ -71,7 +70,6 @@ public class Game {
                 Pair.with(r9, new RoomPath(List.of(Pair.with(r8, true))))
         ));
 
-        //TODO: Qui per output in gui
     }
 
     public Game(String playerName, RoomsMap roomPath, String time, Inventory inventory) throws IOException {
@@ -99,7 +97,7 @@ public class Game {
 
 
         if (parsedCommand == null || parsedCommand.getCommand() == null) {
-            result.setDescription("Cosa vuoi fare non sto capendo?");
+            result.setDescription((currentGame != null ? currentGame.getDescription() : currentRoom.getDescription()) + ColorText.setTextRed("<br>Cosa vuoi fare non sto capendo!"));
             return result;
         }
 
@@ -125,7 +123,7 @@ public class Game {
             case NOTHING -> gameCommandResult.setDescription("Non posso fare nulla");
             case DESCRIPTION -> gameCommandResult.setDescription(result.getSubject());
             case UNLOCK -> {
-                this.printAndConsole( "hai sbloccato il percorso per " +ColorText.setTextPurple( result.getSubject()));
+                gameCommandResult.setDescription( "hai sbloccato il percorso per " + ColorText.setTextPurple( result.getSubject()));
                 this.roomPath.unlockPath(result.getSubject());
             }
             case ADD_ITEM -> {
@@ -137,13 +135,14 @@ public class Game {
             case MOVE -> {
                 try {
                     roomPath.moveTo(result.getSubject());
-                    gameCommandResult.setDescription(roomPath.getCurrentRoom().getDescription());
+                    gameCommandResult.setDescription(roomPath.getCurrentRoom().getDescription() );
                     gameCommandResult.setGameCommandResultType(GameCommandResultType.MOVE);
 
                 } catch (RoomNotAccessibleError e) {
                     gameCommandResult.setDescription(ColorText.setTextRed("Non puoi andare in quella direzione devi fare prima qualcosa!!!<br>"));
                 }
             }
+
             case PLAY -> {
                 switch (result.getSubject()) {
                     case "blackjack" -> currentGame = new BlackJackControl();
@@ -202,12 +201,14 @@ public class Game {
         }
 
         if (result.getType() == MiniGameInteractionType.UNLOCK) {
+            g.setDescription(result.getInfo());
             roomPath.unlockPath(result.getResult().toString());
         }
 
         if (result.getType() == MiniGameInteractionType.END_GAME) {
             g.setGameCommandResultType(GameCommandResultType.END);
-
+            g.setDescription(result.getInfo());
+            g.setPath("/img/endings/" + result.getResult().toString() + ".jpg");
             this.recordService.saveGameRecord(this.playerName, timeManager.getMilliSeconds());
         }
 

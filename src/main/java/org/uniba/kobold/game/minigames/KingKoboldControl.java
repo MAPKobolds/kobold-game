@@ -73,6 +73,7 @@ public class KingKoboldControl extends MiniGame {
                     interaction.addInfo(String.join("<br>", options));
                 } else {
                     interaction.setInfo("Il re Coboldo ti prende in braccio dicendo che sei il suo consigliere personale e che ti vuole bene<br>");
+                    interaction.setResult("captain");
                     interaction.setType(MiniGameInteractionType.END_GAME);
                 }
             }
@@ -125,6 +126,7 @@ public class KingKoboldControl extends MiniGame {
                 }else{
                     if (inventory.contains("maglio")) {
                         interaction.setInfo(ColorText.setTextGreen("Cerignolus brucia e tu scappi via<br>"));
+                        interaction.setResult("fire");
                         interaction.setType(MiniGameInteractionType.END_GAME);
                     } else {
 
@@ -138,6 +140,7 @@ public class KingKoboldControl extends MiniGame {
             case "5" -> {
                 if (thirdQ) {
                     interaction.setInfo(ColorText.setTextGreen("uccidi il Re Coboldo e prendi il suo trono<br>"));
+                    interaction.setResult("drunking");
                     interaction.setType(MiniGameInteractionType.END_GAME);
                 }
             }
@@ -145,6 +148,7 @@ public class KingKoboldControl extends MiniGame {
             case "6" -> {
                 if (thirdQ) {
                     interaction.setInfo(ColorText.setTextGreen("Scappi via con la tua auto<br>"));
+                    interaction.setResult("escape");
                     interaction.setType(MiniGameInteractionType.END_GAME);
                 }
             }

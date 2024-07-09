@@ -8,18 +8,17 @@ import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 import org.uniba.kobold.util.ColorText;
 
-import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-public final class PubRoom extends Room {
+public final class TavernRoom extends Room {
 
-    public PubRoom() {
+    public TavernRoom() {
         super("taverna",
-                "La " + ColorText.setTextPurple("taverna")+" è piena di coboldi,<br>"+ ColorText.setTextBlue("davanti")  +" a te c'è un bancone con un coboldo " + ColorText.setTextOrange("barista") +
-                        "<br>sulla tua " + ColorText.setTextBlue("sinistra")  + " ci sono dei coboldi che giocano a carte, mentre" +
-                        "<br>sulla tua "+ ColorText.setTextBlue("destra")  +" c'è un'uscita che da su uno " + ColorText.setTextPurple("spiazzale"),
+                "La " + ColorText.setTextPurple("taverna")+" è piena di coboldi, "+ ColorText.setTextBlue("davanti")  +" a te c'è un bancone con un coboldo " + ColorText.setTextOrange("barista") +
+                        " sulla tua " + ColorText.setTextBlue("sinistra")  + " ci sono dei coboldi che giocano a carte, mentre" +
+                        " sulla tua "+ ColorText.setTextBlue("destra")  +" c'è un'uscita che da su uno " + ColorText.setTextPurple("spiazzale") +".",
                 "/img/rooms/tavern.jpg",
                 List.of(),
                 Arrays.asList(
@@ -62,6 +61,7 @@ public final class PubRoom extends Room {
                 result.setResultType(RoomInteractionResultType.PLAY);
                 result.setSubject("blackjack");
                 break;
+            case "vai corridoio":
             case "vai caverna":
                 result.setResultType(RoomInteractionResultType.DESCRIPTION);
                 result.setSubject("Le guardie ti vedono e dicono dove vuoi andare bello? ");

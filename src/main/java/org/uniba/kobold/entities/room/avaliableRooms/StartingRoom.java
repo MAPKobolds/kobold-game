@@ -14,22 +14,28 @@ import java.util.List;
 import java.util.Set;
 
 public final class StartingRoom extends Room {
+    boolean alreadyVisited = false;
 
     public StartingRoom() {
         super("caverna",
-            "Ti svegli in una caverna buia, non ricordi come ci sei arrivato, ma senti un forte dolore alla testa.<br>" +
+            "Ti svegli in una "+ ColorText.setTextPurple("caverna") +" buia, non ricordi come ci sei arrivato, ma senti un forte dolore alla testa. " +
                     "Guardandoti intorno è buio pesto, senti qualcosa di appiccicoso " + ColorText.setTextBlue("sotto") +" di te.<br>",
                 "/img/rooms/cave.jpg",
                 List.of(new Cloak()),
             Arrays.asList(
                 new Command("vai corridoio", Set.of("muoviti")),
-                new Command("prendi", Set.of("raccogli", "solleva"))
+                new Command("prendi", Set.of("raccogli", "solleva")),
+                new Command("guarda coboldo", Set.of("Coboldo"))
             )
         );
     }
 
     @Override
     public RoomInteractionResult executeCommand(ParserOutput command, Inventory inventory) {
+        if (!alreadyVisited){
+            alreadyVisited = true;
+            this.setDescription("E' la "+ ColorText.setTextPurple("caverna") +" in cui ti sei svegliato, è buio e umido, senti un odore di muffa e di terra.");
+        }
         RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
 
         switch (command.getCommand().getName()) {
@@ -54,6 +60,9 @@ public final class StartingRoom extends Room {
             case "vai corridoio":
                 result.setResultType(RoomInteractionResultType.MOVE);
                 result.setSubject("corridoio");
+                break;
+            case "guarda coboldo":
+                result.setSubject("Data la tua conoscenza nerd, sembra un " + ColorText.setTextBlue("Coboldo") + " morto. I Coboldi sono creature mitologiche che vivono in caverne e rubano oggetti ai viandanti. Sembra Strano che nel 2024 esistano ancora Coboldi...");
                 break;
             default:
                 result.setResultType(RoomInteractionResultType.NOTHING);
