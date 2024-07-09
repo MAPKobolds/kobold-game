@@ -18,13 +18,14 @@ import java.util.Set;
 public final class IntroductionRoom extends Room {
     int continueCounter = 0;
     private List<Pair<String, String>> slides = List.of(
-            Pair.with("/img/rooms/falling.jpg", "Sei andato in un post ma sei caduto in un buco di merda")
+            Pair.with("/img/rooms/falling.jpg", "Il giorno successivo segui il Gps della tua auto e mentre stai sopra al punto segnato, ti accorgi che il terreno cede sotto i tuoi piedi " + ColorText.setTextBlue("continua") + " per continuare")
     );
 
 
     public IntroductionRoom() {
         super("introduzione",
-                "Guardando fuori dalla finestra vedi che ti stanno fregando la macchina (Work in Progress) (continua per andare avantis).",
+                "Era una giornata come le altre a Molfetta, dopo un lungo giorno vuoi andare alla pizzeria per prendere una siciliana (\"la pizza\") " +
+                        "esci dalla pizzeria con le pizze in mano e vedi che ti stanno rubando la macchina ... Aspe Cosa?! " + ColorText.setTextBlue("continua") + " per continuare",
                 "/img/rooms/cartheft.jpg",
                 List.of(new Cloak()),
                 Arrays.asList(
