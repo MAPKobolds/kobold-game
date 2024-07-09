@@ -3,6 +3,8 @@ package org.uniba.kobold.util;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+
 /**
  * The class that manages the timer.
  */
@@ -80,6 +82,14 @@ public class TimeManager {
 
     public long getMilliSeconds() {
         return (long) getSeconds() * 1000 + (long) getMinutes() * 60 * 1000 + (long) getHours() * 60 * 60 * 1000;
+    }
+
+    public static String fromLongToString(long milliseconds) {
+        int hrs = (int) (MILLISECONDS.toHours(milliseconds) % 24);
+        int min = (int) (MILLISECONDS.toMinutes(milliseconds) % 60);
+        int sec = (int) (MILLISECONDS.toSeconds(milliseconds) % 60);
+
+        return String.format("%d:%02d:%02d", hrs, min, sec);
     }
 
     public int getSeconds() {
