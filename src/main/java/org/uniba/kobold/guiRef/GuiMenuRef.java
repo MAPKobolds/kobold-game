@@ -15,6 +15,7 @@ public class GuiMenuRef extends JPanel {
     private JPanel buttonsContainer;
     private JButton loadButton;
     private JButton siteButton;
+    private JButton gameRecordButton;
     private static final String BACKGROUND_PATH = "/img/wall.png";
 
     /**
@@ -42,6 +43,10 @@ public class GuiMenuRef extends JPanel {
                 "Riconoscimenti"
         ).getButton();
 
+        gameRecordButton = new GuiGenericButton(
+                "Record"
+        ).getButton();
+
         siteButton = new GuiGenericButton(
                 "Sito Koboldico"
         ).getButton();
@@ -67,6 +72,8 @@ public class GuiMenuRef extends JPanel {
 
         //SiteButton logic
         siteButton.addActionListener(_ -> goToAppSite());
+
+        gameRecordButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.GAME_RECORDS, null));
 
         //Exit button logic
         exitButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.EXIT, null));
@@ -97,6 +104,7 @@ public class GuiMenuRef extends JPanel {
                                         .addComponent(siteButton, GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
                                         .addComponent(loadButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(gameStartButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(gameRecordButton, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(creditsButton, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(exitButton, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap())
@@ -111,10 +119,11 @@ public class GuiMenuRef extends JPanel {
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(creditsButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(gameRecordButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(siteButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(exitButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                                .addGap(19, 19, 19))
+                                .addComponent(exitButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
         );
 
         GroupLayout layout = new GroupLayout(this);

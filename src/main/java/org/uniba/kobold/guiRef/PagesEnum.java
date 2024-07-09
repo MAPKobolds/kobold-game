@@ -7,5 +7,6 @@ public enum PagesEnum {
     GAME_SAVES,
     LOADING,
     MENU,
+    GAME_RECORDS,
     EXIT
 }
