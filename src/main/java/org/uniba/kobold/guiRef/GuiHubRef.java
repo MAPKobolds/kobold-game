@@ -28,6 +28,7 @@ public class GuiHubRef extends JFrame {
         muteMusicButton = new JToggleButton();
         masterPanel = new JPanel();
 
+
         //JFrame Settings
         setTitle("Cerignolus: Città dei Coboldi");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -44,6 +45,8 @@ public class GuiHubRef extends JFrame {
 
         toolBar.setRollover(true);
         toolBar.setFloatable(false);
+        toolBar.setBackground(new Color(147, 119, 90));
+        toolBar.setBorder(BorderFactory.createLineBorder(new Color(93, 72, 55), 3));
         UtilMusic.initButton(muteMusicButton);
         toolBar.add(muteMusicButton);
 
@@ -137,7 +140,6 @@ public class GuiHubRef extends JFrame {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(toolBar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(masterPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         ));
     }

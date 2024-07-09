@@ -31,33 +31,23 @@ public class GuiMenuRef extends JPanel {
         buttonsContainer = new JPanel();
         buttonsContainer.setOpaque(false);
         gameStartButton = new GuiGenericButton(
-                "Inizia Partita",
-                new Color(40, 0, 5),
-                Color.WHITE
+                "Inizia Partita"
         ).getButton();
 
         loadButton = new GuiGenericButton(
-                "Carica Partita",
-                new Color(40, 0, 5),
-                Color.WHITE
+                "Carica Partita"
         ).getButton();
 
         creditsButton = new GuiGenericButton(
-                "Riconoscimenti",
-                new Color(40, 0, 5),
-                Color.WHITE
+                "Riconoscimenti"
         ).getButton();
 
         siteButton = new GuiGenericButton(
-                "Sito Koboldico",
-                new Color(40, 0, 5),
-                Color.WHITE
+                "Sito Koboldico"
         ).getButton();
 
         exitButton = new GuiGenericButton(
-                "Esci dal gioco",
-                new Color(40, 0, 5),
-                Color.WHITE
+                "Esci dal gioco"
         ).getButton();
 
         //gameStartButton logic

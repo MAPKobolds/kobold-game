@@ -8,6 +8,8 @@ import org.uniba.kobold.game.GameCommandResultType;
 import org.uniba.kobold.util.GameConverter;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class GuiGameRef extends JPanel {
     private JTextPane dialogText;
@@ -23,7 +25,8 @@ public class GuiGameRef extends JPanel {
     private int inventoryCount = 0;
     private boolean isGameRunning = true;
     private boolean isInventoryVisible;
-    Image backgroundImage = new ImageIcon("src/main/resources/img/rocks2.png").getImage();
+    Image backgroundImage = new ImageIcon("src/main/resources/img/woodwall.jpg").getImage();
+
     /**
      * Creates new form containerPanel
      */
@@ -33,6 +36,7 @@ public class GuiGameRef extends JPanel {
 
         this.refreshItem(game);
         this.refreshGUI(game.getCurrentRoomDescription(), game);
+        this.setFocusable(false);
 
         try {
             this.tickTime(game);
@@ -52,36 +56,47 @@ public class GuiGameRef extends JPanel {
     private void initComponents(Game game) {
         dialogPanel = new JPanel();
         dialogText = new JTextPane();
-        inventoryPanel = new GuiBackgroundPanel("src/main/resources/img/wall.png");
+        inventoryPanel = new JPanel();
         gamePanel = new GuiBackgroundRef(game.getCurrentRoomMap().getCurrentRoom().getBackgroundImage());
         roomName = new JLabel();
         inputField = new JTextField();
         timerLabel = new JLabel();
+        Font customFont = null;
         inventoryPanel.setLayout(new GridBagLayout());
         setBackground(Color.BLACK);
 
-        //Setting the buttons up
-        menuButton = new GuiImageButton(
-                "src/main/resources/img/rocks.png",
-                "Menù"
+        try {
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/minecraft.ttf"));
+            customFont = customFont.deriveFont(Font.PLAIN, 24);
+            inputField.setFont(customFont);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
+
+        dialogText.setOpaque(true);
+        inputField.setBorder(BorderFactory.createLineBorder(new Color(93, 72, 55), 4));
+        dialogText.setBorder(BorderFactory.createLineBorder(new Color(93, 72, 55), 4));
+        gamePanel.setBorder(BorderFactory.createLineBorder(new Color(93, 72, 55), 4));
+        inputField.setBackground(new Color(147, 119, 90));
+
+        menuButton = new GuiGenericButton(
+                "Menu"
         ).getButton();
 
 
-        saveButton = new GuiImageButton(
-                "src/main/resources/img/rocks.png",
+        saveButton = new GuiGenericButton(
                 "Salva"
         ).getButton();
 
-        toggleInventoryButton = new GuiImageButton(
-                "src/main/resources/img/rocks.png",
+        toggleInventoryButton = new GuiGenericButton(
                 "Mostra"
         ).getButton();
 
-        toggleInventoryButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        toggleInventoryButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         toggleInventoryButton.addActionListener(_ -> toggleInventory());
 
         //Setting the dialogText
-        dialogText.setBackground(new Color(0,0,0));
+        dialogText.setBackground(new Color(147, 119, 90));
         dialogText.setContentType("text/html");
         dialogText.setEditable(false);
         dialogText.setFocusable(false);
@@ -91,20 +106,23 @@ public class GuiGameRef extends JPanel {
 
         //Setting the timerLabel
         timerLabel.setOpaque(true);
-        timerLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        timerLabel.setFont(customFont);
         timerLabel.setFocusable(false);
+        timerLabel.setBackground(new Color(147, 119, 90));
+        timerLabel.setForeground(Color.WHITE);
 
 
         //Setting the saveButton logic
-        saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        saveButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         saveButton.addActionListener(_ -> this.saveGame(game));
 
         //Setting the menuButton logic
-        menuButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        menuButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         menuButton.addActionListener(_ -> this.goToMenu());
 
-        dialogPanel.setBackground(new Color(40, 0, 5));
-
+        dialogPanel.setBackground(new Color(0,0,0,0));
+        dialogPanel.setFocusable(false);
+        inventoryPanel.setBackground(new Color(0,0,0,0));
 
         if (GuiHubRef.isGuiActive()) {
             GuiHubRef.setGameToolbar(timerLabel, saveButton, menuButton, toggleInventoryButton);
@@ -124,6 +142,7 @@ public class GuiGameRef extends JPanel {
         System.out.println(inventoryCount);
         JButton itemButton = new GuiObjectButton(item.getName(), item.getImage());
         itemButton.setPreferredSize(new Dimension(70, 70));
+        itemButton.setBorder(BorderFactory.createLineBorder(new Color(93, 72, 55), 3));
         itemButton.setVisible(true);
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridManager(gridBagConstraints, inventoryCount);
@@ -177,7 +196,7 @@ public class GuiGameRef extends JPanel {
                 "        /* Apply the custom font directly to elements */\n" +
                 "        body {\n" +
                 "            font-family: 'Minecraft', sans-serif;\n" +
-                "            font-size: 16px;\n" +
+                "            font-size: 14px;\n" +
                 "        }\n" +
                 "        \n" +
                 "        h1, h2, h3 {\n" +
@@ -215,18 +234,17 @@ public class GuiGameRef extends JPanel {
         dialogPanelLayout.setHorizontalGroup(
                 dialogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(dialogPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(inputField, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(inputField, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(dialogText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addContainerGap())
         );
+
         dialogPanelLayout.setVerticalGroup(
                 dialogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(dialogText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(dialogPanelLayout.createSequentialGroup()
-                                .addComponent(inputField, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 119, Short.MAX_VALUE))
+                                .addComponent(inputField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         GroupLayout gamePanelLayout = new GroupLayout(gamePanel);
@@ -234,15 +252,14 @@ public class GuiGameRef extends JPanel {
         gamePanelLayout.setHorizontalGroup(
                 gamePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(gamePanelLayout.createSequentialGroup()
-                                .addContainerGap()
                                 .addComponent(roomName, GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                                 .addGap(555, 555, 555))
         );
+
         gamePanelLayout.setVerticalGroup(
                 gamePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(gamePanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(roomName, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                                .addComponent(roomName, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                                 .addGap(402, 402, 402))
         );
 
@@ -252,24 +269,24 @@ public class GuiGameRef extends JPanel {
                 layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addComponent(dialogPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(inventoryPanel, GroupLayout.PREFERRED_SIZE, 300, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                                        .addComponent(inventoryPanel, GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(inputField))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(gamePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
         layout.setVerticalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(inventoryPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGap(3, 3, 3)
+                                                .addComponent(inventoryPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(inputField, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
                                         .addComponent(gamePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addComponent(dialogPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
+
     private void saveGame(Game game) {
         Object[] options = {"Sì", "No"};
         int response = JOptionPane.showOptionDialog(null, "Vuoi salvare la partita?", "Conferma Salvataggio", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
@@ -298,11 +315,17 @@ public class GuiGameRef extends JPanel {
         switch (type) {
             case REFRESH_INVENTORY -> this.refreshItem(game);
             case MOVE -> this.updateGamePanel(game.getCurrentRoomMap().getCurrentRoom().getBackgroundImage());
-            case END -> this.endGame(game.getTimeManager().getTime());
+            case END -> {
+                System.out.println(gameCommandResult.getPath());
+                this.updateGamePanel(gameCommandResult.getPath());
+                this.endGame(game.getTimeManager().getTime());
+            }
         }
     }
 
     private void endGame(String time) {
+
+
         this.isGameRunning = false;
         this.saveButton.setVisible(false);
         this.inputField.setEnabled(false);

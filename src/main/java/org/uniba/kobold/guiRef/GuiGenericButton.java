@@ -2,6 +2,8 @@ package org.uniba.kobold.guiRef;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Class GuiGenericButton
@@ -14,9 +16,16 @@ public class GuiGenericButton extends JButton {
          */
         public GuiGenericButton(String text) {
             super(text);
-            setFont(new java.awt.Font("Arial", Font.BOLD, 14));
-            setBackground(new java.awt.Color(204, 204, 204));
-            setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            try {
+                Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/minecraft.ttf"));
+                customFont = customFont.deriveFont(Font.PLAIN, 20);
+                this.setFont(customFont);
+            } catch (FontFormatException | IOException e) {
+                e.printStackTrace();
+            }
+            setForeground(Color.WHITE);
+            setBackground( new Color(40, 0, 5));
+            setBorder(BorderFactory.createLineBorder(new Color(205,164,62), 2));
             setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         }
 
@@ -31,7 +40,6 @@ public class GuiGenericButton extends JButton {
             setFont(new java.awt.Font("Arial", Font.BOLD, 14));
             setBackground(bgColor);
             setForeground(textColor);
-            setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
             setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         }
 
@@ -48,7 +56,6 @@ public class GuiGenericButton extends JButton {
             setBackground(bgColor);
             setForeground(textColor);
             setPreferredSize(size);
-            setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
             setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         }
 
