@@ -20,20 +20,17 @@ public class KingKoboldControl extends MiniGame {
 
     private List<String> options = new ArrayList<>
             (Arrays.asList(
-            "<br> Scegli tra le seguenti opzioni: ",
-            "<br> "   + ColorText.setTextBlue("<esci>")+ " per uscire",
+            ColorText.setTextBlue("esci")+ " per uscire",
             ColorText.setTextBlue("1)")+ " parla con il re Coboldo di quanto è bello rubare",
             ColorText.setTextBlue("2)")+ " sfidare il Re Coboldo a Sasso Carta Forbici",
-            "\t - " + ColorText.setTextBlue("sasso"),
-            "\t - " + ColorText.setTextBlue("carta"),
-            "\t - " + ColorText.setTextBlue("forbici"),
+            " - " + ColorText.setTextBlue("sasso") + " - " + ColorText.setTextBlue("carta") + " - " + ColorText.setTextBlue("forbici"),
             ColorText.setTextBlue("3)") +" offri da bere al Re Coboldo",
             ColorText.setTextBlue("4)") +" ispeziona sotto il trono"
             ));
 
     public KingKoboldControl() {
-        this.description = "Benvento davanti a me il sommo Re Coboldo colui che è sopra di tutti e sopra tutto<br>" +
-                "Cosa ti porta da me :? <br>" +
+        this.description = "Benvento davanti a me il sommo Re Coboldo colui che è sopra di tutti e sopra tutto" +
+                " cosa ti porta da me ?" +
                  String.join("<br>", options);
 
 
@@ -65,14 +62,13 @@ public class KingKoboldControl extends MiniGame {
                     interaction.setType(MiniGameInteractionType.INFO);
                     normalEnding++;
                     if (normalEnding == 3) {
-                        options.set(2, ColorText.setTextGreen("1) accetti di diventare suo consigliere personale e parli di più sulle tue idee per il regno"));
-                        interaction.setInfo("Il Re Coboldo ti guarda e ti invita a diventare suo consigliere personale e ti chiede di parlare di più sulle tue idee per il regno<br>" +
-                                String.join("<br>", options));
+                        options.set(1, ColorText.setTextGreen("1) accetti di diventare un suo capitano ."));
+                        interaction.setInfo("Il Re Coboldo ti invita a diventare suo capitano e ti chiede di parlare di più sulle tue idee per il regno<br>");
                         interaction.setType(MiniGameInteractionType.INFO);
                     }
                     interaction.addInfo(String.join("<br>", options));
                 } else {
-                    interaction.setInfo("Il re Coboldo ti prende in braccio dicendo che sei il suo consigliere personale e che ti vuole bene<br>");
+                    interaction.setInfo("E' il momento della rivincita vai a rubare auto in tutta la Puglia.<br>");
                     interaction.setResult("captain");
                     interaction.setType(MiniGameInteractionType.END_GAME);
                 }
@@ -118,7 +114,7 @@ public class KingKoboldControl extends MiniGame {
             case "4" -> {
                 if (!fourthQ){
                     interaction.setInfo("Vedi sotto il trono dell' olio di macchina <br>");
-                    options.set(8, ColorText.setTextGreen("4) butta qualcosa di infiammabile sotto il trono"));
+                    options.set(5, ColorText.setTextGreen("4) butta qualcosa di infiammabile sotto il trono"));
                     interaction.addInfo(String.join("<br>", options));
                     interaction.setType(MiniGameInteractionType.INFO);
                     fourthQ = true;
@@ -157,8 +153,9 @@ public class KingKoboldControl extends MiniGame {
                 interaction.setInfo("Hai abbandonato il Re Coboldo<br>");
                 interaction.setType(MiniGameInteractionType.EXIT);
             }
-        }
 
+        }
+        this.setDescription(String.join("<br>", options));
         return interaction;
     }
 }

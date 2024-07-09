@@ -18,4 +18,8 @@ public abstract class MiniGame {
     public String getDescription() {
         return description;
     }
+
+    protected void setDescription(String join) {
+        this.description = join;
+    }
 }

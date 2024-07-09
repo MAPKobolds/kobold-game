@@ -59,7 +59,7 @@ public final class ForgeRoom extends Room {
                 result.setSubject("spiazzale");
                 break;
             case "guarda rullo":
-                if (!inventory.contains("carrozzeria")){
+                if (!inventory.contains("carrozzeria") && !inventory.contains("auto")){
                     result.setSubject("rullo");
                     result.setResultType(RoomInteractionResultType.PLAY);
                 } else {

@@ -122,6 +122,7 @@ public class BarManControl extends MiniGame{
                         state = 0;
                     }
                 }
+                interaction.addInfo("<br>" + String.join("<br>", options));
             break;
         }
 
