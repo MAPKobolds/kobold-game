@@ -66,7 +66,7 @@ public class GuiGameRef extends JPanel {
         setBackground(Color.BLACK);
 
         try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/minecraft.ttf"));
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/Minecraft.ttf"));
             customFont = customFont.deriveFont(Font.PLAIN, 24);
             inputField.setFont(customFont);
         } catch (FontFormatException | IOException e) {
