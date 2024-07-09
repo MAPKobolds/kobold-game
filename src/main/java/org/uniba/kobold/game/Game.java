@@ -35,6 +35,7 @@ public class Game {
         this.playerName = playerName;
         this.inventory = new Inventory(List.of(new Engine() , new CarBody(), new SteeringWheel()), 800);
 
+        IntroductionRoom r0 = new IntroductionRoom();
         StartingRoom r1 = new StartingRoom();
         HallwayRoom r2 = new HallwayRoom();
         TavernRoom r3 = new TavernRoom();
@@ -47,6 +48,7 @@ public class Game {
 
         parser = new Parser(ParserUtils.loadFileListInSet(new File("src/main/resources/stopwords.txt")));
         roomPath = new RoomsMap(Arrays.asList(
+                Pair.with(r0, new RoomPath(Arrays.asList(Pair.with(r1, true)))),
                 Pair.with(r1, new RoomPath(Arrays.asList(Pair.with(r2, true)))),
                 Pair.with(r2, new RoomPath(
                     Arrays.asList(Pair.with(r1, true), Pair.with(r3, false))
@@ -155,6 +157,10 @@ public class Game {
                 }
 
                 gameCommandResult.setDescription(currentGame.getDescription());
+            }
+            case CHANGE_BACKGROUND -> {
+                gameCommandResult.setGameCommandResultType(GameCommandResultType.REFRESH_BACKGROUND);
+                gameCommandResult.setDescription(result.getSubject());
             }
         }
 
