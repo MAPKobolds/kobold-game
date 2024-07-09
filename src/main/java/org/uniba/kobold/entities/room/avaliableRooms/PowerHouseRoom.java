@@ -66,8 +66,12 @@ public final class PowerHouseRoom extends Room {
                 }
                 break;
             case "aiuta direttore":
-                result.setSubject("trivia");
-                result.setResultType(RoomInteractionResultType.PLAY);
+                if (inventory.contains("auto") || inventory.contains("motore")){
+                    result.setSubject("hai già aiutato il direttore, non c'è più niente da fare qui");
+                }else {
+                    result.setSubject("trivia");
+                    result.setResultType(RoomInteractionResultType.PLAY);
+                }
                 break;
             default:
                 result.setResultType(RoomInteractionResultType.NOTHING);
