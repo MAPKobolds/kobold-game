@@ -17,8 +17,8 @@ public final class ForgeRoom extends Room {
 
     public ForgeRoom() {
         super("fucine",
-                "Le fucine sono un posto molto caldo,vedi dei pezzi di metallo su un "+ ColorText.setTextBlue("rullo") +" fra cui delle carrozzerie di auto che vengono fusi.<br>Sul nastro ci sono pezzi di carrozzeria." +
-                        "Ti sembra di aver visto qualcosa di interessante sul " + ColorText.setTextBlue("rullo") + ",<br>vedi a destra una " + ColorText.setTextBlue("forgia") + " per la fusione dei pezzi di metallo forse potresti creare qualcosa di utile",
+                "Le fucine sono un posto molto caldo,vedi dei pezzi di metallo su un "+ ColorText.setTextBlue("rullo") +" fra cui delle carrozzerie di auto che vengono fusi. Sul nastro ci sono pezzi di carrozzeria." +
+                        "Ti sembra di aver visto qualcosa di interessante sul " + ColorText.setTextBlue("rullo") + ", vedi a destra una " + ColorText.setTextBlue("forgia") + " per la fusione dei pezzi di metallo forse potresti creare qualcosa di utile",
                 "/img/rooms/forges.jpg",
                 List.of(),
                 Arrays.asList(
@@ -51,6 +51,9 @@ public final class ForgeRoom extends Room {
             case "guarda sopra":
                 result.setSubject("Vedi la parete dell'enorme caverna, è da tempo che non vedi il sole...");
                 break;
+            case "guarda giu":
+                result.setSubject("Vedi il pavimento della fucina, è molto caldo");
+                break;
             case "vai spiazzale":
                 result.setResultType(RoomInteractionResultType.MOVE);
                 result.setSubject("spiazzale");
@@ -71,8 +74,9 @@ public final class ForgeRoom extends Room {
                     inventory.removePiece("carrozzeria");
                     inventory.removePiece("motore");
                     inventory.removePiece("volante");
-                    inventory.addPiece(new Car());
-                    result.setSubject("Hai creato la tua " + ColorText.setTextGreen("auto") + "!");
+                    result.setArgument(new Car());
+                    result.setResultType(RoomInteractionResultType.ADD_ITEM);
+                    result.setSubject("Hai creato la tua " + ColorText.setTextGreen("auto") + "! forse non è proprio come te la ricordavi ma va bene lo stesso...");
                 } else {
                     result.setSubject(ColorText.setTextRed("Non hai tutti i pezzi necessari per creare un auto"));
                 }

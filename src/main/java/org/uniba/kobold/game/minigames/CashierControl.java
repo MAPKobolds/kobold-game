@@ -7,6 +7,7 @@ import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 import org.uniba.kobold.util.ColorText;
 
+import java.awt.*;
 import java.util.Set;
 
 public class CashierControl extends MiniGame{
@@ -18,7 +19,7 @@ public class CashierControl extends MiniGame{
                 ColorText.setTextBlue("2) Verstappen<br>") +
                 ColorText.setTextBlue("3) Vettel<br>") +
                 ColorText.setTextBlue("4) Leclerc<br>") +
-                ColorText.setTextBlue("Esci<br>");
+                ColorText.setTextBlue("esci<br>");
 
         this.commands.add(new Command("1", Set.of("Hamilton")));
         this.commands.add(new Command("2", Set.of("Verstappen")));
@@ -32,7 +33,7 @@ public class CashierControl extends MiniGame{
     @Override
     public MiniGameInteraction play(ParserOutput output, Inventory inventory) {
         MiniGameInteraction interaction = new MiniGameInteraction(
-                "Due buttafuori coboldi si avvicinano a te e ti portano a lavorare per 3 anni nelle fucine per ripagare il debito perchè :<br>",
+                ColorText.setTextRed("Due buttafuori coboldi si avvicinano a te e ti portano a lavorare per 3 anni nelle fucine per ripagare il debito perchè :<br>"),
                 null,
                 MiniGameInteractionType.EXIT
 

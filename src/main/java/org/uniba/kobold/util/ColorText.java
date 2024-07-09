@@ -9,6 +9,7 @@ public class ColorText {
     public static final String PURPLE = "<span style=\"color: rgb(128, 0, 128);\">";
     public static final String ORANGE = "<span style=\"color: rgb(255, 165, 0);\">";
     public static final String YELLOW = "<span style=\"color: rgb(255, 255, 0);\">";
+    public static final String BLACK = "<span style=\"color: rgb(0, 0, 0);>";
 
     public static String setTextGreen(String text) {
         return GREEN + text + RESET;
@@ -28,6 +29,10 @@ public class ColorText {
 
     public static  String setTextOrange(String text) {
         return ORANGE + text + RESET;
+    }
+
+    public static String setTextBlack(String text) {
+        return BLACK + text + RESET;
     }
 
     public static String setTextYellow(String text) {

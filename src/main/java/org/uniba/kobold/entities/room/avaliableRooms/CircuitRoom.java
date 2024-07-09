@@ -16,7 +16,7 @@ public final class CircuitRoom extends Room {
     public CircuitRoom() {
         super("circuito",
                 "Nel circuito ci sono molti coboldi che scommettono, rivolgendosi alla " + ColorText.setTextOrange("cassiera") +
-                        " <br>Alcuni hanno vinto alcune pezzi di auto e esultano, altri sono in completamente disperati per aver perso tutto.",
+                        "  Alcuni hanno vinto alcune pezzi di auto e esultano, altri sono in completamente disperati per aver perso tutto.",
                 "/img/rooms/track.jpg",
                 List.of(),
                 List.of(
@@ -31,6 +31,9 @@ public final class CircuitRoom extends Room {
         RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
 
         switch (command.getCommand().getName()) {
+            case "guarda giu":
+                result.setSubject("Guardi giù e vedi il pavimento, è sporco e pieno di cicche di sigarette ,però noti qualcosa di interessante, un fogio con scritto 2 sopra.");
+                break;
             case "guarda davanti":
                 result.setSubject("Di fronte trovi la " + ColorText.setTextOrange("cassiera") +", lì potrai fare una scommessa");
                 break;

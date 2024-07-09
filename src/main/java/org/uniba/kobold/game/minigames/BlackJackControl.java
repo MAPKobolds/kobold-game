@@ -7,27 +7,30 @@ import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 import org.uniba.kobold.util.ColorText;
 
+import java.awt.*;
 import java.util.Set;
 
 public class BlackJackControl extends MiniGame{
     BlackjackChecker blackjackChecker;
     Boolean isPlaying = false;
     Boolean hasBet = false;
+    String commandsHelp = "";
     int scommettitedMoney = 0;
 
     public BlackJackControl() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         blackjackChecker = new BlackjackChecker();
 
+        commandsHelp = "ecco la lista dei comandi disponibili: <br>" +
+                ColorText.setTextBlue("gioca/g") + " -> per iniziare una nuova mano <br>" +
+                ColorText.setTextBlue("carta/c") + " -> per chiedere una carta <br>" +
+                ColorText.setTextBlue("stai/s") + " -> per fermarsi<br>" +
+                ColorText.setTextBlue("scommetti") +" " + ColorText.setTextPurple("[500/200/100/50]") + "-> per scommettere<br>" +
+                ColorText.setTextBlue("aiuto/a") +" -> per visualizzare i comandi disponibili<br>" +
+                ColorText.setTextBlue("esci/e") +" -> per uscire dal gioco";
+
         description =
-                ColorText.setTextPurple("<br>[Benvento al BlackJack] <br>") +
-                        "Il Coboldo Crupier ti da il benvenuto al tavolo del BlackJack<br>"+
-                        "ecco la lista dei comandi disponibili: <br>" +
-                        ColorText.setTextBlue("gioca/g") + " -> per iniziare una nuova mano <br>" +
-                        ColorText.setTextBlue("carta/c") + " -> per chiedere una carta <br>" +
-                        ColorText.setTextBlue("stai/s") + " -> per fermarsi<br>" +
-                        "come puoi vedere noi coboldi siamo molto bravi a giocare a Blackjack e qui non si gioca con numeri ma con pile di banconote!<br>" +
-                        ColorText.setTextBlue("scommetti") +" " + ColorText.setTextPurple("<500/200/100/50>") + "-> per scommettere<br>" +
-                        ColorText.setTextBlue("esci/e") +" -> per uscire dal gioco";
+                ColorText.setTextPurple("[Benvento al BlackJack] <br>") +
+                        "Il Coboldo Crupier ti da il benvenuto al tavolo del BlackJack<br>" + commandsHelp;
 
         commands.add(new Command("carta",Set.of("carta","c")));
         commands.add(new Command("stai",Set.of("stai","s")));
@@ -37,6 +40,7 @@ public class BlackJackControl extends MiniGame{
         commands.add(new Command("scommetti 500",Set.of("500")));
         commands.add(new Command("esci",Set.of("esci","e")));
         commands.add(new Command("gioca",Set.of("gioca","g")));
+        commands.add(new Command("aiuto",Set.of("aiuto","a")));
 
     }
 
@@ -60,7 +64,8 @@ public class BlackJackControl extends MiniGame{
                                 inventory.addMoney(scommettitedMoney);
 
                                 interaction = new MiniGameInteraction(
-                                        ColorText.setTextGreen("Hai vinto " + scommettitedMoney + " euro"),
+                                        "il dealer ha: " + blackjackChecker.prettyPrintPlayerHand(true) + "<br>" + "Tu hai: " +
+                                        blackjackChecker.prettyPrintPlayerHand(false) + "<br>" +ColorText.setTextGreen("Hai vinto " + scommettitedMoney + " euro"),
                                         blackjackChecker.getHands(),
                                         MiniGameInteractionType.INFO
                                 );
@@ -69,7 +74,7 @@ public class BlackJackControl extends MiniGame{
                                 isPlaying = true;
 
                                 interaction.setResult(blackjackChecker.getHands());
-                                interaction.setInfo("Hai iniziato una mano");
+                                interaction.setInfo("Hai iniziato una mano le tue carte sono: " + blackjackChecker.prettyPrintPlayerHand(false) + "<br>");
                             }
                         } else {
                             interaction.setResult(blackjackChecker.getHands());
@@ -90,13 +95,14 @@ public class BlackJackControl extends MiniGame{
                             hasBet = false;
 
                             interaction = new MiniGameInteraction(
+                                    blackjackChecker.prettyPrintPlayerHand(false) + "<br>" +
                                     ColorText.setTextRed("Hai perso " + scommettitedMoney + " euro"),
                                     blackjackChecker.getHands(),
                                     MiniGameInteractionType.INFO
                             );
 
                         } else {
-                            interaction.setInfo("Hai chiesto una carta");
+                            interaction.setInfo("Hai chiesto una carta" + "<br>" + blackjackChecker.prettyPrintPlayerHand(false));
                             interaction.setResult(blackjackChecker.getHands());
                         }
                     } else {
@@ -118,8 +124,11 @@ public class BlackJackControl extends MiniGame{
                         } else {
                             inventory.removeMoney(scommettitedMoney);
                         }
-                        String finalResult = (hasWon ? "Hai vinto "   : "Hai perso ") + scommettitedMoney + " euro";
-                        interaction.setInfo((hasWon ? ColorText.setTextGreen(finalResult) : ColorText.setTextRed(finalResult)));
+
+                        String finalResult = "Il dealer ha: " + blackjackChecker.prettyPrintPlayerHand(true) + "<br>" +
+                                "Tu hai: " + blackjackChecker.prettyPrintPlayerHand(false) + "<br>" +
+                                (hasWon ? ColorText.setTextGreen("Hai vinto ")   : ColorText.setTextRed("Hai perso ")) + scommettitedMoney + " euro";
+                        interaction.setInfo(finalResult);
                         interaction.setResult(blackjackChecker.getHands());
                         
                     } else {
@@ -159,6 +168,10 @@ public class BlackJackControl extends MiniGame{
                         interaction.setResult(MiniGameInteractionType.EXIT);
                     }
                 break;
+
+                case "aiuto":
+                    interaction.setInfo(commandsHelp);
+                    break;
             }
         }
         catch (HttpInternalServerErrorException | HttpNotFoundException | HttpUnavailableException | HttpBadRequestException | HttpForbiddenException e) {

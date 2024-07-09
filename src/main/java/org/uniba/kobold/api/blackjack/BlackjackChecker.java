@@ -2,6 +2,7 @@ package org.uniba.kobold.api.blackjack;
 
 import org.javatuples.Pair;
 import org.uniba.kobold.api.error.*;
+import org.uniba.kobold.util.ColorText;
 
 import java.util.List;
 
@@ -75,6 +76,26 @@ public class BlackjackChecker {
 
     public Pair<List<Card>,List<Card>> getHands(){
         return Pair.with(playerHand,dealerHand);
+    }
+
+    public String prettyPrintPlayerHand(boolean isDealer){
+        String hand = "";
+        for (Card card : isDealer ? dealerHand : playerHand) {
+            switch (card.getValue()) {
+                case 1 -> hand += "A ";
+                case 11 -> hand += "J ";
+                case 12 -> hand += "Q ";
+                case 13 -> hand += "K ";
+                default -> hand += card.getValue() + " ";
+            }
+            switch (card.getSuit()) {
+                case "HEARTS" -> hand += ColorText.setTextRed("♥ ");
+                case "DIAMONDS" -> hand += ColorText.setTextBlue("♦ ");
+                case "CLUBS" -> hand += ColorText.setTextGreen("♣ ");
+                case "SPADES" -> hand += ColorText.setTextBlack("♠ ");
+            }
+        }
+        return hand;
     }
 
 }

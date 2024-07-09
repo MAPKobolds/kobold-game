@@ -8,6 +8,7 @@ import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 import org.uniba.kobold.util.ColorText;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Set;
 
@@ -58,7 +59,7 @@ public class TriviaControl extends MiniGame{
             return result;
         }else {
             if (round >= 5) {
-                result.setInfo("Non abbiamo così tante domande ,_,");
+                result.setInfo(ColorText.setTextRed("Hai perso ancora !!! ") + "<br> il direttore però apprezza l'aiuto e ti chiede di " + ColorText.setTextBlue("aiutarlo") + "ancora");
                 result.setType(MiniGameInteractionType.EXIT);
             } else {
                 round+=1;

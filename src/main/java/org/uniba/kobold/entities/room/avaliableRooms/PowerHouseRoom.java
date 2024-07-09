@@ -17,9 +17,9 @@ public final class PowerHouseRoom extends Room {
 
     public PowerHouseRoom() {
         super("generatore",
-                "L'edificio contenente il generatore è il più pulito e ordinato di questo inferno.<br>Su tutte le pareti sono stati piazzati dei motori di autovetture " +
-                        "che producono energia. <br>" +
-                        "L'unico essere in questo posto, seduto ad una scrivania è un coboldo,<br>sembra dirigere questo posto dal suo computer è " + ColorText.setTextBlue("davanti") + " a te",
+                "L'edificio contenente il generatore è il più pulito e ordinato di questo inferno. Su tutte le pareti sono stati piazzati dei motori di autovetture " +
+                        "che producono energia.  " +
+                        "L'unico essere in questo posto, seduto ad una scrivania è un coboldo, sembra dirigere questo posto dal suo computer è " + ColorText.setTextBlue("davanti") + " a te",
                 "/img/rooms/powerstation.jpg",
                 List.of(),
                 List.of(
@@ -57,8 +57,8 @@ public final class PowerHouseRoom extends Room {
                 result.setSubject("spiazzale");
                 break;
             case "parla direttore":
-                result.setSubject("Il coboldo direttore ti guarda e ti dice: 'Non hai niente da fare qui, vai via!' <br>" +
-                        "vedi però che sul suo pc sta cercando da oltre 10 minuti di risolvere dei quiz di film <br>sarebbe meglio che lo "
+                result.setSubject("Il coboldo direttore ti guarda e ti dice: 'Non hai niente da fare qui, vai via!'  " +
+                        "vedi però che sul suo pc sta cercando da oltre 10 minuti di risolvere dei quiz di film sarebbe meglio che lo "
                         + ColorText.setTextBlue("aiuti"));
                 break;
             case "aiuta direttore":

@@ -43,17 +43,17 @@ public final class SquareRoom extends Room {
 
         switch (command.getCommand().getName()) {
             case "guarda davanti":
-                result.setSubject("Di fronte, oltre ai cartelli c'è l'entrata del " + ColorText.setTextPurple("palazzo<br>")+". È protetta e chiusa, è impossibile entrarci, " +
+                result.setSubject("Di fronte, oltre ai cartelli c'è l'entrata del " + ColorText.setTextPurple("palazzo")+". È protetta e chiusa, è impossibile entrarci, " +
                         ColorText.setTextBlue("forse qualcosa di veloce la potrebbe sfondare"));
                 break;
             case "guarda dietro":
-                result.setSubject("Guardi dietro e vedi la " + ColorText.setTextOrange("taverna") + "da dove sei arrivato");
+                result.setSubject("Guardi dietro e vedi la " + ColorText.setTextPurple("taverna") + " da dove sei arrivato");
                 break;
             case "guarda destra":
-                result.setSubject("Guardi a destra e vedi il sentiero per le "+ ColorText.setTextOrange("fucine") + " e per il " + ColorText.setTextOrange("generatore"));
+                result.setSubject("Guardi a destra e vedi il sentiero per le "+ ColorText.setTextPurple("fucine") + " e per il " + ColorText.setTextOrange("generatore"));
                 break;
             case "guarda sinistra":
-                result.setSubject("Guardi a sinistra e vedi il sentiero per la "+ColorText.setTextOrange("pista")+" dei kart");
+                result.setSubject("Guardi a sinistra e vedi il sentiero per la "+ColorText.setTextPurple("pista")+" dei kart");
                 break;
             case "guarda sopra":
                 result.setSubject("Vedi la parete dell'enorme caverna, è da tempo che non vedi il sole...");
