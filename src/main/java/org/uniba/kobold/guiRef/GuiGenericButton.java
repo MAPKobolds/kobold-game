@@ -17,7 +17,7 @@ public class GuiGenericButton extends JButton {
         public GuiGenericButton(String text) {
             super(text);
             try {
-                Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/minecraft.ttf"));
+                Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/Minecraft.ttf"));
                 customFont = customFont.deriveFont(Font.PLAIN, 20);
                 this.setFont(customFont);
             } catch (FontFormatException | IOException e) {
