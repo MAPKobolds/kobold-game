@@ -6,5 +6,6 @@ public enum RoomInteractionResultType {
     DESCRIPTION,
     MOVE,
     PLAY,
-    ADD_ITEM
+    ADD_ITEM,
+    CHANGE_BACKGROUND
 }
