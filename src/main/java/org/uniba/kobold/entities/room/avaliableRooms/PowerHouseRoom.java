@@ -57,9 +57,13 @@ public final class PowerHouseRoom extends Room {
                 result.setSubject("spiazzale");
                 break;
             case "parla direttore":
-                result.setSubject("Il coboldo direttore ti guarda e ti dice: 'Non hai niente da fare qui, vai via!'  " +
-                        "vedi però che sul suo pc sta cercando da oltre 10 minuti di risolvere dei quiz di film sarebbe meglio che lo "
-                        + ColorText.setTextBlue("aiuti"));
+                if (inventory.contains("auto") || inventory.contains("motore")){
+                    result.setSubject("hai già aiutato il direttore, non c'è più niente da fare qui");
+                }else {
+                    result.setSubject("Il coboldo direttore ti guarda e ti dice: 'Non hai niente da fare qui, vai via!'  " +
+                            "vedi però che sul suo pc sta cercando da oltre 10 minuti di risolvere dei quiz di film sarebbe meglio che lo "
+                            + ColorText.setTextBlue("aiuti"));
+                }
                 break;
             case "aiuta direttore":
                 result.setSubject("trivia");

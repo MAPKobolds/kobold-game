@@ -57,8 +57,12 @@ public final class CircuitRoom extends Room {
                 result.setResultType(RoomInteractionResultType.MOVE);
                 break;
             case "parla cassiera":
-                result.setSubject("cassiera");
-                result.setResultType(RoomInteractionResultType.PLAY);
+                if (inventory.contains("auto") || inventory.contains("manubrio")) {
+                    result.setSubject(ColorText.setTextRed("le scomesse sono chiuse, torna più tardi"));
+                }else {
+                    result.setSubject("cassiera");
+                    result.setResultType(RoomInteractionResultType.PLAY);
+                }
                 break;
             default:
                 result.setResultType(RoomInteractionResultType.NOTHING);

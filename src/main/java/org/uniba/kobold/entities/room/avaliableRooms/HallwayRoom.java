@@ -37,14 +37,13 @@ public final class HallwayRoom extends Room {
             case "guarda davanti":
                 result.setSubject("Guardi davanti e vedi un gruppo di " + ColorText.setTextOrange("guardie") + ", forse ci dovresti parlare");
                 break;
-
             case "guarda dietro":
                 result.setSubject("Guardi dietro e vedi la "+ ColorText.setTextPurple("caverna") + " da cui sei arrivato");
                 break;
             case "guarda destra":
             case "guarda sinistra":
             case "guarda sopra":
-                result.setSubject("Una normale (Gauss shit) parete");
+                result.setSubject("Una normale parete");
                 break;
             case "guarda giu":
                 result.setSubject("bel pavimento!");

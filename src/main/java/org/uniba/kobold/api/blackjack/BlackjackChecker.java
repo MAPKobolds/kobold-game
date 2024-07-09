@@ -21,7 +21,7 @@ public class BlackjackChecker {
         BlackjackService blackjackService = new BlackjackService();
 
         playerHand = blackjackService.getCards(2);
-        dealerHand = blackjackService.getCards(2);
+        dealerHand = blackjackService.getCards(1);
     }
 
     public List<Card> getDealerHand() {
@@ -92,7 +92,7 @@ public class BlackjackChecker {
                 case "HEARTS" -> hand += ColorText.setTextRed("♥ ");
                 case "DIAMONDS" -> hand += ColorText.setTextBlue("♦ ");
                 case "CLUBS" -> hand += ColorText.setTextGreen("♣ ");
-                case "SPADES" -> hand += ColorText.setTextBlack("♠ ");
+                case "SPADES" -> hand += ColorText.setTextYellow("♠ ");
             }
         }
         return hand;

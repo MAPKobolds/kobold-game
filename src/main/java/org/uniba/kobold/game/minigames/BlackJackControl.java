@@ -74,7 +74,7 @@ public class BlackJackControl extends MiniGame{
                                 isPlaying = true;
 
                                 interaction.setResult(blackjackChecker.getHands());
-                                interaction.setInfo("Hai iniziato una mano le tue carte sono: " + blackjackChecker.prettyPrintPlayerHand(false) + "<br>");
+                                interaction.setInfo("Hai iniziato una mano le tue carte sono: " + blackjackChecker.prettyPrintPlayerHand(false) + "<br>" + "Il dealer ha: " + blackjackChecker.prettyPrintPlayerHand(true) + "<br>" + "Cosa vuoi fare?");
                             }
                         } else {
                             interaction.setResult(blackjackChecker.getHands());
@@ -102,7 +102,7 @@ public class BlackJackControl extends MiniGame{
                             );
 
                         } else {
-                            interaction.setInfo("Hai chiesto una carta" + "<br>" + blackjackChecker.prettyPrintPlayerHand(false));
+                            interaction.setInfo("Hai chiesto una carta" + "<br>" + blackjackChecker.prettyPrintPlayerHand(false) +  "<br>" + "Il dealer ha: " + blackjackChecker.prettyPrintPlayerHand(true));
                             interaction.setResult(blackjackChecker.getHands());
                         }
                     } else {

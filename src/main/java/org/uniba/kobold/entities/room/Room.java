@@ -22,7 +22,8 @@ abstract public class Room {
         new Command("guarda sinistra", Set.of("sinistra", "sx", "lato sinistro", "guarda sinistra" , "guarda sx" , "guarda lato sinistro")),
         new Command("ispeziona", Set.of("esamina")),
         new Command("prendi", Set.of("raccogli", "acquisisci", "prendere", "raccogliere", "acquisire")),
-        new Command("aiuto", Set.of("help", "comandi", "aiuto"))
+        new Command("aiuto", Set.of("help", "comandi", "aiuto")),
+        new Command("soldi", Set.of("denaro"))
     ));
 
     public Room(String name, String description, String backgroundImage, List<Item> items, List<Command> commands) {
@@ -89,14 +90,23 @@ abstract public class Room {
         return result;
     }
 
+
+    private RoomInteractionResult money(ParserOutput command, Inventory inventory) {
+        RoomInteractionResult result = new RoomInteractionResult(RoomInteractionResultType.DESCRIPTION);
+        result.setSubject(ColorText.setTextYellow("Hai " + inventory.getMoney() + " euro"));
+        return result;
+    }
+
     public RoomInteractionResult generalCommands(ParserOutput command, Inventory inventory){
         return switch (command.getCommand().getName()) {
             case "ispeziona" -> inspect(command, inventory);
             case "prendi" -> take(command, inventory);
+            case "soldi" -> money(command,inventory);
             case "aiuto" -> help(command);
             default -> executeCommand(command, inventory);
         };
     }
+
 
     public void setDescription(String description) {
         this.description = description;
