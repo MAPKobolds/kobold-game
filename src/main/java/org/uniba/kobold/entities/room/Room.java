@@ -11,7 +11,7 @@ import java.util.*;
 abstract public class Room {
     private final String name;
     private String description = "";
-    private final String backgroundImage;
+    private String backgroundImage;
     private final List<Item> items;
     private List<Command> commands = new ArrayList<>(Arrays.asList(
         new Command("guarda giu", Set.of("giu", "terra", "pavimento", "sotto", "guarda sotto" , "guarda terra" , "guarda pavimento")),
@@ -107,9 +107,13 @@ abstract public class Room {
         };
     }
 
+    public void setBackgroundImage(String backgroundImage) {
+        this.backgroundImage = backgroundImage;
+    }
 
     public void setDescription(String description) {
         this.description = description;
     }
+
     public abstract RoomInteractionResult executeCommand(ParserOutput command, Inventory inventory);
 }
