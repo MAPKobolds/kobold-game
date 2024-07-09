@@ -314,7 +314,7 @@ public class GuiGameRef extends JPanel {
         setDialogLabel("<span style='color: white;'>" + gameCommandResult.getDescription() + "</span>");
         switch (type) {
             case REFRESH_INVENTORY -> this.refreshItem(game);
-            case MOVE -> this.updateGamePanel(game.getCurrentRoomMap().getCurrentRoom().getBackgroundImage());
+            case REFRESH_BACKGROUND, MOVE -> this.updateGamePanel(game.getCurrentRoomMap().getCurrentRoom().getBackgroundImage());
             case END -> {
                 System.out.println(gameCommandResult.getPath());
                 this.updateGamePanel(gameCommandResult.getPath());
