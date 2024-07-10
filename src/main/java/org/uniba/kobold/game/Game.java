@@ -33,7 +33,7 @@ public class Game {
     public Game(String playerName ) throws IOException {
         this.timeManager = new TimeManager();
         this.playerName = playerName;
-        this.inventory = new Inventory(List.of(new Engine() , new CarBody(), new SteeringWheel()), 800);
+        this.inventory = new Inventory(List.of(), 400);
 
         IntroductionRoom r0 = new IntroductionRoom();
         StartingRoom r1 = new StartingRoom();
