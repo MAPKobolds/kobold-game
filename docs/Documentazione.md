@@ -4,7 +4,6 @@
 
 1. [Introduzione](#1-introduzione)
 
-
 # 1. Introduzione
 
 ## Cerignolus: Città dei Coboldi
@@ -46,7 +45,7 @@ L'obiettivo del nostro è quello di riuscire ad uscire dalla caverna e tornare a
 
 #### [Ritorna all'Indice](#indice)
 
-# Progettazione
+# 2. Progettazione
 
 La fase di progettazione si concentra sul definire le classi e le interazioni tra di esse, in modo da avere una visione chiara di come il progetto sarà strutturato
 
@@ -87,259 +86,352 @@ Ho omesso l'implementazione di ognuna delle "AvailableRooms" e "Minigames" per n
 
 #### [Ritorna all'Indice](#indice)
 
-## 4 - Specifiche Algebriche
+## 3. Specifiche Algebriche
 Due delle strutture dati più utilizzate nel nostro progetto sono la **Lista** e la **Mappa**, in questa sezione verranno presentate le specifiche algebriche di entrambe.
 
-### 4.1 - Specifica algebrica della Lista
+### 3.1 - Specifica algebrica della Lista
+La lista è una struttura dati che permette di memorizzare e recuperare informazioni sfruttando l'indice di posizione degli elementi contenuti.
 
-### Specifica sintattica
-<table>
-    <thead>
-        <tr>
-            <th colspan="2">Tipi</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td colspan="2"><code>List</code>, <code>Item</code>, <code>Integer</code>, <code>Boolean</code></td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center"><strong>Operatori</strong></td>
-        </tr>
-        <tr>
-            <td><code>newList() -> List</code></td>
-            <td>Crea una nuova lista vuota</td>
-        </tr>
-        <tr>
-            <td><code>add(List, Item, Integer) -> List</code></td>
-            <td>Aggiunge un elemento alla lista nella posizione specificata</td>
-        </tr>
-        <tr>
-            <td><code>isEmpty(List) -> Boolean</code></td>
-            <td>Restituisce <code>true</code> se la lista è vuota altrimenti <code>false</code></td>
-          </tr>
-            <tr>
-                <td><code>getSize(List) -> Integer</code></td>
-                <td>Restituisce il numero di elementi della struttura</td>
-            </tr> 
-            <tr>
-                <td><code>getIndex(List, Item) -> Integer</code></td>
-                <td>Restituisce la posizione dell'elemento specificato</td>
-            </tr> 
-            <tr>
-                <td><code>getItem(List, Integer) -> Item</code></td>
-                <td>Restituisce l'elemento nella posizione specificata</td> 
-            </tr> 
-            <tr>
-                <td><code>remove(List, Integer) -> List</code></td>
-                <td>Rimuove dalla lista l'elemento nella posizione specificata</td>  
-            </tr>
-            <tr>
-                <td><code>contains(List, Item) -> Boolean</code></td>
-                <td>Restituisce <code>true</code> se l'elemento specificato è contenuto nella lista</td>
-            </tr>
-    </tbody>
-</table>
-Si noti come <code>Item</code> è un tipo generico, che può essere sostituito con qualsiasi altro tipo di dato.
+#### Specifica sintattica
 
-<code>Interger</code> e <code>Boolean</code> invece, sono tipi ausiliari alla definizione della specifica algebrica della lista.
+**Tipi**
+- `List`, `Element`, `Integer`, `Boolean`
 
-### Osservazioni e Costruttori
+**Operatori**
+- `newList() -> List`: Crea una nuova lista vuota
+- `add(List, Element, Integer) -> List`: Aggiunge un elemento alla lista nella posizione specificata
+- `isEmpty(List) -> Boolean`: Restituisce `true` se la lista è vuota altrimenti `false`
+- `getSize(List) -> Integer`: Restituisce l'ultima posizione occupata da un elemento
+- `getIndex(List, Element) -> Integer`: Restituisce la posizione dell'elemento specificato
+- `getElement(List, Integer) -> Element`: Restituisce l'elemento nella posizione specificata
+- `remove(List, Integer) -> List`: Rimuove dalla lista l'elemento nella posizione specificata
+- `contains(List, Element) -> Boolean`: Restituisce `true` se l'elemento specificato è contenuto nella lista
 
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th colspan="2">Costruttori di l'</th>
-    </tr>
-  </thead>
-  <tbody align="center">
-    <tr>
-      <td><strong>Osservazioni</strong></td>
-      <td><code>newList</code></td>
-      <td><code>add(l, it, id)</code></td>
-    </tr>
-    <tr>
-      <td><code>isEmpty(l')</code></td>
-      <td><code>true</code></td>
-      <td><code>false</code></td>
-    </tr>
-    <tr>
-      <td><code>getSize(l')</code></td>
-      <td><code>error</code></td>
-      <td>if <code>isEmpty(l)</code> then <code>1</code> else <code>getSize(l) + 1</code></td>
-    </tr>
-    <tr>
-      <td><code>getIndex(l', it')</code></td>
-      <td><code>error</code></td>
-      <td>if <code>it = it'</code> then <code>id</code> else <code>getIndex(l, it')</code></td>
-    </tr>
-    <tr>
-      <td><code>getItem(l', id')</code></td>
-      <td><code>error</code></td>
-      <td>if <code>id = id'</code> then <code>it</code> else <code>getItem(l, id')</code></td>
-    </tr>
-    <tr>
-      <td><code>remove(l', id')</code></td>
-      <td><code>error</code></td>
-      <td>if <code>id = id'</code> then <code>l</code> else <code>add(remove(l, id'), it)</code></td>
-    </tr>
-    <tr>
-      <td><code>contains(l', it')</code></td>
-      <td><code>false</code></td>
-      <td>if <code>it = it'</code> then <code>true</code> else <code>contains(l, it')</code></td>
-    </tr>
-  </tbody>
-</table>
+Si noti come `Element` è un tipo generico, che può essere sostituito con qualsiasi altro tipo di dato. `Integer` e `Boolean` invece, sono tipi ausiliari alla definizione della specifica algebrica della lista.
 
-### Specifica semantica
-- **DECLARE**
-    - <code>l</code>, <code>l'</code>: <code>List</code>
-    - <code>it</code>, <code>it'</code>: <code>Item</code>
-    - <code>id</code>, <code>id'</code>: <code>Integer</code>
+#### Osservazioni e Costruttori
 
+| Metodo               | Costruttore         | Osservazioni                                                             |
+|----------------------|---------------------|--------------------------------------------------------------------------|
+| `isEmpty(l')`        | `newList`           | `true`                                                                   |
+| `isEmpty(l')`        | `add(l, el, id)`    | `false`                                                                  |
+| `getSize(l')`        | `newList`           | `error`                                                                  |
+| `getSize(l')`        | `add(l, el, id)`    | `if isEmpty(l) then 1 else getSize(l) + 1`                               |
+| `getIndex(l', el')`  | `newList`           | `error`                                                                  |
+| `getIndex(l', el')`  | `add(l, el, id)`    | `if el = el' then id else getIndex(l, el')`                              |
+| `getElement(l', id')`| `newList`           | `error`                                                                  |
+| `getElement(l', id')`| `add(l, el, id)`    | `if id = id' then el else getElement(l, id')`                            |
+| `remove(l', id')`    | `newList`           | `error`                                                                  |
+| `remove(l', id')`    | `add(l, el, id)`    | `if id = id' then l else add(remove(l, id'), el)`                        |
+| `contains(l', el')`  | `newList`           | `false`                                                                  |
+| `contains(l', el')`  | `add(l, el, id)`    | `if el = el' then true else contains(l, el')`                            |
 
-- **OPERATIONS**
-    - <code>isEmpty(newList)</code> = <code>true</code>
-    - <code>isEmpty(add(l, it, id))</code> = <code>false</code>
-    - <code>getSize(add(l, it, id))</code> = if <code>isEmpty(l)</code> then <code>1</code> else <code>getSize(l) + 1</code>
-    - <code>getIndex(add(l, it, id), it')</code> = if <code>it = it'</code> then <code>id</code> else <code>getIndex(l, it')</code>
-    - <code>getItem(add(l, it, id), id')</code> = if <code>id = id'</code> then <code>it</code> else <code>getItem(l, id')</code>
-    - <code>remove(add(l, it, id), id')</code> = if <code>id = id'</code> then <code>l</code> else <code>add(remove(l, id'), it)</code>
-    - <code>contains(newList, it')</code> = <code>false</code>
-    - <code>contains(add(l, it, id), it')</code> = if <code>it = it'</code> then <code>true</code> else <code>contains(l, it')</code>
-
-### Specifica di restrizione
-- **RESTRICTIONS**
-    - <code>getSize(newList)</code> = <code>error</code>
-    - <code>getIndex(newList, it')</code> = <code>error</code>
-    - <code>getItem(newList, id')</code> = <code>error</code>
-    - <code>remove(newList, id')</code> = <code>error</code>
-
-### 4.2 - Specifica algebrica della Mappa
-
-- La mappa è una struttura dati che associa una chiave ad un valore, permettendo di memorizzare e recuperare informazioni in modo efficiente.
-
-### Specifica sintattica
-<table>
-    <thead>
-        <tr>
-            <th colspan="2">Tipi</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td colspan="2">Map, Key, Value, Boolean, Integer</td>
-        </tr>
-        <tr>
-            <td colspan="2"><strong>Operatori</strong></td>
-        </tr>
-        <tr>
-            <td><code>newMap() -> Map</code></td>
-            <td>Crea una nuova mappa vuota</td>
-        </tr>
-        <tr>
-            <td><code>isEmpty(Map) -> Boolean</code></td>
-            <td>Restituisce <code>true</code> se la mappa è vuota, <code>false</code> altrimenti</td>
-        </tr>
-        <tr>
-            <td><code>put(Map, Key, Value) -> Map</code></td>
-            <td>Aggiunge una coppia chiave-valore alla mappa, o, se già presente, ne aggiorna il valore</td>
-        </tr>
-        <tr>
-            <td><code>get(Map, Key) -> Value</code></td>
-            <td>Restituisce il valore associato alla chiave specificata</td>
-        </tr>
-        <tr>
-            <td><code>containsKey(Map, Key) -> Boolean</code></td>
-            <td>Restituisce <code>true</code> se la chiave specificata è presente nella mappa</td>
-        </tr> 
-        <tr>
-            <td><code>containsValue(Map, Value) -> Boolean</code></td>
-            <td>Restituisce <code>true</code> se il valore specificato è presente nella mappa</td> 
-        </tr>
-        <tr>
-            <td><code>remove(Map, Key) -> Map</code></td>
-            <td>Rimuove la chiave ed il valore associato ad essa dalla mappa</td>
-        </tr> 
-        <tr>
-            <td><code>size(map) -> Integer</code></td>
-            <td>Restituisce il numero di coppie chiave-valore presenti nella mappa</td>  
-        </tr>
-    </tbody>
-</table>
-
-### Osservazioni e Costruttori
-
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th colspan="2">Costruttori di m'</th>
-    </tr>
-  </thead>
-  <tbody align="center">
-    <tr>
-      <td><strong>Osservazioni</strong></td>
-      <td><code>newMap</code></td>
-      <td><code>put(m, k, v)</code></td>
-    </tr>
-    <tr>
-      <td><code>isEmpty(m')</code></td>
-      <td><code>true</code></td>
-      <td><code>false</code></td>
-    </tr>
-    <tr>
-      <td><code>containsKey(m', k')</code></td>
-      <td><code>false</code></td>
-      <td>if <code>k = k'</code> then <code>true</code> else <code>containsKey(m, k')</code></td>
-    </tr>
-    <tr>
-      <td><code>containsValue(m', v')</code></td>
-      <td><code>false</code></td>
-      <td>if <code>v = v'</code> then <code>true</code> else <code>containsValue(m, v')</code></td>
-    </tr>
-    <tr>
-      <td><code>get(m', k')</code></td>
-      <td><code>error</code></td>
-      <td>if <code>k = k'</code> then <code>v</code> else <code>get(m, k')</code></td>
-    </tr>
-    <tr>
-      <td><code>remove(m', k')</code></td>
-      <td><code>error</code></td>
-      <td>if <code>k = k'</code> then <code>m</code> else <code>put(remove(m, k'), k, v)</code></td>
-    </tr>
-    <tr>
-      <td><code>size(m')</code></td>
-      <td><code>0</code></td>
-      <td>if <code>isEmpty(m)</code> then <code>1</code> else <code>size(m) + 1</code></td>
-    </tr>
-  </tbody>
-</table>
-
-### Specifica semantica
+#### Specifica semantica
 
 - **DECLARE**
-    - <code>m</code>, <code>m'</code>: <code>Map</code>
-    - <code>k</code>, <code>k'</code>: <code>Key</code>
-    - <code>v</code>, <code>v'</code>: <code>Value</code>
+  - `l`, `l'`: `List`
+  - `el`, `el'`: `Element`
+  - `id`, `id'`: `Integer`
 
 - **OPERATIONS**
-    - <code>isEmpty(newMap)</code> = <code>true</code>
-    - <code>isEmpty(put(m, k, v))</code> = <code>false</code>
-    - <code>containsKey(newMap, k')</code> = <code>false</code>
-    - <code>containsKey(put(m, k, v), k')</code> = if <code>k = k'</code> then <code>true</code> else <code>containsKey(m, k')</code>
-    - <code>containsValue(newMap, v')</code> = <code>false</code>
-    - <code>containsValue(put(m, k, v), v')</code> = if <code>v = v'</code> then <code>true</code> else <code>containsValue(m, v')</code>
-    - <code>get(put(m, k, v), k')</code> = if <code>k = k'</code> then <code>v</code> else <code>get(m, k')</code>
-    - <code>remove(put(m, k, v), k')</code> = if <code>k = k'</code> then <code>m</code> else <code>put(remove(m, k'), k, v)</code>
-    - <code>size(newMap)</code> = <code>0</code>
-    - <code>size(put(m, k, v))</code> = <code>size(m) + 1</code>
+  - `isEmpty(newList) = true`
+  - `isEmpty(add(l, el, id)) = false`
+  - `getSize(add(l, el, id)) = if isEmpty(l) then 1 else getSize(l) + 1`
+  - `getIndex(add(l, el, id), el') = if el = el' then id else getIndex(l, el')`
+  - `getElement(add(l, el, id), id') = if id = id' then el else getElement(l, id')`
+  - `remove(add(l, el, id), id') = if id = id' then l else add(remove(l, id'), el)`
+  - `contains(newList, el') = false`
+  - `contains(add(l, el, id), el') = if el = el' then true else contains(l, el')`
 
-
-### Specifica di restrizione
+#### Specifica di restrizione
 
 - **RESTRICTIONS**
-    - <code>get(newMap, k')</code> = <code>error</code>
-    - <code>remove(newMap, k')</code> = <code>error</code>
+  - `getSize(newList) = error`
+  - `getIndex(newList, el') = error`
+  - `getElement(newList, id') = error`
+  - `remove(newList, id') = error`
+
+### 3.2 - Specifica algebrica della Mappa
+La mappa è una struttura dati che associa una chiave ad un valore, permettendo di memorizzare e recuperare informazioni in modo efficiente.
+
+#### Specifica sintattica
+
+**Tipi**
+- `Map`, `Key`, `Value`, `Boolean`, `Integer`
+
+**Operatori**
+- `newMap() -> Map`: Crea una nuova mappa vuota
+- `isEmpty(Map) -> Boolean`: Restituisce `true` se la mappa è vuota, `false` altrimenti
+- `put(Map, Key, Value) -> Map`: Aggiunge una coppia chiave-valore alla mappa, o, se già presente, ne aggiorna il valore
+- `get(Map, Key) -> Value`: Restituisce il valore associato alla chiave specificata
+- `containsKey(Map, Key) -> Boolean`: Restituisce `true` se la chiave specificata è presente nella mappa
+- `containsValue(Map, Value) -> Boolean`: Restituisce `true` se il valore specificato è presente nella mappa
+- `remove(Map, Key) -> Map`: Rimuove la chiave ed il valore associato ad essa dalla mappa
+- `size(map) -> Integer`: Restituisce il numero di coppie chiave-valore presenti nella mappa
+
+#### Osservazioni e Costruttori
+
+| Metodo               | Costruttore         | Osservazioni                                                                 |
+|----------------------|---------------------|------------------------------------------------------------------------------|
+| `isEmpty(m')`        | `newMap`            | `true`                                                                       |
+| `isEmpty(m')`        | `put(m, k, v)`      | `false`                                                                      |
+| `containsKey(m', k')`| `newMap`            | `false`                                                                      |
+| `containsKey(m', k')`| `put(m, k, v)`      | `if k = k' then true else containsKey(m, k')`                                |
+| `containsValue(m', v')`| `newMap`          | `false`                                                                      |
+| `containsValue(m', v')`| `put(m, k, v)`    | `if v = v' then true else containsValue(m, v')`                              |
+| `get(m', k')`        | `newMap`            | `error`                                                                      |
+| `get(m', k')`        | `put(m, k, v)`      | `if k = k' then v else get(m, k')`                                           |
+| `remove(m', k')`     | `newMap`            | `error`                                                                      |
+| `remove(m', k')`     | `put(m, k, v)`      | `if k = k' then m else put(remove(m, k'), k, v)`                             |
+| `size(m')`           | `newMap`            | `0`                                                                          |
+| `size(m')`           | `put(m, k, v)`      | `if isEmpty(m) then 1 else size(m) + 1`                                      |
+
+#### Specifica semantica
+
+- **DECLARE**
+  - `m`, `m'`: `Map`
+  - `k`, `k'`: `Key`
+  - `v`, `v'`: `Value`
+
+- **OPERATIONS**
+  - `isEmpty(newMap) = true`
+  - `isEmpty(put(m, k, v)) = false`
+  - `containsKey(newMap, k') = false`
+  - `containsKey(put(m, k, v), k') = if k = k' then true else containsKey(m, k')`
+  - `containsValue(newMap, v') = false`
+  - `containsValue(put(m, k, v), v') = if v = v' then true else containsValue(m, v')`
+  - `get(put(m, k, v), k') = if k = k' then v else get(m, k')`
+  - `remove(put(m, k, v), k') = if k = k' then m else put(remove(m, k'), k, v)`
+  - `size(newMap) = 0`
+  - `size(put(m, k, v)) = size(m) + 1`
+
+#### Specifica di restrizione
+
+- **RESTRICTIONS**
+  - `get(newMap, k') = error`
+  - `remove(newMap, k') = error`
+
+
 #### [Ritorna all'Indice](#indice)
+
+# 4. Applicazione Argomenti del Corso
+
+## File
+
+I file sono il modo attraverso il quale il calcolatore salva i dati in modo permanente, permettendo di memorizzare grandi quantità di dati e di accederci e scriverci
+
+In Java, i file sono gestiti attraverso la classe Files, che fornisce metodi per la gestione dei file
+
+Nel nostro caso i file vengono utilizzati per salvare e caricare le partite, i tempi di gioco e le informazioni sui giocatori
+così da permettere ai giocatori di salvare una partita che si vuole lasciare in sospeso e riprenderla in seguito
+
+Nella fattispecie è stato usato il formato **JSON** per salvare i dati, in quanto è un formato molto flessibile e leggibile, e permette di salvare oggetti complessi in modo semplice,
+inoltre l'interazione con la classe "gson" permette di serializzare e deserializzare gli oggetti in modo molto semplice
+
+### Applicazione
+
+- Per la riproduzione della musica
+- Per serializzare gli oggetti importanti all'interno del gioco, come l'inventario, le stanze e gli oggetti, si utilizza il seguente metodo:
+```java
+public static void serialize(Game game, String time) {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Room.class, new RoomDeserializer())
+                .registerTypeAdapter(Item.class, new ItemDeserializer())
+                .create();
+
+        GameState gameState = new GameState(game.getInventory(), time, game.getCurrentRoomMap());
+        String json = gson.toJson(gameState);
+        String filePath = "src/main/resources/saves/" + game.getPlayerName() + "-" + (GameSave.getNumberOfUserSave(game.getPlayerName()) + 1) + ".json";
+
+        try {
+            Files.write(Paths.get(filePath), json.getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+```
+
+- Per deserializzare il file json riportando gli oggetti nello stato in cui si trovavano al momento del salvataggio, si utilizza il seguente metodo:
+```java
+public static GameState deserialize(Path filePath) {
+        try {
+            String json = new String(Files.readAllBytes(filePath));
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Room.class, new RoomDeserializer())
+                    .create();
+            
+            return gson.fromJson(json, GameState.class);
+        } catch (IOException e) {
+            throw new RuntimeException("Error during JSON reading", e);
+        }
+    }
+```
+
+Sono stati utilizzati dei GsonBuilder() per registrare dei deserializzatori
+personalizzati per le classi Room e Item che sono costruiti nel seguente modo
+
+```java
+@Override
+public Room deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+        String roomName = jsonObject.get("name").getAsString();
+        Class roomClass = Room.class;
+
+        switch (roomName) {
+            case "corridoio" -> roomClass = HallwayRoom.class;
+            case "circuito" -> roomClass = CircuitRoom.class;
+            case "fucine" -> roomClass = ForgeRoom.class;
+            case "palazzo" -> roomClass = PalaceEntryRoom.class;
+            case "generatore" -> roomClass = PowerHouseRoom.class;
+            case "taverna" -> roomClass = PubRoom.class;
+            case "spiazzale" -> roomClass = SquareRoom.class;
+            case "caverna" -> roomClass = StartingRoom.class;
+            case "trono" -> roomClass = ThroneRoom.class;
+        }
+
+        return jsonDeserializationContext.deserialize(jsonElement, roomClass);
+    }
+    
+@Override
+public Item deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+  JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+  String itemName = jsonObject.get("name").getAsString();
+  Class itemClass = Item.class;
+
+  switch (itemName) {
+    case "birre" -> itemClass = Beers.class;
+    case "carrozzeria" -> itemClass = CarBody.class;
+    case "mantello" -> itemClass = Cloak.class;
+    case "motore" -> itemClass = Engine.class;
+    case "maglio" -> itemClass = FireMaul.class;
+    case "GinMoncello" -> itemClass = GinMoncello.class;
+    case "volante" -> itemClass = SteeringWheel.class;
+  }
+
+  return jsonDeserializationContext.deserialize(jsonElement, itemClass);
+}
+```
+
+Implementando l'interfaccia JsonDeserializer e usando questi metodi nel TypeAdapter che permette di distinguere e trattare in modo diverso gli oggetti che Gson tratterebbe come uguali
+
+Ci siamo inoltre serviti di una classe che contenesse lo stato del gioco in un dato momento **GameState** e di una classe che gestisce la comunicazione coi file **GameSave**
+così da poter accedere ad informazioni utili quali il nome dei salvataggi o il numero di salvataggi di un determinato giocatore
+
+#### [Ritorna all'Indice](#indice)
+
+## Thread
+
+I thread sono utilizzati per eseguire operazioni in modo concorrente, permettendo di sfruttare al massimo le risorse del sistema e di migliorare le prestazioni delle applicazioni.
+La classe thread di Java implementa tutte le funzionalità di un singolo thread e può essere creata in due modi:
+
+- Estendendo la classe Thread, che prevede l'implementazione del metodo run() che contiene il codice da eseguire nel thread.
+- Implementando l'interfaccia Runnable, che prevende anch'essa il metodo run().
+A prescindere dal metodo utilizzato, il thread deve essere avviato chiamando il metodo start(), che avvia l'esecuzione del thread e chiama il metodo run().
+
+Il thread può essere interrotto chiamando il metodo interrupt(), che invia un segnale di interruzione al thread, che può essere catturato e gestito nel metodo run().
+
+### Applicazione 
+
+Nel nostro progetto abbiamo utilizzato i thread per gestire il timer di gioco, la musica di sottofondo e il server socket.
+
+- **UtilMusic**: Per permettere all'applicazione di riprodurre la musica di sottofondo in modo concorrente, è stata creata una classe che estende Thread e che implementa il metodo run() per gestire la riproduzione della musica.
+
+```java
+public class UtilMusic extends Thread {
+  public void run() {
+        try {
+                AudioInputStream stream = AudioSystem.getAudioInputStream(new File("src/main/resources/music/Gegagedigedagedago.wav"));
+                clip = AudioSystem.getClip();
+                clip.open(stream);
+                clip.addLineListener(event -> {
+                        if (event.getType() == LineEvent.Type.STOP && !isMuted) {
+                                clip.setFramePosition(0);
+                                playClip();
+                        }
+                });
+                playClip();
+        } catch (UnsupportedAudioFileException e) {
+                System.err.println("Unsupported audio file: " + e.getMessage());
+        } catch (IOException e) {
+                System.err.println("I/O error: " + e.getMessage());
+        } catch (LineUnavailableException e) {
+                System.err.println("Line unavailable: " + e.getMessage());
+        }
+  }
+}
+```
+
+Qui viene gestita la comunicazione con un file di musica, che viene riprodotto in loop finché il gioco è in esecuzione.
+
+- Nelle prossime applicazioni verranno usate insieme alle **lambda expressions** che approndiremo più avanti
+
+- **Timer**: Il timer deve effettuare calcoli e aggiornamenti ogni secondo, per questo è stato utilizzato un thread che esegue un ciclo while che aggiorna il tempo di gioco nella GUI ogni secondo.
+prendendo informazioni dalla classe **TimeManager** che gestisce il tempo di gioco
+```java
+public synchronized void tickTime(Game game) {
+        new Thread(() -> {
+            while (isGameRunning) {
+                timerLabel.setText(" " + game.getTimeManager().getTime() + " ");
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+    }
+```
+
+**synchronized** è stato utilizzato per evitare che più thread accedano contemporaneamente alle stesse risorse
+
+- **Socket Server**: Il server socket è stato implementato in un thread a parte, che rimane in ascolto di richieste di connessione da parte dei client, e crea un thread dedicato per ogni client che si connette.
+```java
+public static void startServerA() {
+        new Thread(() -> {
+            try {
+                ServerSocket serverSocket = new ServerSocket(PORT_A, MAX_USERS);
+                System.out.println("SERVER STARTED at http://localhost:" + PORT_A);
+
+                while (true) {
+                    Socket socket = serverSocket.accept();
+                    HttpPage page = new HttpPage(socket);
+
+                    page.renderPage(new File("src/main/java/org/uniba/kobold/socket/page.html"));
+                }
+
+            } catch(IOException ex){
+                System.out.println("CANNOT START SERVER AT PORT: " + PORT_A);
+            }
+        }).start();
+    }
+```
+Sia per il server A che B
+
+- **REST**: Il server REST è stato implementato anch'esso in un thread similarmente al socket server
+```java
+public static void startServer() {
+        URI baseUri = UriBuilder.fromUri("http://localhost/").port(PORT).build();
+
+        HttpServer server = GrizzlyHttpServerFactory.createHttpServer(baseUri, getControllers());
+
+        new Thread(() -> {
+            try {
+                server.start();
+                System.out.println(String.format("SERVER STARTED at http://localhost:%d", PORT));
+
+                System.in.read();
+                server.shutdown();
+            } catch (IOException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }).start();
+
+    }
+```
+
+#### [Ritorna all'Indice](#indice)
+
+## Database
