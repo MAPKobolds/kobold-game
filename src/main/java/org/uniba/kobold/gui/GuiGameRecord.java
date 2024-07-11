@@ -1,4 +1,4 @@
-package org.uniba.kobold.guiRef;
+package org.uniba.kobold.gui;
 
 import org.uniba.kobold.api.record.RecordService;
 import org.uniba.kobold.rest.models.Record;

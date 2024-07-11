@@ -1,4 +1,4 @@
-package org.uniba.kobold.guiRef;
+package org.uniba.kobold.gui;
 
 public enum PagesEnum {
     ACKNOWLEDGEMENT,

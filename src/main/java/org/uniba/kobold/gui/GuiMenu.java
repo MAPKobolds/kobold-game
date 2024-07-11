@@ -1,4 +1,4 @@
-package org.uniba.kobold.guiRef;
+package org.uniba.kobold.gui;
 
 import org.uniba.kobold.game.Game;
 import org.uniba.kobold.util.BrowserNavigator;
