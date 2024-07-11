@@ -52,12 +52,16 @@ public class GuiGameRecord extends JPanel {
         recordContainer.setLayout(new BoxLayout(recordContainer, BoxLayout.Y_AXIS));
         recordContainer.removeAll();
 
-        int index = 1;
-        for(Record record : records) {
-            JPanel recordPanel = createRecordPanel(record, index);
-            recordContainer.add(recordPanel);
+        if (records.isEmpty()) {
+            this.setNoContentFoundLabel();;
+        } else {
+            int index = 1;
+            for(Record record : records) {
+                JPanel recordPanel = createRecordPanel(record, index);
+                recordContainer.add(recordPanel);
 
-            index++;
+                index++;
+            }
         }
 
         recordContainer.revalidate();
@@ -120,6 +124,20 @@ public class GuiGameRecord extends JPanel {
                                 .addComponent(menuButton, GroupLayout.DEFAULT_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                                 .addGap(31, 31, 31))
         );
+    }
+
+    private void setNoContentFoundLabel() {
+        JPanel noRecordFoundPanel = new JPanel(new BorderLayout());
+        noRecordFoundPanel.setBackground(new Color(40, 0, 5));
+        noRecordFoundPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+
+        JLabel loadInfoLabel = new JLabel("<html>NESSUN RECORD TROVATO <br/><br/> <center> ¯\\_(ツ)_/¯ </center> </html>", SwingConstants.CENTER);
+
+        loadInfoLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 20));
+        loadInfoLabel.setForeground(Color.WHITE);
+        noRecordFoundPanel.add(loadInfoLabel, BorderLayout.CENTER);
+
+        recordContainer.add(noRecordFoundPanel);
     }
 
 }

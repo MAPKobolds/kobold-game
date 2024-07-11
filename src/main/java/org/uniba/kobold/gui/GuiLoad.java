@@ -201,16 +201,16 @@ public class GuiLoad extends JPanel {
     }
 
     private void setNoContentFoundLabel() {
-        JPanel savePanel = new JPanel(new BorderLayout());
-        savePanel.setBackground(new Color(40, 0, 5));
-        savePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+        JPanel noSavesFoundPanel = new JPanel(new BorderLayout());
+        noSavesFoundPanel.setBackground(new Color(40, 0, 5));
+        noSavesFoundPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
 
         JLabel loadInfoLabel = new JLabel("<html>NESSUN SALVATAGGIO TROVATO <br/><br/> <center> ¯\\_(ツ)_/¯ </center> </html>", SwingConstants.CENTER);
 
         loadInfoLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 20));
         loadInfoLabel.setForeground(Color.WHITE);
-        savePanel.add(loadInfoLabel, BorderLayout.CENTER);
+        noSavesFoundPanel.add(loadInfoLabel, BorderLayout.CENTER);
 
-        savesContainer.add(savePanel);
+        savesContainer.add(noSavesFoundPanel);
     }
 }
