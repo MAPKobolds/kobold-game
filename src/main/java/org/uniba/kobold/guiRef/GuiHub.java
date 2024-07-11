@@ -6,15 +6,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
-public class GuiHubRef extends JFrame {
-    private static GuiHubRef instance;
+public class GuiHub extends JFrame {
+    private static GuiHub instance;
     private static JPanel masterPanel;
     private static JToggleButton muteMusicButton;
     private static JToolBar toolBar;
     private static final int WIDTH = 1000;
     private static final int HEIGHT = 700;
 
-    public GuiHubRef() {
+    public GuiHub() {
         instance = this;
         initComponents();
     }
@@ -59,7 +59,7 @@ public class GuiHubRef extends JFrame {
     }
 
     private void setLogo() {
-        URL logo = GuiHubRef.class.getResource("/img/BR.png");
+        URL logo = GuiHub.class.getResource("/img/BR.png");
         ImageIcon image = null;
         if (logo != null) {
             image = new ImageIcon(logo);
@@ -70,7 +70,7 @@ public class GuiHubRef extends JFrame {
     private JPanel getInitialPanel() {
         JPanel cards = new JPanel(new CardLayout());
 
-        GuiMenuRef menuRef = new GuiMenuRef();
+        GuiMenu menuRef = new GuiMenu();
         cards.add(menuRef, "menu");
 
         return cards;
@@ -87,19 +87,19 @@ public class GuiHubRef extends JFrame {
     public static void changeTo(PagesEnum page, Game game) {
         switch (page) {
             case MENU:
-                GuiHubRef.switchPanel(new GuiMenuRef(), page.name());
+                GuiHub.switchPanel(new GuiMenu(), page.name());
                 break;
             case ACKNOWLEDGEMENT:
-                GuiHubRef.switchPanel(new GuiCreditsRef(), page.name());
+                GuiHub.switchPanel(new GuiCredits(), page.name());
                 break;
             case GAME_SAVES:
-                GuiHubRef.switchPanel(new GuiLoadRef(), page.name());
+                GuiHub.switchPanel(new GuiLoad(), page.name());
                 break;
             case NEW_GAME:
-                GuiHubRef.switchPanel(new GuiGameRef(game), page.name());
+                GuiHub.switchPanel(new GuiGame(game), page.name());
                 break;
             case GAME_RECORDS:
-                GuiHubRef.switchPanel(new GuiGameRecord(), page.name());
+                GuiHub.switchPanel(new GuiGameRecord(), page.name());
                 break;
             case EXIT:
                 System.exit(0);

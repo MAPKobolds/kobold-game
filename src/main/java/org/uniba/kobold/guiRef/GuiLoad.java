@@ -8,7 +8,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
-public class GuiLoadRef extends JPanel {
+public class GuiLoad extends JPanel {
 
     private static final String BACKGROUND_PATH = "/img/wall.png";
     private JPanel scrollContainer;
@@ -16,7 +16,7 @@ public class GuiLoadRef extends JPanel {
     private JPanel savesContainer;
     private JScrollPane scroller;
 
-    public GuiLoadRef() {
+    public GuiLoad() {
         initComponents();
     }
 
@@ -29,7 +29,7 @@ public class GuiLoadRef extends JPanel {
                 new Color(40, 0, 5),
                 Color.WHITE
         ).getButton();
-        menuButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.MENU, null));
+        menuButton.addActionListener(_ -> GuiHub.changeTo(PagesEnum.MENU, null));
 
         scrollContainer.setLayout(new BoxLayout(scrollContainer, BoxLayout.Y_AXIS));
         scrollContainer.setOpaque(false);
@@ -192,7 +192,7 @@ public class GuiLoadRef extends JPanel {
             GameState g = GameConverter.deserialize(save.getFilePath());
 //            Inventory.setInventory(g.getInventory());
 
-            GuiHubRef.changeTo(PagesEnum.NEW_GAME, new Game(save.getPlayerName(), g.getRoomsMap(), g.getTimer(), g.getInventory()));
+            GuiHub.changeTo(PagesEnum.NEW_GAME, new Game(save.getPlayerName(), g.getRoomsMap(), g.getTimer(), g.getInventory()));
         }
     }
 }

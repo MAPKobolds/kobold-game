@@ -7,7 +7,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
-public class GuiMenuRef extends JPanel {
+public class GuiMenu extends JPanel {
     
     private JButton creditsButton;
     private JButton exitButton;
@@ -21,7 +21,7 @@ public class GuiMenuRef extends JPanel {
     /**
      * Constructor of the class GuiBackgroundPanel
      */
-    public GuiMenuRef() {
+    public GuiMenu() {
         initComponents();
     }
 
@@ -65,18 +65,18 @@ public class GuiMenuRef extends JPanel {
         });
 
         //loadGameButton logic
-        loadButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.GAME_SAVES, null));
+        loadButton.addActionListener(_ -> GuiHub.changeTo(PagesEnum.GAME_SAVES, null));
 
         //CreditsButton logic
-        creditsButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.ACKNOWLEDGEMENT, null));
+        creditsButton.addActionListener(_ -> GuiHub.changeTo(PagesEnum.ACKNOWLEDGEMENT, null));
 
         //SiteButton logic
         siteButton.addActionListener(_ -> goToAppSite());
 
-        gameRecordButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.GAME_RECORDS, null));
+        gameRecordButton.addActionListener(_ -> GuiHub.changeTo(PagesEnum.GAME_RECORDS, null));
 
         //Exit button logic
-        exitButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.EXIT, null));
+        exitButton.addActionListener(_ -> GuiHub.changeTo(PagesEnum.EXIT, null));
 
         setLayout();
     }
@@ -181,7 +181,7 @@ public class GuiMenuRef extends JPanel {
             return;
         }
 
-        GuiHubRef.changeTo(PagesEnum.NEW_GAME, new Game(playerName));
+        GuiHub.changeTo(PagesEnum.NEW_GAME, new Game(playerName));
     }
 
 }

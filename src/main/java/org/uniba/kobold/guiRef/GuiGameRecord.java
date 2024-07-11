@@ -31,7 +31,7 @@ public class GuiGameRecord extends JPanel {
                 new Color(40, 0, 5),
                 Color.WHITE
         ).getButton();
-        menuButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.MENU, null));
+        menuButton.addActionListener(_ -> GuiHub.changeTo(PagesEnum.MENU, null));
 
         scrollContainer.setLayout(new BoxLayout(scrollContainer, BoxLayout.Y_AXIS));
         scrollContainer.setOpaque(false);

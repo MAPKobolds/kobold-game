@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * Class GuiBackgroundPanel
  */
-public class GuiBackgroundRef extends JPanel {
+public class GuiBackground extends JPanel {
 
     /**
      * Attributes of the class GuiBackgroundPanel
@@ -17,7 +17,7 @@ public class GuiBackgroundRef extends JPanel {
     /**
      * Constructor of the class GuiBackgroundPanel
      */
-    public GuiBackgroundRef(String backgroundPath) {
+    public GuiBackground(String backgroundPath) {
         this.backgroundPath = backgroundPath;
     }
 

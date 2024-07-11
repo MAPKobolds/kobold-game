@@ -1,6 +1,5 @@
 package org.uniba.kobold.guiRef;
 
-import org.uniba.kobold.entities.inventory.Inventory;
 import org.uniba.kobold.entities.inventory.Item;
 import org.uniba.kobold.game.Game;
 import org.uniba.kobold.game.GameCommandResult;
@@ -11,11 +10,11 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class GuiGameRef extends JPanel {
+public class GuiGame extends JPanel {
     private JTextPane dialogText;
     private JPanel inventoryPanel;
     private JLabel roomName;
-    private GuiBackgroundRef gamePanel;
+    private GuiBackground gamePanel;
     private JPanel dialogPanel;
     private JLabel timerLabel;
     private JTextField inputField;
@@ -30,7 +29,7 @@ public class GuiGameRef extends JPanel {
     /**
      * Creates new form containerPanel
      */
-    public GuiGameRef(Game game) {
+    public GuiGame(Game game) {
         initComponents(game);
         isInventoryVisible = true;
 
@@ -57,7 +56,7 @@ public class GuiGameRef extends JPanel {
         dialogPanel = new JPanel();
         dialogText = new JTextPane();
         inventoryPanel = new JPanel();
-        gamePanel = new GuiBackgroundRef(game.getCurrentRoomMap().getCurrentRoom().getBackgroundImage());
+        gamePanel = new GuiBackground(game.getCurrentRoomMap().getCurrentRoom().getBackgroundImage());
         roomName = new JLabel();
         inputField = new JTextField();
         timerLabel = new JLabel();
@@ -124,8 +123,8 @@ public class GuiGameRef extends JPanel {
         dialogPanel.setFocusable(false);
         inventoryPanel.setBackground(new Color(0,0,0,0));
 
-        if (GuiHubRef.isGuiActive()) {
-            GuiHubRef.setGameToolbar(timerLabel, saveButton, menuButton, toggleInventoryButton);
+        if (GuiHub.isGuiActive()) {
+            GuiHub.setGameToolbar(timerLabel, saveButton, menuButton, toggleInventoryButton);
         }
         setLayout();
     }
@@ -139,7 +138,6 @@ public class GuiGameRef extends JPanel {
     }
 
     public void addItem(Item item) {
-        System.out.println(inventoryCount);
         JButton itemButton = new GuiObjectButton(item.getName(), item.getImage());
         itemButton.setPreferredSize(new Dimension(70, 70));
         itemButton.setBorder(BorderFactory.createLineBorder(new Color(93, 72, 55), 3));
@@ -316,7 +314,6 @@ public class GuiGameRef extends JPanel {
             case REFRESH_INVENTORY -> this.refreshItem(game);
             case REFRESH_BACKGROUND, MOVE -> this.updateGamePanel(game.getCurrentRoomMap().getCurrentRoom().getBackgroundImage());
             case END -> {
-                System.out.println(gameCommandResult.getPath());
                 this.updateGamePanel(gameCommandResult.getPath());
                 this.endGame(game.getTimeManager().getTime());
             }
@@ -344,8 +341,8 @@ public class GuiGameRef extends JPanel {
 
         if (response == JOptionPane.YES_OPTION) {
             this.setGameRunning(false);
-            GuiHubRef.setNormalToolbar();
-            GuiHubRef.changeTo(PagesEnum.MENU, null);
+            GuiHub.setNormalToolbar();
+            GuiHub.changeTo(PagesEnum.MENU, null);
         }
     }
 }

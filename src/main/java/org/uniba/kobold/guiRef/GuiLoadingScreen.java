@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class GuiLoadingScreenRef extends JPanel{
+public class GuiLoadingScreen extends JPanel{
 
     /**
      * Attributes of the class GuiLoadingScreenRef
@@ -13,7 +13,7 @@ public class GuiLoadingScreenRef extends JPanel{
     private static final String BACKGROUND_PATH = "/img/wall.png";
     private JProgressBar progressBar;
 
-    public GuiLoadingScreenRef(Game game) {
+    public GuiLoadingScreen(Game game) {
         initComponents(game);
     }
 
@@ -43,7 +43,7 @@ public class GuiLoadingScreenRef extends JPanel{
                 progressBar.setString("Kobold is ready!");
                 Thread.sleep(1000);
 
-                SwingUtilities.invokeLater(() -> GuiHubRef.changeTo(PagesEnum.NEW_GAME, game));
+                SwingUtilities.invokeLater(() -> GuiHub.changeTo(PagesEnum.NEW_GAME, game));
             } catch (InterruptedException ex) {
                 System.err.println("Thread was interrupted: " + ex.getMessage());
             }

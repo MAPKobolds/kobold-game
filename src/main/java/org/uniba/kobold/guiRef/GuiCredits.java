@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class GuiCreditsRef extends JPanel {
+public class GuiCredits extends JPanel {
 
     private JLabel creditsLabel;
     private JButton menuButton;
@@ -20,15 +20,15 @@ public class GuiCreditsRef extends JPanel {
     /**
      * Creates new form GuiCreditsRef
      */
-    public GuiCreditsRef() {
+    public GuiCredits() {
         initComponents();
     }
 
     private void initComponents() {
         tokensPanel = new JPanel();
-        porcelliPanel = new GuiBackgroundRef(PORCELLI_PATH);
-        sgaramellaPanel = new GuiBackgroundRef(SGARAMELLA_PATH);
-        zippoPanel = new GuiBackgroundRef(ZIPPO_PATH);
+        porcelliPanel = new GuiBackground(PORCELLI_PATH);
+        sgaramellaPanel = new GuiBackground(SGARAMELLA_PATH);
+        zippoPanel = new GuiBackground(ZIPPO_PATH);
         creditsLabel = new JLabel();
         menuButton = new GuiGenericButton(
                 "Menu",
@@ -36,7 +36,7 @@ public class GuiCreditsRef extends JPanel {
                 Color.WHITE
         ).getButton();
 
-        menuButton.addActionListener(_ -> GuiHubRef.changeTo(PagesEnum.MENU, null));
+        menuButton.addActionListener(_ -> GuiHub.changeTo(PagesEnum.MENU, null));
 
         tokensPanel.setOpaque(false);
         porcelliPanel.setOpaque(false);
