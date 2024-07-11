@@ -50,10 +50,15 @@ public class GuiLoad extends JPanel {
         savesContainer.setLayout(new BoxLayout(savesContainer, BoxLayout.Y_AXIS));
         savesContainer.removeAll();
 
-        for(GameSaveInstance save : saves) {
-            JPanel savePanel = createSavePanel(save);
-            savesContainer.add(savePanel);
+        if (saves.isEmpty()) {
+            this.setNoContentFoundLabel();
+        } else {
+            for(GameSaveInstance save : saves) {
+                JPanel savePanel = createSavePanel(save);
+                savesContainer.add(savePanel);
+            }
         }
+
         savesContainer.revalidate();
         savesContainer.repaint();
     }
@@ -190,9 +195,22 @@ public class GuiLoad extends JPanel {
 
         if (response == JOptionPane.YES_OPTION) {
             GameState g = GameConverter.deserialize(save.getFilePath());
-//            Inventory.setInventory(g.getInventory());
 
             GuiHub.changeTo(PagesEnum.NEW_GAME, new Game(save.getPlayerName(), g.getRoomsMap(), g.getTimer(), g.getInventory()));
         }
+    }
+
+    private void setNoContentFoundLabel() {
+        JPanel savePanel = new JPanel(new BorderLayout());
+        savePanel.setBackground(new Color(40, 0, 5));
+        savePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+
+        JLabel loadInfoLabel = new JLabel("<html>NESSUN SALVATAGGIO TROVATO <br/><br/> <center> ¯\\_(ツ)_/¯ </center> </html>", SwingConstants.CENTER);
+
+        loadInfoLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 20));
+        loadInfoLabel.setForeground(Color.WHITE);
+        savePanel.add(loadInfoLabel, BorderLayout.CENTER);
+
+        savesContainer.add(savePanel);
     }
 }
