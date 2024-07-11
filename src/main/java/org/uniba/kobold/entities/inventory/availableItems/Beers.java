@@ -17,7 +17,6 @@ public class Beers extends Item implements InteractiveItem {
 
     @Override
     public InteractionResult interact() {
-        System.out.println("Hai bevuto la birra");
         return InteractionResult.SUCCESSFUL;
     }
 
