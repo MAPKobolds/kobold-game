@@ -142,7 +142,7 @@ public class GuiGame extends JPanel {
         itemButton.setPreferredSize(new Dimension(70, 70));
         itemButton.setBorder(BorderFactory.createLineBorder(new Color(93, 72, 55), 3));
         itemButton.setVisible(true);
-        itemButton.setToolTipText(item.getDescription());
+        itemButton.setToolTipText("<html>" + item.getDescription() + "</html>");
 
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridManager(gridBagConstraints, inventoryCount);
