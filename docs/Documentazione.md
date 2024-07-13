@@ -363,6 +363,7 @@ public class UtilMusic extends Thread {
 }
 ```
 
+
 Qui viene gestita la comunicazione con un file di musica, che viene riprodotto in loop finché il gioco è in esecuzione.
 
 - Nelle prossime applicazioni verranno usate insieme alle **lambda expressions** che approndiremo più avanti
@@ -387,6 +388,7 @@ public synchronized void tickTime(Game game) {
 
 **synchronized** è stato utilizzato per evitare che più thread accedano contemporaneamente alle stesse risorse
 
+#### Socket code
 - **Socket Server**: Il server socket è stato implementato in un thread a parte, che rimane in ascolto di richieste di connessione da parte dei client, e crea un thread dedicato per ogni client che si connette.
 ```java
 public static void startServerA() {
@@ -432,6 +434,482 @@ public static void startServer() {
     }
 ```
 
+Infine per il la gestione della GUI è stato usato un concetto fondamentale per l'esecuzione degli eventi sull'interfaccia in modo concorrente, ovvero l'**Event Dispatch Thread**,
+attraverso l'uso di **SwingUtilities.invokeLater()** che permette di eseguire un'azione sull'interfaccia in modo concorrente o ritardandone l'esecuzione a un momento sicuro
+
+```
+SwingUtilities.invokeLater(() -> {
+    progressBar.setValue(progress);
+    progressBar.setString("Loading..." + progress + "%");
+});
+```
+
 #### [Ritorna all'Indice](#indice)
 
-## Database
+## Database e REST
+
+REST è un'architettura software che definisce un insieme di vincoli per la progettazione di servizi web che non utilizza sessioni ma si basa sulla trasmissione di dati tramite HTTP 
+e che permette di accedere e modificare le risorse tramite operazioni CRUD.
+REST prevede una struttura delle URI ben definita che identifica univocamente una risorsa o un insieme di risorse
+Caratteristiche:
+- Client-Server
+- Stateless: Non vengono memorizzati i contesti, viene tutto fatto tramite richieste
+- Cacheable: I client possono mettere in cache le risposte
+- Layered System: Realizzato a strati potendo gestire applicazioni diverse su server a livelli diversi 
+- Uniform Interface: Le risorse sono identificate tramite URI e le operazioni sono standard (GET, POST, PUT, DELETE)
+
+**Database**: Parte automatizzata di un sistema informativo che memorizza grandi quantità di dati in maniera efficiente e sicura, viene gestito da un DBMS(DataBase Management System)
+e permette di accedere e modificare i dati
+
+Nel nostro caso abbiamo adoperato il database H2 poiché può essere utilizzato "embedded" senza dover installare un server a parte e utilizzando lo standard JDBC
+
+JDBC è indipendente dal database e fornisce un driver manager che gestisce dinamicamente tutti gli oggetti driver di cui hanno bisogno le interrogazioni a database, quindi:
+
+Se si hanno tre diversi DBMS allora necessiteranno tre diversi tipi di oggetti driver.
+JDBC è nato per semplificare tutte le interazioni con il database
+
+### Applicazione Database e CRUD
+
+Il database si occupa di memorizzare i tempi di gioco dei giocatori e i loro nomi.
+L'abbiamo gestito implementando una CRUD Interface:
+- *Create*: per inserire un nuovo record
+- *Read*: per leggere i record
+- *Update*: per aggiornare un record
+- *Delete*: per eliminare un record
+
+Più nello specifico, abbiamo utilizzato *Service* e *Repository* per gestire le query al database, infatti solo Repository comunica con il database,
+Service si occupa di definire l'interfaccia tra il Record e il Repository e infine il *Controller* gestisce le richieste e risposte.
+
+Il risultato sarà una pagina nell'app che, comunicando con il database prende i record e li visualizza
+//TODO: Aggiungere immagine record gui
+- CRUD Interface:
+```java
+public interface CRUDInterface<T> {
+    T save(T entity);
+
+    int deleteById(int id);
+
+    T updateById(T entity, int id);
+
+    T getById(int id);
+}
+```
+- Server: 
+```java
+public class Server {
+
+    private static final int PORT = 8000;
+
+    public static void startServer() {
+        URI baseUri = UriBuilder.fromUri("http://localhost/").port(PORT).build();
+
+        HttpServer server = GrizzlyHttpServerFactory.createHttpServer(baseUri, getControllers());
+
+        new Thread(() -> {
+            try {
+                server.start();
+                System.out.println(String.format("SERVER STARTED at http://localhost:%d", PORT));
+
+                System.in.read();
+                server.shutdown();
+            } catch (IOException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }).start();
+
+    }
+
+    private static ResourceConfig getControllers() {
+        ResourceConfig config = new ResourceConfig(new Class[] {
+            RecordController.class
+        });
+
+        return config;
+    }
+
+}
+
+```
+- Esempio di connessione al database:
+
+```java
+public static Connection getConnection() {
+  if (connection == null) {
+    synchronized (DBConnection.class) {
+      if (connection == null) {
+        try {
+          connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
+  return connection;
+}
+```
+- Esempio di record e creazione tabella:
+
+```java
+public Record(String name, long time, int id) {
+  this.id = id;
+  this.name = name;
+  this.time = time;
+}
+
+public RecordRepository() {
+  RELATION = "records";
+
+  String createTableSQL = "CREATE TABLE IF NOT EXISTS records (" +
+          "id INT AUTO_INCREMENT PRIMARY KEY, " +
+          "name VARCHAR(255)," +
+          "time BIGINT" +
+          ")";
+  try (Statement statement = connection.createStatement()) {
+    statement.execute(createTableSQL);
+  } catch (SQLException e) {
+    e.printStackTrace();
+  }
+}
+```
+
+- Per effettuare una query:
+
+```java
+//Controller
+@PUT
+@Path("/{recordId}")
+@Produces("application/json")
+public Response updateById(String json, @PathParam("recordId") String recordId) {
+  Record record = recordService.updateById(gson.fromJson(json, Record.class), Integer.parseInt(recordId));
+
+  String jsonString = gson.toJson(record);
+
+  if(record == null) {
+    return Response.status(Response.Status.NOT_FOUND).build();
+  } else {
+    return Response.ok(jsonString, MediaType.APPLICATION_JSON).build();
+  }
+}
+
+//Repository
+public Record updateById(Record entity, int id) {
+  try {
+    String sql = "UPDATE "+ RELATION + " SET name = ?, time = ?" + " WHERE ID = ?";
+    PreparedStatement preparedStmt = connection.prepareStatement(sql, new String[]{ "ID" });
+
+    preparedStmt.setString(1, entity.getName());
+    preparedStmt.setLong(2, entity.getTime());
+
+    int executedSt = preparedStmt.executeUpdate();
+
+    return executedSt == 1 ? this.getInsertedOne(preparedStmt) : null;
+  } catch (SQLException e) {
+    return null;
+  }
+}
+```
+
+È sempre bene utilizzare dei **prepared statement** quando si comunica con il DB,
+ovvero modello precompilato di una query SQL che può essere eseguito ripetutamente con diversi parametri.
+Questo modello viene inviato al database una volta e può essere eseguito molte volte con diversi valori di parametri, 
+senza la necessità di ricompilare la query ogni volta.
+
+Questo rende la comunicazione più sicura contro SQL Injection e più efficiente per l'unica compilazione.
+
+## Applicazione REST e API
+Il REST server è utilizzato per gestire le richieste HTTP e comunicare con il database, permettendo di effettuare operazioni CRUD sui record dei giocatori viste prima
+
+Inoltre è utilizzato per effettuare chiamate alle API per implementare dei minigiochi all'interno del gioco come il Blackjack e il Trivia
+
+- Blackjack:
+
+![API_Bj_1.jpg](img/API_Bj_1.jpg)
+
+- Richiesta GET all'API Deck of Cards
+
+```java
+private static String getRequest(String url) throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
+    // Create a new client and initiate a request
+    Client client = ClientBuilder.newClient();
+    WebTarget target = client.target(url);
+    int status;
+    String responseBody;
+
+    // verify the response status code and handle it accordingly
+    // if the status code is not 200, throw a runtime exception
+    // otherwise, return the response body
+    try {
+        Response resp = target.request(MediaType.APPLICATION_JSON).get();
+        responseBody = resp.readEntity(String.class);
+        status = resp.getStatus();
+    }catch (Exception e){
+        throw new RuntimeException("Failed to make request to " + url, e);
+    }
+
+    HttpRequestHandler.handle(status);
+
+    return responseBody;
+}
+```
+
+- Chiamata a un numero dato di carte:
+```Java
+public List<Card> getCards(int numberOfCards) throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
+
+    // if the number of remaining cards is less than the limit, shuffle the deck
+    if (remainingCards < LIMIT )shuffleDeck();
+
+    // get a number of cards from the deck and return them as a list of Card objects
+    String url = "https://www.deckofcardsapi.com/api/deck/" + deckToken + "/draw/?count=" + numberOfCards;
+    Type type = new TypeToken<List<Map<String, Object>>>(){}.getType();
+    Gson gson = new Gson();
+
+    Map<String,Object> response = deserializeFromUrl(url);
+    String remaining = response.get("remaining").toString();
+    remainingCards = Integer.parseInt(remaining.substring(0, remaining.length() - 2));
+
+    return gson.fromJson(gson.toJson(response.get("cards")), new TypeToken<List<Card>>() {}.getType());
+}
+```
+
+- Trivia: Un piccolo quiz all'interno del gioco
+
+- Richiesta:
+```java
+private static String getRequest(String url) throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
+  // Create a new client and initiate a request
+  Client client = ClientBuilder.newClient();
+  WebTarget target = client.target(url);
+  int status;
+  String responseBody;
+
+  // verify the response status code and handle it accordingly
+  // if the status code is not 200, throw a runtime exception
+  // otherwise, return the response body
+  try {
+    Response resp = target.request(MediaType.APPLICATION_JSON).get();
+    responseBody = resp.readEntity(String.class);
+    status = resp.getStatus();
+  }catch (Exception e){
+    throw new RuntimeException("Failed to make request to " + url, e);
+  }
+
+  HttpRequestHandler.handle(status);
+
+  return responseBody;
+}
+```
+
+- Ottenimento della domanda con le possibili risposte:
+```java
+public static Quiz getTrivia() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
+  String responseBody = getRequest("https://opentdb.com/api.php?amount=6&category=11&difficulty=easy");
+
+  Gson gson = new Gson();
+
+  return gson.fromJson(responseBody, Quiz.class);
+}
+```
+
+**Entrambi** i servizi restituiscono oggetti che poi vengono gestiti attraverso la logica del gioco che viene implementata
+
+Esempio di utilizzo dell'oggetto richiesto per il Trivia
+
+```java
+public List<List<String>> getAnswersShuffled() {
+  List<List<String>> answers = new ArrayList<>();
+  for( Result result : quiz.getResults()) {
+    List<String> answersList = new ArrayList<>();
+    answersList.add(result.getCorrectAnswer());
+    answersList.addAll(result.getIncorrect_answers());
+    Collections.shuffle(answersList);
+    for(String answer : answersList) {
+      if(answer.equals(result.getCorrectAnswer())) {
+        isCorrect[quiz.getResults().indexOf(result)] = answersList.indexOf(answer);
+      }
+    }
+    answers.add(answersList);
+  }
+
+  return answers;
+}
+```
+
+Qui vengono mescolate le risposte e viene salvato l'indice della risposta corretta
+
+#### [Ritorna all'Indice](#indice)
+
+## Socket
+
+Introduzione ai Socket in Java
+
+I socket sono uno dei mezzi fondamentali per la comunicazione tra nodi in una rete. In Java, i socket permettono ai programmi di scambiarsi dati attraverso una rete TCP/IP (Transmission Control Protocol/Internet Protocol). La programmazione con i socket in Java è essenziale per sviluppare applicazioni di rete come chat, server web, e giochi multiplayer.
+
+    Socket:
+        Un socket rappresenta un endpoint in una comunicazione bidirezionale tra due programmi che girano su una rete. Ogni socket è identificato da un indirizzo IP e un numero di porta.
+
+    Client-Server Model:
+        La comunicazione via socket segue tipicamente il modello client-server. Il server apre un socket su un numero di porta noto e rimane in attesa di richieste. Il client avvia una connessione a quel socket server specificando l'indirizzo IP del server e il numero di porta.
+
+Tipi di Socket in Java
+
+    Socket TCP:
+        I socket TCP (java.net.Socket) forniscono una connessione affidabile e orientata alla connessione tra due applicazioni. Questo significa che i dati inviati sono garantiti per arrivare nell'ordine corretto e senza duplicati.
+    Socket UDP:
+        I socket UDP (java.net.DatagramSocket) utilizzano il protocollo UDP (User Datagram Protocol) che è orientato ai messaggi e non garantisce la consegna, l'ordine, o l'integrità dei dati. È usato quando la velocità è più importante dell'affidabilità.
+
+
+### Applicazione
+
+Nel nostro progetto, nel menu iniziale è presente un bottone che permette di accedere a una pagina web che mostra le informazioni degli sviluppatori del gioco.
+Per fare ciò è stato utilizzato un server socket che rimane in ascolto di richieste di connessione da parte dei client, e crea un thread dedicato per ogni client che si connette.
+- Pagine web:
+
+
+![img.png](img/Website_4200.png)
+
+Dove sono presenti gli sviluppatori e il link ai loro github e al sito dell'Università di Bari
+//TODO: AGGIUNGERE IMMAGINE PAGINA WEB 2 
+- [Codice start Server Socket](#socket-code)
+
+
+Inviamo una pagina web al client attraverso il socket nel caso del server B,
+il server A lo fa renderizzando un file invece
+
+- Codice invio pagina web al client:
+```java
+public HttpPage(Socket socket) {
+  this.socket = socket;
+}
+
+public void renderPage(String htmlPage) throws IOException {
+        PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
+
+        initPage(printWriter, htmlPage.length());
+        printWriter.println(htmlPage);
+
+        printWriter.close();
+}
+```
+#### [Ritorna all'Indice](#indice)
+
+## Lambda Expressions
+
+Le lambda expressions sono state introdotte in Java 8 e permettono di scrivere codice più conciso e leggibile, permettendo di passare funzioni come argomenti ad altri metodi, e di scrivere funzioni anonime in modo più semplice.
+Queste fanno parte di un nuovo paradigma di programmazione chiamato programmazione funzionale, che permette di scrivere codice più pulito e manutenibile e funzioni più efficienti.
+
+Può essere trattata come un'istanza di un'interfaccia funzionale (un'interfaccia con un unico metodo astratto). La sintassi generale è:
+
+- (parameters) -> expression         Se la lambda expression ha un solo statement
+- (parameters) -> { statements; }    Se la lambda expression ha più di uno statement
+
+Permettono di trattare le funzioni come oggetti, rendendo il codice più flessibile e modulare.
+
+### Applicazione
+
+Nel nostro progetto le lambda expressions sono state utilizzate per semplificare il codice e renderlo più leggibile
+
+- Esempio di utilizzo delle lambda expressions per gestire gli eventi dei bottoni:
+```
+menuButton.addActionListener(_ -> GuiHub.changeTo(PagesEnum.MENU, null));
+```
+In questo caso è stato usato "_" per indicare che non ci interessa il parametro passato alla lambda expression ed è una convenzione che si adotta 
+quando non si utilizza il parametro passato, qui l'azione è quella di chiamare il metodo che permette di cambiare panel visualizzato
+
+```
+deleteButton.addActionListener(_ -> {
+  try {
+      this.deleteGame(save);
+  
+      this.initSaves();
+  } catch (Error e) {
+      System.err.println(e.getMessage());
+  }
+});
+```
+In questo caso la lambda expression permette di eliminare un salvataggio e di aggiornare la lista dei salvataggi
+
+- Esempio di utilizzo su stream API su collezioni di oggetti
+```
+public boolean isAccessible(String roomName) {
+  return paths.stream().anyMatch(path -> path.getValue1() && path.getValue0().getName().equals(roomName));
+}
+```
+
+Qui la lambda è il predicato che viene passato al metodo anyMatch() che restituisce true se almeno un elemento della collezione soddisfa il predicato
+
+- Esempio di utilizzo 
+```
+paths = paths.stream().map(pair -> Objects.equals(pair.getValue0().getName(), roomName) ?
+        new Pair<>(pair.getValue0(), isLocked) : pair).toList();
+```
+Qui la lambda expression rappresenta la funzione da applicare a ogni elemento dello stream grazie alla funzione map
+
+#### [Ritorna all'Indice](#indice)
+
+
+## Graphic User Interface - Swing
+
+**Swing** è un toolkit per la creazione di interfacce grafiche in Java, è stato introdotto con Java 1.2 e permette di creare interfacce grafiche per applicazioni desktop in modo semplice e flessibile.
+Swing è basato su **AWT** (Abstract Window Toolkit) e fornisce un set di componenti grafici più avanzati e personalizzabili rispetto ad AWT.
+
+Basato su un modello di programmazione ad eventi, in cui i componenti generano eventi in risposta alle azioni dell'utente, e i listener catturano e gestiscono questi eventi.
+La GUI è composta da un insieme di componenti grafici:
+- Layout
+- Form, menu, tabelle
+- Dialoghi visivi
+- Bottoni
+
+### Applicazione
+
+Nel nostro progetto è stata creata l'interfaccia grafica per il menu iniziale, interfaccia di caricamento, riconoscimenti e gioco
+La particolarità della nostra interfaccia è che è la sua dinamicità, infatti questa può essere ingrandita e rimpicciolita agilmente e presenta 
+elementi dinamici nell'interfaccia quali i bottoni degli oggetti dell'inventario
+
+L'epicentro della GUI è gestito dalla classe GuiHub che si occupa di creare e gestire il frame, infatti qui sono presenti gli elementi comuni a tutte le interfacce:
+- Toolbar
+- Panel in card layout
+
+**Card Layout**: Layout manager che permette di visualizzare un solo componente alla volta, permettendo di passare da un componente all'altro in modo semplice
+questo per cambiare pannello in base all'interfaccia che si vuole visualizzare
+
+- Esempio di utilizzo del card layout:
+```Java
+public static void changeTo(PagesEnum page, Game game) {
+    switch (page) {
+        case MENU:
+            GuiHubRef.switchPanel(new GuiMenuRef(), page.name());
+            break;
+        case ACKNOWLEDGEMENT:
+            GuiHubRef.switchPanel(new GuiCreditsRef(), page.name());
+            break;
+        case GAME_SAVES:
+            GuiHubRef.switchPanel(new GuiLoadRef(), page.name());
+            break;
+        case NEW_GAME:
+            GuiHubRef.switchPanel(new GuiGameRef(game), page.name());
+            break;
+        case EXIT:
+            System.exit(0);
+            break;
+    }
+}
+```
+
+Questa è la funzione principale che permette di cambiare il pannello visualizzato in base alla pagina che si vuole visualizzare
+e agisce istanziando il nuovo pannello ogni qual volta è necessario, abbiamo preferito fare così piuttosto che istanziare tutto all'inizio
+e poi cambiare solo la visualizzazione per evitare un sovraccarico e problemi di istanziazioni in un momento sbagliato
+
+Abbiamo utilizzato vari layout come il **BorderLayout** per i pannelli di salvataggio, il **GridBagLayout** per l'inventario, il **BoxLayout** per contenere i panel di salvataggio gestiti in border 
+e i **Group Layout** per posizionare i componenti in modo da poterli avere resizable e adattabili a qualsiasi dimensione
+
+- Esempio di utilizzo del GridBagLayout:
+```Java
+
+
+
+
+
+
+
