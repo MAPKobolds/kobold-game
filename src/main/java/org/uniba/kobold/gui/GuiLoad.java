@@ -8,7 +8,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
-public class GuiLoad extends JPanel {
+public class GuiLoad extends JPanel implements ListPanel<GameSaveInstance> {
 
     private static final String BACKGROUND_PATH = "/img/wall.png";
     private JPanel scrollContainer;
@@ -20,50 +20,8 @@ public class GuiLoad extends JPanel {
         initComponents();
     }
 
-    private void initComponents() {
-        scrollContainer = new JPanel();
-        scroller = new JScrollPane();
-        savesContainer = new JPanel();
-        menuButton = new GuiGenericButton(
-        "Torna al Menu",
-                new Color(40, 0, 5),
-                Color.WHITE
-        ).getButton();
-        menuButton.addActionListener(_ -> GuiHub.changeTo(PagesEnum.MENU, null));
-
-        scrollContainer.setLayout(new BoxLayout(scrollContainer, BoxLayout.Y_AXIS));
-        scrollContainer.setOpaque(false);
-
-        savesContainer.setBackground(Color.BLACK);
-        scroller.setOpaque(false);
-        scroller.getViewport().setOpaque(false);
-        scroller.setBorder(null);
-        scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        initSaves();
-        setLayout();
-    }
-
-    private void initSaves() {
-        List<GameSaveInstance> saves = GameSave.getSavingName();
-        savesContainer.setLayout(new BoxLayout(savesContainer, BoxLayout.Y_AXIS));
-        savesContainer.removeAll();
-
-        if (saves.isEmpty()) {
-            this.setNoContentFoundLabel();
-        } else {
-            for(GameSaveInstance save : saves) {
-                JPanel savePanel = createSavePanel(save);
-                savesContainer.add(savePanel);
-            }
-        }
-
-        savesContainer.revalidate();
-        savesContainer.repaint();
-    }
-
-    private JPanel createSavePanel(GameSaveInstance save) {
+    @Override
+    public JPanel createItem(GameSaveInstance save, Integer... args) {
         JPanel savePanel = new JPanel(new BorderLayout());
         savePanel.setBackground(new Color(40, 0, 5));
         savePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -97,7 +55,7 @@ public class GuiLoad extends JPanel {
             try {
                 this.deleteGame(save);
 
-                this.initSaves();
+                this.loadList();
             } catch (Error e) {
                 System.err.println(e.getMessage());
             }
@@ -118,6 +76,64 @@ public class GuiLoad extends JPanel {
         return savePanel;
     }
 
+    @Override
+    public void loadList() {
+        List<GameSaveInstance> saves = GameSave.getSavingName();
+        savesContainer.setLayout(new BoxLayout(savesContainer, BoxLayout.Y_AXIS));
+        savesContainer.removeAll();
+
+        if (saves.isEmpty()) {
+            this.manageNoContentFound();
+        } else {
+            for(GameSaveInstance save : saves) {
+                JPanel savePanel = this.createItem(save);
+                savesContainer.add(savePanel);
+            }
+        }
+
+        savesContainer.revalidate();
+        savesContainer.repaint();
+    }
+
+    @Override
+    public void manageNoContentFound() {
+        JPanel noSavesFoundPanel = new JPanel(new BorderLayout());
+        noSavesFoundPanel.setBackground(new Color(40, 0, 5));
+        noSavesFoundPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+
+        JLabel loadInfoLabel = new JLabel("<html>NESSUN SALVATAGGIO TROVATO <br/><br/> <center> ¯\\_(ツ)_/¯ </center> </html>", SwingConstants.CENTER);
+
+        loadInfoLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 20));
+        loadInfoLabel.setForeground(Color.WHITE);
+        noSavesFoundPanel.add(loadInfoLabel, BorderLayout.CENTER);
+
+        savesContainer.add(noSavesFoundPanel);
+    }
+
+    private void initComponents() {
+        scrollContainer = new JPanel();
+        scroller = new JScrollPane();
+        savesContainer = new JPanel();
+        menuButton = new GuiGenericButton(
+        "Torna al Menu",
+                new Color(40, 0, 5),
+                Color.WHITE
+        ).getButton();
+        menuButton.addActionListener(_ -> GuiHub.changeTo(PagesEnum.MENU, null));
+
+        scrollContainer.setLayout(new BoxLayout(scrollContainer, BoxLayout.Y_AXIS));
+        scrollContainer.setOpaque(false);
+
+        savesContainer.setBackground(Color.BLACK);
+        scroller.setOpaque(false);
+        scroller.getViewport().setOpaque(false);
+        scroller.setBorder(null);
+        scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        this.loadList();
+        setLayout();
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -198,19 +214,5 @@ public class GuiLoad extends JPanel {
 
             GuiHub.changeTo(PagesEnum.NEW_GAME, new Game(save.getPlayerName(), g.getRoomsMap(), g.getTimer(), g.getInventory()));
         }
-    }
-
-    private void setNoContentFoundLabel() {
-        JPanel noSavesFoundPanel = new JPanel(new BorderLayout());
-        noSavesFoundPanel.setBackground(new Color(40, 0, 5));
-        noSavesFoundPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
-
-        JLabel loadInfoLabel = new JLabel("<html>NESSUN SALVATAGGIO TROVATO <br/><br/> <center> ¯\\_(ツ)_/¯ </center> </html>", SwingConstants.CENTER);
-
-        loadInfoLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 20));
-        loadInfoLabel.setForeground(Color.WHITE);
-        noSavesFoundPanel.add(loadInfoLabel, BorderLayout.CENTER);
-
-        savesContainer.add(noSavesFoundPanel);
     }
 }

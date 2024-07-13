@@ -9,17 +9,77 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class GuiGameRecord extends JPanel {
+public class GuiGameRecord extends JPanel implements ListPanel<Record> {
 
     private static final String BACKGROUND_PATH = "/img/wall.png";
     private JPanel scrollContainer;
     private JButton menuButton;
     private JPanel recordContainer;
     private JScrollPane scroller;
-    private RecordService recordService = new RecordService();
+    private final RecordService recordService = new RecordService();
 
     public GuiGameRecord() {
         initComponents();
+    }
+
+    @Override
+    public JPanel createItem(Record item, Integer... args) {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(new Color(40, 0, 5));
+        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
+
+        JLabel loadInfoLabel = new JLabel();
+
+        //loadInfoLabel settings
+        loadInfoLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 14));
+        loadInfoLabel.setForeground(Color.WHITE);
+        loadInfoLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        loadInfoLabel.setText(args[0] + "° posto -> " + item.getName() + ", TEMPO: " + TimeManager.fromLongToString(item.getTime()));
+        panel.add(loadInfoLabel, BorderLayout.WEST);
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.setOpaque(false);
+
+        panel.add(buttonPanel, BorderLayout.EAST);
+        return panel;
+    }
+
+    @Override
+    public void loadList() {
+        List<Record> records = recordService.getBestRecord();
+        recordContainer.setLayout(new BoxLayout(recordContainer, BoxLayout.Y_AXIS));
+        recordContainer.removeAll();
+
+        if (records.isEmpty()) {
+            this.manageNoContentFound();
+        } else {
+            int index = 1;
+            for(Record record : records) {
+                JPanel recordPanel = this.createItem(record, index);
+                recordContainer.add(recordPanel);
+
+                index++;
+            }
+        }
+
+        recordContainer.revalidate();
+        recordContainer.repaint();
+    }
+
+    @Override
+    public void manageNoContentFound() {
+        JPanel noRecordFoundPanel = new JPanel(new BorderLayout());
+        noRecordFoundPanel.setBackground(new Color(40, 0, 5));
+        noRecordFoundPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+
+        JLabel loadInfoLabel = new JLabel("<html>NESSUN RECORD TROVATO <br/><br/> <center> ¯\\_(ツ)_/¯ </center> </html>", SwingConstants.CENTER);
+
+        loadInfoLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 20));
+        loadInfoLabel.setForeground(Color.WHITE);
+        noRecordFoundPanel.add(loadInfoLabel, BorderLayout.CENTER);
+
+        recordContainer.add(noRecordFoundPanel);
     }
 
     private void initComponents() {
@@ -43,53 +103,9 @@ public class GuiGameRecord extends JPanel {
         scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        initRecords();
+        this.loadList();
         setLayout();
     }
-
-    private void initRecords() {
-        List<Record> records = recordService.getBestRecord();
-        recordContainer.setLayout(new BoxLayout(recordContainer, BoxLayout.Y_AXIS));
-        recordContainer.removeAll();
-
-        if (records.isEmpty()) {
-            this.setNoContentFoundLabel();;
-        } else {
-            int index = 1;
-            for(Record record : records) {
-                JPanel recordPanel = createRecordPanel(record, index);
-                recordContainer.add(recordPanel);
-
-                index++;
-            }
-        }
-
-        recordContainer.revalidate();
-        recordContainer.repaint();
-    }
-
-    private JPanel createRecordPanel(Record record, int index) {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(40, 0, 5));
-        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
-
-        JLabel loadInfoLabel = new JLabel();
-
-        //loadInfoLabel settings
-        loadInfoLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 14));
-        loadInfoLabel.setForeground(Color.WHITE);
-        loadInfoLabel.setText(index + "° posto -> " + record.getName() + ", TEMPO: " + TimeManager.fromLongToString(record.getTime()));
-        loadInfoLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
-        panel.add(loadInfoLabel, BorderLayout.WEST);
-
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttonPanel.setOpaque(false);
-
-        panel.add(buttonPanel, BorderLayout.EAST);
-        return panel;
-    }
-
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -124,20 +140,6 @@ public class GuiGameRecord extends JPanel {
                                 .addComponent(menuButton, GroupLayout.DEFAULT_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                                 .addGap(31, 31, 31))
         );
-    }
-
-    private void setNoContentFoundLabel() {
-        JPanel noRecordFoundPanel = new JPanel(new BorderLayout());
-        noRecordFoundPanel.setBackground(new Color(40, 0, 5));
-        noRecordFoundPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
-
-        JLabel loadInfoLabel = new JLabel("<html>NESSUN RECORD TROVATO <br/><br/> <center> ¯\\_(ツ)_/¯ </center> </html>", SwingConstants.CENTER);
-
-        loadInfoLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 20));
-        loadInfoLabel.setForeground(Color.WHITE);
-        noRecordFoundPanel.add(loadInfoLabel, BorderLayout.CENTER);
-
-        recordContainer.add(noRecordFoundPanel);
     }
 
 }
