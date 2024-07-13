@@ -19,6 +19,7 @@ public class HttpPage {
 
         String line = reader.readLine();
         while (line != null) {
+            System.out.println(line);
             printWriter.println(line);
             line = reader.readLine();
         }
@@ -40,7 +41,7 @@ public class HttpPage {
         printWriter.println("HTTP/1.1 200 OK");
         printWriter.println("Content-Type: text/html");
         printWriter.println("Content-Length: " + contentLength);
-        printWriter.println("\r<br>");
+        printWriter.println("\r\n");
     }
 
 }
