@@ -17,7 +17,7 @@ public final class SquareRoom extends Room {
 
     public SquareRoom() {
         super("spiazzale",
-                "Lo spiazzale si trova all'uscita del BAR ed è un posto di ritrovo dei coboldi, circondato da altri palazzi abitati da altri coboldi.<br>" +
+                "Lo spiazzale si trova all'uscita del BAR ed è un posto di ritrovo dei coboldi, circondato da altri palazzi abitati da altri coboldi<br>" +
                         "Di fronte a te noti dei cartelli che indicano dei luoghi di interesse: " +
                         ColorText.setTextPurple("<br>fucine") +
                         ColorText.setTextPurple("<br>piste") +
