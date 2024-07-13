@@ -96,7 +96,7 @@ public class GuiGameRecord extends JPanel implements ListPanel<Record> {
         scrollContainer.setLayout(new BoxLayout(scrollContainer, BoxLayout.Y_AXIS));
         scrollContainer.setOpaque(false);
 
-        recordContainer.setBackground(Color.BLACK);
+        recordContainer.setBackground(new Color(0,0,0,0));
         scroller.setOpaque(false);
         scroller.getViewport().setOpaque(false);
         scroller.setBorder(null);
