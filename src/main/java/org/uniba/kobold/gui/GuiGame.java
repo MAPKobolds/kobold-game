@@ -139,8 +139,11 @@ public class GuiGame extends JPanel {
 
     public void addItem(Item item) {
         JButton itemButton = new GuiObjectButton(item.getName(), item.getImage());
-        itemButton.setPreferredSize(new Dimension(70, 70));
         itemButton.setBorder(BorderFactory.createLineBorder(new Color(93, 72, 55), 3));
+        itemButton.setMinimumSize(new Dimension(80, 80));
+        itemButton.setMaximumSize(new Dimension(80, 80));
+        itemButton.setPreferredSize(new Dimension(80, 80));
+
         itemButton.setVisible(true);
         itemButton.setToolTipText("<html>" + item.getDescription() + "</html>");
 
@@ -157,13 +160,7 @@ public class GuiGame extends JPanel {
         int columns = 2;
         gridBagConstraints.gridx = i % columns;
         gridBagConstraints.gridy = i / columns;
-        gridBagConstraints.fill = GridBagConstraints.NORTHEAST;
-        gridBagConstraints.ipady = 50;
-        gridBagConstraints.ipadx = 50;
-        gridBagConstraints.anchor = GridBagConstraints.NORTHEAST;
-        gridBagConstraints.weightx = 0;
-        gridBagConstraints.weighty = 0;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        gridBagConstraints.anchor = GridBagConstraints.CENTER;
     }
 
     /**
@@ -237,7 +234,7 @@ public class GuiGame extends JPanel {
                                 .addComponent(inputField, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(dialogText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap())
+                                )
         );
 
         dialogPanelLayout.setVerticalGroup(
@@ -280,7 +277,7 @@ public class GuiGame extends JPanel {
                         .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(inventoryPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(inventoryPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(inputField, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
                                         .addComponent(gamePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addComponent(dialogPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))

@@ -18,7 +18,7 @@ import java.util.Set;
 public final class IntroductionRoom extends Room {
     int continueCounter = 0;
     private List<Pair<String, String>> slides = List.of(
-            Pair.with("/img/rooms/falling.jpg", "Il giorno successivo segui il Gps della tua auto e mentre stai sopra al punto segnato, ti accorgi che il terreno cede sotto i tuoi piedi " + ColorText.setTextBlue("continua") + " per continuare"),
+            Pair.with("/img/rooms/falling.jpg", "Il giorno successivo segui il Gps della tua auto e mentre stai sopra al punto segnato, ti accorgi che il terreno cede sotto i tuoi piedi <br>" + ColorText.setTextBlue("continua") + " per continuare"),
             Pair.with("/img/rooms/tutorial.jpg", "Salve questo è il tutorial di Kobold, un gioco testuale in cui dovrai risolvere enigmi e rompicapi per poter proseguire. Qui ti elenchiamo i comandi generali:<br>"
                     + ColorText.setTextBlue("guarda") + " per guardare in una direzione sopra/sotto/giu... <br>" +
                     ColorText.setTextBlue("prendi") + " per prendere un oggetto <br>" +

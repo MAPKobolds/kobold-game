@@ -59,7 +59,7 @@ public class GuiHub extends JFrame {
     }
 
     private void setLogo() {
-        URL logo = GuiHub.class.getResource("/img/BR.png");
+        URL logo = GuiHub.class.getResource("/img/firemaul.jpg");
         ImageIcon image = null;
         if (logo != null) {
             image = new ImageIcon(logo);
