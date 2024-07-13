@@ -35,7 +35,7 @@ public final class IntroductionRoom extends Room {
                 "Era una giornata come le altre a Molfetta, dopo un lungo giorno vuoi andare alla pizzeria per prendere una siciliana (\"la pizza\") " +
                         "esci dalla pizzeria con le pizze in mano e vedi che ti stanno rubando la macchina ... Aspe Cosa?! " + ColorText.setTextBlue("continua") + " per continuare",
                 "/img/rooms/cartheft.jpg",
-                List.of(new Cloak()),
+                List.of(),
                 Arrays.asList(
                     new Command("continua", Set.of("avanti"))
                 )

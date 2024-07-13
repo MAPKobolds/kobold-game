@@ -15,6 +15,7 @@ public class RoomDeserializer implements JsonDeserializer<Room> {
         Class roomClass = Room.class;
 
         switch (roomName) {
+            case "introduzione" -> roomClass = IntroductionRoom.class;
             case "corridoio" -> roomClass = HallwayRoom.class;
             case "circuito" -> roomClass = CircuitRoom.class;
             case "fucine" -> roomClass = ForgeRoom.class;
