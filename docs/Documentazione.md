@@ -410,6 +410,10 @@ public static void startServerA() {
         }).start();
     }
 ```
+
+[*Torna ai socket*](#socket)
+
+
 Sia per il server A che B
 
 - **REST**: Il server REST è stato implementato anch'esso in un thread similarmente al socket server
@@ -448,7 +452,7 @@ SwingUtilities.invokeLater(() -> {
 
 ## Database e REST
 
-REST è un'architettura software che definisce un insieme di vincoli per la progettazione di servizi web che non utilizza sessioni ma si basa sulla trasmissione di dati tramite HTTP 
+**REST** è un'architettura software che definisce un insieme di vincoli per la progettazione di servizi web che non utilizza sessioni ma si basa sulla trasmissione di dati tramite HTTP 
 e che permette di accedere e modificare le risorse tramite operazioni CRUD.
 REST prevede una struttura delle URI ben definita che identifica univocamente una risorsa o un insieme di risorse
 Caratteristiche:
@@ -481,7 +485,11 @@ Più nello specifico, abbiamo utilizzato *Service* e *Repository* per gestire le
 Service si occupa di definire l'interfaccia tra il Record e il Repository e infine il *Controller* gestisce le richieste e risposte.
 
 Il risultato sarà una pagina nell'app che, comunicando con il database prende i record e li visualizza
-//TODO: Aggiungere immagine record gui
+
+![Record_1.png](img/Record_1.png)
+
+//TODO: Aggiungere immagine record con effettivi record
+
 - CRUD Interface:
 ```java
 public interface CRUDInterface<T> {
@@ -622,7 +630,7 @@ Il REST server è utilizzato per gestire le richieste HTTP e comunicare con il d
 
 Inoltre è utilizzato per effettuare chiamate alle API per implementare dei minigiochi all'interno del gioco come il Blackjack e il Trivia
 
-- Blackjack:
+- Blackjack: [Deck of Cards API](https://www.deckofcardsapi.com/)
 
 ![API_Bj_1.jpg](img/API_Bj_1.jpg)
 
@@ -673,7 +681,7 @@ public List<Card> getCards(int numberOfCards) throws HttpInternalServerErrorExce
 }
 ```
 
-- Trivia: Un piccolo quiz all'interno del gioco
+- Trivia: Un piccolo quiz all'interno del gioco [Open Trivia DB](https://opentdb.com/)
 
 - Richiesta:
 ```java
@@ -766,11 +774,15 @@ Nel nostro progetto, nel menu iniziale è presente un bottone che permette di ac
 Per fare ciò è stato utilizzato un server socket che rimane in ascolto di richieste di connessione da parte dei client, e crea un thread dedicato per ogni client che si connette.
 - Pagine web:
 
-
-![img.png](img/Website_4200.png)
+![Website_4200](img/Website_4200.png)
 
 Dove sono presenti gli sviluppatori e il link ai loro github e al sito dell'Università di Bari
-//TODO: AGGIUNGERE IMMAGINE PAGINA WEB 2 
+
+La seconda pagina è solo un esempio di utilizzo visualizzando il risultato di una richiesta ad una pagina con un inside joke tra web developer:
+
+![Website_4300.png](img/Website_4300.png)
+
+Che per ovvii motivi non mostrerò completamente
 - [Codice start Server Socket](#socket-code)
 
 
@@ -906,10 +918,58 @@ e i **Group Layout** per posizionare i componenti in modo da poterli avere resiz
 
 - Esempio di utilizzo del GridBagLayout:
 ```Java
+public void addItem(Item item) {
+        JButton itemButton = new GuiObjectButton(item.getName(), item.getImage());
+        itemButton.setBorder(BorderFactory.createLineBorder(new Color(93, 72, 55), 3));
+        itemButton.setMinimumSize(new Dimension(80, 80));
+        itemButton.setMaximumSize(new Dimension(80, 80));
+        itemButton.setPreferredSize(new Dimension(80, 80));
+
+        itemButton.setVisible(true);
+        itemButton.setToolTipText("<html>" + item.getDescription() + "</html>");
+
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        gridManager(gridBagConstraints, inventoryCount);
+
+        inventoryPanel.add(itemButton, gridBagConstraints);
+        inventoryPanel.revalidate();
+        inventoryPanel.repaint();
+        inventoryCount++;
+    }
+
+    private static void gridManager(GridBagConstraints gridBagConstraints, int i) {
+        int columns = 2;
+        gridBagConstraints.gridx = i % columns;
+        gridBagConstraints.gridy = i / columns;
+        gridBagConstraints.anchor = GridBagConstraints.CENTER;
+    }
+```
+
+In questo snippet viene aggiunto un nuovo Item alla visualizzazione dell'inventario e per farlo viene istanziato un nuovo bottone di un tipo 
+GuiObjectButton da noi creato estendendo JButton per la personalizzazione dell'immagine di sfondo con **paintComponent**
+Poi viene impostato e aggiungo chiamato il layout manager per posizionare il bottone nel pannello dell'inventario
+Infine aggiunto al panel a cui appartiene e richiamato il metodo repaint per renderizzare il nuovo bottone
+
+- Visualizzazione:
+
+![Inventory.png](img/Inventory.png)
+
+Come si può vedere è possibile visualizzare gli oggetti dell'inventario in modo dinamico e adattabile e la loro descrizione 
+se il giocatore resta sopra l'oggetto con il mouse
+
+È inoltre possibile giocare in senza visualizzare l'inventario per avere più spazio per la visualizzazione del gioco
+
+![NoInventory.png](img/NoInventory.png)
 
 
+- Scroll Pane per gestire i salvataggi che possono eccedere lo spazio del loro pannello(e non volevamo porre una limitazione):
 
+![ScrollPane .png](img/ScrollPane.png)
 
+Ma soprattutto si può scegliere di giocare in modalità fullscreen per avere una visione più ampia del gioco
 
+TODO: mettere foto riconoscimenti 
 
+#### [Ritorna all'Indice](#indice)
 
+# Manuale Utente
