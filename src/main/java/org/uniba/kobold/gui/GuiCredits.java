@@ -2,6 +2,8 @@ package org.uniba.kobold.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 public class GuiCredits extends JPanel {
@@ -38,6 +40,18 @@ public class GuiCredits extends JPanel {
 
         menuButton.addActionListener(_ -> GuiHub.changeTo(PagesEnum.MENU, null));
 
+        try {
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/Minecraft.ttf"));
+            customFont = customFont.deriveFont(Font.PLAIN, 20);
+            creditsLabel.setFont(customFont);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
+        creditsLabel.setForeground(Color.WHITE);
+        creditsLabel.setHorizontalAlignment(JLabel.CENTER);
+        creditsLabel.setVerticalAlignment(JLabel.CENTER);
+        //TODO: NON SO COSA SCRIVERE!!!!!
+        creditsLabel.setText("");
         tokensPanel.setOpaque(false);
         porcelliPanel.setOpaque(false);
         sgaramellaPanel.setOpaque(false);

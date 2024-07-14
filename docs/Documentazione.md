@@ -33,23 +33,22 @@ avuto grande successo e si trattava di una novità, nonché i primi passi verso 
 ### Caratteristiche Principali
 
 - **Interfaccia Testuale**: l'interazione avviene tramite comandi scritti, "prendi mantello", "ispeziona" ecc...
-- **Descrizioni Dettagliate**: il gioco descrive le scene, gli oggetti e le azioni attraverso testi ed un'immagine di sfondo
+- **Descrizioni Dettagliate**: il gioco descrive le scene, gli oggetti e le azioni attraverso testi e un'immagine di sfondo
 - **Minigiochi**: all'interno del gioco sono presenti minigiochi come il **Blackjack** o la ricerca dei pezzi dell'**Auto**
 
 ### Trama
 
-Ispirato ad una storia vera, il gioco comincia con il protagonista che torna nella sua casa in campagna guidando la sua macchina e la parcheggia momentaneamente fuori casa
-prima di riprendere a guidare. Finito ciò che doveva fare in casa, il protagonista torna fuori e si accorge che la sua macchina stava venendo rubata da un gruppo di persone 
+Ispirato a una storia vera, il gioco comincia con il protagonista che torna verso la sua macchina parcheggiata a Molfetta e si accorge che la sua macchina stava venendo rubata da un gruppo di persone 
 incappucciate. Seguendo le tracce dell'auto si ritrova in un posto sconosciuto, e appena scorge un cartello con scritto "Cerignola", un buco nel pavimento si forma sotto i suoi piedi
-e sprofonda in un mondo sotterraneo e buio, ed una scritta gli appare dinanzi: "Cerignolus: Città dei Coboldi".
-L'obiettivo del nostro è quello di riuscire ad uscire dalla caverna e tornare a casa riprendendosi la sua macchina ma come vedremo potrà finire in molti modi.
+e sprofonda in un mondo sotterraneo e buio, e una scritta gli appare dinanzi: "Cerignolus: Città dei Coboldi".
+L'obiettivo del nostro è quello di riuscire a uscire dalla caverna e tornare a casa riprendendosi la sua macchina ma come vedremo potrà finire in molti modi.
 
 ### Struttura del Progetto
 
 - **Parser**: il giocatore interagisce attraverso comandi testuali che devono essere interpretati dal gioco, il parser è dunque una componente fondamentale
 - **Thread**: si tratta di un progetto che ricchiede l'esecuzione contemporanea di più elementi insieme, come ad esempio il timer, la musica o il socket server
 - **File di Configurazione**: il gioco include la possibiltà di salvare una partita in un dato momento, questo viene fatto serializzando gli oggetti nello stato a runtime e riportandoli in un file JSON, poi caricato per permettere di riprendere una partita da quel momento
-- **Database**: il gioco registra i tempi di gioco dei giocatori ed i loro nomi su un database **H2**
+- **Database**: il gioco registra i tempi di gioco dei giocatori e i loro nomi su un database **H2**
 - **Socket/REST**: il gioco include un server socket, sulla porta 4200 per una piccola panoramica sugli sviluppatori collegandosi all'account Github di ognuno
 - **API**: il gioco per l'implementazione dei minigiochi utilizza API esterne come quella di **Deck of Cards** per il Blackjack
 - **GUI**: nonostante il gioco sia testuale, è stata implementata una GUI per visualizzare le informazioni principali del gioco.
@@ -98,130 +97,261 @@ Ho omesso l'implementazione di ognuna delle "AvailableRooms" e "Minigames" per n
 #### [Ritorna all'Indice](#indice)
 
 ## 3. Specifiche Algebriche
-Due delle strutture dati più utilizzate nel nostro progetto sono la **Lista** e la **Mappa**, in questa sezione verranno presentate le specifiche algebriche di entrambe.
+Due delle strutture dati più utilizzate nel nostro progetto sono la **Mappa** e la **Lista**, in questa sezione verranno presentate le specifiche algebriche di entrambe.
 
 ### 3.1 - Specifica algebrica della Lista
 La lista è una struttura dati che permette di memorizzare e recuperare informazioni sfruttando l'indice di posizione degli elementi contenuti.
 
-#### Specifica sintattica
+### Specifica sintattica
+<table>
+    <thead>
+        <tr>
+            <th colspan="2">Tipi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="2"><code>List</code>, <code>Element</code>, <code>Integer</code>, <code>Boolean</code></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><strong>Operatori</strong></td>
+        </tr>
+        <tr>
+            <td><code>newList() -> List</code></td>
+            <td>Crea una nuova lista vuota</td>
+        </tr>
+        <tr>
+            <td><code>add(List, Element, Integer) -> List</code></td>
+            <td>Aggiunge un elemento alla lista nella posizione specificata</td>
+        </tr>
+        <tr>
+            <td><code>isEmpty(List) -> Boolean</code></td>
+            <td>Restituisce <code>true</code> se la lista è vuota altrimenti <code>false</code></td>
+          </tr>
+            <tr>
+                <td><code>getSize(List) -> Integer</code></td>
+                <td>Restituisce l'ultima posizione occupata da un elemento</td>
+            </tr> 
+            <tr>
+                <td><code>getIndex(List, Element) -> Integer</code></td>
+                <td>Restituisce la posizione dell'elemento specificato</td>
+            </tr> 
+            <tr>
+                <td><code>getElement(List, Integer) -> Element</code></td>
+                <td>Restituisce l'elemento nella posizione specificata</td> 
+            </tr> 
+            <tr>
+                <td><code>remove(List, Integer) -> List</code></td>
+                <td>Rimuove dalla lista l'elemento nella posizione specificata</td>  
+            </tr>
+            <tr>
+                <td><code>contains(List, Element) -> Boolean</code></td>
+                <td>Restituisce <code>true</code> se l'elemento specificato è contenuto nella lista</td>
+            </tr>
+    </tbody>
+</table>
+Si noti come <code>Element</code> è un tipo generico, che può essere sostituito con qualsiasi altro tipo di dato.
 
-**Tipi**
-- `List`, `Element`, `Integer`, `Boolean`
+<code>Interger</code> e <code>Boolean</code> invece, sono tipi ausiliari alla definizione della specifica algebrica della lista.
 
-**Operatori**
-- `newList() -> List`: Crea una nuova lista vuota
-- `add(List, Element, Integer) -> List`: Aggiunge un elemento alla lista nella posizione specificata
-- `isEmpty(List) -> Boolean`: Restituisce `true` se la lista è vuota altrimenti `false`
-- `getSize(List) -> Integer`: Restituisce l'ultima posizione occupata da un elemento
-- `getIndex(List, Element) -> Integer`: Restituisce la posizione dell'elemento specificato
-- `getElement(List, Integer) -> Element`: Restituisce l'elemento nella posizione specificata
-- `remove(List, Integer) -> List`: Rimuove dalla lista l'elemento nella posizione specificata
-- `contains(List, Element) -> Boolean`: Restituisce `true` se l'elemento specificato è contenuto nella lista
+### Osservazioni e Costruttori
 
-Si noti come `Element` è un tipo generico, che può essere sostituito con qualsiasi altro tipo di dato. `Integer` e `Boolean` invece, sono tipi ausiliari alla definizione della specifica algebrica della lista.
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2">Costruttori di l'</th>
+    </tr>
+  </thead>
+  <tbody align="center">
+    <tr>
+      <td><strong>Osservazioni</strong></td>
+      <td><code>newList</code></td>
+      <td><code>add(l, it, id)</code></td>
+    </tr>
+    <tr>
+      <td><code>isEmpty(l')</code></td>
+      <td><code>true</code></td>
+      <td><code>false</code></td>
+    </tr>
+    <tr>
+      <td><code>getSize(l')</code></td>
+      <td><code>error</code></td>
+      <td>if <code>isEmpty(l)</code> then <code>1</code> else <code>getSize(l) + 1</code></td>
+    </tr>
+    <tr>
+      <td><code>getIndex(l', it')</code></td>
+      <td><code>error</code></td>
+      <td>if <code>it = it'</code> then <code>id</code> else <code>getIndex(l, it')</code></td>
+    </tr>
+    <tr>
+      <td><code>getElement(l', id')</code></td>
+      <td><code>error</code></td>
+      <td>if <code>id = id'</code> then <code>it</code> else <code>getElement(l, id')</code></td>
+    </tr>
+    <tr>
+      <td><code>remove(l', id')</code></td>
+      <td><code>error</code></td>
+      <td>if <code>id = id'</code> then <code>l</code> else <code>add(remove(l, id'), it)</code></td>
+    </tr>
+    <tr>
+      <td><code>contains(l', it')</code></td>
+      <td><code>false</code></td>
+      <td>if <code>it = it'</code> then <code>true</code> else <code>contains(l, it')</code></td>
+    </tr>
+  </tbody>
+</table>
 
-#### Osservazioni e Costruttori
-
-| Metodo               | Costruttore         | Osservazioni                                                             |
-|----------------------|---------------------|--------------------------------------------------------------------------|
-| `isEmpty(l')`        | `newList`           | `true`                                                                   |
-| `isEmpty(l')`        | `add(l, el, id)`    | `false`                                                                  |
-| `getSize(l')`        | `newList`           | `error`                                                                  |
-| `getSize(l')`        | `add(l, el, id)`    | `if isEmpty(l) then 1 else getSize(l) + 1`                               |
-| `getIndex(l', el')`  | `newList`           | `error`                                                                  |
-| `getIndex(l', el')`  | `add(l, el, id)`    | `if el = el' then id else getIndex(l, el')`                              |
-| `getElement(l', id')`| `newList`           | `error`                                                                  |
-| `getElement(l', id')`| `add(l, el, id)`    | `if id = id' then el else getElement(l, id')`                            |
-| `remove(l', id')`    | `newList`           | `error`                                                                  |
-| `remove(l', id')`    | `add(l, el, id)`    | `if id = id' then l else add(remove(l, id'), el)`                        |
-| `contains(l', el')`  | `newList`           | `false`                                                                  |
-| `contains(l', el')`  | `add(l, el, id)`    | `if el = el' then true else contains(l, el')`                            |
-
-#### Specifica semantica
-
+### Specifica semantica
 - **DECLARE**
-  - `l`, `l'`: `List`
-  - `el`, `el'`: `Element`
-  - `id`, `id'`: `Integer`
+  - <code>l</code>, <code>l'</code>: <code>List</code>
+  - <code>el</code>, <code>el'</code>: <code>Element</code>
+  - <code>id</code>, <code>id'</code>: <code>Integer</code>
+
 
 - **OPERATIONS**
-  - `isEmpty(newList) = true`
-  - `isEmpty(add(l, el, id)) = false`
-  - `getSize(add(l, el, id)) = if isEmpty(l) then 1 else getSize(l) + 1`
-  - `getIndex(add(l, el, id), el') = if el = el' then id else getIndex(l, el')`
-  - `getElement(add(l, el, id), id') = if id = id' then el else getElement(l, id')`
-  - `remove(add(l, el, id), id') = if id = id' then l else add(remove(l, id'), el)`
-  - `contains(newList, el') = false`
-  - `contains(add(l, el, id), el') = if el = el' then true else contains(l, el')`
+  - <code>isEmpty(newList)</code> = <code>true</code>
+  - <code>isEmpty(add(l, el, id))</code> = <code>false</code>
+  - <code>getSize(add(l, el, id))</code> = if <code>isEmpty(l)</code> then <code>1</code> else <code>getSize(l) + 1</code>
+  - <code>getIndex(add(l, el, id), el')</code> = if <code>el = el'</code> then <code>id</code> else <code>getIndex(l, el')</code>
+  - <code>getElement(add(l, el, id), id')</code> = if <code>id = id'</code> then <code>el</code> else <code>getElement(l, id')</code>
+  - <code>remove(add(l, el, id), id')</code> = if <code>id = id'</code> then <code>l</code> else <code>add(remove(l, id'), el)</code>
+  - <code>contains(newList, el')</code> = <code>false</code>
+  - <code>contains(add(l, el, id), el')</code> = if <code>el = el'</code> then <code>true</code> else <code>contains(l, el')</code>
 
-#### Specifica di restrizione
-
+### Specifica di restrizione
 - **RESTRICTIONS**
-  - `getSize(newList) = error`
-  - `getIndex(newList, el') = error`
-  - `getElement(newList, id') = error`
-  - `remove(newList, id') = error`
+  - <code>getSize(newList)</code> = <code>error</code>
+  - <code>getIndex(newList, el')</code> = <code>error</code>
+  - <code>getElement(newList, id')</code> = <code>error</code>
+  - <code>remove(newList, id')</code> = <code>error</code>
 
 ### 3.2 - Specifica algebrica della Mappa
-La mappa è una struttura dati che associa una chiave ad un valore, permettendo di memorizzare e recuperare informazioni in modo efficiente.
 
-#### Specifica sintattica
+- La mappa è una struttura dati che associa una chiave ad un valore, permettendo di memorizzare e recuperare informazioni in modo efficiente.
 
-**Tipi**
-- `Map`, `Key`, `Value`, `Boolean`, `Integer`
+### Specifica sintattica
+<table>
+    <thead>
+        <tr>
+            <th colspan="2">Tipi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="2">Map, Key, Value, Boolean, Integer</td>
+        </tr>
+        <tr>
+            <td colspan="2"><strong>Operatori</strong></td>
+        </tr>
+        <tr>
+            <td><code>newMap() -> Map</code></td>
+            <td>Crea una nuova mappa vuota</td>
+        </tr>
+        <tr>
+            <td><code>isEmpty(Map) -> Boolean</code></td>
+            <td>Restituisce <code>true</code> se la mappa è vuota, <code>false</code> altrimenti</td>
+        </tr>
+        <tr>
+            <td><code>put(Map, Key, Value) -> Map</code></td>
+            <td>Aggiunge una coppia chiave-valore alla mappa, o, se già presente, ne aggiorna il valore</td>
+        </tr>
+        <tr>
+            <td><code>get(Map, Key) -> Value</code></td>
+            <td>Restituisce il valore associato alla chiave specificata</td>
+        </tr>
+        <tr>
+            <td><code>containsKey(Map, Key) -> Boolean</code></td>
+            <td>Restituisce <code>true</code> se la chiave specificata è presente nella mappa</td>
+        </tr> 
+        <tr>
+            <td><code>containsValue(Map, Value) -> Boolean</code></td>
+            <td>Restituisce <code>true</code> se il valore specificato è presente nella mappa</td> 
+        </tr>
+        <tr>
+            <td><code>remove(Map, Key) -> Map</code></td>
+            <td>Rimuove la chiave e il valore associato a essa dalla mappa</td>
+        </tr> 
+        <tr>
+            <td><code>size(map) -> Integer</code></td>
+            <td>Restituisce il numero di coppie chiave-valore presenti nella mappa</td>  
+        </tr>
+    </tbody>
+</table>
 
-**Operatori**
-- `newMap() -> Map`: Crea una nuova mappa vuota
-- `isEmpty(Map) -> Boolean`: Restituisce `true` se la mappa è vuota, `false` altrimenti
-- `put(Map, Key, Value) -> Map`: Aggiunge una coppia chiave-valore alla mappa, o, se già presente, ne aggiorna il valore
-- `get(Map, Key) -> Value`: Restituisce il valore associato alla chiave specificata
-- `containsKey(Map, Key) -> Boolean`: Restituisce `true` se la chiave specificata è presente nella mappa
-- `containsValue(Map, Value) -> Boolean`: Restituisce `true` se il valore specificato è presente nella mappa
-- `remove(Map, Key) -> Map`: Rimuove la chiave ed il valore associato ad essa dalla mappa
-- `size(map) -> Integer`: Restituisce il numero di coppie chiave-valore presenti nella mappa
+### Osservazioni e Costruttori
 
-#### Osservazioni e Costruttori
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2">Costruttori di m'</th>
+    </tr>
+  </thead>
+  <tbody align="center">
+    <tr>
+      <td><strong>Osservazioni</strong></td>
+      <td><code>newMap</code></td>
+      <td><code>put(m, k, v)</code></td>
+    </tr>
+    <tr>
+      <td><code>isEmpty(m')</code></td>
+      <td><code>true</code></td>
+      <td><code>false</code></td>
+    </tr>
+    <tr>
+      <td><code>containsKey(m', k')</code></td>
+      <td><code>false</code></td>
+      <td>if <code>k = k'</code> then <code>true</code> else <code>containsKey(m, k')</code></td>
+    </tr>
+    <tr>
+      <td><code>containsValue(m', v')</code></td>
+      <td><code>false</code></td>
+      <td>if <code>v = v'</code> then <code>true</code> else <code>containsValue(m, v')</code></td>
+    </tr>
+    <tr>
+      <td><code>get(m', k')</code></td>
+      <td><code>error</code></td>
+      <td>if <code>k = k'</code> then <code>v</code> else <code>get(m, k')</code></td>
+    </tr>
+    <tr>
+      <td><code>remove(m', k')</code></td>
+      <td><code>error</code></td>
+      <td>if <code>k = k'</code> then <code>m</code> else <code>put(remove(m, k'), k, v)</code></td>
+    </tr>
+    <tr>
+      <td><code>size(m')</code></td>
+      <td><code>0</code></td>
+      <td>if <code>isEmpty(m)</code> then <code>1</code> else <code>size(m) + 1</code></td>
+    </tr>
+  </tbody>
+</table>
 
-| Metodo               | Costruttore         | Osservazioni                                                                 |
-|----------------------|---------------------|------------------------------------------------------------------------------|
-| `isEmpty(m')`        | `newMap`            | `true`                                                                       |
-| `isEmpty(m')`        | `put(m, k, v)`      | `false`                                                                      |
-| `containsKey(m', k')`| `newMap`            | `false`                                                                      |
-| `containsKey(m', k')`| `put(m, k, v)`      | `if k = k' then true else containsKey(m, k')`                                |
-| `containsValue(m', v')`| `newMap`          | `false`                                                                      |
-| `containsValue(m', v')`| `put(m, k, v)`    | `if v = v' then true else containsValue(m, v')`                              |
-| `get(m', k')`        | `newMap`            | `error`                                                                      |
-| `get(m', k')`        | `put(m, k, v)`      | `if k = k' then v else get(m, k')`                                           |
-| `remove(m', k')`     | `newMap`            | `error`                                                                      |
-| `remove(m', k')`     | `put(m, k, v)`      | `if k = k' then m else put(remove(m, k'), k, v)`                             |
-| `size(m')`           | `newMap`            | `0`                                                                          |
-| `size(m')`           | `put(m, k, v)`      | `if isEmpty(m) then 1 else size(m) + 1`                                      |
-
-#### Specifica semantica
+### Specifica semantica
 
 - **DECLARE**
-  - `m`, `m'`: `Map`
-  - `k`, `k'`: `Key`
-  - `v`, `v'`: `Value`
+  - <code>m</code>, <code>m'</code>: <code>Map</code>
+  - <code>k</code>, <code>k'</code>: <code>Key</code>
+  - <code>v</code>, <code>v'</code>: <code>Value</code>
 
 - **OPERATIONS**
-  - `isEmpty(newMap) = true`
-  - `isEmpty(put(m, k, v)) = false`
-  - `containsKey(newMap, k') = false`
-  - `containsKey(put(m, k, v), k') = if k = k' then true else containsKey(m, k')`
-  - `containsValue(newMap, v') = false`
-  - `containsValue(put(m, k, v), v') = if v = v' then true else containsValue(m, v')`
-  - `get(put(m, k, v), k') = if k = k' then v else get(m, k')`
-  - `remove(put(m, k, v), k') = if k = k' then m else put(remove(m, k'), k, v)`
-  - `size(newMap) = 0`
-  - `size(put(m, k, v)) = size(m) + 1`
+  - <code>isEmpty(newMap)</code> = <code>true</code>
+  - <code>isEmpty(put(m, k, v))</code> = <code>false</code>
+  - <code>containsKey(newMap, k')</code> = <code>false</code>
+  - <code>containsKey(put(m, k, v), k')</code> = if <code>k = k'</code> then <code>true</code> else <code>containsKey(m, k')</code>
+  - <code>containsValue(newMap, v')</code> = <code>false</code>
+  - <code>containsValue(put(m, k, v), v')</code> = if <code>v = v'</code> then <code>true</code> else <code>containsValue(m, v')</code>
+  - <code>get(put(m, k, v), k')</code> = if <code>k = k'</code> then <code>v</code> else <code>get(m, k')</code>
+  - <code>remove(put(m, k, v), k')</code> = if <code>k = k'</code> then <code>m</code> else <code>put(remove(m, k'), k, v)</code>
+  - <code>size(newMap)</code> = <code>0</code>
+  - <code>size(put(m, k, v))</code> = <code>size(m) + 1</code>
 
-#### Specifica di restrizione
+
+### Specifica di restrizione
 
 - **RESTRICTIONS**
-  - `get(newMap, k') = error`
-  - `remove(newMap, k') = error`
-
+  - <code>get(newMap, k')</code> = <code>error</code>
+  - <code>remove(newMap, k')</code> = <code>error</code>
 
 #### [Ritorna all'Indice](#indice)
 
@@ -499,7 +629,7 @@ Il risultato sarà una pagina nell'app che, comunicando con il database prende i
 
 ![Record_1.png](img/Record_1.png)
 
-//TODO: Aggiungere immagine record con effettivi record
+![Record_2.png](img/Record_2.png)
 
 - CRUD Interface:
 ```java
@@ -1038,8 +1168,7 @@ Di seguito lascio le soluzioni per i minigiochi e per il completamento del gioco
 Ogni volta che finisci una stanza di minigame, ritorna allo spiazzale con "vai spiazzale"
 
 - Fucine: Bisogna raccogliere i seguenti pezzi:
-  - portella dx
-  - portella sx
+  - portelle
   - scheletro
   - cofano
 
@@ -1049,4 +1178,10 @@ Ogni volta che finisci una stanza di minigame, ritorna allo spiazzale con "vai s
 
 - Palazzo Reale: Una volta avuti tutti i pezzi, tornare allo spiazzale e "sfonda cancello"
 
+- Trono: Una volta arrivati davanti al Re Coboldo, ci saranno vari finali davanti a te, quello più semplice è farsi amico il Re, ma vediamo se riesci a scoprire tutti i finali segreti...
 
+
+# Conclusioni
+
+Il progetto è stato un'esperienza molto formativa e ci ha permesso di mettere in pratica le conoscenze acquisite durante il corso ma soprattutto imparare nuove applicazioni 
+autonomamente e a lavorare di squadra dividendosi il carico
