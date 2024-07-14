@@ -161,7 +161,7 @@ public class BlackJackControl extends MiniGame{
                     break;
 
                 case "esci":
-                    if (isPlaying) {
+                    if (isPlaying || hasBet) {
                         interaction.setInfo(ColorText.setTextRed("Devi terminare la mano prima di uscire"));
                     } else {
                         interaction.setInfo("Hai abbandonato il tavolo");
