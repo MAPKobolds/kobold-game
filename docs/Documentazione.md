@@ -2,7 +2,18 @@
 
 ## Indice
 
-1. [Introduzione](#1-introduzione)
+1. [**Introduzione**](#1-introduzione)
+2. [**Progettazione**](#2-progettazione)
+3. [**Specifiche Algebriche**](#3-specifiche-algebriche)
+   - 3.1 [**Specifiche algebriche della Lista**](#31---specifica-algebrica-della-lista)
+   - 3.2 [**Specifiche algebriche della Mappa**](#32---specifica-algebrica-della-mappa)
+4. [**Applicazione Argomenti del Corso**](#4-applicazione-argomenti-del-corso)
+   - 4.1 [**File**](#file)
+   - 4.2 [**Thread**](#thread)
+   - 4.3 [**Database e REST**](#database-e-rest)
+   - 4.4 [**Applicazione REST e API**](#applicazione-rest-e-api)
+   - 4.5 [**Lambda Expressions**](#lambda-expressions)
+   - 4.6 [**Graphic User Interface**](#graphic-user-interface---swing)
 
 # 1. Introduzione
 
@@ -625,6 +636,8 @@ senza la necessità di ricompilare la query ogni volta.
 
 Questo rende la comunicazione più sicura contro SQL Injection e più efficiente per l'unica compilazione.
 
+#### [Ritorna all'Indice](#indice)
+
 ## Applicazione REST e API
 Il REST server è utilizzato per gestire le richieste HTTP e comunicare con il database, permettendo di effettuare operazioni CRUD sui record dei giocatori viste prima
 
@@ -973,3 +986,56 @@ TODO: mettere foto riconoscimenti
 #### [Ritorna all'Indice](#indice)
 
 # Manuale Utente
+
+Di seguito una piccola guida sul gioco così da poter avere sempre un riferimento nel caso di smarrimento
+
+- Primi passi:
+    - Avviare il gioco
+    - Iniziare una nuova partita o caricarne una salvata
+    - Inserire il proprio nome se nuova partita
+
+
+La prima parte del gioco è prettamente guidata e segnalerà l'azione da eseguire, in questo caso basta inserire "continua"
+
+![Walkthrough_1.png](img/Walkthrough_1.png)
+
+- Tutorial: 
+
+![Tutorial.png](img/Tutorial.png)
+
+Qui vengono mostrati i comandi base del gioco e come interagire con l'ambiente, quando si richiede l'interazione con un altro soggetto bisognerà
+aggiungere al comando, il nome dell'oggetto o della stanza con cui si vuole interagire
+
+- Stanza iniziale:
+
+![Start.png](img/Start.png)
+
+- Prima interazione:
+
+![Mantello.png](img/Mantello.png)
+
+Se si guarda di nuovo in basso:
+
+![Mantello_2.png](img/Mantello_2.png)
+
+Dopo aver guardato avanti, si nota un corridoio:
+
+![Corridoio.png](img/Corridoio.png)
+
+- Interazione con le guardie:
+
+![Guardie.png](img/Guardie.png)
+
+**SE** hai il mantello, le guardie ti scambieranno per uno di loro e ti lasceranno passare
+
+- Taverna:
+
+![Taverna.png](img/Taverna.png)
+
+Arrivati fin qui si dovrebbero avere le basi per poter giocare in modo fluido. 
+Di seguito lascio le soluzioni per i minigiochi e per il completamento del gioco coperte nel caso non si vogliano spoiler
+
+<details open>
+  <summary>Visualizza Soluzioni</summary>
+
+</details>
