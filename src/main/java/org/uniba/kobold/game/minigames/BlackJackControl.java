@@ -7,7 +7,6 @@ import org.uniba.kobold.parser.ParserOutput;
 import org.uniba.kobold.type.Command;
 import org.uniba.kobold.util.ColorText;
 
-import java.awt.*;
 import java.util.Set;
 
 public class BlackJackControl extends MiniGame{
@@ -15,7 +14,7 @@ public class BlackJackControl extends MiniGame{
     Boolean isPlaying = false;
     Boolean hasBet = false;
     String commandsHelp = "";
-    int scommettitedMoney = 0;
+    int betMoney = 0;
 
     public BlackJackControl() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         blackjackChecker = new BlackjackChecker();
@@ -29,7 +28,7 @@ public class BlackJackControl extends MiniGame{
                 ColorText.setTextBlue("esci/e") +" -> per uscire dal gioco";
 
         description =
-                ColorText.setTextPurple("[Benvento al BlackJack] <br>") +
+                ColorText.setTextPurple("[Benvenuto al BlackJack] <br>") +
                         "Il Coboldo Crupier ti da il benvenuto al tavolo del BlackJack<br>" + commandsHelp;
 
         commands.add(new Command("carta",Set.of("carta","c")));
@@ -61,11 +60,11 @@ public class BlackJackControl extends MiniGame{
                             blackjackChecker.playRound();
                             if (blackjackChecker.getHandValue(blackjackChecker.getPlayerHand()) == 21) {
                                 hasBet = false;
-                                inventory.addMoney(scommettitedMoney);
+                                inventory.addMoney(betMoney);
 
                                 interaction = new MiniGameInteraction(
                                         "il dealer ha: " + blackjackChecker.prettyPrintPlayerHand(true) + "<br>" + "Tu hai: " +
-                                        blackjackChecker.prettyPrintPlayerHand(false) + "<br>" +ColorText.setTextGreen("Hai vinto " + scommettitedMoney + " euro"),
+                                        blackjackChecker.prettyPrintPlayerHand(false) + "<br>" +ColorText.setTextGreen("Hai vinto " + betMoney + " euro"),
                                         blackjackChecker.getHands(),
                                         MiniGameInteractionType.INFO
                                 );
@@ -89,14 +88,14 @@ public class BlackJackControl extends MiniGame{
                     if (isPlaying) {
                         blackjackChecker.hit();
                         if (blackjackChecker.getHandValue(blackjackChecker.getPlayerHand()) > 21) {
-                            inventory.removeMoney(scommettitedMoney);
+                            inventory.removeMoney(betMoney);
 
                             isPlaying = false;
                             hasBet = false;
 
                             interaction = new MiniGameInteraction(
                                     blackjackChecker.prettyPrintPlayerHand(false) + "<br>" +
-                                    ColorText.setTextRed("Hai perso " + scommettitedMoney + " euro"),
+                                    ColorText.setTextRed("Hai perso " + betMoney + " euro"),
                                     blackjackChecker.getHands(),
                                     MiniGameInteractionType.INFO
                             );
@@ -120,14 +119,14 @@ public class BlackJackControl extends MiniGame{
                                          blackjackChecker.isWinner(blackjackChecker.getPlayerHand(), blackjackChecker.getDealerHand());
 
                         if (hasWon) {
-                            inventory.addMoney(scommettitedMoney);
+                            inventory.addMoney(betMoney);
                         } else {
-                            inventory.removeMoney(scommettitedMoney);
+                            inventory.removeMoney(betMoney);
                         }
 
                         String finalResult = "Il dealer ha: " + blackjackChecker.prettyPrintPlayerHand(true) + "<br>" +
                                 "Tu hai: " + blackjackChecker.prettyPrintPlayerHand(false) + "<br>" +
-                                (hasWon ? ColorText.setTextGreen("Hai vinto ")   : ColorText.setTextRed("Hai perso ")) + scommettitedMoney + " euro";
+                                (hasWon ? ColorText.setTextGreen("Hai vinto ")   : ColorText.setTextRed("Hai perso ")) + betMoney + " euro";
                         interaction.setInfo(finalResult);
                         interaction.setResult(blackjackChecker.getHands());
                         
@@ -148,7 +147,7 @@ public class BlackJackControl extends MiniGame{
 
                             if (inventory.getMoney() >= value) {
                                 hasBet = true;
-                                scommettitedMoney = value;
+                                betMoney = value;
                                 interaction.setInfo("Hai scommesso " + ColorText.setTextPurple(String.valueOf(value)) + " euro");
 
                             } else {
