@@ -1033,9 +1033,20 @@ Dopo aver guardato avanti, si nota un corridoio:
 ![Taverna.png](img/Taverna.png)
 
 Arrivati fin qui si dovrebbero avere le basi per poter giocare in modo fluido. 
-Di seguito lascio le soluzioni per i minigiochi e per il completamento del gioco coperte nel caso non si vogliano spoiler
+Di seguito lascio le soluzioni per i minigiochi e per il completamento del gioco
 
-<details open>
-  <summary>Visualizza Soluzioni</summary>
+Ogni volta che finisci una stanza di minigame, ritorna allo spiazzale con "vai spiazzale"
 
-</details>
+- Fucine: Bisogna raccogliere i seguenti pezzi:
+  - portella dx
+  - portella sx
+  - scheletro
+  - cofano
+
+- Piste: Scommetti su Verstappen
+
+- Generatore: Purtroppo qui non possiamo aiutare, le domande del trivia sono sempre nuove
+
+- Palazzo Reale: Una volta avuti tutti i pezzi, tornare allo spiazzale e "sfonda cancello"
+
+
