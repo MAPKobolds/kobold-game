@@ -49,6 +49,7 @@ public final class IntroductionRoom extends Room {
                 result.setSubject("caverna");
                 result.setResultType(RoomInteractionResultType.MOVE);
             } else {
+                this.setDescription(this.slides.get(this.continueCounter).getValue1());
                 this.setBackgroundImage(this.slides.get(this.continueCounter).getValue0());
                 result.setSubject(this.slides.get(continueCounter).getValue1());
 

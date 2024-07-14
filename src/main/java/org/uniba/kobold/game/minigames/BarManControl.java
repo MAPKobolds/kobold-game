@@ -82,8 +82,6 @@ public class BarManControl extends MiniGame{
                             if (inventory.contains("GinMoncello")) {
                                 interaction.setInfo(ColorText.setTextRed("Hai già comprato il GinMoncello!"));
                                 interaction.setType(MiniGameInteractionType.INFO);
-                                interaction.addInfo("<br>" + String.join("<br>", options));
-                                state = 0;
                             } else {
                                 inventory.removeMoney(500);
                                 interaction.setResult(new GinMoncello());
@@ -92,8 +90,6 @@ public class BarManControl extends MiniGame{
                         }else{
                             interaction.setInfo(ColorText.setTextRed("Non hai abbastanza soldi"));
                             interaction.setType(MiniGameInteractionType.INFO);
-                            interaction.addInfo("<br>" + String.join("<br>", options));
-                            state = 0;
                         }
                     }
                     case "compra birre" -> {
@@ -102,7 +98,6 @@ public class BarManControl extends MiniGame{
                                 interaction.setInfo(ColorText.setTextRed("Hai già comprato il pacco da 2^4 birre"));
                                 interaction.setType(MiniGameInteractionType.INFO);
                                 interaction.addInfo("<br>" + String.join("<br>", options));
-                                state = 0;
                             } else {
                                 inventory.removeMoney(50);
                                 interaction.setInfo(ColorText.setTextGreen("Hai comprato il pacco da 2^4 birre"));
@@ -112,16 +107,14 @@ public class BarManControl extends MiniGame{
                         }else{
                             interaction.setInfo(ColorText.setTextRed("Non hai abbastanza soldi"));
                             interaction.setType(MiniGameInteractionType.INFO);
-                            interaction.addInfo("<br>" + String.join("<br>", options));
-                            state = 0;
                         }
                     }
                     case "esci" -> {
-                        interaction.setInfo(ColorText.setTextGreen("Buona sbronza! " + "<br>" + String.join("<br>", options)));
+                        interaction.setInfo(ColorText.setTextGreen("Buona sbronza!"));
                         interaction.setType(MiniGameInteractionType.INFO);
-                        state = 0;
                     }
                 }
+                state = 0;
                 interaction.addInfo("<br>" + String.join("<br>", options));
             break;
         }
