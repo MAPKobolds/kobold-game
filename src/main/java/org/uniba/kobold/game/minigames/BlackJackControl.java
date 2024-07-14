@@ -174,6 +174,7 @@ public class BlackJackControl extends MiniGame{
                     break;
             }
         }
+        
         catch (HttpInternalServerErrorException | HttpNotFoundException | HttpUnavailableException | HttpBadRequestException | HttpForbiddenException e) {
             e.printStackTrace();
         }
