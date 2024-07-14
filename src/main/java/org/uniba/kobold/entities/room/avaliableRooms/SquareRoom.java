@@ -17,7 +17,7 @@ public final class SquareRoom extends Room {
 
     public SquareRoom() {
         super("spiazzale",
-                "Lo spiazzale si trova all'uscita del BAR ed è un posto di ritrovo dei coboldi, circondato da altri palazzi abitati da altri coboldi<br>" +
+                "Lo spiazzale si trova all'uscita della " + ColorText.setTextPurple("taverna") +" ed è un posto di ritrovo dei coboldi, circondato da altri palazzi abitati da altri coboldi<br>" +
                         "Di fronte a te noti dei cartelli che indicano dei luoghi di interesse: " +
                         ColorText.setTextPurple("<br>fucine") +
                         ColorText.setTextPurple("<br>piste") +
@@ -32,7 +32,7 @@ public final class SquareRoom extends Room {
                     new Command("vai circuito", Set.of("vai piste","piste")),
                     new Command("vai palazzo", Set.of("vai palazzo reale","palazzo reale","palazzo")),
                     new Command("vai generatore", Set.of("vai generatore","generatore")),
-                    new Command("sfonda cancello", Set.of("sfonda cancello"))
+                    new Command("sfonda cancello", Set.of("sfonda cancello","sfondare cancello"))
                 )
         );
     }
@@ -62,7 +62,7 @@ public final class SquareRoom extends Room {
                 result.setSubject("Vedi il pavimento, è sporco di olio e grasso");
                 break;
 
-            case "vai bar":
+            case "vai taverna":
             case "vai fucine":
             case "vai palazzo":
             case "vai circuito":
