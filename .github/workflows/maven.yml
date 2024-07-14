@@ -34,5 +34,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Progetto_MAP_JAR
-        path: target/Progetto_MAP_-1.0-SNAPSHOT-jar-with-dependencies.jar
+        path: target/kobold-game-1.0-SNAPSHOT-jar-with-dependencies.jar
 
