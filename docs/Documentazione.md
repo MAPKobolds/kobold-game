@@ -272,14 +272,14 @@ ad uno specifico elemento della struttura, poiché associa una chiave ad un valo
       <td><code>false</code></td>
     </tr>
     <tr>
-      <td><code>containsKey(m', k')</code></td>
+      <td><code>isKeyPresent(m', k')</code></td>
       <td><code>false</code></td>
-      <td>if <code>k = k'</code> then <code>true</code> else <code>containsKey(m, k')</code></td>
+      <td>if <code>k = k'</code> then <code>true</code> else <code>isKeyPresent(m, k')</code></td>
     </tr>
     <tr>
-      <td><code>containsValue(m', v')</code></td>
+      <td><code>isValuePresent(m', v')</code></td>
       <td><code>false</code></td>
-      <td>if <code>v = v'</code> then <code>true</code> else <code>containsValue(m, v')</code></td>
+      <td>if <code>v = v'</code> then <code>true</code> else <code>isValuePresent(m, v')</code></td>
     </tr>
     <tr>
       <td><code>get(m', k')</code></td>
@@ -306,22 +306,21 @@ ad uno specifico elemento della struttura, poiché associa una chiave ad un valo
   - `k`, `k'`: `Key`
   - `v`, `v'`: `Value`
 
-- **OPERATIONS**
+- **Operazioni**
   - `isEmpty(newMap)` = `true`
   - `isEmpty(insert(m, k, v))` = `false`
-  - `containsKey(newMap, k')` = `false`
-  - `containsKey(insert(m, k, v), k')` = if `k = k'` then `true` else `containsKey(m, k')`
-  - `containsValue(newMap, v')` = `false`
-  - `containsValue(insert(m, k, v), v')` = if `v = v'` then `true` else `containsValue(m, v')`
+  - `isKeyPresent(newMap, k')` = `false`
+  - `isKeyPresent(insert(m, k, v), k')` = if `k = k'` then `true` else `isKeyPresent(m, k')`
+  - `isValuePresent(newMap, v')` = `false`
+  - `isValuePresent(insert(m, k, v), v')` = if `v = v'` then `true` else `isValuePresent(m, v')`
   - `get(insert(m, k, v), k')` = if `k = k'` then `v` else `get(m, k')`
   - `remove(insert(m, k, v), k')` = if `k = k'` then `m` else `insert(remove(m, k'), k, v)`
-  - `size(newMap)` = `0`
-  - `size(insert(m, k, v))` = `size(m) + 1`
+  - `getSize(newMap)` = `0`
+  - `getSize(insert(m, k, v))` = `getSize(m) + 1`
 
 
 ### Specifica di restrizione
 
-- **RESTRICTIONS**
   - `get(newMap, k')` = `error`
   - `remove(newMap, k')` = `error`
 
