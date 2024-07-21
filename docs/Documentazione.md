@@ -100,74 +100,57 @@ Ho omesso l'implementazione di ognuna delle "AvailableRooms" e "Minigames" per n
 Due delle strutture dati più utilizzate nel nostro progetto sono la **Mappa** e la **Lista**, in questa sezione verranno presentate le specifiche algebriche di entrambe.
 
 ### 3.1 - Specifica algebrica della Lista
-La lista è una struttura dati che permette di memorizzare e recuperare informazioni sfruttando l'indice di posizione degli elementi contenuti.
-
+Una lista è una struttura dati lineare che consente di memorizzare una sequenza di elementi in un ordine specifico, permettendo operazioni di
+inserimento, rimozione e accesso agli elementi basate sulla loro posizione nella sequenza.
 ### Specifica sintattica
-<table>
-    <thead>
-        <tr>
-            <th colspan="2">Tipi</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td colspan="2"><code>List</code>, <code>Element</code>, <code>Integer</code>, <code>Boolean</code></td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center"><strong>Operatori</strong></td>
-        </tr>
-        <tr>
-            <td><code>newList() -> List</code></td>
-            <td>Crea una nuova lista vuota</td>
-        </tr>
-        <tr>
-            <td><code>add(List, Element, Integer) -> List</code></td>
-            <td>Aggiunge un elemento alla lista nella posizione specificata</td>
-        </tr>
-        <tr>
-            <td><code>isEmpty(List) -> Boolean</code></td>
-            <td>Restituisce <code>true</code> se la lista è vuota altrimenti <code>false</code></td>
-          </tr>
-            <tr>
-                <td><code>getSize(List) -> Integer</code></td>
-                <td>Restituisce l'ultima posizione occupata da un elemento</td>
-            </tr> 
-            <tr>
-                <td><code>getIndex(List, Element) -> Integer</code></td>
-                <td>Restituisce la posizione dell'elemento specificato</td>
-            </tr> 
-            <tr>
-                <td><code>getElement(List, Integer) -> Element</code></td>
-                <td>Restituisce l'elemento nella posizione specificata</td> 
-            </tr> 
-            <tr>
-                <td><code>remove(List, Integer) -> List</code></td>
-                <td>Rimuove dalla lista l'elemento nella posizione specificata</td>  
-            </tr>
-            <tr>
-                <td><code>contains(List, Element) -> Boolean</code></td>
-                <td>Restituisce <code>true</code> se l'elemento specificato è contenuto nella lista</td>
-            </tr>
-    </tbody>
-</table>
-Si noti come <code>Element</code> è un tipo generico, che può essere sostituito con qualsiasi altro tipo di dato.
 
-<code>Interger</code> e <code>Boolean</code> invece, sono tipi ausiliari alla definizione della specifica algebrica della lista.
+- **Tipi:** `List`, `Element`, `Int`, `Boolean`
 
-### Osservazioni e Costruttori
 
+- **Operatori:**
+
+    - **newList() -> List**        
+  Crea una nuova lista 
+
+    - **addElement(List, Element, Int) -> List**    
+     Aggiunge un nuovo elemento nella posizione indicata
+    - **isEmpty(List) -> Boolean**
+
+      Restituisce `true` se la lista è vuota, `false` altrimenti
+
+    - **getSize(List) -> Int**
+
+      Restituisce la dimensione della lista
+    
+    - **getIndex(List, Element) -> Int**
+
+      Restituisce l'indice di un determinato elemento
+
+    - **getElement(List, Int) -> Element**
+    
+      Restituisce l'emeento in un dato indice
+
+    - **removeElement(List, Int) -> List**
+    
+      Rimuove un elemento in una data posizione
+
+    - **contains(List, Element) -> Boolean**
+
+      Restituisce `true` se l'elemento dato è nella lista
+
+### Costruttori e Osservazioni
 <table>
   <thead>
     <tr>
       <th></th>
-      <th colspan="2">Costruttori di l'</th>
+      <th colspan="5">Costruttori di l'</th>
     </tr>
   </thead>
   <tbody align="center">
     <tr>
       <td><strong>Osservazioni</strong></td>
       <td><code>newList</code></td>
-      <td><code>add(l, it, id)</code></td>
+      <td><code>addElement(l, it, id)</code></td>
     </tr>
     <tr>
       <td><code>isEmpty(l')</code></td>
@@ -190,9 +173,9 @@ Si noti come <code>Element</code> è un tipo generico, che può essere sostituit
       <td>if <code>id = id'</code> then <code>it</code> else <code>getElement(l, id')</code></td>
     </tr>
     <tr>
-      <td><code>remove(l', id')</code></td>
+      <td><code>removeElement(l', id')</code></td>
       <td><code>error</code></td>
-      <td>if <code>id = id'</code> then <code>l</code> else <code>add(remove(l, id'), it)</code></td>
+      <td>if <code>id = id'</code> then <code>l</code> else <code>addElement(removeElement(l, id'), it)</code></td>
     </tr>
     <tr>
       <td><code>contains(l', it')</code></td>
@@ -203,81 +186,70 @@ Si noti come <code>Element</code> è un tipo generico, che può essere sostituit
 </table>
 
 ### Specifica semantica
-- **DECLARE**
-  - <code>l</code>, <code>l'</code>: <code>List</code>
-  - <code>el</code>, <code>el'</code>: <code>Element</code>
-  - <code>id</code>, <code>id'</code>: <code>Integer</code>
 
+- **Dichiarazioni**
+  - `l`, `l'`: `List`
+  - `id`, `id'`: `Integer`
+  - `el` `el'`: `Element`
+  
 
-- **OPERATIONS**
-  - <code>isEmpty(newList)</code> = <code>true</code>
-  - <code>isEmpty(add(l, el, id))</code> = <code>false</code>
-  - <code>getSize(add(l, el, id))</code> = if <code>isEmpty(l)</code> then <code>1</code> else <code>getSize(l) + 1</code>
-  - <code>getIndex(add(l, el, id), el')</code> = if <code>el = el'</code> then <code>id</code> else <code>getIndex(l, el')</code>
-  - <code>getElement(add(l, el, id), id')</code> = if <code>id = id'</code> then <code>el</code> else <code>getElement(l, id')</code>
-  - <code>remove(add(l, el, id), id')</code> = if <code>id = id'</code> then <code>l</code> else <code>add(remove(l, id'), el)</code>
-  - <code>contains(newList, el')</code> = <code>false</code>
-  - <code>contains(add(l, el, id), el')</code> = if <code>el = el'</code> then <code>true</code> else <code>contains(l, el')</code>
+- **Operazioni**
+  - `isEmpty(newList)` = `true`
+  - `isEmpty(addElement(l, el, id))` = `false`
+  - `getSize(addElement(l, el, id))` = if `isEmpty(l)` then `1` else `getSize(l) + 1`
+  - `getIndex(addElement(l, el, id), el')` = if `el = el'` then `id` else `getIndex(l, el')`
+  - `getElement(addElement(l, el, id), id')` = if `id = id'` then `el` else `getElement(l, id')`
+  - `removeElement(addElement(l, el, id), id')` = if `id = id'` then `l` else `addElement(removeElement(l, id'), el)`
+  - `contains(newList, el')` = `false`
+  - `contains(addElement(l, el, id), el')` = if `el = el'` then `true` else `contains(l, el')`
 
 ### Specifica di restrizione
-- **RESTRICTIONS**
-  - <code>getSize(newList)</code> = <code>error</code>
-  - <code>getIndex(newList, el')</code> = <code>error</code>
-  - <code>getElement(newList, id')</code> = <code>error</code>
-  - <code>remove(newList, id')</code> = <code>error</code>
+  - `getSize(newList)` = `error`
+  - `getIndex(newList, el')` = `error`
+  - `getElement(newList, id')` = `error`
+  - `removeElement(newList, id')` = `error`
 
-### 3.2 - Specifica algebrica della Mappa
+### 3.2 - Specifica algebrica del Dizionario
 
-- La mappa è una struttura dati che associa una chiave ad un valore, permettendo di memorizzare e recuperare informazioni in modo efficiente.
+- Il dizionario(o Mappa) è una struttura dati che si dimostra efficiente quando c'è bisogno di accedere
+ad uno specifico elemento della struttura, poiché associa una chiave ad un valore e lo rende immediatamente accessibile
 
 ### Specifica sintattica
-<table>
-    <thead>
-        <tr>
-            <th colspan="2">Tipi</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td colspan="2">Map, Key, Value, Boolean, Integer</td>
-        </tr>
-        <tr>
-            <td colspan="2"><strong>Operatori</strong></td>
-        </tr>
-        <tr>
-            <td><code>newMap() -> Map</code></td>
-            <td>Crea una nuova mappa vuota</td>
-        </tr>
-        <tr>
-            <td><code>isEmpty(Map) -> Boolean</code></td>
-            <td>Restituisce <code>true</code> se la mappa è vuota, <code>false</code> altrimenti</td>
-        </tr>
-        <tr>
-            <td><code>put(Map, Key, Value) -> Map</code></td>
-            <td>Aggiunge una coppia chiave-valore alla mappa, o, se già presente, ne aggiorna il valore</td>
-        </tr>
-        <tr>
-            <td><code>get(Map, Key) -> Value</code></td>
-            <td>Restituisce il valore associato alla chiave specificata</td>
-        </tr>
-        <tr>
-            <td><code>containsKey(Map, Key) -> Boolean</code></td>
-            <td>Restituisce <code>true</code> se la chiave specificata è presente nella mappa</td>
-        </tr> 
-        <tr>
-            <td><code>containsValue(Map, Value) -> Boolean</code></td>
-            <td>Restituisce <code>true</code> se il valore specificato è presente nella mappa</td> 
-        </tr>
-        <tr>
-            <td><code>remove(Map, Key) -> Map</code></td>
-            <td>Rimuove la chiave e il valore associato a essa dalla mappa</td>
-        </tr> 
-        <tr>
-            <td><code>size(map) -> Integer</code></td>
-            <td>Restituisce il numero di coppie chiave-valore presenti nella mappa</td>  
-        </tr>
-    </tbody>
-</table>
+
+- **Tipi:** `Map`, `Key`, `Value`, `Int`, `Boolean`
+
+- **Operatori:**
+
+    - **newMap() -> Map**        
+      Crea un nuov dizionario
+
+    - **isEmpty(Map) -> Boolean**
+
+      Restituisce `true` se il dizionario è vuoto, `false` altrimenti
+
+    - **insert(Map, Key, Value) -> Map**
+
+      Inserisce un nuovo elemento all'interno del dizionario o aggiorna
+
+    - **get(Map, Key) -> Value**
+
+      Restituisce il valore dell'elemento salvato con la chiave specificata
+
+    - **isKeyPresent(Map, Key) -> Boolean**
+
+      Restituisce `true` se la chiave è nel dizionario, `false` altrimenti
+
+    - **isValuePresent(Map, Value) -> Boolean**
+
+      Restituisce `true` se il valore è nel dizionario, `false` altrimenti
+
+    - **removeElement(Map, Key) -> List**
+
+      Rimuove un elemento data una determinata chiave
+
+    - **getSize(Map) -> Int**
+
+      Restituisce il numero di elementi del dizionario
 
 ### Osservazioni e Costruttori
 
@@ -292,7 +264,7 @@ Si noti come <code>Element</code> è un tipo generico, che può essere sostituit
     <tr>
       <td><strong>Osservazioni</strong></td>
       <td><code>newMap</code></td>
-      <td><code>put(m, k, v)</code></td>
+      <td><code>insert(m, k, v)</code></td>
     </tr>
     <tr>
       <td><code>isEmpty(m')</code></td>
@@ -317,7 +289,7 @@ Si noti come <code>Element</code> è un tipo generico, che può essere sostituit
     <tr>
       <td><code>remove(m', k')</code></td>
       <td><code>error</code></td>
-      <td>if <code>k = k'</code> then <code>m</code> else <code>put(remove(m, k'), k, v)</code></td>
+      <td>if <code>k = k'</code> then <code>m</code> else <code>insert(remove(m, k'), k, v)</code></td>
     </tr>
     <tr>
       <td><code>size(m')</code></td>
@@ -329,29 +301,29 @@ Si noti come <code>Element</code> è un tipo generico, che può essere sostituit
 
 ### Specifica semantica
 
-- **DECLARE**
-  - <code>m</code>, <code>m'</code>: <code>Map</code>
-  - <code>k</code>, <code>k'</code>: <code>Key</code>
-  - <code>v</code>, <code>v'</code>: <code>Value</code>
+- **Dichiarazioni**
+  - `m`, `m'`: `Map`
+  - `k`, `k'`: `Key`
+  - `v`, `v'`: `Value`
 
 - **OPERATIONS**
-  - <code>isEmpty(newMap)</code> = <code>true</code>
-  - <code>isEmpty(put(m, k, v))</code> = <code>false</code>
-  - <code>containsKey(newMap, k')</code> = <code>false</code>
-  - <code>containsKey(put(m, k, v), k')</code> = if <code>k = k'</code> then <code>true</code> else <code>containsKey(m, k')</code>
-  - <code>containsValue(newMap, v')</code> = <code>false</code>
-  - <code>containsValue(put(m, k, v), v')</code> = if <code>v = v'</code> then <code>true</code> else <code>containsValue(m, v')</code>
-  - <code>get(put(m, k, v), k')</code> = if <code>k = k'</code> then <code>v</code> else <code>get(m, k')</code>
-  - <code>remove(put(m, k, v), k')</code> = if <code>k = k'</code> then <code>m</code> else <code>put(remove(m, k'), k, v)</code>
-  - <code>size(newMap)</code> = <code>0</code>
-  - <code>size(put(m, k, v))</code> = <code>size(m) + 1</code>
+  - `isEmpty(newMap)` = `true`
+  - `isEmpty(insert(m, k, v))` = `false`
+  - `containsKey(newMap, k')` = `false`
+  - `containsKey(insert(m, k, v), k')` = if `k = k'` then `true` else `containsKey(m, k')`
+  - `containsValue(newMap, v')` = `false`
+  - `containsValue(insert(m, k, v), v')` = if `v = v'` then `true` else `containsValue(m, v')`
+  - `get(insert(m, k, v), k')` = if `k = k'` then `v` else `get(m, k')`
+  - `remove(insert(m, k, v), k')` = if `k = k'` then `m` else `insert(remove(m, k'), k, v)`
+  - `size(newMap)` = `0`
+  - `size(insert(m, k, v))` = `size(m) + 1`
 
 
 ### Specifica di restrizione
 
 - **RESTRICTIONS**
-  - <code>get(newMap, k')</code> = <code>error</code>
-  - <code>remove(newMap, k')</code> = <code>error</code>
+  - `get(newMap, k')` = `error`
+  - `remove(newMap, k')` = `error`
 
 #### [Ritorna all'Indice](#indice)
 
