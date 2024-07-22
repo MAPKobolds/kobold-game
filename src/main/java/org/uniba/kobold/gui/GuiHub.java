@@ -52,7 +52,7 @@ public class GuiHub extends JFrame {
         add(masterPanel);
 
         UtilMusic music = UtilMusic.getInstance();
-        //music.start();
+        music.start();
 
         toolBar.setRollover(true);
         toolBar.setFloatable(false);

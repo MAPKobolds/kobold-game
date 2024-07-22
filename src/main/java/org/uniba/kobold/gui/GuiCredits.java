@@ -53,7 +53,6 @@ public class GuiCredits extends JPanel {
         creditsLabel.setForeground(Color.WHITE);
         creditsLabel.setHorizontalAlignment(JLabel.CENTER);
         creditsLabel.setVerticalAlignment(JLabel.CENTER);
-        //TODO: NON SO COSA SCRIVERE!!!!!
         creditsLabel.setText("");
         tokensPanel.setOpaque(false);
         porcelliPanel.setOpaque(false);
