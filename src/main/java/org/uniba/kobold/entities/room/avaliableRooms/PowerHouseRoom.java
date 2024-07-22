@@ -42,7 +42,7 @@ public final class PowerHouseRoom extends Room {
 
         switch (command.getCommand().getName()) {
             case "guarda davanti":
-                result.setSubject("Di fronte, c'è il " + ColorText.setTextOrange("direttore") + " coboldo , sembra molto preso dallo schermo del " +
+                result.setSubject("Di fronte, c'è il " + ColorText.setTextOrange("direttore") + " coboldo, sembra molto preso dallo schermo del " +
                         "suo PC");
                 break;
             case "guarda dietro":

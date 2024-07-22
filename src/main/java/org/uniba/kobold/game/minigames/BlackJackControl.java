@@ -29,9 +29,6 @@ public class BlackJackControl extends MiniGame{
      * The Commands help.
      */
     String commandsHelp = "";
-    /**
-     * The Bet money.
-     */
     int betMoney = 0;
 
     /**
@@ -55,7 +52,7 @@ public class BlackJackControl extends MiniGame{
                 ColorText.setTextBlue("esci/e") +" -> per uscire dal gioco";
 
         description =
-                ColorText.setTextPurple("[Benvento al BlackJack] <br>") +
+                ColorText.setTextPurple("[Benvenuto al BlackJack] <br>") +
                         "Il Coboldo Crupier ti da il benvenuto al tavolo del BlackJack<br>" + commandsHelp;
 
         commands.add(new Command("carta",Set.of("carta","c")));

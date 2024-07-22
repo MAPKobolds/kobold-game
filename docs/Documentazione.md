@@ -2,7 +2,18 @@
 
 ## Indice
 
-1. [Introduzione](#1-introduzione)
+1. [**Introduzione**](#1-introduzione)
+2. [**Progettazione**](#2-progettazione)
+3. [**Specifiche Algebriche**](#3-specifiche-algebriche)
+   - 3.1 [**Specifiche algebriche della Lista**](#31---specifica-algebrica-della-lista)
+   - 3.2 [**Specifiche algebriche della Mappa**](#32---specifica-algebrica-della-mappa)
+4. [**Applicazione Argomenti del Corso**](#4-applicazione-argomenti-del-corso)
+   - 4.1 [**File**](#file)
+   - 4.2 [**Thread**](#thread)
+   - 4.3 [**Database e REST**](#database-e-rest)
+   - 4.4 [**Applicazione REST e API**](#applicazione-rest-e-api)
+   - 4.5 [**Lambda Expressions**](#lambda-expressions)
+   - 4.6 [**Graphic User Interface**](#graphic-user-interface---swing)
 
 # 1. Introduzione
 
@@ -22,23 +33,22 @@ avuto grande successo e si trattava di una novità, nonché i primi passi verso 
 ### Caratteristiche Principali
 
 - **Interfaccia Testuale**: l'interazione avviene tramite comandi scritti, "prendi mantello", "ispeziona" ecc...
-- **Descrizioni Dettagliate**: il gioco descrive le scene, gli oggetti e le azioni attraverso testi ed un'immagine di sfondo
+- **Descrizioni Dettagliate**: il gioco descrive le scene, gli oggetti e le azioni attraverso testi e un'immagine di sfondo
 - **Minigiochi**: all'interno del gioco sono presenti minigiochi come il **Blackjack** o la ricerca dei pezzi dell'**Auto**
 
 ### Trama
 
-Ispirato ad una storia vera, il gioco comincia con il protagonista che torna nella sua casa in campagna guidando la sua macchina e la parcheggia momentaneamente fuori casa
-prima di riprendere a guidare. Finito ciò che doveva fare in casa, il protagonista torna fuori e si accorge che la sua macchina stava venendo rubata da un gruppo di persone 
+Ispirato a una storia vera, il gioco comincia con il protagonista che torna verso la sua macchina parcheggiata a Molfetta e si accorge che la sua macchina stava venendo rubata da un gruppo di persone 
 incappucciate. Seguendo le tracce dell'auto si ritrova in un posto sconosciuto, e appena scorge un cartello con scritto "Cerignola", un buco nel pavimento si forma sotto i suoi piedi
-e sprofonda in un mondo sotterraneo e buio, ed una scritta gli appare dinanzi: "Cerignolus: Città dei Coboldi".
-L'obiettivo del nostro è quello di riuscire ad uscire dalla caverna e tornare a casa riprendendosi la sua macchina ma come vedremo potrà finire in molti modi.
+e sprofonda in un mondo sotterraneo e buio, e una scritta gli appare dinanzi: "Cerignolus: Città dei Coboldi".
+L'obiettivo del nostro è quello di riuscire a uscire dalla caverna e tornare a casa riprendendosi la sua macchina ma come vedremo potrà finire in molti modi.
 
 ### Struttura del Progetto
 
 - **Parser**: il giocatore interagisce attraverso comandi testuali che devono essere interpretati dal gioco, il parser è dunque una componente fondamentale
 - **Thread**: si tratta di un progetto che ricchiede l'esecuzione contemporanea di più elementi insieme, come ad esempio il timer, la musica o il socket server
 - **File di Configurazione**: il gioco include la possibiltà di salvare una partita in un dato momento, questo viene fatto serializzando gli oggetti nello stato a runtime e riportandoli in un file JSON, poi caricato per permettere di riprendere una partita da quel momento
-- **Database**: il gioco registra i tempi di gioco dei giocatori ed i loro nomi su un database **H2**
+- **Database**: il gioco registra i tempi di gioco dei giocatori e i loro nomi su un database **H2**
 - **Socket/REST**: il gioco include un server socket, sulla porta 4200 per una piccola panoramica sugli sviluppatori collegandosi all'account Github di ognuno
 - **API**: il gioco per l'implementazione dei minigiochi utilizza API esterne come quella di **Deck of Cards** per il Blackjack
 - **GUI**: nonostante il gioco sia testuale, è stata implementata una GUI per visualizzare le informazioni principali del gioco.
@@ -87,130 +97,232 @@ Ho omesso l'implementazione di ognuna delle "AvailableRooms" e "Minigames" per n
 #### [Ritorna all'Indice](#indice)
 
 ## 3. Specifiche Algebriche
-Due delle strutture dati più utilizzate nel nostro progetto sono la **Lista** e la **Mappa**, in questa sezione verranno presentate le specifiche algebriche di entrambe.
+Due delle strutture dati più utilizzate nel nostro progetto sono la **Mappa** e la **Lista**, in questa sezione verranno presentate le specifiche algebriche di entrambe.
 
 ### 3.1 - Specifica algebrica della Lista
-La lista è una struttura dati che permette di memorizzare e recuperare informazioni sfruttando l'indice di posizione degli elementi contenuti.
+Una lista è una struttura dati lineare che consente di memorizzare una sequenza di elementi in un ordine specifico, permettendo operazioni di
+inserimento, rimozione e accesso agli elementi basate sulla loro posizione nella sequenza.
+### Specifica sintattica
 
-#### Specifica sintattica
+- **Tipi:** `List`, `Element`, `Int`, `Boolean`
 
-**Tipi**
-- `List`, `Element`, `Integer`, `Boolean`
 
-**Operatori**
-- `newList() -> List`: Crea una nuova lista vuota
-- `add(List, Element, Integer) -> List`: Aggiunge un elemento alla lista nella posizione specificata
-- `isEmpty(List) -> Boolean`: Restituisce `true` se la lista è vuota altrimenti `false`
-- `getSize(List) -> Integer`: Restituisce l'ultima posizione occupata da un elemento
-- `getIndex(List, Element) -> Integer`: Restituisce la posizione dell'elemento specificato
-- `getElement(List, Integer) -> Element`: Restituisce l'elemento nella posizione specificata
-- `remove(List, Integer) -> List`: Rimuove dalla lista l'elemento nella posizione specificata
-- `contains(List, Element) -> Boolean`: Restituisce `true` se l'elemento specificato è contenuto nella lista
+- **Operatori:**
 
-Si noti come `Element` è un tipo generico, che può essere sostituito con qualsiasi altro tipo di dato. `Integer` e `Boolean` invece, sono tipi ausiliari alla definizione della specifica algebrica della lista.
+    - **newList() -> List**        
+  Crea una nuova lista 
 
-#### Osservazioni e Costruttori
+    - **addElement(List, Element, Int) -> List**    
+     Aggiunge un nuovo elemento nella posizione indicata
+    - **isEmpty(List) -> Boolean**
 
-| Metodo               | Costruttore         | Osservazioni                                                             |
-|----------------------|---------------------|--------------------------------------------------------------------------|
-| `isEmpty(l')`        | `newList`           | `true`                                                                   |
-| `isEmpty(l')`        | `add(l, el, id)`    | `false`                                                                  |
-| `getSize(l')`        | `newList`           | `error`                                                                  |
-| `getSize(l')`        | `add(l, el, id)`    | `if isEmpty(l) then 1 else getSize(l) + 1`                               |
-| `getIndex(l', el')`  | `newList`           | `error`                                                                  |
-| `getIndex(l', el')`  | `add(l, el, id)`    | `if el = el' then id else getIndex(l, el')`                              |
-| `getElement(l', id')`| `newList`           | `error`                                                                  |
-| `getElement(l', id')`| `add(l, el, id)`    | `if id = id' then el else getElement(l, id')`                            |
-| `remove(l', id')`    | `newList`           | `error`                                                                  |
-| `remove(l', id')`    | `add(l, el, id)`    | `if id = id' then l else add(remove(l, id'), el)`                        |
-| `contains(l', el')`  | `newList`           | `false`                                                                  |
-| `contains(l', el')`  | `add(l, el, id)`    | `if el = el' then true else contains(l, el')`                            |
+      Restituisce `true` se la lista è vuota, `false` altrimenti
 
-#### Specifica semantica
+    - **getSize(List) -> Int**
 
-- **DECLARE**
+      Restituisce la dimensione della lista
+    
+    - **getIndex(List, Element) -> Int**
+
+      Restituisce l'indice di un determinato elemento
+
+    - **getElement(List, Int) -> Element**
+    
+      Restituisce l'emeento in un dato indice
+
+    - **removeElement(List, Int) -> List**
+    
+      Rimuove un elemento in una data posizione
+
+    - **contains(List, Element) -> Boolean**
+
+      Restituisce `true` se l'elemento dato è nella lista
+
+### Costruttori e Osservazioni
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="5">Costruttori di l'</th>
+    </tr>
+  </thead>
+  <tbody align="center">
+    <tr>
+      <td><strong>Osservazioni</strong></td>
+      <td><code>newList</code></td>
+      <td><code>addElement(l, it, id)</code></td>
+    </tr>
+    <tr>
+      <td><code>isEmpty(l')</code></td>
+      <td><code>true</code></td>
+      <td><code>false</code></td>
+    </tr>
+    <tr>
+      <td><code>getSize(l')</code></td>
+      <td><code>error</code></td>
+      <td>if <code>isEmpty(l)</code> then <code>1</code> else <code>getSize(l) + 1</code></td>
+    </tr>
+    <tr>
+      <td><code>getIndex(l', it')</code></td>
+      <td><code>error</code></td>
+      <td>if <code>it = it'</code> then <code>id</code> else <code>getIndex(l, it')</code></td>
+    </tr>
+    <tr>
+      <td><code>getElement(l', id')</code></td>
+      <td><code>error</code></td>
+      <td>if <code>id = id'</code> then <code>it</code> else <code>getElement(l, id')</code></td>
+    </tr>
+    <tr>
+      <td><code>removeElement(l', id')</code></td>
+      <td><code>error</code></td>
+      <td>if <code>id = id'</code> then <code>l</code> else <code>addElement(removeElement(l, id'), it)</code></td>
+    </tr>
+    <tr>
+      <td><code>contains(l', it')</code></td>
+      <td><code>false</code></td>
+      <td>if <code>it = it'</code> then <code>true</code> else <code>contains(l, it')</code></td>
+    </tr>
+  </tbody>
+</table>
+
+### Specifica semantica
+
+- **Dichiarazioni**
   - `l`, `l'`: `List`
-  - `el`, `el'`: `Element`
   - `id`, `id'`: `Integer`
+  - `el` `el'`: `Element`
+  
 
-- **OPERATIONS**
-  - `isEmpty(newList) = true`
-  - `isEmpty(add(l, el, id)) = false`
-  - `getSize(add(l, el, id)) = if isEmpty(l) then 1 else getSize(l) + 1`
-  - `getIndex(add(l, el, id), el') = if el = el' then id else getIndex(l, el')`
-  - `getElement(add(l, el, id), id') = if id = id' then el else getElement(l, id')`
-  - `remove(add(l, el, id), id') = if id = id' then l else add(remove(l, id'), el)`
-  - `contains(newList, el') = false`
-  - `contains(add(l, el, id), el') = if el = el' then true else contains(l, el')`
+- **Operazioni**
+  - `isEmpty(newList)` = `true`
+  - `isEmpty(addElement(l, el, id))` = `false`
+  - `getSize(addElement(l, el, id))` = if `isEmpty(l)` then `1` else `getSize(l) + 1`
+  - `getIndex(addElement(l, el, id), el')` = if `el = el'` then `id` else `getIndex(l, el')`
+  - `getElement(addElement(l, el, id), id')` = if `id = id'` then `el` else `getElement(l, id')`
+  - `removeElement(addElement(l, el, id), id')` = if `id = id'` then `l` else `addElement(removeElement(l, id'), el)`
+  - `contains(newList, el')` = `false`
+  - `contains(addElement(l, el, id), el')` = if `el = el'` then `true` else `contains(l, el')`
 
-#### Specifica di restrizione
+### Specifica di restrizione
+  - `getSize(newList)` = `error`
+  - `getIndex(newList, el')` = `error`
+  - `getElement(newList, id')` = `error`
+  - `removeElement(newList, id')` = `error`
 
-- **RESTRICTIONS**
-  - `getSize(newList) = error`
-  - `getIndex(newList, el') = error`
-  - `getElement(newList, id') = error`
-  - `remove(newList, id') = error`
+### 3.2 - Specifica algebrica del Dizionario
 
-### 3.2 - Specifica algebrica della Mappa
-La mappa è una struttura dati che associa una chiave ad un valore, permettendo di memorizzare e recuperare informazioni in modo efficiente.
+- Il dizionario(o Mappa) è una struttura dati che si dimostra efficiente quando c'è bisogno di accedere
+ad uno specifico elemento della struttura, poiché associa una chiave ad un valore e lo rende immediatamente accessibile
 
-#### Specifica sintattica
+### Specifica sintattica
 
-**Tipi**
-- `Map`, `Key`, `Value`, `Boolean`, `Integer`
+- **Tipi:** `Map`, `Key`, `Value`, `Int`, `Boolean`
 
-**Operatori**
-- `newMap() -> Map`: Crea una nuova mappa vuota
-- `isEmpty(Map) -> Boolean`: Restituisce `true` se la mappa è vuota, `false` altrimenti
-- `put(Map, Key, Value) -> Map`: Aggiunge una coppia chiave-valore alla mappa, o, se già presente, ne aggiorna il valore
-- `get(Map, Key) -> Value`: Restituisce il valore associato alla chiave specificata
-- `containsKey(Map, Key) -> Boolean`: Restituisce `true` se la chiave specificata è presente nella mappa
-- `containsValue(Map, Value) -> Boolean`: Restituisce `true` se il valore specificato è presente nella mappa
-- `remove(Map, Key) -> Map`: Rimuove la chiave ed il valore associato ad essa dalla mappa
-- `size(map) -> Integer`: Restituisce il numero di coppie chiave-valore presenti nella mappa
+- **Operatori:**
 
-#### Osservazioni e Costruttori
+    - **newMap() -> Map**        
+      Crea un nuov dizionario
 
-| Metodo               | Costruttore         | Osservazioni                                                                 |
-|----------------------|---------------------|------------------------------------------------------------------------------|
-| `isEmpty(m')`        | `newMap`            | `true`                                                                       |
-| `isEmpty(m')`        | `put(m, k, v)`      | `false`                                                                      |
-| `containsKey(m', k')`| `newMap`            | `false`                                                                      |
-| `containsKey(m', k')`| `put(m, k, v)`      | `if k = k' then true else containsKey(m, k')`                                |
-| `containsValue(m', v')`| `newMap`          | `false`                                                                      |
-| `containsValue(m', v')`| `put(m, k, v)`    | `if v = v' then true else containsValue(m, v')`                              |
-| `get(m', k')`        | `newMap`            | `error`                                                                      |
-| `get(m', k')`        | `put(m, k, v)`      | `if k = k' then v else get(m, k')`                                           |
-| `remove(m', k')`     | `newMap`            | `error`                                                                      |
-| `remove(m', k')`     | `put(m, k, v)`      | `if k = k' then m else put(remove(m, k'), k, v)`                             |
-| `size(m')`           | `newMap`            | `0`                                                                          |
-| `size(m')`           | `put(m, k, v)`      | `if isEmpty(m) then 1 else size(m) + 1`                                      |
+    - **isEmpty(Map) -> Boolean**
 
-#### Specifica semantica
+      Restituisce `true` se il dizionario è vuoto, `false` altrimenti
 
-- **DECLARE**
+    - **insert(Map, Key, Value) -> Map**
+
+      Inserisce un nuovo elemento all'interno del dizionario o aggiorna
+
+    - **get(Map, Key) -> Value**
+
+      Restituisce il valore dell'elemento salvato con la chiave specificata
+
+    - **isKeyPresent(Map, Key) -> Boolean**
+
+      Restituisce `true` se la chiave è nel dizionario, `false` altrimenti
+
+    - **isValuePresent(Map, Value) -> Boolean**
+
+      Restituisce `true` se il valore è nel dizionario, `false` altrimenti
+
+    - **removeElement(Map, Key) -> List**
+
+      Rimuove un elemento data una determinata chiave
+
+    - **getSize(Map) -> Int**
+
+      Restituisce il numero di elementi del dizionario
+
+### Osservazioni e Costruttori
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2">Costruttori di m'</th>
+    </tr>
+  </thead>
+  <tbody align="center">
+    <tr>
+      <td><strong>Osservazioni</strong></td>
+      <td><code>newMap</code></td>
+      <td><code>insert(m, k, v)</code></td>
+    </tr>
+    <tr>
+      <td><code>isEmpty(m')</code></td>
+      <td><code>true</code></td>
+      <td><code>false</code></td>
+    </tr>
+    <tr>
+      <td><code>isKeyPresent(m', k')</code></td>
+      <td><code>false</code></td>
+      <td>if <code>k = k'</code> then <code>true</code> else <code>isKeyPresent(m, k')</code></td>
+    </tr>
+    <tr>
+      <td><code>isValuePresent(m', v')</code></td>
+      <td><code>false</code></td>
+      <td>if <code>v = v'</code> then <code>true</code> else <code>isValuePresent(m, v')</code></td>
+    </tr>
+    <tr>
+      <td><code>get(m', k')</code></td>
+      <td><code>error</code></td>
+      <td>if <code>k = k'</code> then <code>v</code> else <code>get(m, k')</code></td>
+    </tr>
+    <tr>
+      <td><code>remove(m', k')</code></td>
+      <td><code>error</code></td>
+      <td>if <code>k = k'</code> then <code>m</code> else <code>insert(remove(m, k'), k, v)</code></td>
+    </tr>
+    <tr>
+      <td><code>size(m')</code></td>
+      <td><code>0</code></td>
+      <td>if <code>isEmpty(m)</code> then <code>1</code> else <code>size(m) + 1</code></td>
+    </tr>
+  </tbody>
+</table>
+
+### Specifica semantica
+
+- **Dichiarazioni**
   - `m`, `m'`: `Map`
   - `k`, `k'`: `Key`
   - `v`, `v'`: `Value`
 
-- **OPERATIONS**
-  - `isEmpty(newMap) = true`
-  - `isEmpty(put(m, k, v)) = false`
-  - `containsKey(newMap, k') = false`
-  - `containsKey(put(m, k, v), k') = if k = k' then true else containsKey(m, k')`
-  - `containsValue(newMap, v') = false`
-  - `containsValue(put(m, k, v), v') = if v = v' then true else containsValue(m, v')`
-  - `get(put(m, k, v), k') = if k = k' then v else get(m, k')`
-  - `remove(put(m, k, v), k') = if k = k' then m else put(remove(m, k'), k, v)`
-  - `size(newMap) = 0`
-  - `size(put(m, k, v)) = size(m) + 1`
+- **Operazioni**
+  - `isEmpty(newMap)` = `true`
+  - `isEmpty(insert(m, k, v))` = `false`
+  - `isKeyPresent(newMap, k')` = `false`
+  - `isKeyPresent(insert(m, k, v), k')` = if `k = k'` then `true` else `isKeyPresent(m, k')`
+  - `isValuePresent(newMap, v')` = `false`
+  - `isValuePresent(insert(m, k, v), v')` = if `v = v'` then `true` else `isValuePresent(m, v')`
+  - `get(insert(m, k, v), k')` = if `k = k'` then `v` else `get(m, k')`
+  - `remove(insert(m, k, v), k')` = if `k = k'` then `m` else `insert(remove(m, k'), k, v)`
+  - `getSize(newMap)` = `0`
+  - `getSize(insert(m, k, v))` = `getSize(m) + 1`
 
-#### Specifica di restrizione
 
-- **RESTRICTIONS**
-  - `get(newMap, k') = error`
-  - `remove(newMap, k') = error`
+### Specifica di restrizione
 
+  - `get(newMap, k')` = `error`
+  - `remove(newMap, k')` = `error`
 
 #### [Ritorna all'Indice](#indice)
 
@@ -410,6 +522,10 @@ public static void startServerA() {
         }).start();
     }
 ```
+
+[*Torna ai socket*](#socket)
+
+
 Sia per il server A che B
 
 - **REST**: Il server REST è stato implementato anch'esso in un thread similarmente al socket server
@@ -448,7 +564,7 @@ SwingUtilities.invokeLater(() -> {
 
 ## Database e REST
 
-REST è un'architettura software che definisce un insieme di vincoli per la progettazione di servizi web che non utilizza sessioni ma si basa sulla trasmissione di dati tramite HTTP 
+**REST** è un'architettura software che definisce un insieme di vincoli per la progettazione di servizi web che non utilizza sessioni ma si basa sulla trasmissione di dati tramite HTTP 
 e che permette di accedere e modificare le risorse tramite operazioni CRUD.
 REST prevede una struttura delle URI ben definita che identifica univocamente una risorsa o un insieme di risorse
 Caratteristiche:
@@ -477,11 +593,16 @@ L'abbiamo gestito implementando una CRUD Interface:
 - *Update*: per aggiornare un record
 - *Delete*: per eliminare un record
 
-Più nello specifico, abbiamo utilizzato *Service* e *Repository* per gestire le query al database, infatti solo Repository comunica con il database,
+
+E' stato utilizzato il pattern **Controller-Service-Repository** per gestire le query al database, infatti solo Repository comunica con il database,
 Service si occupa di definire l'interfaccia tra il Record e il Repository e infine il *Controller* gestisce le richieste e risposte.
 
 Il risultato sarà una pagina nell'app che, comunicando con il database prende i record e li visualizza
-//TODO: Aggiungere immagine record gui
+
+![Record_1.png](img/Record_1.png)
+
+![Record_2.png](img/Record_2.png)
+
 - CRUD Interface:
 ```java
 public interface CRUDInterface<T> {
@@ -617,12 +738,14 @@ senza la necessità di ricompilare la query ogni volta.
 
 Questo rende la comunicazione più sicura contro SQL Injection e più efficiente per l'unica compilazione.
 
+#### [Ritorna all'Indice](#indice)
+
 ## Applicazione REST e API
 Il REST server è utilizzato per gestire le richieste HTTP e comunicare con il database, permettendo di effettuare operazioni CRUD sui record dei giocatori viste prima
 
 Inoltre è utilizzato per effettuare chiamate alle API per implementare dei minigiochi all'interno del gioco come il Blackjack e il Trivia
 
-- Blackjack:
+- Blackjack: [Deck of Cards API](https://www.deckofcardsapi.com/)
 
 ![API_Bj_1.jpg](img/API_Bj_1.jpg)
 
@@ -673,7 +796,7 @@ public List<Card> getCards(int numberOfCards) throws HttpInternalServerErrorExce
 }
 ```
 
-- Trivia: Un piccolo quiz all'interno del gioco
+- Trivia: Un piccolo quiz all'interno del gioco [Open Trivia DB](https://opentdb.com/)
 
 - Richiesta:
 ```java
@@ -766,11 +889,15 @@ Nel nostro progetto, nel menu iniziale è presente un bottone che permette di ac
 Per fare ciò è stato utilizzato un server socket che rimane in ascolto di richieste di connessione da parte dei client, e crea un thread dedicato per ogni client che si connette.
 - Pagine web:
 
-
-![img.png](img/Website_4200.png)
+![Website_4200](img/Website_4200.png)
 
 Dove sono presenti gli sviluppatori e il link ai loro github e al sito dell'Università di Bari
-//TODO: AGGIUNGERE IMMAGINE PAGINA WEB 2 
+
+La seconda pagina è solo un esempio di utilizzo visualizzando il risultato di una richiesta ad una pagina con un inside joke tra web developer:
+
+![Website_4300.png](img/Website_4300.png)
+
+Che per ovvii motivi non mostrerò completamente
 - [Codice start Server Socket](#socket-code)
 
 
@@ -906,10 +1033,127 @@ e i **Group Layout** per posizionare i componenti in modo da poterli avere resiz
 
 - Esempio di utilizzo del GridBagLayout:
 ```Java
+public void addItem(Item item) {
+        JButton itemButton = new GuiObjectButton(item.getName(), item.getImage());
+        itemButton.setBorder(BorderFactory.createLineBorder(new Color(93, 72, 55), 3));
+        itemButton.setMinimumSize(new Dimension(80, 80));
+        itemButton.setMaximumSize(new Dimension(80, 80));
+        itemButton.setPreferredSize(new Dimension(80, 80));
+
+        itemButton.setVisible(true);
+        itemButton.setToolTipText("<html>" + item.getDescription() + "</html>");
+
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        gridManager(gridBagConstraints, inventoryCount);
+
+        inventoryPanel.add(itemButton, gridBagConstraints);
+        inventoryPanel.revalidate();
+        inventoryPanel.repaint();
+        inventoryCount++;
+    }
+
+    private static void gridManager(GridBagConstraints gridBagConstraints, int i) {
+        int columns = 2;
+        gridBagConstraints.gridx = i % columns;
+        gridBagConstraints.gridy = i / columns;
+        gridBagConstraints.anchor = GridBagConstraints.CENTER;
+    }
+```
+
+In questo snippet viene aggiunto un nuovo Item alla visualizzazione dell'inventario e per farlo viene istanziato un nuovo bottone di un tipo 
+GuiObjectButton da noi creato estendendo JButton per la personalizzazione dell'immagine di sfondo con **paintComponent**
+Poi viene impostato e aggiungo chiamato il layout manager per posizionare il bottone nel pannello dell'inventario
+Infine aggiunto al panel a cui appartiene e richiamato il metodo repaint per renderizzare il nuovo bottone
+
+- Visualizzazione:
+
+![Inventory.png](img/Inventory.png)
+
+Come si può vedere è possibile visualizzare gli oggetti dell'inventario in modo dinamico e adattabile e la loro descrizione 
+se il giocatore resta sopra l'oggetto con il mouse
+
+È inoltre possibile giocare in senza visualizzare l'inventario per avere più spazio per la visualizzazione del gioco
+
+![NoInventory.png](img/NoInventory.png)
 
 
+- Scroll Pane per gestire i salvataggi che possono eccedere lo spazio del loro pannello(e non volevamo porre una limitazione):
+
+![ScrollPane .png](img/ScrollPane.png)
+
+Ma soprattutto si può scegliere di giocare in modalità fullscreen per avere una visione più ampia del gioco
+
+TODO: mettere foto riconoscimenti 
+
+#### [Ritorna all'Indice](#indice)
+
+# Manuale Utente
+
+Di seguito una piccola guida sul gioco così da poter avere sempre un riferimento nel caso di smarrimento
+
+- Primi passi:
+    - Avviare il gioco
+    - Iniziare una nuova partita o caricarne una salvata
+    - Inserire il proprio nome se nuova partita
 
 
+La prima parte del gioco è prettamente guidata e segnalerà l'azione da eseguire, in questo caso basta inserire "continua"
+
+![Walkthrough_1.png](img/Walkthrough_1.png)
+
+- Tutorial: 
+
+![Tutorial.png](img/Tutorial.png)
+
+Qui vengono mostrati i comandi base del gioco e come interagire con l'ambiente, quando si richiede l'interazione con un altro soggetto bisognerà
+aggiungere al comando, il nome dell'oggetto o della stanza con cui si vuole interagire
+
+- Stanza iniziale:
+
+![Start.png](img/Start.png)
+
+- Prima interazione:
+
+![Mantello.png](img/Mantello.png)
+
+Se si guarda di nuovo in basso:
+
+![Mantello_2.png](img/Mantello_2.png)
+
+Dopo aver guardato avanti, si nota un corridoio:
+
+![Corridoio.png](img/Corridoio.png)
+
+- Interazione con le guardie:
+
+![Guardie.png](img/Guardie.png)
+
+**SE** hai il mantello, le guardie ti scambieranno per uno di loro e ti lasceranno passare
+
+- Taverna:
+
+![Taverna.png](img/Taverna.png)
+
+Arrivati fin qui si dovrebbero avere le basi per poter giocare in modo fluido. 
+Di seguito lascio le soluzioni per i minigiochi e per il completamento del gioco
+
+Ogni volta che finisci una stanza di minigame, ritorna allo spiazzale con "vai spiazzale"
+
+- Fucine: Bisogna raccogliere i seguenti pezzi:
+  - portelle
+  - scheletro
+  - cofano
+
+- Piste: Scommetti su Verstappen
+
+- Generatore: Purtroppo qui non possiamo aiutare, le domande del trivia sono sempre nuove
+
+- Palazzo Reale: Una volta avuti tutti i pezzi, tornare allo spiazzale e "sfonda cancello"
+
+- Trono: Una volta arrivati davanti al Re Coboldo, ci saranno vari finali davanti a te, quello più semplice è farsi amico il Re, ma vediamo se riesci a scoprire tutti i finali segreti...
 
 
+# Conclusioni
 
+Il progetto è stato un'esperienza molto formativa e ci ha permesso di mettere in pratica le conoscenze acquisite durante il corso ma soprattutto imparare nuove applicazioni 
+autonomamente e a lavorare di squadra dividendosi il carico
