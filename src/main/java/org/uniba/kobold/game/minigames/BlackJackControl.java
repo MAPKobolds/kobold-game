@@ -32,11 +32,6 @@ public class BlackJackControl extends MiniGame{
     int betMoney = 0;
 
     /**
-     * The Bet money.
-     */
-    int betMoney = 0;
-
-    /**
      * Instantiates a new Black jack control.
      *
      * @throws HttpInternalServerErrorException the http internal server error exception
