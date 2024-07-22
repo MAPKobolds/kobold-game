@@ -6,7 +6,7 @@
 2. [**Progettazione**](#2-progettazione)
 3. [**Specifiche Algebriche**](#3-specifiche-algebriche)
    - 3.1 [**Specifiche algebriche della Lista**](#31---specifica-algebrica-della-lista)
-   - 3.2 [**Specifiche algebriche della Mappa**](#32---specifica-algebrica-della-mappa)
+   - 3.2 [**Specifiche algebriche della Mappa**](#32---specifica-algebrica-del-dizionario)
 4. [**Applicazione Argomenti del Corso**](#4-applicazione-argomenti-del-corso)
    - 4.1 [**File**](#file)
    - 4.2 [**Thread**](#thread)
@@ -14,6 +14,8 @@
    - 4.4 [**Applicazione REST e API**](#applicazione-rest-e-api)
    - 4.5 [**Lambda Expressions**](#lambda-expressions)
    - 4.6 [**Graphic User Interface**](#graphic-user-interface---swing)
+5. [**Manuale Utente**](#5-manuale-utente)
+6. [**Javadoc**](Javadoc/index.html)
 
 # 1. Introduzione
 
@@ -1087,7 +1089,7 @@ TODO: mettere foto riconoscimenti
 
 #### [Ritorna all'Indice](#indice)
 
-# Manuale Utente
+# 5. Manuale Utente
 
 Di seguito una piccola guida sul gioco così da poter avere sempre un riferimento nel caso di smarrimento
 

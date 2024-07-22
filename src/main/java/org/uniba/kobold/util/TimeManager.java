@@ -24,8 +24,6 @@ public class TimeManager {
 
     /**
      * Gets instance and starts the timer.
-     *
-     * @return the instance
      */
     public TimeManager() {
         tick();
