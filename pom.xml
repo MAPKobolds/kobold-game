@@ -61,7 +61,7 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
-                    <include>/*</include>
+                    <include>**/**</include>
                 </includes>
             </resource>
         </resources>
@@ -83,7 +83,8 @@
                                 <resource>
                                     <directory>src/main/resources</directory>
                                     <includes>
-                                        <include>/*</include>
+                                        <include>music/**</include>
+                                        <include>img/**</include>
                                     </includes>
                                 </resource>
                             </resources>
