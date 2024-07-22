@@ -593,7 +593,8 @@ L'abbiamo gestito implementando una CRUD Interface:
 - *Update*: per aggiornare un record
 - *Delete*: per eliminare un record
 
-Più nello specifico, abbiamo utilizzato *Service* e *Repository* per gestire le query al database, infatti solo Repository comunica con il database,
+
+E' stato utilizzato il pattern **Controller-Service-Repository** per gestire le query al database, infatti solo Repository comunica con il database,
 Service si occupa di definire l'interfaccia tra il Record e il Repository e infine il *Controller* gestisce le richieste e risposte.
 
 Il risultato sarà una pagina nell'app che, comunicando con il database prende i record e li visualizza
