@@ -5,6 +5,9 @@ import org.uniba.kobold.entities.inventory.availableItems.*;
 
 import java.lang.reflect.Type;
 
+/**
+ * The type Item deserializer.
+ */
 public class ItemDeserializer implements JsonDeserializer<Item> {
 
     @Override

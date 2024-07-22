@@ -12,11 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Seeker game control.
+ */
 public class SeekerGameControl extends MiniGame {
     private int currentItemIndex = 0;
     private int itemsToFindCount;
     private final List<Pair<Boolean, Item>> itemList = new ArrayList<>();
 
+    /**
+     * Instantiates a new Seeker game control.
+     */
     public SeekerGameControl() {
         List<Pair<Boolean, Item>> items = List.of(
             Pair.with(true, new Item("Portelle", Set.of("portelle"),"delle portelle", "/img/rocks.png")),
@@ -51,6 +57,11 @@ public class SeekerGameControl extends MiniGame {
         commands.add(new Command("esci", Set.of("via")));
     }
 
+    /**
+     * Instantiates a new Seeker game control.
+     *
+     * @param items the items
+     */
     public SeekerGameControl(List<Pair<Boolean, Item>> items) {
         itemsToFindCount = (int) items.stream().filter(object -> object.getValue0()).count();
 
@@ -83,6 +94,11 @@ public class SeekerGameControl extends MiniGame {
 
     }
 
+    /**
+     * Gets current item.
+     *
+     * @return the current item
+     */
     public Pair<Boolean, Item> getCurrentItem() {
         return itemList.get(currentItemIndex);
     }

@@ -12,14 +12,35 @@ import java.awt.*;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Trivia control.
+ */
 public class TriviaControl extends MiniGame{
 
+    /**
+     * The Trivia checker.
+     */
     TriviaChecker triviaChecker;
+    /**
+     * The Questions.
+     */
     String[] questions;
+    /**
+     * The Answers.
+     */
     List<List<String>> answers;
     private int score = 0;
     private int round = 0;
 
+    /**
+     * Instantiates a new Trivia control.
+     *
+     * @throws HttpInternalServerErrorException the http internal server error exception
+     * @throws HttpNotFoundException            the http not found exception
+     * @throws HttpUnavailableException         the http unavailable exception
+     * @throws HttpBadRequestException          the http bad request exception
+     * @throws HttpForbiddenException           the http forbidden exception
+     */
     public TriviaControl() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         this.commands.add(new Command("1", Set.of("uno")));
         this.commands.add(new Command("2", Set.of("due")));

@@ -12,8 +12,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Tavern room.
+ */
 public final class TavernRoom extends Room {
 
+    /**
+     * Instantiates a new Tavern room.
+     */
     public TavernRoom() {
         super("taverna",
                 "La " + ColorText.setTextPurple("taverna")+" è piena di coboldi, "+ ColorText.setTextBlue("davanti")  +" a te c'è un bancone con un coboldo " + ColorText.setTextOrange("barista") +

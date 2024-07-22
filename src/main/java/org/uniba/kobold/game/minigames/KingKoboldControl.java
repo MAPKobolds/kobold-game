@@ -10,6 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type King kobold control.
+ */
 public class KingKoboldControl extends MiniGame {
 
     private boolean secondQ = false;
@@ -28,6 +31,9 @@ public class KingKoboldControl extends MiniGame {
             ColorText.setTextBlue("4)") +" ispeziona sotto il trono"
             ));
 
+    /**
+     * Instantiates a new King kobold control.
+     */
     public KingKoboldControl() {
         this.description = "Benvento davanti a me il sommo Re Coboldo colui che è sopra di tutti e sopra tutto" +
                 " cosa ti porta da me ?" +

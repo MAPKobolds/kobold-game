@@ -10,8 +10,14 @@ import org.uniba.kobold.util.ColorText;
 import java.awt.*;
 import java.util.Set;
 
+/**
+ * The type Cashier control.
+ */
 public class CashierControl extends MiniGame{
 
+    /**
+     * Instantiates a new Cashier control.
+     */
     public CashierControl() {
         this.description = "Amico mio, la prima puntata costa molto cara, <br>" +
                 "se perdi sei fregato, per puntare scrivi su questo foglio il numero o il nome del pilota vincente<br>" +

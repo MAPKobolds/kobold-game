@@ -5,12 +5,21 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * The type Web server socket.
+ */
 public class WebServerSocket {
     private static final int PORT_A = 4200;
     private static final int PORT_B = 4300;
 
+    /**
+     * The Max users.
+     */
     static final int MAX_USERS = 5;
 
+    /**
+     * Start server a.
+     */
     public static void startServerA() {
         new Thread(() -> {
             try {
@@ -30,6 +39,9 @@ public class WebServerSocket {
         }).start();
     }
 
+    /**
+     * Start server b.
+     */
     public static void startServerB() {
         new Thread(() -> {
             try {

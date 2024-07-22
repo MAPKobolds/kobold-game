@@ -9,13 +9,40 @@ import org.uniba.kobold.util.ColorText;
 
 import java.util.Set;
 
+/**
+ * The type Black jack control.
+ */
 public class BlackJackControl extends MiniGame{
+    /**
+     * The Blackjack checker.
+     */
     BlackjackChecker blackjackChecker;
+    /**
+     * The Is playing.
+     */
     Boolean isPlaying = false;
+    /**
+     * The Has bet.
+     */
     Boolean hasBet = false;
+    /**
+     * The Commands help.
+     */
     String commandsHelp = "";
+    /**
+     * The Bet money.
+     */
     int betMoney = 0;
 
+    /**
+     * Instantiates a new Black jack control.
+     *
+     * @throws HttpInternalServerErrorException the http internal server error exception
+     * @throws HttpNotFoundException            the http not found exception
+     * @throws HttpUnavailableException         the http unavailable exception
+     * @throws HttpBadRequestException          the http bad request exception
+     * @throws HttpForbiddenException           the http forbidden exception
+     */
     public BlackJackControl() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         blackjackChecker = new BlackjackChecker();
 

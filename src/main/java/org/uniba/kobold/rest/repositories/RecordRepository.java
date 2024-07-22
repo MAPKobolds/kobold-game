@@ -8,8 +8,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Record repository.
+ */
 public class RecordRepository extends Repository<Record> {
 
+    /**
+     * Instantiates a new Record repository.
+     */
     public RecordRepository() {
         RELATION = "records";
 
@@ -97,6 +103,12 @@ public class RecordRepository extends Repository<Record> {
         }
     }
 
+    /**
+     * Gets best time.
+     *
+     * @param limit the limit
+     * @return the best time
+     */
     public List<Record> getBestTime(int limit) {
         try {
             String selectSQL = "SELECT * FROM "+ RELATION + " ORDER BY time LIMIT ?";

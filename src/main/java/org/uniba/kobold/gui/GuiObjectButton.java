@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
+/**
+ * The type Gui object button.
+ */
 public class GuiObjectButton extends JButton{
 
     /**
@@ -13,7 +16,8 @@ public class GuiObjectButton extends JButton{
 
     /**
      * Constructor of the class GuiObjectButton
-     * @param name the name of the button
+     *
+     * @param name            the name of the button
      * @param objectImagePath the path of the image
      */
     public GuiObjectButton(String name, String objectImagePath) {
@@ -39,12 +43,18 @@ public class GuiObjectButton extends JButton{
 
     /**
      * Method to get the button
+     *
      * @return the button
      */
     public JButton getButton() {
         return this;
     }
 
+    /**
+     * Update image.
+     *
+     * @param objectImagePath the object image path
+     */
     public void updateImage(String objectImagePath) {
         this.objectImagePath = objectImagePath;
         repaint();

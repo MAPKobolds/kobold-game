@@ -13,9 +13,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Starting room.
+ */
 public final class StartingRoom extends Room {
+    /**
+     * The Already visited.
+     */
     boolean alreadyVisited = false;
 
+    /**
+     * Instantiates a new Starting room.
+     */
     public StartingRoom() {
         super("caverna",
             "Ti svegli in una "+ ColorText.setTextPurple("caverna") +" buia, non ricordi come ci sei arrivato, ma senti un forte dolore alla testa. " +

@@ -4,7 +4,13 @@ import org.uniba.kobold.entities.inventory.Item;
 
 import java.util.Set;
 
+/**
+ * The type Steering wheel.
+ */
 public class SteeringWheel extends Item {
+    /**
+     * Instantiates a new Steering wheel.
+     */
     public SteeringWheel() {
         super(
                 "volante",

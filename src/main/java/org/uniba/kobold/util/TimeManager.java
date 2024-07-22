@@ -24,12 +24,18 @@ public class TimeManager {
 
     /**
      * Gets instance and starts the timer.
+     *
      * @return the instance
      */
     public TimeManager() {
         tick();
     }
 
+    /**
+     * Instantiates a new Time manager.
+     *
+     * @param time the time
+     */
     public TimeManager(String time) {
         this.loadTimer(time);
         tick();
@@ -57,6 +63,7 @@ public class TimeManager {
 
     /**
      * Gets the formatted time.
+     *
      * @return the time
      */
     public String getTime() {
@@ -80,10 +87,21 @@ public class TimeManager {
         }
     }
 
+    /**
+     * Gets milli seconds.
+     *
+     * @return the milli seconds
+     */
     public long getMilliSeconds() {
         return (long) getSeconds() * 1000 + (long) getMinutes() * 60 * 1000 + (long) getHours() * 60 * 60 * 1000;
     }
 
+    /**
+     * From long to string string.
+     *
+     * @param milliseconds the milliseconds
+     * @return the string
+     */
     public static String fromLongToString(long milliseconds) {
         int hrs = (int) (MILLISECONDS.toHours(milliseconds) % 24);
         int min = (int) (MILLISECONDS.toMinutes(milliseconds) % 60);
@@ -92,14 +110,29 @@ public class TimeManager {
         return String.format("%d:%02d:%02d", hrs, min, sec);
     }
 
+    /**
+     * Gets seconds.
+     *
+     * @return the seconds
+     */
     public int getSeconds() {
         return seconds;
     }
 
+    /**
+     * Gets minutes.
+     *
+     * @return the minutes
+     */
     public int getMinutes() {
         return minutes;
     }
 
+    /**
+     * Gets hours.
+     *
+     * @return the hours
+     */
     public int getHours() {
         return hours;
     }

@@ -10,7 +10,16 @@ import org.uniba.kobold.util.DirCreator;
 
 import java.awt.*;
 
+/**
+ * The type Main.
+ */
 public class Main {
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws IOException the io exception
+     */
     public static void main(String[] args) throws IOException {
 
         if (!DirCreator.createDir("src/main/resources/saves")) {

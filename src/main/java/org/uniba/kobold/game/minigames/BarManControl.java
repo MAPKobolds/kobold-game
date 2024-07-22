@@ -11,12 +11,24 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Set;
 
+/**
+ * The type Bar man control.
+ */
 public class BarManControl extends MiniGame{
 
     private int state = 0;
+    /**
+     * The Options.
+     */
     ArrayList<String> options = new ArrayList<>();
+    /**
+     * The Market.
+     */
     ArrayList<String> market = new ArrayList<>();
 
+    /**
+     * Instantiates a new Bar man control.
+     */
     public BarManControl() {
 
         options.add(ColorText.setTextBlue("1)") + " [" + ColorText.setTextBlue("compra") +"]" + "["+ColorText.setTextBlue("oggetto")+"] qualcosa dal barman");

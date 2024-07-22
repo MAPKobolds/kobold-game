@@ -7,6 +7,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.uniba.kobold.api.error.*;
 
+/**
+ * The type Trivia service.
+ */
 class TriviaService {
 
     private static String getRequest(String url) throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
@@ -32,6 +35,16 @@ class TriviaService {
         return responseBody;
     }
 
+    /**
+     * Gets trivia.
+     *
+     * @return the trivia
+     * @throws HttpInternalServerErrorException the http internal server error exception
+     * @throws HttpNotFoundException            the http not found exception
+     * @throws HttpUnavailableException         the http unavailable exception
+     * @throws HttpBadRequestException          the http bad request exception
+     * @throws HttpForbiddenException           the http forbidden exception
+     */
     public static Quiz getTrivia() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         String responseBody = getRequest("https://opentdb.com/api.php?amount=6&category=11&difficulty=easy");
 

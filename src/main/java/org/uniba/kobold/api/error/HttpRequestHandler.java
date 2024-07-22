@@ -2,12 +2,22 @@ package org.uniba.kobold.api.error;
 
 import java.net.HttpURLConnection;
 
+/**
+ * The type Http request handler.
+ */
 public class HttpRequestHandler {
     // for now, we will just print the status code to the console
     // next we will implement a way to handle the status code with exceptions
+
     /**
      * Handle the status code of an HTTP request
+     *
      * @param statusCode the status code of the HTTP request
+     * @throws HttpInternalServerErrorException the http internal server error exception
+     * @throws HttpNotFoundException            the http not found exception
+     * @throws HttpBadRequestException          the http bad request exception
+     * @throws HttpForbiddenException           the http forbidden exception
+     * @throws HttpUnavailableException         the http unavailable exception
      */
     public static void handle(int statusCode) throws  HttpInternalServerErrorException, HttpNotFoundException, HttpBadRequestException, HttpForbiddenException, HttpUnavailableException {
         switch (statusCode) {

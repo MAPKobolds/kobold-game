@@ -13,7 +13,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Introduction room.
+ */
 public final class IntroductionRoom extends Room {
+    /**
+     * The Continue counter.
+     */
     int continueCounter = 0;
     private List<Pair<String, String>> slides = List.of(
             Pair.with("/img/rooms/falling.jpg", "Il giorno successivo segui il Gps della tua auto e mentre stai sopra al punto segnato, ti accorgi che il terreno cede sotto i tuoi piedi. <br>" + ColorText.setTextBlue("continua") + " per continuare"),
@@ -28,6 +34,9 @@ public final class IntroductionRoom extends Room {
     );
 
 
+    /**
+     * Instantiates a new Introduction room.
+     */
     public IntroductionRoom() {
         super("introduzione",
                 "Era una giornata come le altre a Molfetta, dopo un lungo giorno vuoi andare alla pizzeria per prendere una siciliana (\"la pizza\"), " +

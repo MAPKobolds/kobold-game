@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
+/**
+ * The type Gui hub.
+ */
 public class GuiHub extends JFrame {
     private static GuiHub instance;
     private static JPanel masterPanel;
@@ -14,11 +17,19 @@ public class GuiHub extends JFrame {
     private static final int WIDTH = 1000;
     private static final int HEIGHT = 700;
 
+    /**
+     * Instantiates a new Gui hub.
+     */
     public GuiHub() {
         instance = this;
         initComponents();
     }
 
+    /**
+     * Is gui active boolean.
+     *
+     * @return the boolean
+     */
     public static boolean isGuiActive() {
         return instance != null;
     }
@@ -84,6 +95,12 @@ public class GuiHub extends JFrame {
         masterPanel.repaint();
     }
 
+    /**
+     * Change to.
+     *
+     * @param page the page
+     * @param game the game
+     */
     public static void changeTo(PagesEnum page, Game game) {
         switch (page) {
             case MENU:
@@ -107,6 +124,14 @@ public class GuiHub extends JFrame {
         }
     }
 
+    /**
+     * Sets game toolbar.
+     *
+     * @param timerLabel            the timer label
+     * @param saveButton            the save button
+     * @param menuButton            the menu button
+     * @param toggleInventoryButton the toggle inventory button
+     */
     public static void setGameToolbar(JLabel timerLabel, JButton saveButton, JButton menuButton, JButton toggleInventoryButton) {
         double widthOffset = WIDTH * 0.005;
         toolBar.removeAll();
@@ -124,6 +149,9 @@ public class GuiHub extends JFrame {
         toolBar.repaint();
     }
 
+    /**
+     * Sets normal toolbar.
+     */
     public static void setNormalToolbar() {
         toolBar.removeAll();
         toolBar.add(muteMusicButton);

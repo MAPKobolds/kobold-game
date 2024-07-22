@@ -13,8 +13,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Square room.
+ */
 public final class SquareRoom extends Room {
 
+    /**
+     * Instantiates a new Square room.
+     */
     public SquareRoom() {
         super("spiazzale",
                 "Lo spiazzale si trova all'uscita della " + ColorText.setTextPurple("taverna") +" ed è un posto di ritrovo dei coboldi, circondato da altri palazzi abitati da altri coboldi<br>" +

@@ -9,11 +9,26 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+/**
+ * The type Record controller.
+ */
 @Path("records")
 public class RecordController {
+    /**
+     * The Gson.
+     */
     Gson gson = new Gson();
+    /**
+     * The Record service.
+     */
     RecordService recordService = new RecordService();
 
+    /**
+     * Save response.
+     *
+     * @param json the json
+     * @return the response
+     */
     @POST
     @Produces("application/json")
     public Response save(String json) {
@@ -24,6 +39,12 @@ public class RecordController {
         return Response.ok(jsonString, MediaType.APPLICATION_JSON).build();
     }
 
+    /**
+     * Delete by id response.
+     *
+     * @param recordId the record id
+     * @return the response
+     */
     @DELETE
     @Path("/{recordId}")
     @Produces("application/json")
@@ -37,6 +58,13 @@ public class RecordController {
         }
     }
 
+    /**
+     * Update by id response.
+     *
+     * @param json     the json
+     * @param recordId the record id
+     * @return the response
+     */
     @PUT
     @Path("/{recordId}")
     @Produces("application/json")
@@ -52,6 +80,12 @@ public class RecordController {
         }
     }
 
+    /**
+     * Update by id response.
+     *
+     * @param recordId the record id
+     * @return the response
+     */
     @GET
     @Path("/{recordId}")
     @Produces("application/json")
@@ -67,6 +101,11 @@ public class RecordController {
         }
     }
 
+    /**
+     * Gets best five.
+     *
+     * @return the best five
+     */
     @GET
     @Path("/best")
     @Produces("application/json")

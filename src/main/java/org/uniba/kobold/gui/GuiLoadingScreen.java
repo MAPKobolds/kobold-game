@@ -5,6 +5,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
+/**
+ * The type Gui loading screen.
+ */
 public class GuiLoadingScreen extends JPanel{
 
     /**
@@ -13,10 +16,20 @@ public class GuiLoadingScreen extends JPanel{
     private static final String BACKGROUND_PATH = "/img/wall.png";
     private JProgressBar progressBar;
 
+    /**
+     * Instantiates a new Gui loading screen.
+     *
+     * @param game the game
+     */
     public GuiLoadingScreen(Game game) {
         initComponents(game);
     }
 
+    /**
+     * Init components.
+     *
+     * @param game the game
+     */
     public void initComponents(Game game) {
         progressBar = new JProgressBar(0, 100);
 

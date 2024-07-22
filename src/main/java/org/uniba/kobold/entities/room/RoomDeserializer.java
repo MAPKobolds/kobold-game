@@ -5,6 +5,9 @@ import org.uniba.kobold.entities.room.avaliableRooms.*;
 
 import java.lang.reflect.Type;
 
+/**
+ * The type Room deserializer.
+ */
 public class RoomDeserializer implements JsonDeserializer<Room> {
 
     @Override

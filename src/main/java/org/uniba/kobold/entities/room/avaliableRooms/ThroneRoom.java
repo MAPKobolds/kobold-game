@@ -13,8 +13,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Throne room.
+ */
 public final class ThroneRoom extends Room {
 
+    /**
+     * Instantiates a new Throne room.
+     */
     public ThroneRoom() {
         super("trono",
                 "Dopo tanta fatica sei arrivato dal capo di questo posto infernale. Il coboldo più grande che tu abbia mai visto è sul suo trono di " +

@@ -26,45 +26,49 @@ public class UtilMusic extends Thread{
                 isMuted = false;
         }
 
-        /**
-         * getInstance Method to get the instance
-         * @return instance
-         */
-        public static UtilMusic getInstance() {
+    /**
+     * getInstance Method to get the instance
+     *
+     * @return instance instance
+     */
+    public static UtilMusic getInstance() {
                 if (instance == null) {
                         instance = new UtilMusic();
                 }
                 return instance;
         }
 
-        /**
-         * isMuted Method to check if the music is muted
-         * @return isMuted
-         */
-        public boolean isMuted() {
+    /**
+     * isMuted Method to check if the music is muted
+     *
+     * @return isMuted boolean
+     */
+    public boolean isMuted() {
                 return isMuted;
         }
 
-        /**
-         * setOnText Method to set the text on
-         * @param muteMusicButton JToggleButton to toggle music
-         */
-        public static void setOnText(JToggleButton muteMusicButton) {
+    /**
+     * setOnText Method to set the text on
+     *
+     * @param muteMusicButton JToggleButton to toggle music
+     */
+    public static void setOnText(JToggleButton muteMusicButton) {
                 muteMusicButton.setText("\uD83D\uDD0A");
         }
 
-        /**
-         * setOffText Method to set the text off
-         * @param muteMusicButton JToggleButton to toggle music
-         */
-        public static void setOffText(JToggleButton muteMusicButton) {
+    /**
+     * setOffText Method to set the text off
+     *
+     * @param muteMusicButton JToggleButton to toggle music
+     */
+    public static void setOffText(JToggleButton muteMusicButton) {
                 muteMusicButton.setText("\uD83D\uDD07");
         }
 
-        /**
-         * playClip Method to play the clip
-         */
-        public void playClip() {
+    /**
+     * playClip Method to play the clip
+     */
+    public void playClip() {
                 if (clip != null && !isMuted) {
                         clip.start();
                 }
@@ -79,11 +83,12 @@ public class UtilMusic extends Thread{
                 }
         }
 
-        /**
-         * initButton Method to initialize the button
-         * @param muteMusicButton JToggleButton to toggle music
-         */
-        public static void initButton(JToggleButton muteMusicButton) {
+    /**
+     * initButton Method to initialize the button
+     *
+     * @param muteMusicButton JToggleButton to toggle music
+     */
+    public static void initButton(JToggleButton muteMusicButton) {
                 //Mute music button logic and clip management
                 muteMusicButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
                 muteMusicButton.setForeground(Color.WHITE);
@@ -99,11 +104,13 @@ public class UtilMusic extends Thread{
                 muteMusicButton.addItemListener(button -> instance.setMuted(button.getStateChange() == ItemEvent.SELECTED, muteMusicButton));
         }
 
-        /**
-         * setMuted Method to mute
-         * @param isMuted boolean to see if the music is muted or not
-         */
-        public void setMuted(boolean isMuted, JToggleButton muteMusicButton) {
+    /**
+     * setMuted Method to mute
+     *
+     * @param isMuted         boolean to see if the music is muted or not
+     * @param muteMusicButton the mute music button
+     */
+    public void setMuted(boolean isMuted, JToggleButton muteMusicButton) {
                 UtilMusic.isMuted = isMuted;
                 if (isMuted) {
                         stopClip();

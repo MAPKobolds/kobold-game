@@ -10,10 +10,18 @@ import java.util.Set;
 import org.uniba.kobold.type.Command;
 import org.uniba.kobold.entities.inventory.Item;
 
+/**
+ * The type Parser.
+ */
 public class Parser {
 
     private final Set<String> stopwords;
 
+    /**
+     * Instantiates a new Parser.
+     *
+     * @param stopwords the stopwords
+     */
     public Parser(Set<String> stopwords) {
         this.stopwords = stopwords;
     }
@@ -37,6 +45,15 @@ public class Parser {
     }
 
 
+    /**
+     * Parse parser output.
+     *
+     * @param command   the command
+     * @param commands  the commands
+     * @param Items     the items
+     * @param inventory the inventory
+     * @return the parser output
+     */
     public ParserOutput parse(String command, List<Command> commands, List<Item> Items, List<Item> inventory) {
         List<String> tokens = ParserUtils.parseString(command, stopwords);
         if (!tokens.isEmpty()) {

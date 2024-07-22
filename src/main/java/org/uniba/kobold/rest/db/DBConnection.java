@@ -3,6 +3,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * The type Db connection.
+ */
 public class DBConnection {
     private static final String DB_NAME = "map";
     private static final String JDBC_URL = "jdbc:h2:~/" + DB_NAME;
@@ -14,7 +17,12 @@ public class DBConnection {
 
     private DBConnection() { }
 
-    // Method to get the singleton instance of the connection
+    /**
+     * Gets connection.
+     *
+     * @return the connection
+     */
+// Method to get the singleton instance of the connection
     public static Connection getConnection() {
         if (connection == null) {
             synchronized (DBConnection.class) {
@@ -30,6 +38,9 @@ public class DBConnection {
         return connection;
     }
 
+    /**
+     * Close connection.
+     */
     public static void closeConnection() {
         if (connection != null) {
             try {

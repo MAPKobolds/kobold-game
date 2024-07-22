@@ -11,8 +11,14 @@ import javax.swing.*;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Circuit room.
+ */
 public final class CircuitRoom extends Room {
 
+    /**
+     * Instantiates a new Circuit room.
+     */
     public CircuitRoom() {
         super("circuito",
                 "Nel circuito ci sono molti coboldi che scommettono, rivolgendosi alla " + ColorText.setTextOrange("cassiera") +
