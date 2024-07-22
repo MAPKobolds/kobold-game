@@ -75,7 +75,7 @@ public class BarManControl extends MiniGame{
                     }
 
                     case "3" -> {
-                        interaction.setInfo("Il barman ti dice che a cerignolus i clienti sono sempre i benvenuti , qui si gioca a carte , si ruba e si beve non ci piace chi non rispetta le regole" + "<br>" + this.description);
+                        interaction.setInfo("Il barman ti dice che a Cerignolus i clienti sono sempre i benvenuti, qui si gioca a carte, si ruba e si beve non ci piace chi non rispetta le regole" + "<br>" + this.description);
                         interaction.setType(MiniGameInteractionType.INFO);
                     }
 
