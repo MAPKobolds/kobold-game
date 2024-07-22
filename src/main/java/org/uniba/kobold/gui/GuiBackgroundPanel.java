@@ -7,9 +7,17 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+/**
+ * The type Gui background panel.
+ */
 public class GuiBackgroundPanel extends JPanel {
     private BufferedImage backgroundImage;
 
+    /**
+     * Instantiates a new Gui background panel.
+     *
+     * @param imagePath the image path
+     */
     public GuiBackgroundPanel(String imagePath) {
         try {
             backgroundImage = ImageIO.read(new File(imagePath));

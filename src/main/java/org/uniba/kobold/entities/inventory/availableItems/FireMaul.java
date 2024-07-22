@@ -4,7 +4,13 @@ import org.uniba.kobold.entities.inventory.Item;
 
 import java.util.Set;
 
+/**
+ * The type Fire maul.
+ */
 public class FireMaul extends Item {
+    /**
+     * Instantiates a new Fire maul.
+     */
     public FireMaul() {
         super(
                 "maglio", Set.of("maglio di fuoco", "maglio", "magli"),

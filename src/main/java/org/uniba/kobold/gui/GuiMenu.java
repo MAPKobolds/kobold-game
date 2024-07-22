@@ -7,6 +7,9 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * The type Gui menu.
+ */
 public class GuiMenu extends JPanel {
     
     private JButton creditsButton;

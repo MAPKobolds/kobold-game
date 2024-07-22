@@ -4,7 +4,13 @@ import org.uniba.kobold.entities.inventory.Item;
 
 import java.util.Set;
 
+/**
+ * The type Gin moncello.
+ */
 public class GinMoncello extends Item {
+    /**
+     * Instantiates a new Gin moncello.
+     */
     public GinMoncello() {
         super(
                 "GinMoncello", Set.of("ginmoncello"),

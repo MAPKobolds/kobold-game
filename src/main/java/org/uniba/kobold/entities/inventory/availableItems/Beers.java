@@ -6,8 +6,14 @@ import org.uniba.kobold.entities.inventory.Item;
 
 import java.util.Set;
 
+/**
+ * The type Beers.
+ */
 public class Beers extends Item implements InteractiveItem {
 
+    /**
+     * Instantiates a new Beers.
+     */
     public Beers() {
         super(
                 "birre", Set.of("birra"),

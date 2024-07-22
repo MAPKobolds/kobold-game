@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The type Game.
+ */
 public class Game {
     private TimeManager timeManager;
     private final Parser parser;
@@ -30,6 +33,12 @@ public class Game {
     private Inventory inventory;
     private RecordService recordService = new RecordService();
 
+    /**
+     * Instantiates a new Game.
+     *
+     * @param playerName the player name
+     * @throws IOException the io exception
+     */
     public Game(String playerName ) throws IOException {
         this.timeManager = new TimeManager();
         this.playerName = playerName;
@@ -74,6 +83,15 @@ public class Game {
 
     }
 
+    /**
+     * Instantiates a new Game.
+     *
+     * @param playerName the player name
+     * @param roomPath   the room path
+     * @param time       the time
+     * @param inventory  the inventory
+     * @throws IOException the io exception
+     */
     public Game(String playerName, RoomsMap roomPath, String time, Inventory inventory) throws IOException {
         this.timeManager = new TimeManager(time);
         parser = new Parser(ParserUtils.loadFileListInSet(new File("src/main/resources/stopwords.txt")));
@@ -83,6 +101,12 @@ public class Game {
 
     }
 
+    /**
+     * Execute command game command result.
+     *
+     * @param command the command
+     * @return the game command result
+     */
     public GameCommandResult executeCommand(String command) {
         GameCommandResult result = new GameCommandResult(GameCommandResultType.DESCRIPTION, "");
         Room currentRoom = roomPath.getCurrentRoom();
@@ -118,6 +142,17 @@ public class Game {
         return result;
     }
 
+    /**
+     * Manage room interaction game command result.
+     *
+     * @param result the result
+     * @return the game command result
+     * @throws HttpInternalServerErrorException the http internal server error exception
+     * @throws HttpNotFoundException            the http not found exception
+     * @throws HttpUnavailableException         the http unavailable exception
+     * @throws HttpBadRequestException          the http bad request exception
+     * @throws HttpForbiddenException           the http forbidden exception
+     */
     public GameCommandResult manageRoomInteraction(RoomInteractionResult result) throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         GameCommandResult gameCommandResult = new GameCommandResult(GameCommandResultType.DESCRIPTION, "");
 
@@ -167,18 +202,38 @@ public class Game {
         return gameCommandResult;
     }
 
+    /**
+     * Gets current room description.
+     *
+     * @return the current room description
+     */
     public  GameCommandResult getCurrentRoomDescription() {
         return new GameCommandResult(GameCommandResultType.DESCRIPTION, roomPath.getCurrentRoom().getDescription());
     }
 
+    /**
+     * Gets player name.
+     *
+     * @return the player name
+     */
     public String getPlayerName() {
         return playerName;
     }
 
+    /**
+     * Gets current room map.
+     *
+     * @return the current room map
+     */
     public RoomsMap getCurrentRoomMap() {
         return roomPath;
     }
 
+    /**
+     * Gets time manager.
+     *
+     * @return the time manager
+     */
     public TimeManager getTimeManager() {
         return timeManager;
     }
@@ -187,6 +242,11 @@ public class Game {
         System.out.println(arg);
     }
 
+    /**
+     * Gets inventory.
+     *
+     * @return the inventory
+     */
     public Inventory getInventory() {
         return inventory;
     }

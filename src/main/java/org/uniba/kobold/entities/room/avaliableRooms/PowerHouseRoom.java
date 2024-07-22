@@ -13,12 +13,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Power house room.
+ */
 public final class PowerHouseRoom extends Room {
 
+    /**
+     * Instantiates a new Power house room.
+     */
     public PowerHouseRoom() {
         super("generatore",
                 "L'edificio contenente il generatore è il più pulito e ordinato di questo inferno. Su tutte le pareti sono stati piazzati dei motori di autovetture " +
-                        "che producono energia.  " +
+                        "che producono energia" +
                         "L'unico essere in questo posto, seduto ad una scrivania è un coboldo, sembra dirigere questo posto dal suo computer è " + ColorText.setTextBlue("davanti") + " a te",
                 "/img/rooms/powerstation.jpg",
                 List.of(),

@@ -12,13 +12,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Tavern room.
+ */
 public final class TavernRoom extends Room {
 
+    /**
+     * Instantiates a new Tavern room.
+     */
     public TavernRoom() {
         super("taverna",
                 "La " + ColorText.setTextPurple("taverna")+" è piena di coboldi, "+ ColorText.setTextBlue("davanti")  +" a te c'è un bancone con un coboldo " + ColorText.setTextOrange("barista") +
                         " sulla tua " + ColorText.setTextBlue("sinistra")  + " ci sono dei coboldi che giocano a carte, mentre" +
-                        " sulla tua "+ ColorText.setTextBlue("destra")  +" c'è un'uscita che da su uno " + ColorText.setTextPurple("spiazzale") +".",
+                        " sulla tua "+ ColorText.setTextBlue("destra")  +" c'è un'uscita che da su uno " + ColorText.setTextPurple("spiazzale"),
                 "/img/rooms/tavern.jpg",
                 List.of(),
                 Arrays.asList(
@@ -45,7 +51,7 @@ public final class TavernRoom extends Room {
                 result.setSubject("Guardi a destra e un'uscita che da su uno " + ColorText.setTextPurple("spiazzale"));
                 break;
             case "guarda sinistra":
-                result.setSubject("Guardi a sinistra e vedi un gruppo di coboldi che giocano a " + ColorText.setTextBlue("blackjack") + ", sei abbastanza ludopatico per giocare.");
+                result.setSubject("Guardi a sinistra e vedi un gruppo di coboldi che giocano a " + ColorText.setTextBlue("blackjack") + ", sei abbastanza ludopatico per giocare");
                 break;
             case "guarda sopra":
                 result.setSubject("bel soffitto");

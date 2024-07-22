@@ -13,8 +13,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Throne room.
+ */
 public final class ThroneRoom extends Room {
 
+    /**
+     * Instantiates a new Throne room.
+     */
     public ThroneRoom() {
         super("trono",
                 "Dopo tanta fatica sei arrivato dal capo di questo posto infernale. Il coboldo più grande che tu abbia mai visto è sul suo trono di " +
@@ -34,7 +40,7 @@ public final class ThroneRoom extends Room {
 
         switch (command.getCommand().getName()) {
             case "guarda davanti":
-                result.setSubject("Di fronte, c'è l'enorme trono di cianfrusaglie del re coboldo." +
+                result.setSubject("Di fronte, c'è l'enorme trono di cianfrusaglie del re coboldo" +
                         "<br>Il re ti sta fissando con aria quasi scocciata");
                 break;
             case "guarda dietro":

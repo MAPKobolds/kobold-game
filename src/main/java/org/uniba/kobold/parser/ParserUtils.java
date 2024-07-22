@@ -15,16 +15,18 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * The type Parser utils.
  *
  * @author pierpaolo
  */
 public class ParserUtils {
 
     /**
+     * Load file list in set set.
      *
-     * @param file
-     * @return
-     * @throws IOException
+     * @param file the file
+     * @return set
+     * @throws IOException the io exception
      */
     public static Set<String> loadFileListInSet(File file) throws IOException {
         Set<String> set = new HashSet<>();
@@ -37,10 +39,11 @@ public class ParserUtils {
     }
 
     /**
+     * Parse string list.
      *
-     * @param string
-     * @param stopwords
-     * @return
+     * @param string    the string
+     * @param stopwords the stopwords
+     * @return list
      */
     public static List<String> parseString(String string, Set<String> stopwords) {
         List<String> tokens = new ArrayList<>();

@@ -11,11 +11,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * The type Game converter.
+ */
 public class GameConverter {
 
     /**
      * itemsFromJSON method to take items from JSON and fill the Inventory
+     *
      * @param filePath the path of the file
+     * @return the game state
      */
     public static GameState deserialize(Path filePath) {
         try {
@@ -31,6 +36,12 @@ public class GameConverter {
         }
     }
 
+    /**
+     * Serialize.
+     *
+     * @param game the game
+     * @param time the time
+     */
     public static void serialize(Game game, String time) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Room.class, new RoomDeserializer())

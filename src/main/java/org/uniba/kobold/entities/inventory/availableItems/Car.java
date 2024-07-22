@@ -3,8 +3,14 @@ package org.uniba.kobold.entities.inventory.availableItems;
 import org.uniba.kobold.entities.inventory.Item;
 import java.util.Set;
 
+/**
+ * The type Car.
+ */
 public class Car extends Item {
 
+    /**
+     * Instantiates a new Car.
+     */
     public Car() {
         super(
             "auto",

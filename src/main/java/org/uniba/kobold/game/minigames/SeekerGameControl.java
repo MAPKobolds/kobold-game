@@ -12,24 +12,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Seeker game control.
+ */
 public class SeekerGameControl extends MiniGame {
     private int currentItemIndex = 0;
     private int itemsToFindCount;
     private final List<Pair<Boolean, Item>> itemList = new ArrayList<>();
 
+    /**
+     * Instantiates a new Seeker game control.
+     */
     public SeekerGameControl() {
         List<Pair<Boolean, Item>> items = List.of(
-            Pair.with(true, new Item("Portelle Destre", Set.of("portelle dx"),"delle portelle", "/img/BR.png")),
-            Pair.with(true, new Item("Portelle Sinistre", Set.of("portelle sx"),"delle portelle", "/img/BR.png")),
-            Pair.with(false, new Item("Bottiglia", Set.of("bottiglia"),"Una bottiglia di vetro", "/img/BR.png")),
-            Pair.with(false, new Item("Ciondolo", Set.of("ciondolo"),"Un ciondolo d'oro", "/img/BR.png")),
-            Pair.with(false, new Item("Anello", Set.of("anello"),"Un anello di diamanti", "/img/BR.png")),
-            Pair.with(false, new Item("Orologio", Set.of("orologio"),"Un orologio da polso", "/img/BR.png")),
-            Pair.with(true, new Item("Scheletro auto", Set.of("scheletro auto"),"Lo scheletro di un auto", "/img/BR.png")),
-            Pair.with(false, new Item("Occhiali", Set.of("occhiali"),"Un paio di occhiali da sole", "/img/BR.png")),
-            Pair.with(false, new Item("Cappello", Set.of("cappello"),"Un cappello di lana", "/img/BR.png")),
-            Pair.with(false, new Item("Sciarpa", Set.of("sciarpa"),"Una sciarpa di seta", "/img/BR.png")),
-            Pair.with(true, new Item("Cofano", Set.of("cofano"),"Il cofano ", "/img/BR.png"))
+            Pair.with(true, new Item("Portelle", Set.of("portelle"),"delle portelle", "/img/rocks.png")),
+            Pair.with(false, new Item("Bottiglia", Set.of("bottiglia"),"Una bottiglia di vetro", "/img/rocks.png")),
+            Pair.with(false, new Item("Ciondolo", Set.of("ciondolo"),"Un ciondolo d'oro", "/img/rocks.png")),
+            Pair.with(false, new Item("Anello", Set.of("anello"),"Un anello di diamanti", "/img/rocks.png")),
+            Pair.with(false, new Item("Orologio", Set.of("orologio"),"Un orologio da polso", "/img/rocks.png")),
+            Pair.with(true, new Item("Scheletro auto", Set.of("scheletro auto"),"Lo scheletro di un auto", "/img/rocks.png")),
+            Pair.with(false, new Item("Occhiali", Set.of("occhiali"),"Un paio di occhiali da sole", "/img/rocks.png")),
+            Pair.with(false, new Item("Cappello", Set.of("cappello"),"Un cappello di lana", "/img/rocks.png")),
+            Pair.with(false, new Item("Sciarpa", Set.of("sciarpa"),"Una sciarpa di seta", "/img/rocks.png")),
+            Pair.with(true, new Item("Cofano", Set.of("cofano"),"Il cofano ", "/img/rocks.png"))
         );
 
         itemsToFindCount = (int) items.stream().filter(object -> object.getValue0()).count();
@@ -41,7 +46,7 @@ public class SeekerGameControl extends MiniGame {
         itemList.addAll(items);
         description = "Cerca i tuoi pezzi in mezzo alla spazzatura <br>" +
             "ecco la lista dei comandi disponibili: <br>" +
-            ColorText.setTextBlue("cerca <destra/sinistra>") + " -> per andare avanti al prossimo pezzo <br>" +
+            ColorText.setTextBlue("cerca destra/sinistra") + " -> per andare avanti al prossimo pezzo <br>" +
             ColorText.setTextBlue("guarda") +"-> guarda l'oggetto corrente <br>" +
             ColorText.setTextBlue("prendi") +" -> per prendere il pezzo giusto <br>";
 
@@ -52,6 +57,11 @@ public class SeekerGameControl extends MiniGame {
         commands.add(new Command("esci", Set.of("via")));
     }
 
+    /**
+     * Instantiates a new Seeker game control.
+     *
+     * @param items the items
+     */
     public SeekerGameControl(List<Pair<Boolean, Item>> items) {
         itemsToFindCount = (int) items.stream().filter(object -> object.getValue0()).count();
 
@@ -84,6 +94,11 @@ public class SeekerGameControl extends MiniGame {
 
     }
 
+    /**
+     * Gets current item.
+     *
+     * @return the current item
+     */
     public Pair<Boolean, Item> getCurrentItem() {
         return itemList.get(currentItemIndex);
     }

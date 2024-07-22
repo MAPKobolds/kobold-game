@@ -7,11 +7,21 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+/**
+ * The type Record service.
+ */
 public class RecordService {
     private String basePath = "http://localhost:8000/records";
     private Client client = ClientBuilder.newClient();
     private Gson gson = new Gson();
 
+    /**
+     * Save game record int.
+     *
+     * @param playerName the player name
+     * @param time       the time
+     * @return the int
+     */
     public int saveGameRecord(String playerName, Long time) {
         Record record = new Record(playerName, time, 0);
         WebTarget target = client.target(basePath);
@@ -30,6 +40,11 @@ public class RecordService {
         }
     }
 
+    /**
+     * Gets best record.
+     *
+     * @return the best record
+     */
     public List<Record> getBestRecord() {
         WebTarget target = client.target(basePath + "/best");
         String responseBody;

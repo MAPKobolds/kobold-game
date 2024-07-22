@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * The type Gui credits.
+ */
 public class GuiCredits extends JPanel {
 
     private JLabel creditsLabel;
@@ -18,7 +21,7 @@ public class GuiCredits extends JPanel {
     private static final String PORCELLI_PATH = "/img/PorcelliToken.png";
     private static final String SGARAMELLA_PATH = "/img/SgaramellaToken.png";
     private static final String ZIPPO_PATH = "/img/ZippoToken.png";
-    
+
     /**
      * Creates new form GuiCreditsRef
      */

@@ -27,6 +27,12 @@ class BlackjackService {
 
     /**
      * Constructor
+     *
+     * @throws HttpInternalServerErrorException the http internal server error exception
+     * @throws HttpNotFoundException            the http not found exception
+     * @throws HttpUnavailableException         the http unavailable exception
+     * @throws HttpBadRequestException          the http bad request exception
+     * @throws HttpForbiddenException           the http forbidden exception
      */
     public BlackjackService() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         getDeck();
@@ -62,8 +68,14 @@ class BlackjackService {
 
     /**
      * Deserialize a JSON response from a URL to a map
+     *
      * @param url the URL to get the JSON response from
      * @return a map of the JSON response
+     * @throws HttpInternalServerErrorException the http internal server error exception
+     * @throws HttpNotFoundException            the http not found exception
+     * @throws HttpUnavailableException         the http unavailable exception
+     * @throws HttpBadRequestException          the http bad request exception
+     * @throws HttpForbiddenException           the http forbidden exception
      */
     public Map<String,Object> deserializeFromUrl(String url) throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         // get the response body from the url and cast it to a map
@@ -75,6 +87,12 @@ class BlackjackService {
 
     /**
      * Get a new deck of cards
+     *
+     * @throws HttpInternalServerErrorException the http internal server error exception
+     * @throws HttpNotFoundException            the http not found exception
+     * @throws HttpUnavailableException         the http unavailable exception
+     * @throws HttpBadRequestException          the http bad request exception
+     * @throws HttpForbiddenException           the http forbidden exception
      */
     public void getDeck() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
 
@@ -88,8 +106,14 @@ class BlackjackService {
 
     /**
      * Get a number of cards from the deck
+     *
      * @param numberOfCards the number of cards to get
      * @return a list of Card objects
+     * @throws HttpInternalServerErrorException the http internal server error exception
+     * @throws HttpNotFoundException            the http not found exception
+     * @throws HttpUnavailableException         the http unavailable exception
+     * @throws HttpBadRequestException          the http bad request exception
+     * @throws HttpForbiddenException           the http forbidden exception
      */
     public List<Card> getCards(int numberOfCards) throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
 
@@ -110,6 +134,12 @@ class BlackjackService {
 
     /**
      * Shuffle the deck of cards
+     *
+     * @throws HttpInternalServerErrorException the http internal server error exception
+     * @throws HttpNotFoundException            the http not found exception
+     * @throws HttpUnavailableException         the http unavailable exception
+     * @throws HttpBadRequestException          the http bad request exception
+     * @throws HttpForbiddenException           the http forbidden exception
      */
     public void shuffleDeck() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         // shuffle the deck of cards

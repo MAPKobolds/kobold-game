@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
+/**
+ * The type Gui game record.
+ */
 public class GuiGameRecord extends JPanel implements ListPanel<Record> {
 
     private static final String BACKGROUND_PATH = "/img/wall.png";
@@ -18,6 +21,9 @@ public class GuiGameRecord extends JPanel implements ListPanel<Record> {
     private JScrollPane scroller;
     private final RecordService recordService = new RecordService();
 
+    /**
+     * Instantiates a new Gui game record.
+     */
     public GuiGameRecord() {
         initComponents();
     }

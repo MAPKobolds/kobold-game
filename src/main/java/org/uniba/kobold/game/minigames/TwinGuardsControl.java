@@ -7,8 +7,14 @@ import org.uniba.kobold.util.ColorText;
 
 import java.util.Set;
 
+/**
+ * The type Twin guards control.
+ */
 public class TwinGuardsControl extends MiniGame{
 
+    /**
+     * Instantiates a new Twin guards control.
+     */
     public TwinGuardsControl() {
         this.description = "I due guardiani ti guardano e ti chiedono cosa vuoi fare :" +
                 ColorText.setTextBlue("<br>1)") + " Passare" +

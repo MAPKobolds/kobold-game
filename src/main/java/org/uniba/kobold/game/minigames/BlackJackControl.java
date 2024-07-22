@@ -9,13 +9,42 @@ import org.uniba.kobold.util.ColorText;
 
 import java.util.Set;
 
+/**
+ * The type Black jack control.
+ */
 public class BlackJackControl extends MiniGame{
+    /**
+     * The Blackjack checker.
+     */
     BlackjackChecker blackjackChecker;
+    /**
+     * The Is playing.
+     */
     Boolean isPlaying = false;
+    /**
+     * The Has bet.
+     */
     Boolean hasBet = false;
+    /**
+     * The Commands help.
+     */
     String commandsHelp = "";
     int betMoney = 0;
 
+    /**
+     * The Bet money.
+     */
+    int betMoney = 0;
+
+    /**
+     * Instantiates a new Black jack control.
+     *
+     * @throws HttpInternalServerErrorException the http internal server error exception
+     * @throws HttpNotFoundException            the http not found exception
+     * @throws HttpUnavailableException         the http unavailable exception
+     * @throws HttpBadRequestException          the http bad request exception
+     * @throws HttpForbiddenException           the http forbidden exception
+     */
     public BlackJackControl() throws HttpInternalServerErrorException, HttpNotFoundException, HttpUnavailableException, HttpBadRequestException, HttpForbiddenException {
         blackjackChecker = new BlackjackChecker();
 
@@ -160,11 +189,11 @@ public class BlackJackControl extends MiniGame{
                     break;
 
                 case "esci":
-                    if (isPlaying) {
+                    if (isPlaying || hasBet) {
                         interaction.setInfo(ColorText.setTextRed("Devi terminare la mano prima di uscire"));
                     } else {
                         interaction.setInfo("Hai abbandonato il tavolo");
-                        interaction.setResult(MiniGameInteractionType.EXIT);
+                        interaction.setType(MiniGameInteractionType.EXIT);
                     }
                 break;
 
@@ -173,6 +202,7 @@ public class BlackJackControl extends MiniGame{
                     break;
             }
         }
+        
         catch (HttpInternalServerErrorException | HttpNotFoundException | HttpUnavailableException | HttpBadRequestException | HttpForbiddenException e) {
             e.printStackTrace();
         }

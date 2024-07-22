@@ -13,8 +13,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Forge room.
+ */
 public final class ForgeRoom extends Room {
 
+    /**
+     * Instantiates a new Forge room.
+     */
     public ForgeRoom() {
         super("fucine",
                 "Le fucine sono un posto molto caldo,vedi dei pezzi di metallo su un "+ ColorText.setTextBlue("rullo") +" fra cui delle carrozzerie di auto che vengono fusi. Sul nastro ci sono pezzi di carrozzeria." +

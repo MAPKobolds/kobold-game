@@ -8,6 +8,9 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * The type Gui load.
+ */
 public class GuiLoad extends JPanel implements ListPanel<GameSaveInstance> {
 
     private static final String BACKGROUND_PATH = "/img/wall.png";
@@ -16,6 +19,9 @@ public class GuiLoad extends JPanel implements ListPanel<GameSaveInstance> {
     private JPanel savesContainer;
     private JScrollPane scroller;
 
+    /**
+     * Instantiates a new Gui load.
+     */
     public GuiLoad() {
         initComponents();
     }

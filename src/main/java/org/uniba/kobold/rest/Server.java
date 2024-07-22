@@ -11,10 +11,16 @@ import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The type Server.
+ */
 public class Server {
 
     private static final int PORT = 8000;
 
+    /**
+     * Start server.
+     */
     public static void startServer() {
         URI baseUri = UriBuilder.fromUri("http://localhost/").port(PORT).build();
 

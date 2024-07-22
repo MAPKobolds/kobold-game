@@ -10,6 +10,7 @@ import org.uniba.kobold.type.Command;
 
 
 /**
+ * The type Parser output.
  *
  * @author pierpaolo
  */
@@ -22,9 +23,10 @@ public class ParserOutput {
     private Item invItem;
 
     /**
+     * Instantiates a new Parser output.
      *
-     * @param command
-     * @param item
+     * @param command the command
+     * @param item    the item
      */
     public ParserOutput(Command command, Item item) {
         this.command = command;
@@ -32,10 +34,11 @@ public class ParserOutput {
     }
 
     /**
+     * Instantiates a new Parser output.
      *
-     * @param command
-     * @param item
-     * @param invObejct
+     * @param command   the command
+     * @param item      the item
+     * @param invObejct the inv obejct
      */
     public ParserOutput(Command command, Item item, Item invObejct) {
         this.command = command;
@@ -44,48 +47,54 @@ public class ParserOutput {
     }
 
     /**
+     * Gets command.
      *
-     * @return
+     * @return command
      */
     public Command getCommand() {
         return command;
     }
 
     /**
+     * Sets command.
      *
-     * @param command
+     * @param command the command
      */
     public void setCommand(Command command) {
         this.command = command;
     }
 
     /**
+     * Gets item.
      *
-     * @return
+     * @return item
      */
     public Item getItem() {
         return item;
     }
 
     /**
+     * Sets item.
      *
-     * @param item
+     * @param item the item
      */
     public void setItem(Item item) {
         this.item = item;
     }
 
     /**
+     * Gets inv item.
      *
-     * @return
+     * @return inv item
      */
     public Item getInvItem() {
         return invItem;
     }
 
     /**
+     * Sets inv item.
      *
-     * @param invItem
+     * @param invItem the inv item
      */
     public void setInvItem(Item invItem) {
         this.invItem = invItem;

@@ -15,8 +15,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Palace entry room.
+ */
 public final class PalaceEntryRoom extends Room {
 
+    /**
+     * Instantiates a new Palace entry room.
+     */
     public PalaceEntryRoom() {
         super("palazzo",
                 "Dopo aver sfondato il cancello del palazzo hai ucciso numerose guardie, nonostante ciò la macchina è integra.<br>" +

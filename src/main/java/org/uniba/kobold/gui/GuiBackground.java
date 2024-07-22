@@ -16,6 +16,8 @@ public class GuiBackground extends JPanel {
 
     /**
      * Constructor of the class GuiBackgroundPanel
+     *
+     * @param backgroundPath the background path
      */
     public GuiBackground(String backgroundPath) {
         this.backgroundPath = backgroundPath;
@@ -35,6 +37,7 @@ public class GuiBackground extends JPanel {
 
     /**
      * Method to update the background image
+     *
      * @param newBackgroundPath the path to the new background image
      */
     public void updateBackground(String newBackgroundPath) {

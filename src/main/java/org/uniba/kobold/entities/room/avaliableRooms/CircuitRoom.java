@@ -11,12 +11,18 @@ import javax.swing.*;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Circuit room.
+ */
 public final class CircuitRoom extends Room {
 
+    /**
+     * Instantiates a new Circuit room.
+     */
     public CircuitRoom() {
         super("circuito",
                 "Nel circuito ci sono molti coboldi che scommettono, rivolgendosi alla " + ColorText.setTextOrange("cassiera") +
-                        "  Alcuni hanno vinto alcune pezzi di auto e esultano, altri sono in completamente disperati per aver perso tutto.",
+                        "  Alcuni hanno vinto alcune pezzi di auto e esultano, altri sono in completamente disperati per aver perso tutto",
                 "/img/rooms/track.jpg",
                 List.of(),
                 List.of(
@@ -57,7 +63,7 @@ public final class CircuitRoom extends Room {
                 result.setResultType(RoomInteractionResultType.MOVE);
                 break;
             case "parla cassiera":
-                if (inventory.contains("auto") || inventory.contains("manubrio")) {
+                if (inventory.contains("auto") || inventory.contains("volante")) {
                     result.setSubject(ColorText.setTextRed("le scomesse sono chiuse, torna più tardi"));
                 }else {
                     result.setSubject("cassiera");

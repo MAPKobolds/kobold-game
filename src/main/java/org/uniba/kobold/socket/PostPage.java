@@ -8,10 +8,19 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * The type Post page.
+ */
 public final class PostPage {
 
     private static final Logger log = LoggerFactory.getLogger(PostPage.class);
 
+    /**
+     * Gets post page.
+     *
+     * @return the post page
+     * @throws IOException the io exception
+     */
     static public String getPostPage () throws IOException {
         String endpoint = "/posts";
         Socket socket = new Socket("jsonplaceholder.typicode.com", 80);

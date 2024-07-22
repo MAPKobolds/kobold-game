@@ -10,6 +10,9 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * The type Gui game.
+ */
 public class GuiGame extends JPanel {
     private JTextPane dialogText;
     private JPanel inventoryPanel;
@@ -24,10 +27,15 @@ public class GuiGame extends JPanel {
     private int inventoryCount = 0;
     private boolean isGameRunning = true;
     private boolean isInventoryVisible;
+    /**
+     * The Background image.
+     */
     Image backgroundImage = new ImageIcon("src/main/resources/img/woodwall.jpg").getImage();
 
     /**
      * Creates new form containerPanel
+     *
+     * @param game the game
      */
     public GuiGame(Game game) {
         initComponents(game);
@@ -129,6 +137,11 @@ public class GuiGame extends JPanel {
         setLayout();
     }
 
+    /**
+     * Refresh item.
+     *
+     * @param game the game
+     */
     public void refreshItem(Game game) {
         inventoryPanel.removeAll();
 
@@ -137,6 +150,11 @@ public class GuiGame extends JPanel {
         game.getInventory().getItems().forEach(this::addItem);
     }
 
+    /**
+     * Add item.
+     *
+     * @param item the item
+     */
     public void addItem(Item item) {
         JButton itemButton = new GuiObjectButton(item.getName(), item.getImage());
         itemButton.setBorder(BorderFactory.createLineBorder(new Color(93, 72, 55), 3));
@@ -173,6 +191,11 @@ public class GuiGame extends JPanel {
         repaint();
     }
 
+    /**
+     * Sets dialog label.
+     *
+     * @param message the message
+     */
     public void setDialogLabel(String message) {
 
         this.dialogText.setText("<!DOCTYPE html>\n" +
@@ -207,6 +230,11 @@ public class GuiGame extends JPanel {
                 "</html>");
     }
 
+    /**
+     * Tick time.
+     *
+     * @param game the game
+     */
     public synchronized void tickTime(Game game) {
         new Thread(() -> {
             while (isGameRunning) {
@@ -221,6 +249,11 @@ public class GuiGame extends JPanel {
         }).start();
     }
 
+    /**
+     * Update game panel.
+     *
+     * @param path the path
+     */
     public void updateGamePanel(String path) {
         gamePanel.updateBackground(path);
     }
@@ -295,6 +328,11 @@ public class GuiGame extends JPanel {
         }
     }
 
+    /**
+     * Sets game running.
+     *
+     * @param gameRunning the game running
+     */
     public void setGameRunning(boolean gameRunning) {
         isGameRunning = gameRunning;
     }
@@ -306,6 +344,12 @@ public class GuiGame extends JPanel {
         refreshGUI(game.executeCommand(userInput), game);
     }
 
+    /**
+     * Refresh gui.
+     *
+     * @param gameCommandResult the game command result
+     * @param game              the game
+     */
     public void refreshGUI(GameCommandResult gameCommandResult, Game game) {
         GameCommandResultType type = gameCommandResult.getGameCommandResultType();
         setDialogLabel("<span style='color: white;'>" + gameCommandResult.getDescription() + "</span>");

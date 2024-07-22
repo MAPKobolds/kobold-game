@@ -9,10 +9,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The type Game save.
+ */
 public class GameSave {
+    /**
+     * The constant FOLDER_PATH.
+     */
     final static String FOLDER_PATH = "src/main/resources/saves/";
+    /**
+     * The constant instance.
+     */
     public static GameSave instance;
 
+    /**
+     * Gets saving name.
+     *
+     * @return the saving name
+     * @throws Error the error
+     */
     public static List<GameSaveInstance> getSavingName() throws Error {
         Path dirPath = Paths.get(FOLDER_PATH);
         List<GameSaveInstance> saves =  new ArrayList(Arrays.asList());
@@ -34,6 +49,12 @@ public class GameSave {
         return saves;
     }
 
+    /**
+     * Delete save.
+     *
+     * @param save the save
+     * @throws IOException the io exception
+     */
     public static void deleteSave(GameSaveInstance save) throws IOException {
         try {
             String filePath = FOLDER_PATH + save.toString() + ".json";
@@ -44,6 +65,13 @@ public class GameSave {
         }
     }
 
+    /**
+     * Gets number of user save.
+     *
+     * @param name the name
+     * @return the number of user save
+     * @throws Error the error
+     */
     public static int getNumberOfUserSave(String name) throws Error {
         try {
             return (int) getSavingName().stream().filter(n -> n.getPlayerName().contains(name)).count();

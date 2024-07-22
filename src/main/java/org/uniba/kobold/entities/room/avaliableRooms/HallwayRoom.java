@@ -13,8 +13,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Hallway room.
+ */
 public final class HallwayRoom extends Room {
 
+    /**
+     * Instantiates a new Hallway room.
+     */
     public HallwayRoom() {
         super("corridoio",
                 "Sei in un corridoio che si apre ad una strada. Di fronte a te vedi una " + ColorText.setTextPurple("taverna") + " preceduta" +
